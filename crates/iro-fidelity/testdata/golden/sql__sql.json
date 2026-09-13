@@ -1,0 +1,1724 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "sql",
+  "grammarSourceHash": "sha256:9ad0fbe07a5e8cd4c7396d526c2280c4d6021e18f2e20a8d5956a0502da8cee4",
+  "source": "USE AdventureWorks2022;\nGO\nIF OBJECT_ID('dbo.NewProducts', 'U') IS NOT NULL\n    DROP TABLE dbo.NewProducts;\nGO\nALTER DATABASE AdventureWorks2022 SET RECOVERY BULK_LOGGED;\nGO\n\nSELECT * INTO dbo.NewProducts\nFROM Production.Product\nWHERE ListPrice > $25\nAND ListPrice < $100;\nGO\nALTER DATABASE AdventureWorks2022 SET RECOVERY FULL;\nGO\n\n-- From https://learn.microsoft.com/en-us/sql/t-sql/queries/select-examples-transact-sql\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "USE",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 23,
+            "text": " AdventureWorks2022;",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "IF",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 12,
+            "text": "OBJECT_ID",
+            "scopes": [
+              "source.sql",
+              "support.function.metadata.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "(",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "'",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql",
+              "punctuation.definition.string.begin.sql"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 29,
+            "text": "dbo.NewProducts",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "'",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql",
+              "punctuation.definition.string.end.sql"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 32,
+            "text": ", ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": "'",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql",
+              "punctuation.definition.string.begin.sql"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "U",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "'",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql",
+              "punctuation.definition.string.end.sql"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 37,
+            "text": ") ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 48,
+            "text": "IS NOT NULL",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DDL.create.II.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.sql",
+              "meta.drop.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "DROP",
+            "scopes": [
+              "source.sql",
+              "meta.drop.sql",
+              "keyword.other.create.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.drop.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 14,
+            "text": "TABLE",
+            "scopes": [
+              "source.sql",
+              "meta.drop.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 18,
+            "text": "dbo",
+            "scopes": [
+              "source.sql",
+              "constant.other.database-name.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ".",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 30,
+            "text": "NewProducts",
+            "scopes": [
+              "source.sql",
+              "constant.other.table-name.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": ";",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "ALTER",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql",
+              "keyword.other.create.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 14,
+            "text": "DATABASE",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql",
+              "keyword.other.table.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 34,
+            "text": "AdventureWorks2022 ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 37,
+            "text": "SET",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 46,
+            "text": "RECOVERY",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 58,
+            "text": "BULK_LOGGED",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 58,
+            "end": 59,
+            "text": ";",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "SELECT",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "*",
+            "scopes": [
+              "source.sql",
+              "keyword.operator.star.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "INTO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 17,
+            "text": "dbo",
+            "scopes": [
+              "source.sql",
+              "constant.other.database-name.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ".",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 29,
+            "text": "NewProducts",
+            "scopes": [
+              "source.sql",
+              "constant.other.table-name.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "FROM",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 15,
+            "text": "Production",
+            "scopes": [
+              "source.sql",
+              "constant.other.database-name.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 23,
+            "text": "Product",
+            "scopes": [
+              "source.sql",
+              "constant.other.table-name.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "WHERE",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 16,
+            "text": " ListPrice ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ">",
+            "scopes": [
+              "source.sql",
+              "keyword.operator.comparison.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 19,
+            "text": " $",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 21,
+            "text": "25",
+            "scopes": [
+              "source.sql",
+              "constant.numeric.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "AND",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 14,
+            "text": " ListPrice ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "<",
+            "scopes": [
+              "source.sql",
+              "keyword.operator.comparison.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 17,
+            "text": " $",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 20,
+            "text": "100",
+            "scopes": [
+              "source.sql",
+              "constant.numeric.sql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "ALTER",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql",
+              "keyword.other.create.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 14,
+            "text": "DATABASE",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql",
+              "keyword.other.table.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 34,
+            "text": "AdventureWorks2022 ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 37,
+            "text": "SET",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 46,
+            "text": "RECOVERY",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 52,
+            "text": " FULL;",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "--",
+            "scopes": [
+              "source.sql",
+              "comment.line.double-dash.sql",
+              "punctuation.definition.comment.sql"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 88,
+            "text": " From https://learn.microsoft.com/en-us/sql/t-sql/queries/select-examples-transact-sql",
+            "scopes": [
+              "source.sql",
+              "comment.line.double-dash.sql"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "USE",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 23,
+            "text": " AdventureWorks2022;",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "IF",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 12,
+            "text": "OBJECT_ID",
+            "scopes": [
+              "source.sql",
+              "support.function.metadata.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "(",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "'",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql",
+              "punctuation.definition.string.begin.sql"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 29,
+            "text": "dbo.NewProducts",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "'",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql",
+              "punctuation.definition.string.end.sql"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 32,
+            "text": ", ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": "'",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql",
+              "punctuation.definition.string.begin.sql"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "U",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "'",
+            "scopes": [
+              "source.sql",
+              "string.quoted.single.sql",
+              "punctuation.definition.string.end.sql"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 37,
+            "text": ") ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 48,
+            "text": "IS NOT NULL",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DDL.create.II.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.sql",
+              "meta.drop.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "DROP",
+            "scopes": [
+              "source.sql",
+              "meta.drop.sql",
+              "keyword.other.create.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.drop.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 14,
+            "text": "TABLE",
+            "scopes": [
+              "source.sql",
+              "meta.drop.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 18,
+            "text": "dbo",
+            "scopes": [
+              "source.sql",
+              "constant.other.database-name.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ".",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 30,
+            "text": "NewProducts",
+            "scopes": [
+              "source.sql",
+              "constant.other.table-name.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": ";",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "ALTER",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql",
+              "keyword.other.create.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 14,
+            "text": "DATABASE",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql",
+              "keyword.other.table.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 34,
+            "text": "AdventureWorks2022 ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 37,
+            "text": "SET",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 46,
+            "text": "RECOVERY",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 58,
+            "text": "BULK_LOGGED",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 58,
+            "end": 59,
+            "text": ";",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "SELECT",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "*",
+            "scopes": [
+              "source.sql",
+              "keyword.operator.star.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "INTO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 17,
+            "text": "dbo",
+            "scopes": [
+              "source.sql",
+              "constant.other.database-name.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ".",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 29,
+            "text": "NewProducts",
+            "scopes": [
+              "source.sql",
+              "constant.other.table-name.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "FROM",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 15,
+            "text": "Production",
+            "scopes": [
+              "source.sql",
+              "constant.other.database-name.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 23,
+            "text": "Product",
+            "scopes": [
+              "source.sql",
+              "constant.other.table-name.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "WHERE",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 16,
+            "text": " ListPrice ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ">",
+            "scopes": [
+              "source.sql",
+              "keyword.operator.comparison.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 19,
+            "text": " $",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 21,
+            "text": "25",
+            "scopes": [
+              "source.sql",
+              "constant.numeric.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "AND",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 14,
+            "text": " ListPrice ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "<",
+            "scopes": [
+              "source.sql",
+              "keyword.operator.comparison.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 17,
+            "text": " $",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 20,
+            "text": "100",
+            "scopes": [
+              "source.sql",
+              "constant.numeric.sql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "ALTER",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql",
+              "keyword.other.create.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 14,
+            "text": "DATABASE",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql",
+              "keyword.other.table.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.sql",
+              "meta.alter.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 34,
+            "text": "AdventureWorks2022 ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 37,
+            "text": "SET",
+            "scopes": [
+              "source.sql",
+              "keyword.other.DML.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 46,
+            "text": "RECOVERY",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 52,
+            "text": " FULL;",
+            "scopes": [
+              "source.sql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "GO",
+            "scopes": [
+              "source.sql",
+              "keyword.other.sql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "--",
+            "scopes": [
+              "source.sql",
+              "comment.line.double-dash.sql",
+              "punctuation.definition.comment.sql"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 88,
+            "text": " From https://learn.microsoft.com/en-us/sql/t-sql/queries/select-examples-transact-sql",
+            "scopes": [
+              "source.sql",
+              "comment.line.double-dash.sql"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

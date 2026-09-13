@@ -1,0 +1,1130 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "docker",
+  "grammarSourceHash": "sha256:772f17e3f6703aacddfa7500bfdac4a7d93d96e2cfa3a93b02699e65ecc68568",
+  "source": "# syntax=docker/dockerfile:1\nFROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env\nWORKDIR /app\n\n# Copy csproj and restore as distinct layers\nCOPY *.csproj ./\nRUN dotnet restore\n\n# Copy everything else and build\nCOPY ../engine/examples ./\nRUN dotnet publish -c Release -o out\n\n# Build runtime image\nFROM mcr.microsoft.com/dotnet/aspnet:3.1\nWORKDIR /app\nCOPY --from=build-env /app/out .\nENTRYPOINT [\"dotnet\", \"aspnetapp.dll\"]\n\n# From https://docs.docker.com/samples/dotnetcore/",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 28,
+            "text": " syntax=docker/dockerfile:1",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "FROM",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 38,
+            "text": " mcr.microsoft.com/dotnet/sdk:5.0 ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 40,
+            "text": "AS",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 50,
+            "text": " build-env",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "WORKDIR",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "/app",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 44,
+            "text": " Copy csproj and restore as distinct layers",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "COPY",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 16,
+            "text": "*.csproj ./",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "RUN",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 18,
+            "text": "dotnet restore",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 32,
+            "text": " Copy everything else and build",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "COPY",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 26,
+            "text": "../engine/examples ./",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "RUN",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 36,
+            "text": "dotnet publish -c Release -o out",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 21,
+            "text": " Build runtime image",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "FROM",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 40,
+            "text": "mcr.microsoft.com/dotnet/aspnet:3.1",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "WORKDIR",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "/app",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "COPY",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 32,
+            "text": "--from=build-env /app/out .",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "ENTRYPOINT",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "[",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "\"",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 19,
+            "text": "dotnet",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "\"",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": ", ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 36,
+            "text": "aspnetapp.dll",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "\"",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": "]",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 50,
+            "text": " From https://docs.docker.com/samples/dotnetcore/",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 28,
+            "text": " syntax=docker/dockerfile:1",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "FROM",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 38,
+            "text": " mcr.microsoft.com/dotnet/sdk:5.0 ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 40,
+            "text": "AS",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 50,
+            "text": " build-env",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "WORKDIR",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "/app",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 44,
+            "text": " Copy csproj and restore as distinct layers",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "COPY",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 16,
+            "text": "*.csproj ./",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "RUN",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 18,
+            "text": "dotnet restore",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 32,
+            "text": " Copy everything else and build",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "COPY",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 26,
+            "text": "../engine/examples ./",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "RUN",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 36,
+            "text": "dotnet publish -c Release -o out",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 21,
+            "text": " Build runtime image",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "FROM",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 40,
+            "text": "mcr.microsoft.com/dotnet/aspnet:3.1",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "WORKDIR",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "/app",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "COPY",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 32,
+            "text": "--from=build-env /app/out .",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "ENTRYPOINT",
+            "scopes": [
+              "source.dockerfile",
+              "keyword.other.special-method.dockerfile"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "[",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "\"",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 19,
+            "text": "dotnet",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "\"",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": ", ",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 36,
+            "text": "aspnetapp.dll",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "\"",
+            "scopes": [
+              "source.dockerfile",
+              "string.quoted.double.dockerfile"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": "]",
+            "scopes": [
+              "source.dockerfile"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile",
+              "punctuation.definition.comment.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 50,
+            "text": " From https://docs.docker.com/samples/dotnetcore/",
+            "scopes": [
+              "source.dockerfile",
+              "comment.line.number-sign.dockerfile"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

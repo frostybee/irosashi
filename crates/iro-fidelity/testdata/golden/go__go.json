@@ -1,0 +1,2366 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "go",
+  "grammarSourceHash": "sha256:e555e47bc4760e521e5449fc05931c5dffb7204b3ef16efe724b6a4c9761a5e4",
+  "source": "package main\n\nimport (\n    \"fmt\"\n    \"log\"\n    \"net/http\"\n)\n\nfunc handler(w http.ResponseWriter, r *http.Request) {\n    fmt.Fprintf(w, \"Hi there, I love %s!\", r.URL.Path[1:])\n}\n\nfunc main() {\n    http.HandleFunc(\"/\", handler)\n    log.Fatal(http.ListenAndServe(\":8080\", nil))\n}\n\n// From https://golang.org/doc/articles/wiki/#tmp_3",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "package",
+            "scopes": [
+              "source.go",
+              "keyword.package.go"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "main",
+            "scopes": [
+              "source.go",
+              "entity.name.type.package.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "import",
+            "scopes": [
+              "source.go",
+              "keyword.control.import.go"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.imports.begin.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 8,
+            "text": "fmt",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "entity.name.import.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 8,
+            "text": "log",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "entity.name.import.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 13,
+            "text": "net/http",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "entity.name.import.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.imports.end.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "func",
+            "scopes": [
+              "source.go",
+              "keyword.function.go"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 12,
+            "text": "handler",
+            "scopes": [
+              "source.go",
+              "entity.name.function.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "w",
+            "scopes": [
+              "source.go",
+              "variable.parameter.go"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 19,
+            "text": "http",
+            "scopes": [
+              "source.go",
+              "entity.name.type.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 34,
+            "text": "ResponseWriter",
+            "scopes": [
+              "source.go",
+              "entity.name.type.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "r",
+            "scopes": [
+              "source.go",
+              "variable.parameter.go"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "*",
+            "scopes": [
+              "source.go",
+              "keyword.operator.address.go"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 43,
+            "text": "http",
+            "scopes": [
+              "source.go",
+              "entity.name.type.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 44,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 51,
+            "text": "Request",
+            "scopes": [
+              "source.go",
+              "entity.name.type.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 54,
+            "text": "{",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.curly.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "fmt",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 15,
+            "text": "Fprintf",
+            "scopes": [
+              "source.go",
+              "entity.name.function.support.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "w",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 37,
+            "text": "Hi there, I love ",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 39,
+            "text": "%s",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "constant.other.placeholder.go"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": "!",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 44,
+            "text": "r",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 45,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 48,
+            "text": "URL",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 53,
+            "text": "Path",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 54,
+            "text": "[",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.square.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 54,
+            "end": 55,
+            "text": "1",
+            "scopes": [
+              "source.go",
+              "constant.numeric.decimal.go"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 55,
+            "end": 56,
+            "text": ":",
+            "scopes": [
+              "source.go",
+              "punctuation.other.colon.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 56,
+            "end": 57,
+            "text": "]",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.square.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 57,
+            "end": 58,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.curly.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "func",
+            "scopes": [
+              "source.go",
+              "keyword.function.go"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 9,
+            "text": "main",
+            "scopes": [
+              "source.go",
+              "entity.name.function.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "{",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.curly.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "http",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 19,
+            "text": "HandleFunc",
+            "scopes": [
+              "source.go",
+              "entity.name.function.support.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "/",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 32,
+            "text": "handler",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "log",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "Fatal",
+            "scopes": [
+              "source.go",
+              "entity.name.function.support.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 18,
+            "text": "http",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 33,
+            "text": "ListenAndServe",
+            "scopes": [
+              "source.go",
+              "entity.name.function.support.go"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 40,
+            "text": ":8080",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 46,
+            "text": "nil",
+            "scopes": [
+              "source.go",
+              "constant.language.null.go"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 48,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.curly.go"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.go",
+              "comment.line.double-slash.go",
+              "punctuation.definition.comment.go"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 51,
+            "text": " From https://golang.org/doc/articles/wiki/#tmp_3",
+            "scopes": [
+              "source.go",
+              "comment.line.double-slash.go"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "package",
+            "scopes": [
+              "source.go",
+              "keyword.package.go"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "main",
+            "scopes": [
+              "source.go",
+              "entity.name.type.package.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "import",
+            "scopes": [
+              "source.go",
+              "keyword.control.import.go"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.imports.begin.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 8,
+            "text": "fmt",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "entity.name.import.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 8,
+            "text": "log",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "entity.name.import.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 13,
+            "text": "net/http",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "entity.name.import.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.imports.end.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "func",
+            "scopes": [
+              "source.go",
+              "keyword.function.go"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 12,
+            "text": "handler",
+            "scopes": [
+              "source.go",
+              "entity.name.function.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "w",
+            "scopes": [
+              "source.go",
+              "variable.parameter.go"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 19,
+            "text": "http",
+            "scopes": [
+              "source.go",
+              "entity.name.type.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 34,
+            "text": "ResponseWriter",
+            "scopes": [
+              "source.go",
+              "entity.name.type.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "r",
+            "scopes": [
+              "source.go",
+              "variable.parameter.go"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "*",
+            "scopes": [
+              "source.go",
+              "keyword.operator.address.go"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 43,
+            "text": "http",
+            "scopes": [
+              "source.go",
+              "entity.name.type.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 44,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 51,
+            "text": "Request",
+            "scopes": [
+              "source.go",
+              "entity.name.type.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 54,
+            "text": "{",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.curly.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "fmt",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 15,
+            "text": "Fprintf",
+            "scopes": [
+              "source.go",
+              "entity.name.function.support.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "w",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 37,
+            "text": "Hi there, I love ",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 39,
+            "text": "%s",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "constant.other.placeholder.go"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": "!",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 44,
+            "text": "r",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 45,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 48,
+            "text": "URL",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 53,
+            "text": "Path",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 54,
+            "text": "[",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.square.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 54,
+            "end": 55,
+            "text": "1",
+            "scopes": [
+              "source.go",
+              "constant.numeric.decimal.go"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 55,
+            "end": 56,
+            "text": ":",
+            "scopes": [
+              "source.go",
+              "punctuation.other.colon.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 56,
+            "end": 57,
+            "text": "]",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.square.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 57,
+            "end": 58,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.curly.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "func",
+            "scopes": [
+              "source.go",
+              "keyword.function.go"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 9,
+            "text": "main",
+            "scopes": [
+              "source.go",
+              "entity.name.function.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "{",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.curly.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "http",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 19,
+            "text": "HandleFunc",
+            "scopes": [
+              "source.go",
+              "entity.name.function.support.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "/",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 32,
+            "text": "handler",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "log",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "Fatal",
+            "scopes": [
+              "source.go",
+              "entity.name.function.support.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 18,
+            "text": "http",
+            "scopes": [
+              "source.go",
+              "variable.other.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ".",
+            "scopes": [
+              "source.go",
+              "punctuation.other.period.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 33,
+            "text": "ListenAndServe",
+            "scopes": [
+              "source.go",
+              "entity.name.function.support.go"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "(",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.begin.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.begin.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 40,
+            "text": ":8080",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": "\"",
+            "scopes": [
+              "source.go",
+              "string.quoted.double.go",
+              "punctuation.definition.string.end.go"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": ",",
+            "scopes": [
+              "source.go",
+              "punctuation.other.comma.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": " ",
+            "scopes": [
+              "source.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 46,
+            "text": "nil",
+            "scopes": [
+              "source.go",
+              "constant.language.null.go"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 48,
+            "text": ")",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.round.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.go",
+              "punctuation.definition.end.bracket.curly.go"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.go",
+              "comment.line.double-slash.go",
+              "punctuation.definition.comment.go"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 51,
+            "text": " From https://golang.org/doc/articles/wiki/#tmp_3",
+            "scopes": [
+              "source.go",
+              "comment.line.double-slash.go"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

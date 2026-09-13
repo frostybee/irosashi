@@ -1,0 +1,4810 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "jsx",
+  "grammarSourceHash": "sha256:6bc4ddbfe2f322dec6590fd9b58d7df40cb78460bfd9ed2eacf71df30a086ded",
+  "source": "function Item({ name, isPacked }) {\n  if (isPacked) {\n    return null;\n  }\n  return <li className=\"item\">{name}</li>;\n}\n\nexport default function PackingList() {\n  return (\n    <section>\n      <h1>Sally Ride's Packing List</h1>\n      <ul>\n        <Item\n          isPacked={true}\n          name=\"Space suit\"\n        />\n        <Item\n          isPacked={true}\n          name=\"Helmet with a golden leaf\"\n        />\n        <Item\n          isPacked={false}\n          name=\"Photo of Tam\"\n        />\n      </ul>\n    </section>\n  );\n}\n\n// From https://react.dev/learn/conditional-rendering\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "function",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "storage.type.function.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.definition.function.js.jsx",
+              "entity.name.function.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "punctuation.definition.parameters.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "punctuation.definition.binding-pattern.object.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 20,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "variable.parameter.js.jsx"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ",",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "punctuation.separator.comma.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 30,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "variable.parameter.js.jsx"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "punctuation.definition.binding-pattern.object.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": ")",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "punctuation.definition.parameters.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "if",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "keyword.control.conditional.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "(",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.brace.round.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 14,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "variable.other.readwrite.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ")",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.brace.round.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 10,
+            "text": "return",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "keyword.control.flow.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "null",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "constant.language.null.js.jsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ";",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.terminator.statement.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "return",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "keyword.control.flow.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 12,
+            "text": "li",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 22,
+            "text": "className",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.begin.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 28,
+            "text": "item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.end.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "punctuation.section.embedded.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 35,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.embedded.expression.js.jsx",
+              "variable.other.readwrite.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "punctuation.section.embedded.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 38,
+            "text": "</",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 40,
+            "text": "li",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": ";",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.terminator.statement.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "export",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "keyword.control.export.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 14,
+            "text": "default",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "keyword.control.default.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 23,
+            "text": "function",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "storage.type.function.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 35,
+            "text": "PackingList",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.definition.function.js.jsx",
+              "entity.name.function.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": "(",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.parameters.js.jsx",
+              "punctuation.definition.parameters.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": ")",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.parameters.js.jsx",
+              "punctuation.definition.parameters.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "return",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "keyword.control.flow.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "(",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.brace.round.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 12,
+            "text": "section",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 9,
+            "text": "h1",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 35,
+            "text": "Sally Ride's Packing List",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 37,
+            "text": "</",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 39,
+            "text": "h1",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 9,
+            "text": "ul",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx",
+              "support.class.component.js.jsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 18,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 24,
+            "text": "true",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "meta.embedded.expression.js.jsx",
+              "constant.language.boolean.true.js.jsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 14,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.begin.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 26,
+            "text": "Space suit",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.end.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "/>",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx",
+              "support.class.component.js.jsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 18,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 24,
+            "text": "true",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "meta.embedded.expression.js.jsx",
+              "constant.language.boolean.true.js.jsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 14,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.begin.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 41,
+            "text": "Helmet with a golden leaf",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.end.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "/>",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx",
+              "support.class.component.js.jsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 18,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 25,
+            "text": "false",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "meta.embedded.expression.js.jsx",
+              "constant.language.boolean.false.js.jsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 14,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.begin.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 28,
+            "text": "Photo of Tam",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.end.js.jsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "/>",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 8,
+            "text": "</",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "ul",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "</",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 13,
+            "text": "section",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": ")",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.brace.round.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": ";",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.terminator.statement.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.js.jsx",
+              "comment.line.double-slash.js.jsx",
+              "punctuation.definition.comment.js.jsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 53,
+            "text": " From https://react.dev/learn/conditional-rendering",
+            "scopes": [
+              "source.js.jsx",
+              "comment.line.double-slash.js.jsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "function",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "storage.type.function.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.definition.function.js.jsx",
+              "entity.name.function.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "punctuation.definition.parameters.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "punctuation.definition.binding-pattern.object.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 20,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "variable.parameter.js.jsx"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ",",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "punctuation.separator.comma.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 30,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "variable.parameter.js.jsx"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "meta.parameter.object-binding-pattern.js.jsx",
+              "punctuation.definition.binding-pattern.object.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": ")",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.parameters.js.jsx",
+              "punctuation.definition.parameters.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "if",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "keyword.control.conditional.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "(",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.brace.round.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 14,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "variable.other.readwrite.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ")",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.brace.round.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 10,
+            "text": "return",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "keyword.control.flow.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "null",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "constant.language.null.js.jsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ";",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.terminator.statement.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "return",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "keyword.control.flow.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 12,
+            "text": "li",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 22,
+            "text": "className",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.begin.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 28,
+            "text": "item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.end.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "punctuation.section.embedded.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 35,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.embedded.expression.js.jsx",
+              "variable.other.readwrite.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "punctuation.section.embedded.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 38,
+            "text": "</",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 40,
+            "text": "li",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": ";",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.terminator.statement.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.function.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "export",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "keyword.control.export.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 14,
+            "text": "default",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "keyword.control.default.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 23,
+            "text": "function",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "storage.type.function.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 35,
+            "text": "PackingList",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.definition.function.js.jsx",
+              "entity.name.function.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": "(",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.parameters.js.jsx",
+              "punctuation.definition.parameters.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": ")",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.parameters.js.jsx",
+              "punctuation.definition.parameters.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "return",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "keyword.control.flow.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "(",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.brace.round.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 12,
+            "text": "section",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 9,
+            "text": "h1",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 35,
+            "text": "Sally Ride's Packing List",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 37,
+            "text": "</",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 39,
+            "text": "h1",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 9,
+            "text": "ul",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx",
+              "support.class.component.js.jsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 18,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 24,
+            "text": "true",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "meta.embedded.expression.js.jsx",
+              "constant.language.boolean.true.js.jsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 14,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.begin.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 26,
+            "text": "Space suit",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.end.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "/>",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx",
+              "support.class.component.js.jsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 18,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 24,
+            "text": "true",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "meta.embedded.expression.js.jsx",
+              "constant.language.boolean.true.js.jsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 14,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.begin.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 41,
+            "text": "Helmet with a golden leaf",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.end.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "/>",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "<",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Item",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "entity.name.tag.js.jsx",
+              "support.class.component.js.jsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 18,
+            "text": "isPacked",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "{",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 25,
+            "text": "false",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "meta.embedded.expression.js.jsx",
+              "constant.language.boolean.false.js.jsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "punctuation.section.embedded.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 10,
+            "text": "          ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 14,
+            "text": "name",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "entity.other.attribute-name.js.jsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "=",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "keyword.operator.assignment.js.jsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.begin.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 28,
+            "text": "Photo of Tam",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "\"",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx",
+              "string.quoted.double.js.jsx",
+              "punctuation.definition.string.end.js.jsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "meta.tag.attributes.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "/>",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 8,
+            "text": "</",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "ul",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "meta.jsx.children.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "</",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.begin.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 13,
+            "text": "section",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "entity.name.tag.js.jsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ">",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.tag.without-attributes.js.jsx",
+              "punctuation.definition.tag.end.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": ")",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "meta.brace.round.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": ";",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.terminator.statement.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.js.jsx",
+              "meta.export.default.js.jsx",
+              "meta.function.expression.js.jsx",
+              "meta.block.js.jsx",
+              "punctuation.definition.block.js.jsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.js.jsx",
+              "comment.line.double-slash.js.jsx",
+              "punctuation.definition.comment.js.jsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 53,
+            "text": " From https://react.dev/learn/conditional-rendering",
+            "scopes": [
+              "source.js.jsx",
+              "comment.line.double-slash.js.jsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

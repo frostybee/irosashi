@@ -1,0 +1,9 @@
+{
+  "scopeName": "source.test-match",
+  "name": "test-match",
+  "patterns": [
+    {"match": "\\b(if|else|for|return)\\b", "name": "keyword.control.test"},
+    {"match": "\\b\\d+\\b", "name": "constant.numeric.test"},
+    {"match": "\\b[a-zA-Z_]\\w*\\b", "name": "variable.other.test"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "scopeName": "source.test-negation",
+  "patterns": [
+    {"match": "\\b(if|else)\\b", "name": "keyword.test"},
+    {
+      "begin": "//",
+      "end": "$",
+      "name": "comment.line.test"
+    }
+  ],
+  "injections": {
+    "source.test-negation -comment": {
+      "patterns": [
+        {"match": "\\b\\d+\\b", "name": "injected.number.test"}
+      ]
+    }
+  }
+}

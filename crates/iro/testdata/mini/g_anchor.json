@@ -1,0 +1,17 @@
+{
+  "scopeName": "source.test-ganchor",
+  "name": "test-ganchor",
+  "patterns": [
+    {
+      "name": "meta.list.test",
+      "begin": "^-\\s+",
+      "end": "$",
+      "beginCaptures": {"0": {"name": "punctuation.definition.list.test"}},
+      "patterns": [
+        {"match": "\\G\\w+", "name": "entity.name.first-word.test"},
+        {"match": "\\w+", "name": "variable.other.test"}
+      ]
+    },
+    {"match": "\\w+", "name": "variable.other.test"}
+  ]
+}

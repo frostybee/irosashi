@@ -1,0 +1,1696 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "python",
+  "grammarSourceHash": "sha256:987c10175247c6c9735628d2304e252561ce17cb6e91b08331e8d0a05bac0e26",
+  "source": "def fib(n):    # write Fibonacci series up to n\n    \"\"\"Print a Fibonacci series up to n.\"\"\"\n    a, b = 0, 1\n    while a < n:\n        print(a, end=' ')\n        a, b = b, a+b\n    print()\n\n# Now call the function we just defined:\nfib(2000)\n\n# From https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "def",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "storage.type.function.python"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.python",
+              "meta.function.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "fib",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "entity.name.function.python"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "(",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "meta.function.parameters.python",
+              "punctuation.definition.parameters.begin.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "n",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "meta.function.parameters.python",
+              "variable.parameter.function.language.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ")",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "meta.function.parameters.python",
+              "punctuation.definition.parameters.end.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ":",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "punctuation.section.function.begin.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "#",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python",
+              "punctuation.definition.comment.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 47,
+            "text": " write Fibonacci series up to n",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "\"\"\"",
+            "scopes": [
+              "source.python",
+              "string.quoted.docstring.multi.python",
+              "punctuation.definition.string.begin.python"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 40,
+            "text": "Print a Fibonacci series up to n.",
+            "scopes": [
+              "source.python",
+              "string.quoted.docstring.multi.python"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 43,
+            "text": "\"\"\"",
+            "scopes": [
+              "source.python",
+              "string.quoted.docstring.multi.python",
+              "punctuation.definition.string.end.python"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "a",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.element.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "b",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "=",
+            "scopes": [
+              "source.python",
+              "keyword.operator.assignment.python"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "0",
+            "scopes": [
+              "source.python",
+              "constant.numeric.dec.python"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.element.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "1",
+            "scopes": [
+              "source.python",
+              "constant.numeric.dec.python"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "while",
+            "scopes": [
+              "source.python",
+              "keyword.control.flow.python"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "a",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "<",
+            "scopes": [
+              "source.python",
+              "keyword.operator.comparison.python"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "n",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ":",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.colon.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "print",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "support.function.builtin.python"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.begin.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "a",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "punctuation.separator.arguments.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 20,
+            "text": "end",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "variable.parameter.function-call.python"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "=",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "keyword.operator.assignment.python"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "'",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "string.quoted.single.python",
+              "punctuation.definition.string.begin.python"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "string.quoted.single.python"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "'",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "string.quoted.single.python",
+              "punctuation.definition.string.end.python"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ")",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.end.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "a",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.element.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "b",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "=",
+            "scopes": [
+              "source.python",
+              "keyword.operator.assignment.python"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "b",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.element.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "a",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "+",
+            "scopes": [
+              "source.python",
+              "keyword.operator.arithmetic.python"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "b",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "print",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "support.function.builtin.python"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "(",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.begin.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ")",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.end.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python",
+              "punctuation.definition.comment.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 40,
+            "text": " Now call the function we just defined:",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "fib",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.generic.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "(",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.begin.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "2000",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "constant.numeric.dec.python"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ")",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.end.python"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python",
+              "punctuation.definition.comment.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 77,
+            "text": " From https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "def",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "storage.type.function.python"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.python",
+              "meta.function.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "fib",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "entity.name.function.python"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "(",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "meta.function.parameters.python",
+              "punctuation.definition.parameters.begin.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "n",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "meta.function.parameters.python",
+              "variable.parameter.function.language.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ")",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "meta.function.parameters.python",
+              "punctuation.definition.parameters.end.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ":",
+            "scopes": [
+              "source.python",
+              "meta.function.python",
+              "punctuation.section.function.begin.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "#",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python",
+              "punctuation.definition.comment.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 47,
+            "text": " write Fibonacci series up to n",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "\"\"\"",
+            "scopes": [
+              "source.python",
+              "string.quoted.docstring.multi.python",
+              "punctuation.definition.string.begin.python"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 40,
+            "text": "Print a Fibonacci series up to n.",
+            "scopes": [
+              "source.python",
+              "string.quoted.docstring.multi.python"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 43,
+            "text": "\"\"\"",
+            "scopes": [
+              "source.python",
+              "string.quoted.docstring.multi.python",
+              "punctuation.definition.string.end.python"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "a",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.element.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "b",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "=",
+            "scopes": [
+              "source.python",
+              "keyword.operator.assignment.python"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "0",
+            "scopes": [
+              "source.python",
+              "constant.numeric.dec.python"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.element.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "1",
+            "scopes": [
+              "source.python",
+              "constant.numeric.dec.python"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "while",
+            "scopes": [
+              "source.python",
+              "keyword.control.flow.python"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "a",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "<",
+            "scopes": [
+              "source.python",
+              "keyword.operator.comparison.python"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "n",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ":",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.colon.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "print",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "support.function.builtin.python"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.begin.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "a",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "punctuation.separator.arguments.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 20,
+            "text": "end",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "variable.parameter.function-call.python"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "=",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "keyword.operator.assignment.python"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "'",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "string.quoted.single.python",
+              "punctuation.definition.string.begin.python"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "string.quoted.single.python"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "'",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "string.quoted.single.python",
+              "punctuation.definition.string.end.python"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ")",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.end.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "a",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.element.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "b",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "=",
+            "scopes": [
+              "source.python",
+              "keyword.operator.assignment.python"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "b",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ",",
+            "scopes": [
+              "source.python",
+              "punctuation.separator.element.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "a",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "+",
+            "scopes": [
+              "source.python",
+              "keyword.operator.arithmetic.python"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "b",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "print",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "support.function.builtin.python"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "(",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.begin.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ")",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.end.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python",
+              "punctuation.definition.comment.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 40,
+            "text": " Now call the function we just defined:",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "fib",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.generic.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "(",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.begin.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "2000",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "meta.function-call.arguments.python",
+              "constant.numeric.dec.python"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ")",
+            "scopes": [
+              "source.python",
+              "meta.function-call.python",
+              "punctuation.definition.arguments.end.python"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python",
+              "punctuation.definition.comment.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 77,
+            "text": " From https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
+            "scopes": [
+              "source.python",
+              "comment.line.number-sign.python"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

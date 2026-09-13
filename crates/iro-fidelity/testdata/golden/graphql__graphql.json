@@ -1,0 +1,1288 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "graphql",
+  "grammarSourceHash": "sha256:f56631b49a3c65686e4f192c4c1e3ef23144b54a0cd9633e9ee025c5d7548044",
+  "source": "query($number_of_repos:Int!) {\n  viewer {\n    name\n     repositories(last: $number_of_repos) {\n       nodes {\n         name\n       }\n     }\n   }\n}\nvariables {\n   \"number_of_repos\": 3\n}\n\n# From https://docs.github.com/en/graphql/guides/forming-calls-with-graphql\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "query",
+            "scopes": [
+              "source.graphql",
+              "keyword.operation.graphql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "(",
+            "scopes": [
+              "source.graphql",
+              "meta.brace.round.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 22,
+            "text": "$number_of_repos",
+            "scopes": [
+              "source.graphql",
+              "meta.variables.graphql",
+              "variable.parameter.graphql"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ":",
+            "scopes": [
+              "source.graphql",
+              "meta.variables.graphql",
+              "punctuation.colon.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 26,
+            "text": "Int",
+            "scopes": [
+              "source.graphql",
+              "meta.variables.graphql",
+              "support.type.builtin.graphql"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "!",
+            "scopes": [
+              "source.graphql",
+              "meta.variables.graphql",
+              "keyword.operator.nulltype.graphql"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ")",
+            "scopes": [
+              "source.graphql",
+              "meta.brace.round.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "viewer",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "name",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "     ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 17,
+            "text": "repositories",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "(",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "meta.brace.round.directive.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "last",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "variable.parameter.graphql"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ":",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "punctuation.colon.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 40,
+            "text": "$number_of_repos",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "variable.graphql"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": ")",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "meta.brace.round.directive.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "       ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 12,
+            "text": "nodes",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "         ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "name",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "       ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "     ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "variables",
+            "scopes": [
+              "source.graphql",
+              "entity.name.function.graphql"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "\"",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "comment.line.graphql.js",
+              "punctuation.whitespace.comment.leading.graphql"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 19,
+            "text": "number_of_repos",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "comment.line.graphql.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "\"",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "comment.line.graphql.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 23,
+            "text": ": 3",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 75,
+            "text": "# From https://docs.github.com/en/graphql/guides/forming-calls-with-graphql",
+            "scopes": [
+              "source.graphql",
+              "comment.line.graphql.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "query",
+            "scopes": [
+              "source.graphql",
+              "keyword.operation.graphql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "(",
+            "scopes": [
+              "source.graphql",
+              "meta.brace.round.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 22,
+            "text": "$number_of_repos",
+            "scopes": [
+              "source.graphql",
+              "meta.variables.graphql",
+              "variable.parameter.graphql"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ":",
+            "scopes": [
+              "source.graphql",
+              "meta.variables.graphql",
+              "punctuation.colon.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 26,
+            "text": "Int",
+            "scopes": [
+              "source.graphql",
+              "meta.variables.graphql",
+              "support.type.builtin.graphql"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "!",
+            "scopes": [
+              "source.graphql",
+              "meta.variables.graphql",
+              "keyword.operator.nulltype.graphql"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ")",
+            "scopes": [
+              "source.graphql",
+              "meta.brace.round.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "viewer",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "name",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "     ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 17,
+            "text": "repositories",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "(",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "meta.brace.round.directive.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "last",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "variable.parameter.graphql"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ":",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "punctuation.colon.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 40,
+            "text": "$number_of_repos",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "variable.graphql"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": ")",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.arguments.graphql",
+              "meta.brace.round.directive.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "       ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 12,
+            "text": "nodes",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "         ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "name",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "variable.graphql"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 7,
+            "text": "       ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "     ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "variables",
+            "scopes": [
+              "source.graphql",
+              "entity.name.function.graphql"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "{",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "\"",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "comment.line.graphql.js",
+              "punctuation.whitespace.comment.leading.graphql"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 19,
+            "text": "number_of_repos",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "comment.line.graphql.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "\"",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "comment.line.graphql.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 23,
+            "text": ": 3",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.graphql",
+              "meta.selectionset.graphql",
+              "punctuation.operation.graphql"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 75,
+            "text": "# From https://docs.github.com/en/graphql/guides/forming-calls-with-graphql",
+            "scopes": [
+              "source.graphql",
+              "comment.line.graphql.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

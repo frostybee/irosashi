@@ -1,0 +1,13 @@
+{
+  "scopeName": "source.test-priority-right",
+  "patterns": [
+    {"match": "\\b[a-z]+\\b", "name": "word.test"}
+  ],
+  "injections": {
+    "R:source.test-priority-right": {
+      "patterns": [
+        {"match": "\\b[a-z]+\\b", "name": "injected.word.test"}
+      ]
+    }
+  }
+}

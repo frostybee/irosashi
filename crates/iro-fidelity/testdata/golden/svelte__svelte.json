@@ -1,0 +1,6014 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "svelte",
+  "grammarSourceHash": "sha256:f7a36cc472a387564ce78f8275d47bcb72c707f0143b8b11be21a5734291b8d6",
+  "source": "<script>\n\tlet files;\n\n\t$: if (files) {\n\t\t// Note that `files` is of type `FileList`, not an Array:\n\t\t// https://developer.mozilla.org/en-US/docs/Web/API/FileList\n\t\tconsole.log(files);\n\n\t\tfor (const file of files) {\n\t\t\tconsole.log(`${file.name}: ${file.size} bytes`);\n\t\t}\n\t}\n</script>\n\n<label for=\"avatar\">Upload a picture:</label>\n<input accept=\"image/png, image/jpeg\" bind:files id=\"avatar\" name=\"avatar\" type=\"file\" />\n\n<label for=\"many\">Upload multiple files of any type:</label>\n<input bind:files id=\"many\" multiple type=\"file\" />\n\n{#if files}\n\t<h2>Selected files:</h2>\n\t{#each Array.from(files) as file}\n\t\t<p>{file.name} ({file.size} bytes)</p>\n\t{/each}\n{/if}\n\n// From https://svelte.dev/examples/file-inputs\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "script",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 4,
+            "text": "let",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.var.expr.js",
+              "storage.type.js"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.var.expr.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 10,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.var.expr.js",
+              "meta.var-single-variable.expr.js",
+              "meta.definition.variable.js",
+              "variable.other.readwrite.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ";",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "punctuation.terminator.statement.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "$",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "entity.name.label.js"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": ":",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "punctuation.separator.label.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "if",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "keyword.control.conditional.js"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "variable.other.readwrite.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.definition.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.whitespace.comment.leading.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "//",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "comment.line.double-slash.js",
+              "punctuation.definition.comment.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 59,
+            "text": " Note that `files` is of type `FileList`, not an Array:",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "comment.line.double-slash.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.whitespace.comment.leading.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "//",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "comment.line.double-slash.js",
+              "punctuation.definition.comment.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 62,
+            "text": " https://developer.mozilla.org/en-US/docs/Web/API/FileList",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "comment.line.double-slash.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "console",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "variable.other.object.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "punctuation.accessor.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 13,
+            "text": "log",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "entity.name.function.js"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 19,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "variable.other.readwrite.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.terminator.statement.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "for",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "keyword.control.loop.js"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 12,
+            "text": "const",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.var.expr.js",
+              "storage.type.js"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.var.expr.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 17,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.var.expr.js",
+              "meta.var-single-variable.expr.js",
+              "meta.definition.variable.js",
+              "variable.other.constant.js"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.var.expr.js",
+              "meta.var-single-variable.expr.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 20,
+            "text": "of",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "keyword.operator.expression.of.js"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 26,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "variable.other.readwrite.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "punctuation.definition.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "\t\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 10,
+            "text": "console",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "variable.other.object.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "punctuation.accessor.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 14,
+            "text": "log",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "entity.name.function.js"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "`",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "punctuation.definition.string.template.begin.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 18,
+            "text": "${",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "punctuation.definition.template-expression.begin.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "variable.other.object.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "punctuation.accessor.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 27,
+            "text": "name",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "variable.other.property.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "punctuation.definition.template-expression.end.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 30,
+            "text": ": ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 32,
+            "text": "${",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "punctuation.definition.template-expression.begin.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 36,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "variable.other.object.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "punctuation.accessor.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 41,
+            "text": "size",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "variable.other.property.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "punctuation.definition.template-expression.end.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 48,
+            "text": " bytes",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": "`",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "punctuation.definition.string.template.end.js"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 50,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 50,
+            "end": 51,
+            "text": ";",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "punctuation.terminator.statement.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "punctuation.definition.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.definition.block.js"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "script",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "label",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 10,
+            "text": "for",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 18,
+            "text": "avatar",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 37,
+            "text": "Upload a picture:",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 39,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 44,
+            "text": "label",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 45,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "input",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 13,
+            "text": "accept",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 36,
+            "text": "image/png, image/jpeg",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 42,
+            "text": "bind",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "keyword.control.svelte"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": ":",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 48,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "variable.parameter.svelte"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 51,
+            "text": "id",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 59,
+            "text": "avatar",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 59,
+            "end": 60,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 60,
+            "end": 61,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 61,
+            "end": 65,
+            "text": "name",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 65,
+            "end": 66,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 66,
+            "end": 67,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 67,
+            "end": 73,
+            "text": "avatar",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 73,
+            "end": 74,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 74,
+            "end": 75,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 75,
+            "end": 79,
+            "text": "type",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 79,
+            "end": 80,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 80,
+            "end": 81,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 81,
+            "end": 85,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 85,
+            "end": 86,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 86,
+            "end": 87,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 87,
+            "end": 89,
+            "text": "/>",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "label",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 10,
+            "text": "for",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 16,
+            "text": "many",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 52,
+            "text": "Upload multiple files of any type:",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 54,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 54,
+            "end": 59,
+            "text": "label",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 59,
+            "end": 60,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "input",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 11,
+            "text": "bind",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "keyword.control.svelte"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 17,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "variable.parameter.svelte"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 20,
+            "text": "id",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 26,
+            "text": "many",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 36,
+            "text": "multiple",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.multiple.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 41,
+            "text": "type",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 47,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 48,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 51,
+            "text": "/>",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.block.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "#",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "if",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "keyword.control.conditional.svelte"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 10,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.readwrite.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.block.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "h2",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 20,
+            "text": "Selected files:",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 24,
+            "text": "h2",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.block.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "#",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 7,
+            "text": "each",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "keyword.control.svelte"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "Array",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.function-call.ts",
+              "variable.other.object.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.function-call.ts",
+              "punctuation.accessor.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 18,
+            "text": "from",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.function-call.ts",
+              "entity.name.function.ts"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.brace.round.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 24,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.readwrite.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.brace.round.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 28,
+            "text": "as",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "keyword.control.as.svelte"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 33,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.readwrite.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.block.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "p",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "punctuation.section.embedded.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.object.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "punctuation.accessor.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "name",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.property.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "punctuation.section.embedded.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 18,
+            "text": " (",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "punctuation.section.embedded.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 23,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.object.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "punctuation.accessor.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 28,
+            "text": "size",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.property.ts"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "punctuation.section.embedded.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 36,
+            "text": " bytes)",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 38,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "p",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.block.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "/",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 7,
+            "text": "each",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.end.svelte",
+              "keyword.control.svelte"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.block.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.block.begin.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "/",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "if",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.end.svelte",
+              "keyword.control.conditional.svelte"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.block.end.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 47,
+            "text": "// From https://svelte.dev/examples/file-inputs",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "script",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 4,
+            "text": "let",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.var.expr.js",
+              "storage.type.js"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.var.expr.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 10,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.var.expr.js",
+              "meta.var-single-variable.expr.js",
+              "meta.definition.variable.js",
+              "variable.other.readwrite.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ";",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "punctuation.terminator.statement.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "$",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "entity.name.label.js"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": ":",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "punctuation.separator.label.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "if",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "keyword.control.conditional.js"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "variable.other.readwrite.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.definition.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.whitespace.comment.leading.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "//",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "comment.line.double-slash.js",
+              "punctuation.definition.comment.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 59,
+            "text": " Note that `files` is of type `FileList`, not an Array:",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "comment.line.double-slash.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.whitespace.comment.leading.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "//",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "comment.line.double-slash.js",
+              "punctuation.definition.comment.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 62,
+            "text": " https://developer.mozilla.org/en-US/docs/Web/API/FileList",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "comment.line.double-slash.js"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "console",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "variable.other.object.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "punctuation.accessor.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 13,
+            "text": "log",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "entity.name.function.js"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 19,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "variable.other.readwrite.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.terminator.statement.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "for",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "keyword.control.loop.js"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 12,
+            "text": "const",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.var.expr.js",
+              "storage.type.js"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.var.expr.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 17,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.var.expr.js",
+              "meta.var-single-variable.expr.js",
+              "meta.definition.variable.js",
+              "variable.other.constant.js"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.var.expr.js",
+              "meta.var-single-variable.expr.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 20,
+            "text": "of",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "keyword.operator.expression.of.js"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 26,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "variable.other.readwrite.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "punctuation.definition.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "\t\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 10,
+            "text": "console",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "variable.other.object.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "punctuation.accessor.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 14,
+            "text": "log",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.function-call.js",
+              "entity.name.function.js"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "`",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "punctuation.definition.string.template.begin.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 18,
+            "text": "${",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "punctuation.definition.template-expression.begin.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "variable.other.object.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "punctuation.accessor.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 27,
+            "text": "name",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "variable.other.property.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "punctuation.definition.template-expression.end.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 30,
+            "text": ": ",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 32,
+            "text": "${",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "punctuation.definition.template-expression.begin.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 36,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "variable.other.object.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "punctuation.accessor.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 41,
+            "text": "size",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "meta.embedded.line.js",
+              "variable.other.property.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "meta.template.expression.js",
+              "punctuation.definition.template-expression.end.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 48,
+            "text": " bytes",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": "`",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "string.template.js",
+              "punctuation.definition.string.template.end.js"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 50,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "meta.brace.round.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 50,
+            "end": 51,
+            "text": ";",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "punctuation.terminator.statement.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "meta.block.js",
+              "punctuation.definition.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.embedded.block.svelte",
+              "source.js",
+              "meta.block.js",
+              "punctuation.definition.block.js"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "script",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.script.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "label",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 10,
+            "text": "for",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 18,
+            "text": "avatar",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 37,
+            "text": "Upload a picture:",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 39,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 44,
+            "text": "label",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 45,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "input",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 13,
+            "text": "accept",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 36,
+            "text": "image/png, image/jpeg",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.accept.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 42,
+            "text": "bind",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "keyword.control.svelte"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": ":",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 48,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "variable.parameter.svelte"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 51,
+            "text": "id",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 59,
+            "text": "avatar",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 59,
+            "end": 60,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 60,
+            "end": 61,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 61,
+            "end": 65,
+            "text": "name",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 65,
+            "end": 66,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 66,
+            "end": 67,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 67,
+            "end": 73,
+            "text": "avatar",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 73,
+            "end": 74,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.name.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 74,
+            "end": 75,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 75,
+            "end": 79,
+            "text": "type",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 79,
+            "end": 80,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 80,
+            "end": 81,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 81,
+            "end": 85,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 85,
+            "end": 86,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 86,
+            "end": 87,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 87,
+            "end": 89,
+            "text": "/>",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "label",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 10,
+            "text": "for",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 16,
+            "text": "many",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "meta.attribute.for.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 52,
+            "text": "Upload multiple files of any type:",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 54,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 54,
+            "end": 59,
+            "text": "label",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 59,
+            "end": 60,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.label.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "input",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 11,
+            "text": "bind",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "keyword.control.svelte"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 17,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.directive.bind.svelte",
+              "variable.parameter.svelte"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 20,
+            "text": "id",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 26,
+            "text": "many",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.id.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 36,
+            "text": "multiple",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.multiple.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 41,
+            "text": "type",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "entity.other.attribute-name.svelte"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "=",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "punctuation.separator.key-value.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.begin.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 47,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 48,
+            "text": "\"",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "meta.attribute.type.svelte",
+              "string.quoted.svelte",
+              "punctuation.definition.string.end.svelte"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 51,
+            "text": "/>",
+            "scopes": [
+              "source.svelte",
+              "meta.tag.void.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.block.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "#",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "if",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "keyword.control.conditional.svelte"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 10,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.readwrite.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.block.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "h2",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 20,
+            "text": "Selected files:",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 24,
+            "text": "h2",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.h2.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.block.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "#",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 7,
+            "text": "each",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "keyword.control.svelte"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "Array",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.function-call.ts",
+              "variable.other.object.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.function-call.ts",
+              "punctuation.accessor.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 18,
+            "text": "from",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.function-call.ts",
+              "entity.name.function.ts"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "(",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.brace.round.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 24,
+            "text": "files",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.readwrite.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ")",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "meta.brace.round.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 28,
+            "text": "as",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "keyword.control.as.svelte"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 33,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.readwrite.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.start.svelte",
+              "punctuation.definition.block.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "\t\t",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "<",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": "p",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.start.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.start.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "punctuation.section.embedded.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.object.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "punctuation.accessor.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "name",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.property.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "punctuation.section.embedded.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 18,
+            "text": " (",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "punctuation.section.embedded.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 23,
+            "text": "file",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.object.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ".",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "punctuation.accessor.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 28,
+            "text": "size",
+            "scopes": [
+              "source.svelte",
+              "meta.embedded.expression.svelte",
+              "source.ts",
+              "variable.other.property.ts"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "punctuation.section.embedded.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 36,
+            "text": " bytes)",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 38,
+            "text": "</",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "p",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.end.svelte",
+              "entity.name.tag.svelte"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": ">",
+            "scopes": [
+              "source.svelte",
+              "meta.scope.tag.p.svelte",
+              "meta.tag.end.svelte",
+              "punctuation.definition.tag.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.block.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "/",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 7,
+            "text": "each",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.end.svelte",
+              "keyword.control.svelte"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.special.each.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.block.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "{",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.block.begin.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "/",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.keyword.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "if",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.end.svelte",
+              "keyword.control.conditional.svelte"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.svelte",
+              "meta.special.if.svelte",
+              "meta.special.end.svelte",
+              "punctuation.definition.block.end.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 47,
+            "text": "// From https://svelte.dev/examples/file-inputs",
+            "scopes": [
+              "source.svelte",
+              "text.svelte"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

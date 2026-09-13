@@ -1,0 +1,4530 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "css",
+  "grammarSourceHash": "sha256:fd318afdeec68015d6ef573579334e21fe8079da75692a4775e35eb653829a4e",
+  "source": "html {\n\tmargin: 0;\n\tbackground: black;\n\theight: 100%;\n}\n\nbody {\n\tmargin: 0;\n\twidth: 100%;\n\theight: inherit;\n}\n\n/* the three main rows going down the page */\n\nbody > div {\n  height: 25%;\n}\n\n.thumb {\n\tfloat: left;\n\twidth: 25%;\n\theight: 100%;\n\tobject-fit: cover;\n}\n\n.main {\n  display: none;\n}\n\n.blowup {\n  display: block;\n  position: absolute;\n  object-fit: contain;\n  object-position: center;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 2000;\n}\n\n.darken {\n  opacity: 0.4;\n}\n\n/* From https://github.com/mdn/css-examples/blob/main/object-fit-gallery/style.css */\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "html",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.name.tag.css"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "margin",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "0",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 11,
+            "text": "background",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 18,
+            "text": "black",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.color.w3c-standard-color-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 12,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "body",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.name.tag.css"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "margin",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "0",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "width",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 11,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 16,
+            "text": "inherit",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "/*",
+            "scopes": [
+              "source.css",
+              "comment.block.css",
+              "punctuation.definition.comment.begin.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 43,
+            "text": " the three main rows going down the page ",
+            "scopes": [
+              "source.css",
+              "comment.block.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 45,
+            "text": "*/",
+            "scopes": [
+              "source.css",
+              "comment.block.css",
+              "punctuation.definition.comment.end.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "body",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.name.tag.css"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.selector.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": ">",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "keyword.operator.combinator.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.selector.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 10,
+            "text": "div",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.name.tag.css"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 12,
+            "text": "25",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ".",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css",
+              "punctuation.definition.entity.css"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "thumb",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "float",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "left",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "width",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "25",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 12,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 11,
+            "text": "object-fit",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 18,
+            "text": "cover",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ".",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css",
+              "punctuation.definition.entity.css"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 5,
+            "text": "main",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "display",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "none",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ".",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css",
+              "punctuation.definition.entity.css"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "blowup",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "display",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 16,
+            "text": "block",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 10,
+            "text": "position",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 20,
+            "text": "absolute",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 12,
+            "text": "object-fit",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 21,
+            "text": "contain",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 17,
+            "text": "object-position",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 25,
+            "text": "center",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "top",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "0",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 6,
+            "text": "left",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "0",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 7,
+            "text": "width",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 12,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 13,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "z-index",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "2000",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ".",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css",
+              "punctuation.definition.entity.css"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "darken",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "opacity",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 14,
+            "text": "0.4",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "/*",
+            "scopes": [
+              "source.css",
+              "comment.block.css",
+              "punctuation.definition.comment.begin.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 83,
+            "text": " From https://github.com/mdn/css-examples/blob/main/object-fit-gallery/style.css ",
+            "scopes": [
+              "source.css",
+              "comment.block.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 83,
+            "end": 85,
+            "text": "*/",
+            "scopes": [
+              "source.css",
+              "comment.block.css",
+              "punctuation.definition.comment.end.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "html",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.name.tag.css"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "margin",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "0",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 11,
+            "text": "background",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 18,
+            "text": "black",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.color.w3c-standard-color-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 12,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "body",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.name.tag.css"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "margin",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "0",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "width",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 11,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 16,
+            "text": "inherit",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "/*",
+            "scopes": [
+              "source.css",
+              "comment.block.css",
+              "punctuation.definition.comment.begin.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 43,
+            "text": " the three main rows going down the page ",
+            "scopes": [
+              "source.css",
+              "comment.block.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 45,
+            "text": "*/",
+            "scopes": [
+              "source.css",
+              "comment.block.css",
+              "punctuation.definition.comment.end.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "body",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.name.tag.css"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.selector.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": ">",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "keyword.operator.combinator.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.selector.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 10,
+            "text": "div",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.name.tag.css"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 12,
+            "text": "25",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ".",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css",
+              "punctuation.definition.entity.css"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "thumb",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "float",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 12,
+            "text": "left",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 6,
+            "text": "width",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "25",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 12,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "\t",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 11,
+            "text": "object-fit",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 18,
+            "text": "cover",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ".",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css",
+              "punctuation.definition.entity.css"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 5,
+            "text": "main",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "display",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "none",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ".",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css",
+              "punctuation.definition.entity.css"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "blowup",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "display",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 16,
+            "text": "block",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 10,
+            "text": "position",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 20,
+            "text": "absolute",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 12,
+            "text": "object-fit",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 21,
+            "text": "contain",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 17,
+            "text": "object-position",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 25,
+            "text": "center",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "top",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "0",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 6,
+            "text": "left",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "0",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 7,
+            "text": "width",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 12,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "height",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 13,
+            "text": "100",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "%",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css",
+              "keyword.other.unit.percentage.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "z-index",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 15,
+            "text": "2000",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ".",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css",
+              "punctuation.definition.entity.css"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 7,
+            "text": "darken",
+            "scopes": [
+              "source.css",
+              "meta.selector.css",
+              "entity.other.attribute-name.class.css"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "{",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.begin.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 9,
+            "text": "opacity",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-name.css",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.separator.key-value.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 14,
+            "text": "0.4",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "meta.property-value.css",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ";",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.terminator.rule.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css",
+              "meta.property-list.css",
+              "punctuation.section.property-list.end.bracket.curly.css"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "/*",
+            "scopes": [
+              "source.css",
+              "comment.block.css",
+              "punctuation.definition.comment.begin.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 83,
+            "text": " From https://github.com/mdn/css-examples/blob/main/object-fit-gallery/style.css ",
+            "scopes": [
+              "source.css",
+              "comment.block.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 83,
+            "end": 85,
+            "text": "*/",
+            "scopes": [
+              "source.css",
+              "comment.block.css",
+              "punctuation.definition.comment.end.css"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

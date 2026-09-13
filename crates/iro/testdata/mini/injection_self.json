@@ -1,0 +1,13 @@
+{
+  "scopeName": "source.test-injection",
+  "patterns": [
+    {"match": "\\b(if|else)\\b", "name": "keyword.test"}
+  ],
+  "injections": {
+    "source.test-injection": {
+      "patterns": [
+        {"match": "#[^\n]*", "name": "comment.line.test"}
+      ]
+    }
+  }
+}

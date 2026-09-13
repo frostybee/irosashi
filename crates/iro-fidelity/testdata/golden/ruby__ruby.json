@@ -1,0 +1,2728 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "ruby",
+  "grammarSourceHash": "sha256:b7d3f3580903b556e78cad7f432b1dcb87b4c3ca97efc8a3b7cdf2bd2fcf4193",
+  "source": "class LotteryTicket\n\n  NUMERIC_RANGE = 1..25\n\n  attr_reader :picks, :purchased\n\n  def initialize( *picks )\n    if picks.length != 3\n      raise ArgumentError, \"three numbers must be picked\"\n    elsif picks.uniq.length != 0x3\n      raise ArgumentError, \"the three picks must be different numbers\"\n    elsif picks.detect { |p| not NUMERIC_RANGE === p }\n      raise ArgumentError, \"the three picks must be numbers between 1 and 25\"\n    end\n    @picks = picks\n    @purchased = Time.now\n  end\n\nend\n\n# From https://poignant.guide/book/chapter-5.html\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "class",
+            "scopes": [
+              "source.ruby",
+              "meta.class.ruby",
+              "keyword.control.class.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.class.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 19,
+            "text": "LotteryTicket",
+            "scopes": [
+              "source.ruby",
+              "meta.class.ruby",
+              "entity.name.type.class.ruby"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 15,
+            "text": "NUMERIC_RANGE",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.assignment.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "1",
+            "scopes": [
+              "source.ruby",
+              "constant.numeric.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 23,
+            "text": "25",
+            "scopes": [
+              "source.ruby",
+              "constant.numeric.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 13,
+            "text": "attr_reader",
+            "scopes": [
+              "source.ruby",
+              "keyword.other.special-method.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ":",
+            "scopes": [
+              "source.ruby",
+              "constant.language.symbol.ruby",
+              "punctuation.definition.constant.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 20,
+            "text": "picks",
+            "scopes": [
+              "source.ruby",
+              "constant.language.symbol.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ",",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.object.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ":",
+            "scopes": [
+              "source.ruby",
+              "constant.language.symbol.ruby",
+              "punctuation.definition.constant.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 32,
+            "text": "purchased",
+            "scopes": [
+              "source.ruby",
+              "constant.language.symbol.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "def",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "keyword.control.def.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 16,
+            "text": "initialize",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "punctuation.definition.parameters.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "*",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "storage.type.variable.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 24,
+            "text": "picks",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "variable.parameter.function.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ")",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "punctuation.definition.parameters.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "if",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 12,
+            "text": " picks",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 19,
+            "text": "length",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "!=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.comparison.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "3",
+            "scopes": [
+              "source.ruby",
+              "constant.numeric.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 11,
+            "text": "raise",
+            "scopes": [
+              "source.ruby",
+              "keyword.other.special-method.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 25,
+            "text": "ArgumentError",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ",",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.object.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.begin.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 56,
+            "text": "three numbers must be picked",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 56,
+            "end": 57,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.end.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "elsif",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 15,
+            "text": " picks",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 20,
+            "text": "uniq",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 27,
+            "text": "length",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 30,
+            "text": "!=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.comparison.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 34,
+            "text": "0x3",
+            "scopes": [
+              "source.ruby",
+              "constant.numeric.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 11,
+            "text": "raise",
+            "scopes": [
+              "source.ruby",
+              "keyword.other.special-method.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 25,
+            "text": "ArgumentError",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ",",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.object.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.begin.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 69,
+            "text": "the three picks must be different numbers",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 69,
+            "end": 70,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.end.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "elsif",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 15,
+            "text": " picks",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 22,
+            "text": "detect",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "{",
+            "scopes": [
+              "source.ruby",
+              "punctuation.section.scope.begin.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.syntax.ruby.start-block"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "|",
+            "scopes": [
+              "source.ruby",
+              "meta.block.parameters.ruby",
+              "punctuation.separator.variable.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "p",
+            "scopes": [
+              "source.ruby",
+              "meta.block.parameters.ruby",
+              "variable.other.block.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "|",
+            "scopes": [
+              "source.ruby",
+              "meta.block.parameters.ruby",
+              "punctuation.separator.variable.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 32,
+            "text": "not",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.logical.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 46,
+            "text": "NUMERIC_RANGE",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 50,
+            "text": "===",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.comparison.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 50,
+            "end": 51,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": "p",
+            "scopes": [
+              "source.ruby",
+              "support.function.kernel.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 54,
+            "text": "}",
+            "scopes": [
+              "source.ruby",
+              "punctuation.section.scope.end.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 11,
+            "text": "raise",
+            "scopes": [
+              "source.ruby",
+              "keyword.other.special-method.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 25,
+            "text": "ArgumentError",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ",",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.object.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.begin.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 76,
+            "text": "the three picks must be numbers between 1 and 25",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 76,
+            "end": 77,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.end.ruby"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "end",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "@",
+            "scopes": [
+              "source.ruby",
+              "variable.other.readwrite.instance.ruby",
+              "punctuation.definition.variable.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 10,
+            "text": "picks",
+            "scopes": [
+              "source.ruby",
+              "variable.other.readwrite.instance.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.assignment.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 18,
+            "text": " picks",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "@",
+            "scopes": [
+              "source.ruby",
+              "variable.other.readwrite.instance.ruby",
+              "punctuation.definition.variable.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 14,
+            "text": "purchased",
+            "scopes": [
+              "source.ruby",
+              "variable.other.readwrite.instance.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.assignment.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 21,
+            "text": "Time",
+            "scopes": [
+              "source.ruby",
+              "support.class.ruby"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 25,
+            "text": "now",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "end",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "end",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.ruby",
+              "comment.line.number-sign.ruby",
+              "punctuation.definition.comment.ruby"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 49,
+            "text": " From https://poignant.guide/book/chapter-5.html",
+            "scopes": [
+              "source.ruby",
+              "comment.line.number-sign.ruby"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "class",
+            "scopes": [
+              "source.ruby",
+              "meta.class.ruby",
+              "keyword.control.class.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.class.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 19,
+            "text": "LotteryTicket",
+            "scopes": [
+              "source.ruby",
+              "meta.class.ruby",
+              "entity.name.type.class.ruby"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 15,
+            "text": "NUMERIC_RANGE",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.assignment.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "1",
+            "scopes": [
+              "source.ruby",
+              "constant.numeric.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 23,
+            "text": "25",
+            "scopes": [
+              "source.ruby",
+              "constant.numeric.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 13,
+            "text": "attr_reader",
+            "scopes": [
+              "source.ruby",
+              "keyword.other.special-method.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ":",
+            "scopes": [
+              "source.ruby",
+              "constant.language.symbol.ruby",
+              "punctuation.definition.constant.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 20,
+            "text": "picks",
+            "scopes": [
+              "source.ruby",
+              "constant.language.symbol.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ",",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.object.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ":",
+            "scopes": [
+              "source.ruby",
+              "constant.language.symbol.ruby",
+              "punctuation.definition.constant.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 32,
+            "text": "purchased",
+            "scopes": [
+              "source.ruby",
+              "constant.language.symbol.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "def",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "keyword.control.def.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 16,
+            "text": "initialize",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "punctuation.definition.parameters.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "*",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "storage.type.variable.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 24,
+            "text": "picks",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "variable.parameter.function.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ")",
+            "scopes": [
+              "source.ruby",
+              "meta.function.method.with-arguments.ruby",
+              "punctuation.definition.parameters.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "if",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 12,
+            "text": " picks",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 19,
+            "text": "length",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "!=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.comparison.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "3",
+            "scopes": [
+              "source.ruby",
+              "constant.numeric.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 11,
+            "text": "raise",
+            "scopes": [
+              "source.ruby",
+              "keyword.other.special-method.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 25,
+            "text": "ArgumentError",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ",",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.object.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.begin.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 56,
+            "text": "three numbers must be picked",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 56,
+            "end": 57,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.end.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "elsif",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 15,
+            "text": " picks",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 20,
+            "text": "uniq",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 27,
+            "text": "length",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 30,
+            "text": "!=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.comparison.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 34,
+            "text": "0x3",
+            "scopes": [
+              "source.ruby",
+              "constant.numeric.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 11,
+            "text": "raise",
+            "scopes": [
+              "source.ruby",
+              "keyword.other.special-method.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 25,
+            "text": "ArgumentError",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ",",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.object.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.begin.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 69,
+            "text": "the three picks must be different numbers",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 69,
+            "end": 70,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.end.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "elsif",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 15,
+            "text": " picks",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 22,
+            "text": "detect",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "{",
+            "scopes": [
+              "source.ruby",
+              "punctuation.section.scope.begin.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.ruby",
+              "meta.syntax.ruby.start-block"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "|",
+            "scopes": [
+              "source.ruby",
+              "meta.block.parameters.ruby",
+              "punctuation.separator.variable.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "p",
+            "scopes": [
+              "source.ruby",
+              "meta.block.parameters.ruby",
+              "variable.other.block.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "|",
+            "scopes": [
+              "source.ruby",
+              "meta.block.parameters.ruby",
+              "punctuation.separator.variable.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 32,
+            "text": "not",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.logical.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 46,
+            "text": "NUMERIC_RANGE",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 50,
+            "text": "===",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.comparison.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 50,
+            "end": 51,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": "p",
+            "scopes": [
+              "source.ruby",
+              "support.function.kernel.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 54,
+            "text": "}",
+            "scopes": [
+              "source.ruby",
+              "punctuation.section.scope.end.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 11,
+            "text": "raise",
+            "scopes": [
+              "source.ruby",
+              "keyword.other.special-method.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 25,
+            "text": "ArgumentError",
+            "scopes": [
+              "source.ruby",
+              "variable.other.constant.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ",",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.object.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.begin.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 76,
+            "text": "the three picks must be numbers between 1 and 25",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 76,
+            "end": 77,
+            "text": "\"",
+            "scopes": [
+              "source.ruby",
+              "string.quoted.double.interpolated.ruby",
+              "punctuation.definition.string.end.ruby"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "end",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "@",
+            "scopes": [
+              "source.ruby",
+              "variable.other.readwrite.instance.ruby",
+              "punctuation.definition.variable.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 10,
+            "text": "picks",
+            "scopes": [
+              "source.ruby",
+              "variable.other.readwrite.instance.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.assignment.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 18,
+            "text": " picks",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "@",
+            "scopes": [
+              "source.ruby",
+              "variable.other.readwrite.instance.ruby",
+              "punctuation.definition.variable.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 14,
+            "text": "purchased",
+            "scopes": [
+              "source.ruby",
+              "variable.other.readwrite.instance.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "=",
+            "scopes": [
+              "source.ruby",
+              "keyword.operator.assignment.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 21,
+            "text": "Time",
+            "scopes": [
+              "source.ruby",
+              "support.class.ruby"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ".",
+            "scopes": [
+              "source.ruby",
+              "punctuation.separator.method.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 25,
+            "text": "now",
+            "scopes": [
+              "source.ruby",
+              "meta.function-call.ruby",
+              "entity.name.function.ruby"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.ruby"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "end",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "end",
+            "scopes": [
+              "source.ruby",
+              "keyword.control.ruby"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.ruby",
+              "comment.line.number-sign.ruby",
+              "punctuation.definition.comment.ruby"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 49,
+            "text": " From https://poignant.guide/book/chapter-5.html",
+            "scopes": [
+              "source.ruby",
+              "comment.line.number-sign.ruby"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

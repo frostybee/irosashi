@@ -1,0 +1,10 @@
+[package]
+name = "iro-fidelity"
+version = "0.1.0"
+description = "Fixture loader, comparator and scoring for iro against vscode-textmate goldens"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]

@@ -1,0 +1,3610 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "tsx",
+  "grammarSourceHash": "sha256:555694135f36e3b2d8d2900b929defbd75a6e68938b182274ffaf4db268b94ed",
+  "source": "// posts will be populated at build time by getStaticProps()\nfunction Blog({ posts }) {\n  return (\n    <ul>\n      {posts.map((post) => (\n        <li>{post.title}</li>\n      ))}\n    </ul>\n  )\n}\n\n// This function gets called at build time on server-side.\nexport async function getStaticProps() {\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  return {\n    props: {\n      posts\n    }\n  }\n}\n\nexport default Blog\n\n// From https://nextjs.org/docs/basic-features/data-fetching\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx",
+              "punctuation.definition.comment.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 60,
+            "text": " posts will be populated at build time by getStaticProps()",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "function",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "storage.type.function.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Blog",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.definition.function.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx",
+              "punctuation.definition.binding-pattern.object.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 21,
+            "text": "posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx",
+              "variable.parameter.tsx"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx",
+              "punctuation.definition.binding-pattern.object.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "return",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "keyword.control.flow.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "<",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "ul",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "entity.name.tag.tsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ">",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "punctuation.section.embedded.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 12,
+            "text": "posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.function-call.tsx",
+              "variable.other.object.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ".",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.function-call.tsx",
+              "punctuation.accessor.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 16,
+            "text": "map",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.function-call.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "post",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.parameters.tsx",
+              "variable.parameter.tsx"
+            ],
+            "color": "#FFAB70",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 26,
+            "text": "=>",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "storage.type.function.arrow.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "<",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 11,
+            "text": "li",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "entity.name.tag.tsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ">",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "punctuation.section.embedded.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 17,
+            "text": "post",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "variable.other.object.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ".",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "punctuation.accessor.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 23,
+            "text": "title",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "variable.other.property.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "punctuation.section.embedded.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 26,
+            "text": "</",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 28,
+            "text": "li",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "entity.name.tag.tsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": ">",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "punctuation.section.embedded.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "</",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 8,
+            "text": "ul",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "entity.name.tag.tsx"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ">",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx",
+              "punctuation.definition.comment.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 58,
+            "text": " This function gets called at build time on server-side.",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "export",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "keyword.control.export.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 12,
+            "text": "async",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "storage.modifier.async.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 21,
+            "text": "function",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "storage.type.function.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 36,
+            "text": "getStaticProps",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.definition.function.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.begin.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.end.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 7,
+            "text": "const",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "storage.type.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 11,
+            "text": "res",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.var-single-variable.expr.tsx",
+              "meta.definition.variable.tsx",
+              "variable.other.constant.tsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.var-single-variable.expr.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "=",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "keyword.operator.assignment.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 19,
+            "text": "await",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "keyword.control.flow.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 25,
+            "text": "fetch",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.function-call.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "'",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "string.quoted.single.tsx",
+              "punctuation.definition.string.begin.tsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 44,
+            "text": "https://.../posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "string.quoted.single.tsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 45,
+            "text": "'",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "string.quoted.single.tsx",
+              "punctuation.definition.string.end.tsx"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 46,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 7,
+            "text": "const",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "storage.type.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.var-single-variable.expr.tsx",
+              "meta.definition.variable.tsx",
+              "variable.other.constant.tsx"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.var-single-variable.expr.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "=",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "keyword.operator.assignment.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 21,
+            "text": "await",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "keyword.control.flow.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 25,
+            "text": "res",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.function-call.tsx",
+              "variable.other.object.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ".",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.function-call.tsx",
+              "punctuation.accessor.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 30,
+            "text": "json",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.function-call.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "return",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "keyword.control.flow.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "props",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.object-literal.key.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.object-literal.key.tsx",
+              "punctuation.separator.key-value.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 11,
+            "text": "posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "variable.other.readwrite.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "export",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx",
+              "keyword.control.export.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 14,
+            "text": "default",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx",
+              "keyword.control.default.tsx"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 19,
+            "text": "Blog",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx",
+              "variable.other.readwrite.tsx"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx",
+              "punctuation.definition.comment.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 60,
+            "text": " From https://nextjs.org/docs/basic-features/data-fetching",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx",
+              "punctuation.definition.comment.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 60,
+            "text": " posts will be populated at build time by getStaticProps()",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "function",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "storage.type.function.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "Blog",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.definition.function.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx",
+              "punctuation.definition.binding-pattern.object.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 21,
+            "text": "posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx",
+              "variable.parameter.tsx"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "meta.parameter.object-binding-pattern.tsx",
+              "punctuation.definition.binding-pattern.object.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "return",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "keyword.control.flow.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "<",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "ul",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "entity.name.tag.tsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ">",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "punctuation.section.embedded.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 12,
+            "text": "posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.function-call.tsx",
+              "variable.other.object.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ".",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.function-call.tsx",
+              "punctuation.accessor.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 16,
+            "text": "map",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.function-call.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "post",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.parameters.tsx",
+              "variable.parameter.tsx"
+            ],
+            "color": "#E36209",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 26,
+            "text": "=>",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "storage.type.function.arrow.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "<",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 11,
+            "text": "li",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "entity.name.tag.tsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ">",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "punctuation.section.embedded.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 17,
+            "text": "post",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "variable.other.object.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ".",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "punctuation.accessor.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 23,
+            "text": "title",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "variable.other.property.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "punctuation.section.embedded.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 26,
+            "text": "</",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 28,
+            "text": "li",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "entity.name.tag.tsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": ">",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.arrow.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "meta.embedded.expression.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx",
+              "punctuation.section.embedded.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "meta.jsx.children.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "</",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 8,
+            "text": "ul",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "entity.name.tag.tsx"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ">",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.tag.without-attributes.tsx",
+              "punctuation.definition.tag.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx",
+              "punctuation.definition.comment.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 58,
+            "text": " This function gets called at build time on server-side.",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "export",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "keyword.control.export.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 12,
+            "text": "async",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "storage.modifier.async.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 21,
+            "text": "function",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "storage.type.function.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 36,
+            "text": "getStaticProps",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.definition.function.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.begin.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.parameters.tsx",
+              "punctuation.definition.parameters.end.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 7,
+            "text": "const",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "storage.type.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 11,
+            "text": "res",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.var-single-variable.expr.tsx",
+              "meta.definition.variable.tsx",
+              "variable.other.constant.tsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.var-single-variable.expr.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "=",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "keyword.operator.assignment.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 19,
+            "text": "await",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "keyword.control.flow.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 25,
+            "text": "fetch",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.function-call.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "'",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "string.quoted.single.tsx",
+              "punctuation.definition.string.begin.tsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 44,
+            "text": "https://.../posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "string.quoted.single.tsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 45,
+            "text": "'",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "string.quoted.single.tsx",
+              "punctuation.definition.string.end.tsx"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 46,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 7,
+            "text": "const",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "storage.type.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 13,
+            "text": "posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.var-single-variable.expr.tsx",
+              "meta.definition.variable.tsx",
+              "variable.other.constant.tsx"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.var-single-variable.expr.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "=",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "keyword.operator.assignment.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 21,
+            "text": "await",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "keyword.control.flow.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 25,
+            "text": "res",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.function-call.tsx",
+              "variable.other.object.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ".",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.function-call.tsx",
+              "punctuation.accessor.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 30,
+            "text": "json",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.function-call.tsx",
+              "entity.name.function.tsx"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "(",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": ")",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.var.expr.tsx",
+              "meta.brace.round.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 8,
+            "text": "return",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "keyword.control.flow.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 9,
+            "text": "props",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.object-literal.key.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ":",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.object-literal.key.tsx",
+              "punctuation.separator.key-value.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "{",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "      ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 11,
+            "text": "posts",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "variable.other.readwrite.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx",
+              "meta.objectliteral.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "meta.object.member.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "meta.objectliteral.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.tsx",
+              "meta.function.tsx",
+              "meta.block.tsx",
+              "punctuation.definition.block.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 6,
+            "text": "export",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx",
+              "keyword.control.export.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 14,
+            "text": "default",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx",
+              "keyword.control.default.tsx"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 19,
+            "text": "Blog",
+            "scopes": [
+              "source.tsx",
+              "meta.export.default.tsx",
+              "variable.other.readwrite.tsx"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx",
+              "punctuation.definition.comment.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 60,
+            "text": " From https://nextjs.org/docs/basic-features/data-fetching",
+            "scopes": [
+              "source.tsx",
+              "comment.line.double-slash.tsx"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

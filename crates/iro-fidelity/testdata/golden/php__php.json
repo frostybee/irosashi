@@ -1,0 +1,3082 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "php",
+  "grammarSourceHash": "sha256:151296fb5dbdd8b955448ceb76c7c8a4b487b60ac57ffec076fd154ac690c4d2",
+  "source": "<?php\n\nnamespace App\\Console;\n\nuse Illuminate\\Console\\Scheduling\\Schedule;\nuse Illuminate\\Foundation\\Console\\Kernel as ConsoleKernel;\n\nclass Kernel extends ConsoleKernel\n{\n    /**\n     * Define the application's command schedule.\n     */\n    protected function schedule(Schedule $schedule): void\n    {\n        // $schedule->command('inspire')->hourly();\n    }\n\n    /**\n     * Register the commands for the application.\n     */\n    protected function commands(): void\n    {\n        $this->load(__DIR__.'/Commands');\n\n        require base_path('routes/console.php');\n    }\n}\n\n// From https://github.com/laravel/laravel/blob/10.x/app/Console/Kernel.php\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.php",
+              "keyword.operator.comparison.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "?",
+            "scopes": [
+              "source.php",
+              "keyword.operator.ternary.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "php",
+            "scopes": [
+              "source.php",
+              "constant.other.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "namespace",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php",
+              "keyword.other.namespace.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 13,
+            "text": "App",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php",
+              "entity.name.type.namespace.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php",
+              "entity.name.type.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 21,
+            "text": "Console",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php",
+              "entity.name.type.namespace.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "use",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "keyword.other.use.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.use.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 14,
+            "text": "Illuminate",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 22,
+            "text": "Console",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 33,
+            "text": "Scheduling",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 42,
+            "text": "Schedule",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.class.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "use",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "keyword.other.use.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.use.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 14,
+            "text": "Illuminate",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 25,
+            "text": "Foundation",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 33,
+            "text": "Console",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 40,
+            "text": "Kernel",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.class.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.use.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 43,
+            "text": "as",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "keyword.other.use-as.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 44,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.use.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 57,
+            "text": "ConsoleKernel",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "entity.other.alias.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 57,
+            "end": 58,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "class",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "storage.type.class.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 12,
+            "text": "Kernel",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "entity.name.type.class.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 20,
+            "text": "extends",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "storage.modifier.extends.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 34,
+            "text": "ConsoleKernel",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "entity.other.inherited-class.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "{",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "punctuation.definition.class.begin.bracket.curly.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "/**",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 49,
+            "text": "     * Define the application's command schedule.",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "     ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "*/",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 13,
+            "text": "protected",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "storage.modifier.php",
+              "storage.modifier.visibility.protected.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 22,
+            "text": "function",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "storage.type.function.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 31,
+            "text": "schedule",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "entity.name.function.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "(",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "punctuation.definition.parameters.begin.bracket.round.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 40,
+            "text": "Schedule",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "meta.function.parameters.php",
+              "meta.function.parameter.typehinted.php",
+              "support.class.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "meta.function.parameters.php",
+              "meta.function.parameter.typehinted.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "$",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "meta.function.parameters.php",
+              "meta.function.parameter.typehinted.php",
+              "variable.other.php",
+              "punctuation.definition.variable.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 50,
+            "text": "schedule",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "meta.function.parameters.php",
+              "meta.function.parameter.typehinted.php",
+              "variable.other.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 50,
+            "end": 51,
+            "text": ")",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "punctuation.definition.parameters.end.bracket.round.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": ":",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "keyword.operator.return-value.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 57,
+            "text": "void",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "keyword.other.type.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.definition.begin.bracket.curly.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.whitespace.comment.leading.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "//",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.line.double-slash.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 51,
+            "text": " $schedule->command('inspire')->hourly();",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.line.double-slash.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.definition.end.bracket.curly.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "/**",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 49,
+            "text": "     * Register the commands for the application.",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "     ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "*/",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 13,
+            "text": "protected",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "storage.modifier.php",
+              "storage.modifier.visibility.protected.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 22,
+            "text": "function",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "storage.type.function.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 31,
+            "text": "commands",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "entity.name.function.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "(",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "punctuation.definition.parameters.begin.bracket.round.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": ")",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "punctuation.definition.parameters.end.bracket.round.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": ":",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "keyword.operator.return-value.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 39,
+            "text": "void",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "keyword.other.type.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.definition.begin.bracket.curly.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "$",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "variable.language.this.php",
+              "punctuation.definition.variable.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "this",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "variable.language.this.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 15,
+            "text": "->",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "keyword.operator.class.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 19,
+            "text": "load",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "entity.name.function.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "(",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "punctuation.definition.arguments.begin.bracket.round.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 27,
+            "text": "__DIR__",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "constant.language.php"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ".",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "keyword.operator.string.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "'",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "string.quoted.single.php",
+              "punctuation.definition.string.begin.php"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 38,
+            "text": "/Commands",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "string.quoted.single.php"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "'",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "string.quoted.single.php",
+              "punctuation.definition.string.end.php"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": ")",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "punctuation.definition.arguments.end.bracket.round.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 15,
+            "text": "require",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "keyword.control.import.include.php"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 25,
+            "text": "base_path",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "entity.name.function.php"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "(",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "punctuation.definition.arguments.begin.bracket.round.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "'",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "string.quoted.single.php",
+              "punctuation.definition.string.begin.php"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 45,
+            "text": "routes/console.php",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "string.quoted.single.php"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 46,
+            "text": "'",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "string.quoted.single.php",
+              "punctuation.definition.string.end.php"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ")",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "punctuation.definition.arguments.end.bracket.round.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 48,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.definition.end.bracket.curly.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "punctuation.definition.class.end.bracket.curly.php"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.php",
+              "comment.line.double-slash.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 75,
+            "text": " From https://github.com/laravel/laravel/blob/10.x/app/Console/Kernel.php",
+            "scopes": [
+              "source.php",
+              "comment.line.double-slash.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "<",
+            "scopes": [
+              "source.php",
+              "keyword.operator.comparison.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 2,
+            "text": "?",
+            "scopes": [
+              "source.php",
+              "keyword.operator.ternary.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": "php",
+            "scopes": [
+              "source.php",
+              "constant.other.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "namespace",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php",
+              "keyword.other.namespace.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 13,
+            "text": "App",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php",
+              "entity.name.type.namespace.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php",
+              "entity.name.type.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 21,
+            "text": "Console",
+            "scopes": [
+              "source.php",
+              "meta.namespace.php",
+              "entity.name.type.namespace.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "use",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "keyword.other.use.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.use.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 14,
+            "text": "Illuminate",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 22,
+            "text": "Console",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 33,
+            "text": "Scheduling",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 42,
+            "text": "Schedule",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.class.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "use",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "keyword.other.use.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.use.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 14,
+            "text": "Illuminate",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 25,
+            "text": "Foundation",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 33,
+            "text": "Console",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "\\",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.other.namespace.php",
+              "punctuation.separator.inheritance.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 40,
+            "text": "Kernel",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "support.class.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.use.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 43,
+            "text": "as",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "keyword.other.use-as.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 44,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.use.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 57,
+            "text": "ConsoleKernel",
+            "scopes": [
+              "source.php",
+              "meta.use.php",
+              "entity.other.alias.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 57,
+            "end": 58,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "class",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "storage.type.class.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 12,
+            "text": "Kernel",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "entity.name.type.class.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 20,
+            "text": "extends",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "storage.modifier.extends.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 34,
+            "text": "ConsoleKernel",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "entity.other.inherited-class.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "{",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "punctuation.definition.class.begin.bracket.curly.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "/**",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 49,
+            "text": "     * Define the application's command schedule.",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "     ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "*/",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 13,
+            "text": "protected",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "storage.modifier.php",
+              "storage.modifier.visibility.protected.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 22,
+            "text": "function",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "storage.type.function.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 31,
+            "text": "schedule",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "entity.name.function.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "(",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "punctuation.definition.parameters.begin.bracket.round.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 40,
+            "text": "Schedule",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "meta.function.parameters.php",
+              "meta.function.parameter.typehinted.php",
+              "support.class.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "meta.function.parameters.php",
+              "meta.function.parameter.typehinted.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "$",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "meta.function.parameters.php",
+              "meta.function.parameter.typehinted.php",
+              "variable.other.php",
+              "punctuation.definition.variable.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 50,
+            "text": "schedule",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "meta.function.parameters.php",
+              "meta.function.parameter.typehinted.php",
+              "variable.other.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 50,
+            "end": 51,
+            "text": ")",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "punctuation.definition.parameters.end.bracket.round.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": ":",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "keyword.operator.return-value.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 57,
+            "text": "void",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "keyword.other.type.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.definition.begin.bracket.curly.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.whitespace.comment.leading.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "//",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.line.double-slash.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 51,
+            "text": " $schedule->command('inspire')->hourly();",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.line.double-slash.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.definition.end.bracket.curly.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "/**",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 49,
+            "text": "     * Register the commands for the application.",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "     ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "*/",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "comment.block.documentation.phpdoc.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 13,
+            "text": "protected",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "storage.modifier.php",
+              "storage.modifier.visibility.protected.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 22,
+            "text": "function",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "storage.type.function.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 31,
+            "text": "commands",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "entity.name.function.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "(",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "punctuation.definition.parameters.begin.bracket.round.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": ")",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "punctuation.definition.parameters.end.bracket.round.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": ":",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "keyword.operator.return-value.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 39,
+            "text": "void",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.function.php",
+              "keyword.other.type.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.definition.begin.bracket.curly.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "$",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "variable.language.this.php",
+              "punctuation.definition.variable.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 13,
+            "text": "this",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "variable.language.this.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 15,
+            "text": "->",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "keyword.operator.class.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 19,
+            "text": "load",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "entity.name.function.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "(",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "punctuation.definition.arguments.begin.bracket.round.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 27,
+            "text": "__DIR__",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "constant.language.php"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ".",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "keyword.operator.string.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "'",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "string.quoted.single.php",
+              "punctuation.definition.string.begin.php"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 38,
+            "text": "/Commands",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "string.quoted.single.php"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "'",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "string.quoted.single.php",
+              "punctuation.definition.string.end.php"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": ")",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.method-call.php",
+              "punctuation.definition.arguments.end.bracket.round.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 15,
+            "text": "require",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "keyword.control.import.include.php"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 25,
+            "text": "base_path",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "entity.name.function.php"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "(",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "punctuation.definition.arguments.begin.bracket.round.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "'",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "string.quoted.single.php",
+              "punctuation.definition.string.begin.php"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 45,
+            "text": "routes/console.php",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "string.quoted.single.php"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 46,
+            "text": "'",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "string.quoted.single.php",
+              "punctuation.definition.string.end.php"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ")",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "meta.include.php",
+              "meta.function-call.php",
+              "punctuation.definition.arguments.end.bracket.round.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 48,
+            "text": ";",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.terminator.expression.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "meta.class.body.php",
+              "punctuation.definition.end.bracket.curly.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.php",
+              "meta.class.php",
+              "punctuation.definition.class.end.bracket.curly.php"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.php",
+              "comment.line.double-slash.php",
+              "punctuation.definition.comment.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 75,
+            "text": " From https://github.com/laravel/laravel/blob/10.x/app/Console/Kernel.php",
+            "scopes": [
+              "source.php",
+              "comment.line.double-slash.php"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

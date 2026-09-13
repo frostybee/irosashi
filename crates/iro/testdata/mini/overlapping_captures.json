@@ -1,0 +1,28 @@
+{
+  "scopeName": "source.test-captures",
+  "name": "test-captures",
+  "patterns": [
+    {
+      "comment": "Match 'fn name(args)' with captures 0 (full), 1 (keyword), 2 (name), 3 (parens+args)",
+      "match": "(fn)\\s+(\\w+)(\\(.*?\\))",
+      "name": "meta.function.test",
+      "captures": {
+        "1": {"name": "keyword.function.test"},
+        "2": {"name": "entity.name.function.test"},
+        "3": {"name": "meta.parameters.test"}
+      }
+    },
+    {
+      "comment": "Match 'let name = value' with captures 0 (full) and 1 (keyword)",
+      "match": "(let|var)\\s+(\\w+)\\s*=\\s*(\\w+)",
+      "captures": {
+        "0": {"name": "meta.assignment.test"},
+        "1": {"name": "storage.type.test"},
+        "2": {"name": "variable.name.test"},
+        "3": {"name": "variable.value.test"}
+      }
+    },
+    {"match": "\\b\\d+\\b", "name": "constant.numeric.test"},
+    {"match": "\\b\\w+\\b", "name": "variable.other.test"}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "scopeName": "source.bw",
+  "name": "begin-while-no-eol",
+  "patterns": [
+    { "include": "#block" },
+    { "match": "\\w+", "name": "other.word.test" }
+  ],
+  "repository": {
+    "block": {
+      "begin": "^<<<",
+      "while": "\\G\\.",
+      "name": "meta.block.test",
+      "patterns": [
+        { "match": "\\w+", "name": "inner.word.test" }
+      ]
+    }
+  }
+}

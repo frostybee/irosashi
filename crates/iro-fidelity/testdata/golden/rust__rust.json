@@ -1,0 +1,5112 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "rust",
+  "grammarSourceHash": "sha256:9ff55359cf42616ce5c6b9405483ccfb78175c18ce0d960bebcffa86adb36d7a",
+  "source": "// Unlike C/C++, there's no restriction on the order of function definitions\nfn main() {\n    // We can use this function here, and define it somewhere later\n    fizzbuzz_to(100);\n}\n\n// Function that returns a boolean value\nfn is_divisible_by(lhs: u32, rhs: u32) -> bool {\n    // Corner case, early return\n    if rhs == 0 {\n        return false;\n    }\n\n    // This is an expression, the `return` keyword is not necessary here\n    lhs % rhs == 0\n}\n\n// Functions that \"don't\" return a value, actually return the unit type `()`\nfn fizzbuzz(n: u32) -> () {\n    if is_divisible_by(n, 15) {\n        println!(\"fizzbuzz\");\n    } else if is_divisible_by(n, 3) {\n        println!(\"fizz\");\n    } else if is_divisible_by(n, 5) {\n        println!(\"buzz\");\n    } else {\n        println!(\"{}\", n);\n    }\n}\n\n// When a function returns `()`, the return type can be omitted from the\n// signature\nfn fizzbuzz_to(n: u32) {\n    for n in 1..=n {\n        fizzbuzz(n);\n    }\n}\n\n// From https://doc.rust-lang.org/rust-by-example/fn.html\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 76,
+            "text": " Unlike C/C++, there's no restriction on the order of function definitions",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "fn",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.other.fn.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 7,
+            "text": "main",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 67,
+            "text": " We can use this function here, and define it somewhere later",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 15,
+            "text": "fizzbuzz_to",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 19,
+            "text": "100",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 40,
+            "text": " Function that returns a boolean value",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "fn",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.other.fn.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 18,
+            "text": "is_divisible_by",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 22,
+            "text": "lhs",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ":",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.key-value.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 27,
+            "text": "u32",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.numeric.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 32,
+            "text": "rhs",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": ":",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.key-value.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 37,
+            "text": "u32",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.numeric.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 41,
+            "text": "->",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.arrow.skinny.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 46,
+            "text": "bool",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.primitive.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 48,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 32,
+            "text": " Corner case, early return",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "if",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 10,
+            "text": "rhs",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 13,
+            "text": "==",
+            "scopes": [
+              "source.rust",
+              "keyword.operator.comparison.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "0",
+            "scopes": [
+              "source.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 14,
+            "text": "return",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 20,
+            "text": "false",
+            "scopes": [
+              "source.rust",
+              "constant.language.bool.rust"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 72,
+            "text": " This is an expression, the `return` keyword is not necessary here",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "lhs",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "%",
+            "scopes": [
+              "source.rust",
+              "keyword.operator.math.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 13,
+            "text": "rhs",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 16,
+            "text": "==",
+            "scopes": [
+              "source.rust",
+              "keyword.operator.comparison.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "0",
+            "scopes": [
+              "source.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 76,
+            "text": " Functions that \"don't\" return a value, actually return the unit type `()`",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "fn",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.other.fn.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 11,
+            "text": "fizzbuzz",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ":",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.key-value.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 18,
+            "text": "u32",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.numeric.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "->",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.arrow.skinny.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "if",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 22,
+            "text": "is_divisible_by",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 28,
+            "text": "15",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "println!",
+            "scopes": [
+              "source.rust",
+              "meta.macro.rust",
+              "entity.name.function.macro.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 26,
+            "text": "fizzbuzz",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "else",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 13,
+            "text": "if",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 29,
+            "text": "is_divisible_by",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "3",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "println!",
+            "scopes": [
+              "source.rust",
+              "meta.macro.rust",
+              "entity.name.function.macro.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "fizz",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "else",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 13,
+            "text": "if",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 29,
+            "text": "is_divisible_by",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "5",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "println!",
+            "scopes": [
+              "source.rust",
+              "meta.macro.rust",
+              "entity.name.function.macro.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "buzz",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "else",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "println!",
+            "scopes": [
+              "source.rust",
+              "meta.macro.rust",
+              "entity.name.function.macro.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "meta.interpolation.rust",
+              "punctuation.definition.interpolation.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "meta.interpolation.rust",
+              "punctuation.definition.interpolation.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 72,
+            "text": " When a function returns `()`, the return type can be omitted from the",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 12,
+            "text": " signature",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "fn",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.other.fn.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 14,
+            "text": "fizzbuzz_to",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ":",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.key-value.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 21,
+            "text": "u32",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.numeric.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "for",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 12,
+            "text": "in",
+            "scopes": [
+              "source.rust",
+              "keyword.other.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "1",
+            "scopes": [
+              "source.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 17,
+            "text": "..=",
+            "scopes": [
+              "source.rust",
+              "keyword.operator.range.rust"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "fizzbuzz",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "variable.other.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 57,
+            "text": " From https://doc.rust-lang.org/rust-by-example/fn.html",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 76,
+            "text": " Unlike C/C++, there's no restriction on the order of function definitions",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "fn",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.other.fn.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 7,
+            "text": "main",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 67,
+            "text": " We can use this function here, and define it somewhere later",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 15,
+            "text": "fizzbuzz_to",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 19,
+            "text": "100",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 40,
+            "text": " Function that returns a boolean value",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "fn",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.other.fn.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 18,
+            "text": "is_divisible_by",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 22,
+            "text": "lhs",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ":",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.key-value.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 27,
+            "text": "u32",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.numeric.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 32,
+            "text": "rhs",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": ":",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.key-value.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 37,
+            "text": "u32",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.numeric.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 41,
+            "text": "->",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.arrow.skinny.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 46,
+            "text": "bool",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.primitive.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 48,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 32,
+            "text": " Corner case, early return",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "if",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 10,
+            "text": "rhs",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 13,
+            "text": "==",
+            "scopes": [
+              "source.rust",
+              "keyword.operator.comparison.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "0",
+            "scopes": [
+              "source.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 14,
+            "text": "return",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 20,
+            "text": "false",
+            "scopes": [
+              "source.rust",
+              "constant.language.bool.rust"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 72,
+            "text": " This is an expression, the `return` keyword is not necessary here",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "lhs",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "%",
+            "scopes": [
+              "source.rust",
+              "keyword.operator.math.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 13,
+            "text": "rhs",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 16,
+            "text": "==",
+            "scopes": [
+              "source.rust",
+              "keyword.operator.comparison.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "0",
+            "scopes": [
+              "source.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 76,
+            "text": " Functions that \"don't\" return a value, actually return the unit type `()`",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "fn",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.other.fn.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 11,
+            "text": "fizzbuzz",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ":",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.key-value.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 18,
+            "text": "u32",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.numeric.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "->",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.arrow.skinny.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "if",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 22,
+            "text": "is_divisible_by",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 28,
+            "text": "15",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "println!",
+            "scopes": [
+              "source.rust",
+              "meta.macro.rust",
+              "entity.name.function.macro.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 26,
+            "text": "fizzbuzz",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "else",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 13,
+            "text": "if",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 29,
+            "text": "is_divisible_by",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "3",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "println!",
+            "scopes": [
+              "source.rust",
+              "meta.macro.rust",
+              "entity.name.function.macro.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "fizz",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "else",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 13,
+            "text": "if",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 29,
+            "text": "is_divisible_by",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 33,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 33,
+            "end": 34,
+            "text": "5",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "println!",
+            "scopes": [
+              "source.rust",
+              "meta.macro.rust",
+              "entity.name.function.macro.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 22,
+            "text": "buzz",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "else",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "println!",
+            "scopes": [
+              "source.rust",
+              "meta.macro.rust",
+              "entity.name.function.macro.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "meta.interpolation.rust",
+              "punctuation.definition.interpolation.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "meta.interpolation.rust",
+              "punctuation.definition.interpolation.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "\"",
+            "scopes": [
+              "source.rust",
+              "string.quoted.double.rust",
+              "punctuation.definition.string.rust"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ",",
+            "scopes": [
+              "source.rust",
+              "punctuation.comma.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 72,
+            "text": " When a function returns `()`, the return type can be omitted from the",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 12,
+            "text": " signature",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "fn",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.other.fn.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 14,
+            "text": "fizzbuzz_to",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ":",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "keyword.operator.key-value.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 21,
+            "text": "u32",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "entity.name.type.numeric.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "meta.function.definition.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 7,
+            "text": "for",
+            "scopes": [
+              "source.rust",
+              "keyword.control.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 12,
+            "text": "in",
+            "scopes": [
+              "source.rust",
+              "keyword.other.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "1",
+            "scopes": [
+              "source.rust",
+              "constant.numeric.decimal.rust"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 17,
+            "text": "..=",
+            "scopes": [
+              "source.rust",
+              "keyword.operator.range.rust"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": " ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "{",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 16,
+            "text": "fizzbuzz",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "entity.name.function.rust"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "(",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "n",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "variable.other.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ")",
+            "scopes": [
+              "source.rust",
+              "meta.function.call.rust",
+              "punctuation.brackets.round.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ";",
+            "scopes": [
+              "source.rust",
+              "punctuation.semi.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.rust",
+              "punctuation.brackets.curly.rust"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust",
+              "punctuation.definition.comment.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 57,
+            "text": " From https://doc.rust-lang.org/rust-by-example/fn.html",
+            "scopes": [
+              "source.rust",
+              "comment.line.double-slash.rust"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

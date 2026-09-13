@@ -1,0 +1,13 @@
+[package]
+name = "iro"
+version = "0.1.0"
+description = "TextMate grammar syntax highlighting with VS Code themes, byte-identical to vscode-textmate"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+onig = { package = "onig-regset", version = "6", default-features = false }
+thiserror.workspace = true
+serde.workspace = true
+serde_json.workspace = true

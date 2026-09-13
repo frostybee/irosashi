@@ -1,0 +1,2004 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "cpp",
+  "grammarSourceHash": "sha256:7a335a692ac973c88119ecd5331aa1073ca285a0e0fba6bfc79a659b21839e86",
+  "source": "// Working of implicit type-conversion\n\n#include <iostream>\nusing namespace std;\n\nint main() {\n\n   int num_int;\n   double num_double = 9.99;\n\n   // implicit conversion\n   // assigning a double value to an int variable\n   num_int = num_double;\n\n   cout << \"num_int = \" << num_int << endl;\n   cout << \"num_double = \" << num_double << endl;\n\n   return 0;\n}\n\n// From https://www.programiz.com/cpp-programming/type-conversion",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.cpp",
+              "comment.line.double-slash.cpp",
+              "punctuation.definition.comment.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 38,
+            "text": " Working of implicit type-conversion",
+            "scopes": [
+              "source.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "keyword.control.directive.include.cpp",
+              "punctuation.definition.directive.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 8,
+            "text": "include",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "keyword.control.directive.include.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "<",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "string.quoted.other.lt-gt.include.cpp",
+              "punctuation.definition.string.begin.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 18,
+            "text": "iostream",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "string.quoted.other.lt-gt.include.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ">",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "string.quoted.other.lt-gt.include.cpp",
+              "punctuation.definition.string.end.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp",
+              "keyword.other.using.directive.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "namespace",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp",
+              "keyword.other.namespace.directive.cpp",
+              "storage.type.namespace.directive.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 19,
+            "text": "std",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp",
+              "entity.name.namespace.cpp"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "int",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.qualified_type.cpp",
+              "storage.type.primitive.cpp",
+              "storage.type.built-in.primitive.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "main",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp",
+              "entity.name.function.definition.cpp"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "(",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp",
+              "punctuation.section.parameters.begin.bracket.round.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ")",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp",
+              "punctuation.section.parameters.end.bracket.round.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "{",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp",
+              "punctuation.section.block.begin.bracket.curly.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 6,
+            "text": "int",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "storage.type.primitive.cpp",
+              "storage.type.built-in.primitive.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 14,
+            "text": " num_int",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 9,
+            "text": "double",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "storage.type.primitive.cpp",
+              "storage.type.built-in.primitive.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 21,
+            "text": " num_double ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "=",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.assignment.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "9",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "constant.numeric.decimal.cpp"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ".",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "constant.numeric.decimal.point.cpp"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 27,
+            "text": "99",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "constant.numeric.decimal.cpp"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "//",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp",
+              "punctuation.definition.comment.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 25,
+            "text": " implicit conversion",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "//",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp",
+              "punctuation.definition.comment.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 49,
+            "text": " assigning a double value to an int variable",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 11,
+            "text": "   num_int ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "=",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.assignment.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 23,
+            "text": " num_double",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "   cout ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp",
+              "punctuation.definition.string.begin.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 22,
+            "text": "num_int = ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp",
+              "punctuation.definition.string.end.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 26,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 35,
+            "text": " num_int ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 37,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 42,
+            "text": " endl",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "   cout ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp",
+              "punctuation.definition.string.begin.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 25,
+            "text": "num_double = ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "\"",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp",
+              "punctuation.definition.string.end.cpp"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 29,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 41,
+            "text": " num_double ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 43,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 48,
+            "text": " endl",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 9,
+            "text": "return",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.control.return.cpp"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "0",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "constant.numeric.decimal.cpp"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.section.block.end.bracket.curly.function.definition.cpp"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.cpp",
+              "comment.line.double-slash.cpp",
+              "punctuation.definition.comment.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 65,
+            "text": " From https://www.programiz.com/cpp-programming/type-conversion",
+            "scopes": [
+              "source.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.cpp",
+              "comment.line.double-slash.cpp",
+              "punctuation.definition.comment.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 38,
+            "text": " Working of implicit type-conversion",
+            "scopes": [
+              "source.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "#",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "keyword.control.directive.include.cpp",
+              "punctuation.definition.directive.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 8,
+            "text": "include",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "keyword.control.directive.include.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "<",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "string.quoted.other.lt-gt.include.cpp",
+              "punctuation.definition.string.begin.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 18,
+            "text": "iostream",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "string.quoted.other.lt-gt.include.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ">",
+            "scopes": [
+              "source.cpp",
+              "meta.preprocessor.include.cpp",
+              "string.quoted.other.lt-gt.include.cpp",
+              "punctuation.definition.string.end.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp",
+              "keyword.other.using.directive.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "namespace",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp",
+              "keyword.other.namespace.directive.cpp",
+              "storage.type.namespace.directive.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 19,
+            "text": "std",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp",
+              "entity.name.namespace.cpp"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.using-namespace.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "int",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.qualified_type.cpp",
+              "storage.type.primitive.cpp",
+              "storage.type.built-in.primitive.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "main",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp",
+              "entity.name.function.definition.cpp"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "(",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp",
+              "punctuation.section.parameters.begin.bracket.round.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": ")",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp",
+              "punctuation.section.parameters.end.bracket.round.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "{",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.head.function.definition.cpp",
+              "punctuation.section.block.begin.bracket.curly.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 6,
+            "text": "int",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "storage.type.primitive.cpp",
+              "storage.type.built-in.primitive.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 14,
+            "text": " num_int",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 9,
+            "text": "double",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "storage.type.primitive.cpp",
+              "storage.type.built-in.primitive.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 21,
+            "text": " num_double ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "=",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.assignment.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "9",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "constant.numeric.decimal.cpp"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": ".",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "constant.numeric.decimal.point.cpp"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 27,
+            "text": "99",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "constant.numeric.decimal.cpp"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "//",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp",
+              "punctuation.definition.comment.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 25,
+            "text": " implicit conversion",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "//",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp",
+              "punctuation.definition.comment.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 49,
+            "text": " assigning a double value to an int variable",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 11,
+            "text": "   num_int ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "=",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.assignment.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 23,
+            "text": " num_double",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "   cout ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp",
+              "punctuation.definition.string.begin.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 22,
+            "text": "num_int = ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp",
+              "punctuation.definition.string.end.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 26,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 35,
+            "text": " num_int ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 37,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 42,
+            "text": " endl",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "   cout ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp",
+              "punctuation.definition.string.begin.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 25,
+            "text": "num_double = ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": "\"",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "string.quoted.double.cpp",
+              "punctuation.definition.string.end.cpp"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 29,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 41,
+            "text": " num_double ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 43,
+            "text": "<<",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.operator.bitwise.shift.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 43,
+            "end": 48,
+            "text": " endl",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 48,
+            "end": 49,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "   ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 9,
+            "text": "return",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "keyword.control.return.cpp"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "0",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "constant.numeric.decimal.cpp"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ";",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.terminator.statement.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.cpp",
+              "meta.function.definition.cpp",
+              "meta.body.function.definition.cpp",
+              "punctuation.section.block.end.bracket.curly.function.definition.cpp"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.cpp",
+              "comment.line.double-slash.cpp",
+              "punctuation.definition.comment.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 65,
+            "text": " From https://www.programiz.com/cpp-programming/type-conversion",
+            "scopes": [
+              "source.cpp",
+              "comment.line.double-slash.cpp"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

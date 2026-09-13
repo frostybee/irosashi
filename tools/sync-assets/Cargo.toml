@@ -1,0 +1,14 @@
+[package]
+name = "sync-assets"
+version = "0.1.0"
+description = "Copies grammars, themes and fixtures from the Nuri checkout and writes the provenance lockfile"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+flate2 = "1"
+serde.workspace = true
+serde_json.workspace = true
+sha2 = "0.10"

@@ -1,0 +1,4338 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "csharp",
+  "grammarSourceHash": "sha256:c763d27e4a2ca7a067791a2e537200b89468bd04406a160b8439914e8f92ec5d",
+  "source": "using KCTest.Infrastructure.Database;\nusing Microsoft.AspNetCore.Hosting;\nusing Microsoft.EntityFrameworkCore;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Hosting;\n\nnamespace KCTest.API\n{\n    public class Program\n    {\n        public static void Main(string[] args)\n        {\n            var host = CreateHostBuilder(args).Build();\n\n            using (var scope = host.Services.CreateScope())\n            {\n                var db = scope.ServiceProvider.GetRequiredService<KCTestContext>();\n                db.Database.Migrate();\n            }\n\n            host.Run();\n        }\n\n        public static IHostBuilder CreateHostBuilder(string[] args) =>\n            Host.CreateDefaultBuilder(args)\n                .ConfigureWebHostDefaults(webBuilder =>\n                {\n                    webBuilder.UseStartup<Startup>();\n                });\n    }\n}\n\n// From https://github.com/Jadhielv/KCTest/blob/master/Backend/src/KCTest.API/Program.cs",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 12,
+            "text": "KCTest",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 27,
+            "text": "Infrastructure",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 36,
+            "text": "Database",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "Microsoft",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 26,
+            "text": "AspNetCore",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 34,
+            "text": "Hosting",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "Microsoft",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 35,
+            "text": "EntityFrameworkCore",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "Microsoft",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 26,
+            "text": "Extensions",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 46,
+            "text": "DependencyInjection",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "Microsoft",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 26,
+            "text": "Extensions",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 34,
+            "text": "Hosting",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "namespace",
+            "scopes": [
+              "source.cs",
+              "storage.type.namespace.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 16,
+            "text": "KCTest",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 20,
+            "text": "API",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 10,
+            "text": "public",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.public.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 16,
+            "text": "class",
+            "scopes": [
+              "source.cs",
+              "storage.type.class.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 24,
+            "text": "Program",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.class.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 14,
+            "text": "public",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.public.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 21,
+            "text": "static",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.static.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 26,
+            "text": "void",
+            "scopes": [
+              "source.cs",
+              "keyword.type.void.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 31,
+            "text": "Main",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 38,
+            "text": "string",
+            "scopes": [
+              "source.cs",
+              "keyword.type.string.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "[",
+            "scopes": [
+              "source.cs",
+              "punctuation.squarebracket.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": "]",
+            "scopes": [
+              "source.cs",
+              "punctuation.squarebracket.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 45,
+            "text": "args",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.parameter.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 46,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 15,
+            "text": "var",
+            "scopes": [
+              "source.cs",
+              "storage.type.var.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 20,
+            "text": "host",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.local.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "=",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.assignment.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 40,
+            "text": "CreateHostBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 45,
+            "text": "args",
+            "scopes": [
+              "source.cs",
+              "variable.other.readwrite.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 46,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 52,
+            "text": "Build",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 54,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 54,
+            "end": 55,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 17,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.control.context.using.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 22,
+            "text": "var",
+            "scopes": [
+              "source.cs",
+              "storage.type.var.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 28,
+            "text": "scope",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.local.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "=",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.assignment.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 35,
+            "text": "host",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 44,
+            "text": "Services",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.property.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 45,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 56,
+            "text": "CreateScope",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 56,
+            "end": 57,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 57,
+            "end": 58,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 58,
+            "end": 59,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 19,
+            "text": "var",
+            "scopes": [
+              "source.cs",
+              "storage.type.var.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "db",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.local.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "=",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.assignment.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 30,
+            "text": "scope",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 46,
+            "text": "ServiceProvider",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.property.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 65,
+            "text": "GetRequiredService",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 65,
+            "end": 66,
+            "text": "<",
+            "scopes": [
+              "source.cs",
+              "punctuation.definition.typeparameters.begin.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 66,
+            "end": 79,
+            "text": "KCTestContext",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 79,
+            "end": 80,
+            "text": ">",
+            "scopes": [
+              "source.cs",
+              "punctuation.definition.typeparameters.end.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 80,
+            "end": 81,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 81,
+            "end": 82,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 82,
+            "end": 83,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 18,
+            "text": "db",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 27,
+            "text": "Database",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.property.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 35,
+            "text": "Migrate",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 16,
+            "text": "host",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 20,
+            "text": "Run",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 14,
+            "text": "public",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.public.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 21,
+            "text": "static",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.static.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 34,
+            "text": "IHostBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 52,
+            "text": "CreateHostBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 59,
+            "text": "string",
+            "scopes": [
+              "source.cs",
+              "keyword.type.string.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 59,
+            "end": 60,
+            "text": "[",
+            "scopes": [
+              "source.cs",
+              "punctuation.squarebracket.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 60,
+            "end": 61,
+            "text": "]",
+            "scopes": [
+              "source.cs",
+              "punctuation.squarebracket.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 61,
+            "end": 62,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 62,
+            "end": 66,
+            "text": "args",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.parameter.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 66,
+            "end": 67,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 67,
+            "end": 68,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 68,
+            "end": 70,
+            "text": "=>",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.arrow.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 16,
+            "text": "Host",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 37,
+            "text": "CreateDefaultBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 42,
+            "text": "args",
+            "scopes": [
+              "source.cs",
+              "variable.other.readwrite.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 41,
+            "text": "ConfigureWebHostDefaults",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 52,
+            "text": "webBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.parameter.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 55,
+            "text": "=>",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.arrow.cs"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 20,
+            "text": "                    ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 30,
+            "text": "webBuilder",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 41,
+            "text": "UseStartup",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "<",
+            "scopes": [
+              "source.cs",
+              "punctuation.definition.typeparameters.begin.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 49,
+            "text": "Startup",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.cs"
+            ],
+            "color": "#B392F0",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 50,
+            "text": ">",
+            "scopes": [
+              "source.cs",
+              "punctuation.definition.typeparameters.end.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 50,
+            "end": 51,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.cs",
+              "comment.line.double-slash.cs",
+              "punctuation.definition.comment.cs"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 88,
+            "text": " From https://github.com/Jadhielv/KCTest/blob/master/Backend/src/KCTest.API/Program.cs",
+            "scopes": [
+              "source.cs",
+              "comment.line.double-slash.cs"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 12,
+            "text": "KCTest",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 27,
+            "text": "Infrastructure",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 36,
+            "text": "Database",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "Microsoft",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 26,
+            "text": "AspNetCore",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 34,
+            "text": "Hosting",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "Microsoft",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 35,
+            "text": "EntityFrameworkCore",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "Microsoft",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 26,
+            "text": "Extensions",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 46,
+            "text": "DependencyInjection",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 5,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.other.directive.using.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 15,
+            "text": "Microsoft",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 26,
+            "text": "Extensions",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 34,
+            "text": "Hosting",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 9,
+            "text": "namespace",
+            "scopes": [
+              "source.cs",
+              "storage.type.namespace.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 16,
+            "text": "KCTest",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 20,
+            "text": "API",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.namespace.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 10,
+            "text": "public",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.public.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 16,
+            "text": "class",
+            "scopes": [
+              "source.cs",
+              "storage.type.class.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 24,
+            "text": "Program",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.class.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 14,
+            "text": "public",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.public.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 21,
+            "text": "static",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.static.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 26,
+            "text": "void",
+            "scopes": [
+              "source.cs",
+              "keyword.type.void.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 26,
+            "end": 27,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 31,
+            "text": "Main",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 32,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 32,
+            "end": 38,
+            "text": "string",
+            "scopes": [
+              "source.cs",
+              "keyword.type.string.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 39,
+            "text": "[",
+            "scopes": [
+              "source.cs",
+              "punctuation.squarebracket.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 39,
+            "end": 40,
+            "text": "]",
+            "scopes": [
+              "source.cs",
+              "punctuation.squarebracket.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 45,
+            "text": "args",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.parameter.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 46,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 15,
+            "text": "var",
+            "scopes": [
+              "source.cs",
+              "storage.type.var.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 20,
+            "text": "host",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.local.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": "=",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.assignment.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 40,
+            "text": "CreateHostBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 40,
+            "end": 41,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 45,
+            "text": "args",
+            "scopes": [
+              "source.cs",
+              "variable.other.readwrite.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 46,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 52,
+            "text": "Build",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 54,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 54,
+            "end": 55,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 17,
+            "text": "using",
+            "scopes": [
+              "source.cs",
+              "keyword.control.context.using.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 22,
+            "text": "var",
+            "scopes": [
+              "source.cs",
+              "storage.type.var.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 28,
+            "text": "scope",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.local.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": "=",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.assignment.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 35,
+            "text": "host",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 44,
+            "text": "Services",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.property.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 44,
+            "end": 45,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 45,
+            "end": 56,
+            "text": "CreateScope",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 56,
+            "end": 57,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 57,
+            "end": 58,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 58,
+            "end": 59,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 19,
+            "text": "var",
+            "scopes": [
+              "source.cs",
+              "storage.type.var.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 22,
+            "text": "db",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.local.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 23,
+            "end": 24,
+            "text": "=",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.assignment.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 30,
+            "text": "scope",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 46,
+            "text": "ServiceProvider",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.property.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 46,
+            "end": 47,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 47,
+            "end": 65,
+            "text": "GetRequiredService",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 65,
+            "end": 66,
+            "text": "<",
+            "scopes": [
+              "source.cs",
+              "punctuation.definition.typeparameters.begin.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 66,
+            "end": 79,
+            "text": "KCTestContext",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 79,
+            "end": 80,
+            "text": ">",
+            "scopes": [
+              "source.cs",
+              "punctuation.definition.typeparameters.end.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 80,
+            "end": 81,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 81,
+            "end": 82,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 82,
+            "end": 83,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 18,
+            "text": "db",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 27,
+            "text": "Database",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.property.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 35,
+            "text": "Migrate",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 36,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 36,
+            "end": 37,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 16,
+            "text": "host",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 20,
+            "text": "Run",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 8,
+            "text": "        ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 14,
+            "text": "public",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.public.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 21,
+            "text": "static",
+            "scopes": [
+              "source.cs",
+              "storage.modifier.static.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 34,
+            "text": "IHostBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 35,
+            "end": 52,
+            "text": "CreateHostBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 59,
+            "text": "string",
+            "scopes": [
+              "source.cs",
+              "keyword.type.string.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 59,
+            "end": 60,
+            "text": "[",
+            "scopes": [
+              "source.cs",
+              "punctuation.squarebracket.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 60,
+            "end": 61,
+            "text": "]",
+            "scopes": [
+              "source.cs",
+              "punctuation.squarebracket.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 61,
+            "end": 62,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 62,
+            "end": 66,
+            "text": "args",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.parameter.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 66,
+            "end": 67,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 67,
+            "end": 68,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 68,
+            "end": 70,
+            "text": "=>",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.arrow.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 12,
+            "text": "            ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 16,
+            "text": "Host",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 37,
+            "text": "CreateDefaultBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 37,
+            "end": 38,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 38,
+            "end": 42,
+            "text": "args",
+            "scopes": [
+              "source.cs",
+              "variable.other.readwrite.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 43,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 41,
+            "text": "ConfigureWebHostDefaults",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 52,
+            "text": "webBuilder",
+            "scopes": [
+              "source.cs",
+              "entity.name.variable.parameter.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": " ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 53,
+            "end": 55,
+            "text": "=>",
+            "scopes": [
+              "source.cs",
+              "keyword.operator.arrow.cs"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "{",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 20,
+            "text": "                    ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 30,
+            "text": "webBuilder",
+            "scopes": [
+              "source.cs",
+              "variable.other.object.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": ".",
+            "scopes": [
+              "source.cs",
+              "punctuation.accessor.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 31,
+            "end": 41,
+            "text": "UseStartup",
+            "scopes": [
+              "source.cs",
+              "entity.name.function.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 41,
+            "end": 42,
+            "text": "<",
+            "scopes": [
+              "source.cs",
+              "punctuation.definition.typeparameters.begin.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 42,
+            "end": 49,
+            "text": "Startup",
+            "scopes": [
+              "source.cs",
+              "entity.name.type.cs"
+            ],
+            "color": "#6F42C1",
+            "fontStyle": 0
+          },
+          {
+            "start": 49,
+            "end": 50,
+            "text": ">",
+            "scopes": [
+              "source.cs",
+              "punctuation.definition.typeparameters.end.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 50,
+            "end": 51,
+            "text": "(",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.open.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 51,
+            "end": 52,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 52,
+            "end": 53,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 16,
+            "text": "                ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": ")",
+            "scopes": [
+              "source.cs",
+              "punctuation.parenthesis.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ";",
+            "scopes": [
+              "source.cs",
+              "punctuation.terminator.statement.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.cs",
+              "punctuation.curlybrace.close.cs"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.cs",
+              "comment.line.double-slash.cs",
+              "punctuation.definition.comment.cs"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 88,
+            "text": " From https://github.com/Jadhielv/KCTest/blob/master/Backend/src/KCTest.API/Program.cs",
+            "scopes": [
+              "source.cs",
+              "comment.line.double-slash.cs"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

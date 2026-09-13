@@ -1,0 +1,17 @@
+{
+  "scopeName": "source.test-backref",
+  "name": "test-backref",
+  "patterns": [
+    {
+      "name": "string.quoted.test",
+      "begin": "(['\"])",
+      "end": "\\1",
+      "beginCaptures": {"0": {"name": "punctuation.definition.string.begin.test"}},
+      "endCaptures": {"0": {"name": "punctuation.definition.string.end.test"}},
+      "patterns": [
+        {"match": "\\\\.", "name": "constant.character.escape.test"}
+      ]
+    },
+    {"match": "\\w+", "name": "variable.other.test"}
+  ]
+}

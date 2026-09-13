@@ -1,0 +1,1854 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "scss",
+  "grammarSourceHash": "sha256:267d92553a1073c8ae4e9094c8df03e941f754a73bfbd51c5969a002b3d25537",
+  "source": "nav {\n  ul {\n    margin: 0;\n    padding: 0;\n    list-style: none;\n  }\n\n  li { display: inline-block; }\n\n  a {\n    display: block;\n    padding: 6px 12px;\n    text-decoration: none;\n  }\n}\n\n// From https://sass-lang.com/guide/\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "nav",
+            "scopes": [
+              "source.css.scss",
+              "entity.name.tag.css"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.css.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.begin.bracket.curly.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "ul",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "entity.name.tag.css"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.begin.bracket.curly.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 10,
+            "text": "margin",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "0",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 11,
+            "text": "padding",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "0",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 14,
+            "text": "list-style",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 20,
+            "text": "none",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.end.bracket.curly.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "li",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "entity.name.tag.css"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.begin.bracket.curly.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 14,
+            "text": "display",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 28,
+            "text": "inline-block",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "}",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.end.bracket.curly.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "a",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "entity.name.tag.css"
+            ],
+            "color": "#85E89D",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.begin.bracket.curly.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 11,
+            "text": "display",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 18,
+            "text": "block",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 11,
+            "text": "padding",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "6",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 16,
+            "text": "px",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css",
+              "keyword.other.unit.px.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 19,
+            "text": "12",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 21,
+            "text": "px",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css",
+              "keyword.other.unit.px.css"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 19,
+            "text": "text-decoration",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 25,
+            "text": "none",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "support.constant.property-value.css"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.end.bracket.curly.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.end.bracket.curly.scss"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.css.scss",
+              "comment.line.scss",
+              "punctuation.definition.comment.scss"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 36,
+            "text": " From https://sass-lang.com/guide/",
+            "scopes": [
+              "source.css.scss",
+              "comment.line.scss"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "nav",
+            "scopes": [
+              "source.css.scss",
+              "entity.name.tag.css"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.css.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.begin.bracket.curly.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "ul",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "entity.name.tag.css"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.begin.bracket.curly.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 10,
+            "text": "margin",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "0",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 11,
+            "text": "padding",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "0",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 14,
+            "text": "list-style",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 20,
+            "text": "none",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.end.bracket.curly.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "li",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "entity.name.tag.css"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": "{",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.begin.bracket.curly.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 14,
+            "text": "display",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 28,
+            "text": "inline-block",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 29,
+            "end": 30,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 30,
+            "end": 31,
+            "text": "}",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.end.bracket.curly.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "a",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "entity.name.tag.css"
+            ],
+            "color": "#22863A",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "{",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.begin.bracket.curly.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 11,
+            "text": "display",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 18,
+            "text": "block",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 11,
+            "text": "padding",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 14,
+            "text": "6",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 16,
+            "text": "px",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css",
+              "keyword.other.unit.px.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 17,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 19,
+            "text": "12",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 21,
+            "text": "px",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "constant.numeric.css",
+              "keyword.other.unit.px.css"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 22,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 19,
+            "text": "text-decoration",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-name.scss",
+              "support.type.property-name.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": ":",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.separator.key-value.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": " ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 21,
+            "end": 25,
+            "text": "none",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "meta.property-value.scss",
+              "support.constant.property-value.css"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 25,
+            "end": 26,
+            "text": ";",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.terminator.rule.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "  ",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 3,
+            "text": "}",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.end.bracket.curly.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.css.scss",
+              "meta.property-list.scss",
+              "punctuation.section.property-list.end.bracket.curly.scss"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "//",
+            "scopes": [
+              "source.css.scss",
+              "comment.line.scss",
+              "punctuation.definition.comment.scss"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 36,
+            "text": " From https://sass-lang.com/guide/",
+            "scopes": [
+              "source.css.scss",
+              "comment.line.scss"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "scopeName": "source.test-beginend",
+  "name": "test-beginend",
+  "patterns": [
+    {
+      "name": "string.quoted.double.test",
+      "begin": "\"",
+      "end": "\"",
+      "beginCaptures": {"0": {"name": "punctuation.definition.string.begin.test"}},
+      "endCaptures": {"0": {"name": "punctuation.definition.string.end.test"}},
+      "patterns": [
+        {"match": "\\\\.", "name": "constant.character.escape.test"}
+      ]
+    },
+    {"match": "\\b\\w+\\b", "name": "variable.other.test"}
+  ]
+}

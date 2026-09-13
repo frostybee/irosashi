@@ -1,0 +1,20 @@
+{
+  "scopeName": "source.test-injection-be",
+  "patterns": [
+    {"match": "\\b[a-z]+\\b", "name": "word.test"}
+  ],
+  "injections": {
+    "source.test-injection-be": {
+      "patterns": [
+        {
+          "begin": "\\{",
+          "end": "\\}",
+          "name": "block.injected.test",
+          "patterns": [
+            {"match": "\\b\\d+\\b", "name": "number.injected.test"}
+          ]
+        }
+      ]
+    }
+  }
+}

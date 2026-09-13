@@ -3,6 +3,9 @@ pub enum Error {
     #[error("regex compilation failed for pattern {index}: {message}")]
     RegexCompilation { index: usize, message: String },
 
+    #[error("grammar parse failed: {0}")]
+    GrammarParse(String),
+
     #[error("language not found: {0}")]
     LanguageNotFound(String),
 

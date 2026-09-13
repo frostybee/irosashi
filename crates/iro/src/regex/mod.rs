@@ -1,7 +1,9 @@
+mod lazy;
 mod options;
 mod pattern_set;
 mod rewrite;
 
+pub use lazy::LazyRegex;
 pub use options::{AnchorActive, SearchOptions};
 pub use pattern_set::{Match, PatternSet};
 pub use rewrite::rewrite_z_anchor;

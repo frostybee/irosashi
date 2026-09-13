@@ -1,3 +1,4 @@
+pub mod grammar;
 pub mod regex;
 
 mod error;

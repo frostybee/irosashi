@@ -5,6 +5,7 @@ members = [
     "crates/iro-fidelity",
     "tools/sync-assets",
 ]
+exclude = ["fuzz"]
 resolver = "3"
 
 [workspace.package]
@@ -15,4 +16,4 @@ repository = "https://github.com/frostybee/iro"
 [workspace.dependencies]
 thiserror = "2"
 serde = { version = "1", features = ["derive"] }
-serde_json = "1"
+serde_json = { version = "1", features = ["preserve_order"] }

@@ -3,14 +3,20 @@ use std::sync::Arc;
 
 /// An interned scope name such as `keyword.control.go`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct ScopeId(pub u32);
+pub struct ScopeId(pub(crate) u32);
+
+impl ScopeId {
+    pub fn as_u32(self) -> u32 {
+        self.0
+    }
+}
 
 /// An interned scope stack, outermost scope first.
 ///
 /// Ids are only meaningful within the `ScopeInterner` (and therefore the `Session`)
 /// that produced them. `ScopeListId::EMPTY` is the empty stack in every interner.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct ScopeListId(pub u32);
+pub struct ScopeListId(pub(crate) u32);
 
 impl ScopeListId {
     pub const EMPTY: ScopeListId = ScopeListId(0);

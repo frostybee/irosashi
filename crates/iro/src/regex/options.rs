@@ -19,6 +19,7 @@ impl SearchOptions {
         Self(self.0 | other.0)
     }
 
+    #[allow(dead_code)]
     pub fn contains(self, other: Self) -> bool {
         self.0.contains(other.0)
     }

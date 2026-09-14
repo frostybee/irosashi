@@ -143,7 +143,7 @@ fn warm_tokenize_line(c: &mut Criterion) {
     let mut group = c.benchmark_group("warm/tokenize_line");
     for (lang, _) in SMALL {
         let med = medium(lang);
-        let lines: Vec<&str> = iro::tokenizer::split_lines(&med)
+        let lines: Vec<&str> = iro::split_lines(&med)
             .into_iter()
             .map(|r| &med[r])
             .collect();

@@ -7,6 +7,7 @@ use crate::token::{ThemedToken, TokensResult};
 
 /// Which characters are escaped and how.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[non_exhaustive]
 pub enum Escape {
     /// Named entities: `& < >` in text, `& "` in attributes.
     #[default]
@@ -19,6 +20,7 @@ pub enum Escape {
 /// The output conventions. Both dialects share the tree shape and differ in class
 /// names, declaration order, escaping and multi-theme variables.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[non_exhaustive]
 pub enum Dialect {
     #[default]
     Iro,
@@ -28,6 +30,7 @@ pub enum Dialect {
 
 /// Which theme provides the inline colors in multi-theme output.
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[non_exhaustive]
 pub enum DefaultColor {
     /// Slot 0, the lexicographically first key.
     #[default]

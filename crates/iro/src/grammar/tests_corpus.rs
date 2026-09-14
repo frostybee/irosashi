@@ -3,7 +3,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use iro::grammar::{Grammar, ROOT_RULE_ID, Rule, RuleId, compile_patterns};
+use crate::grammar::{Grammar, ROOT_RULE_ID, Rule, RuleId, compile_patterns};
+use crate::regex::LazyRegex;
 
 fn grammars_dir() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("assets/grammars")
@@ -53,7 +54,7 @@ fn all_regexes_compile() {
     let mut failures = Vec::new();
     for (name, grammar) in load_all() {
         for (index, rule) in grammar.rules.iter().enumerate() {
-            let mut check = |label: &str, regex: &iro::regex::LazyRegex| {
+            let mut check = |label: &str, regex: &LazyRegex| {
                 if regex.compiled().is_some() {
                     compiled += 1;
                 } else {

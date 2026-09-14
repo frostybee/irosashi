@@ -5,9 +5,9 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use iro::grammar::Grammar;
-use iro::tokenizer::split_lines;
-use iro::{Session, Token, TokenizeOptions};
+use crate::grammar::Grammar;
+use crate::token::Token;
+use crate::tokenizer::{Session, TokenizeOptions, split_lines};
 
 fn session(name: &str) -> Session {
     let path = Path::new(env!("CARGO_MANIFEST_DIR"))

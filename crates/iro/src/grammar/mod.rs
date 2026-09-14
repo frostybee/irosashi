@@ -5,9 +5,10 @@ mod raw;
 mod rules;
 mod selector;
 
-pub use backref::{escape_regex, has_backref_marker, resolve_backrefs, resolve_scope_backrefs};
-pub use compile::{CompiledRule, GrammarResolver, compile_patterns, compile_rule_list};
-pub use rules::{
-    Capture, Captures, Grammar, Include, Injection, ROOT_RULE_ID, Repository, Rule, RuleId,
-};
-pub use selector::{Priority, Selector};
+#[cfg(test)]
+mod tests_corpus;
+
+pub(crate) use backref::{resolve_backrefs, resolve_scope_backrefs};
+pub(crate) use compile::{CompiledRule, GrammarResolver, compile_patterns, compile_rule_list};
+pub(crate) use rules::{Captures, Grammar, ROOT_RULE_ID, Rule, RuleId};
+pub(crate) use selector::{Priority, Selector};

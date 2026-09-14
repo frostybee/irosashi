@@ -68,7 +68,7 @@ fn allocations_per_call() {
             });
         }
         let mut session = h.session(lang).unwrap();
-        let lines: Vec<&str> = iro::tokenizer::split_lines(&med)
+        let lines: Vec<&str> = iro::split_lines(&med)
             .into_iter()
             .map(|r| &med[r])
             .collect();

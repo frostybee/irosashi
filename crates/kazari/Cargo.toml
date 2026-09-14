@@ -3,6 +3,7 @@ name = "kazari"
 version = "0.1.0"
 description = "Presentation layer for iro: fence meta, transformers, decorated HTML and Typst output"
 edition.workspace = true
+publish = false
 license.workspace = true
 repository.workspace = true
 

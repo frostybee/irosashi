@@ -59,6 +59,7 @@ pub struct ThemeColors {
 
 /// Where bundled grammar and theme JSON comes from.
 #[derive(Debug, Clone)]
+#[non_exhaustive]
 pub enum AssetSource {
     /// `grammars/{name}.json` (plus `grammars/index.json`) and `themes/{name}.json`
     /// under a root directory.

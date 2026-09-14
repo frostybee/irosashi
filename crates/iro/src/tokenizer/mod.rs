@@ -4,6 +4,9 @@ mod line;
 mod memo;
 mod state;
 
+#[cfg(test)]
+mod tests_mini;
+
 use std::collections::{HashMap, HashSet};
 use std::mem;
 use std::ops::Range;
@@ -55,6 +58,7 @@ pub struct TokenizeResult {
 
 /// How much a session has accumulated; used to retire pooled sessions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
 pub struct SessionFootprint {
     pub scope_lists: usize,
     pub compiled_sets: usize,
@@ -64,6 +68,7 @@ pub struct SessionFootprint {
 /// A memo lookup happens once per open frame per line; a scan step is one regset
 /// search of the grammar's context.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+#[non_exhaustive]
 pub struct SessionStats {
     pub lines: u64,
     pub scan_steps: u64,

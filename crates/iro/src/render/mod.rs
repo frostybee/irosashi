@@ -11,6 +11,7 @@ pub use style_class::StyleClassMap;
 /// A minimal output tree shared by renderers. Attributes keep insertion order; the
 /// renderer that builds the tree decides the order it wants serialized.
 #[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
 pub enum Node {
     Element {
         tag: String,

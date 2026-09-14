@@ -7,7 +7,6 @@ use std::sync::atomic::{AtomicU64, Ordering};
 
 use bitflags::bitflags;
 
-pub use matcher::{MatchScore, scope_prefix_match};
 
 bitflags! {
     /// Font style bits, matching vscode-textmate's numeric encoding.
@@ -45,7 +44,13 @@ pub struct ThemeId(u64);
 
 /// Index into a theme's color table.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct ColorId(pub u32);
+pub struct ColorId(pub(crate) u32);
+
+impl ColorId {
+    pub fn as_u32(self) -> u32 {
+        self.0
+    }
+}
 
 /// The settings one theme rule contributes. `None` means the rule does not set that
 /// property, so a lower-scoring rule may still provide it.
@@ -69,8 +74,8 @@ pub struct Theme {
     pub name: String,
     pub display_name: String,
     pub kind: String,
-    pub colors: BTreeMap<String, String>,
-    pub token_colors: Vec<TokenColor>,
+    pub(crate) colors: BTreeMap<String, String>,
+    pub(crate) token_colors: Vec<TokenColor>,
     color_table: Vec<String>,
     color_ids: HashMap<String, ColorId>,
     default_foreground: ColorId,
@@ -106,6 +111,14 @@ impl Theme {
 
     pub fn default_background(&self) -> &str {
         self.color(self.default_background)
+    }
+
+    pub fn colors(&self) -> &BTreeMap<String, String> {
+        &self.colors
+    }
+
+    pub fn token_color_count(&self) -> usize {
+        self.token_colors.len()
     }
 
     fn intern_color(&mut self, color: &str) -> ColorId {

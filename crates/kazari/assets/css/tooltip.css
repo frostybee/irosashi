@@ -1,0 +1,75 @@
+.kazari-block [data-tooltip] {
+  position: relative;
+}
+.kazari-block [data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + var(--kz-tooltip-offset));
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--kz-tooltip-padding);
+  border-radius: var(--kz-tooltip-radius);
+  background: var(--kz-tooltip-bg);
+  color: var(--kz-tooltip-fg);
+  font-family: var(--kz-ui-font-family);
+  font-size: var(--kz-tooltip-font-size);
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: var(--kz-tooltip-shadow);
+  visibility: hidden;
+  z-index: 10;
+}
+.kazari-block [data-tooltip]::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + var(--kz-tooltip-offset) - var(--kz-tooltip-arrow-size));
+  left: 50%;
+  transform: translateX(-50%);
+  border: var(--kz-tooltip-arrow-size) solid transparent;
+  border-top-color: var(--kz-tooltip-bg);
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 10;
+}
+.kazari-block [data-tooltip]:hover::after,
+.kazari-block [data-tooltip]:hover::before,
+.kazari-block [data-tooltip]:focus-visible::after,
+.kazari-block [data-tooltip]:focus-visible::before {
+  visibility: visible;
+}
+.kazari-block [data-tooltip]:active::after,
+.kazari-block [data-tooltip]:active::before {
+  visibility: hidden;
+}
+.kazari-block .kz-copy-btn.copied::after,
+.kazari-block .kz-copy-btn.copied::before {
+  visibility: hidden;
+}
+.kazari-block:fullscreen [data-tooltip]::after,
+.kazari-block:-webkit-full-screen [data-tooltip]::after {
+  z-index: 100;
+  bottom: auto;
+  top: calc(100% + var(--kz-tooltip-offset));
+}
+.kazari-block:fullscreen [data-tooltip]::before,
+.kazari-block:-webkit-full-screen [data-tooltip]::before {
+  z-index: 100;
+  bottom: auto;
+  top: calc(100% + var(--kz-tooltip-offset) - var(--kz-tooltip-arrow-size));
+  border-top-color: transparent;
+  border-bottom-color: var(--kz-tooltip-bg);
+}
+@media (hover: none) {
+  .kazari-block [data-tooltip]::after,
+  .kazari-block [data-tooltip]::before {
+    display: none;
+  }
+}
+@media print {
+  .kazari-block [data-tooltip]::after,
+  .kazari-block [data-tooltip]::before {
+    display: none;
+  }
+}

@@ -1,0 +1,23 @@
+.kazari-block .kz-gutter {
+  grid-area: gutter;
+  min-width: calc(var(--kz-ln-width) + 2 * var(--kz-ln-padding-inline));
+  border-right: var(--kz-gutter-border-width) solid var(--kz-gutter-border-color);
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+.kazari-block .kz-gutter .kz-ln {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  box-sizing: content-box;
+  min-width: var(--kz-ln-width);
+  padding-inline: var(--kz-ln-padding-inline);
+  font-variant-numeric: tabular-nums;
+  color: var(--kz-ln-fg);
+  opacity: var(--kz-ln-opacity);
+}
+.kazari-block .highlight .kz-gutter .kz-ln {
+  color: var(--kz-ln-highlight-fg);
+  opacity: var(--kz-ln-highlight-opacity);
+}

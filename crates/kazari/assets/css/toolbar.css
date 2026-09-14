@@ -1,0 +1,55 @@
+.kazari-block .kz-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  padding: var(--kz-toolbar-padding);
+  background: var(--kz-toolbar-bg);
+  border-bottom: 1px solid var(--kz-toolbar-border);
+}
+.kazari-block .kz-toolbar-left,
+.kazari-block .kz-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+/* The title side shrinks and ellipsizes; the button side keeps its
+   buttons whole. */
+.kazari-block .kz-toolbar-right {
+  flex-shrink: 0;
+}
+.kazari-block .kz-lang {
+  font-size: var(--kz-lang-font-size);
+  font-weight: var(--kz-lang-font-weight);
+  font-family: var(--kz-ui-font-family);
+  color: var(--kz-lang-fg);
+}
+/* The row's 0.5rem flex gap already separates these, so the margin only
+   tops it up to 0.625rem, keeping the separator centered against the
+   0.625rem padding on its other side. */
+.kazari-block .kz-lang + .kz-title {
+  margin-left: 0.125rem;
+  padding-left: 0.625rem;
+  border-left: 1px solid var(--kz-separator-color);
+}
+.kazari-block .kz-title {
+  font-size: 0.875rem;
+  font-family: var(--kz-ui-font-family);
+  color: var(--kz-editor-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 480px) {
+  .kazari-block .kz-toolbar {
+    padding-inline: 0.5rem;
+  }
+  .kazari-block .kz-toolbar-left,
+  .kazari-block .kz-toolbar-right {
+    gap: 0.25rem;
+  }
+  .kazari-block .kz-terminal-actions {
+    gap: 0.25rem;
+  }
+}

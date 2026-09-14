@@ -71,7 +71,7 @@ pub struct InlineMarker {
     pub is_regex: bool,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct ThemeInfo {
     pub fg: String,
     pub bg: String,

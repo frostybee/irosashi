@@ -1,0 +1,86 @@
+/* Line marker backgrounds */
+.kazari-block .kz-line.highlight.mark {
+  background: var(--kz-mark-bg);
+}
+.kazari-block .kz-line.highlight.ins {
+  background: var(--kz-ins-bg);
+}
+.kazari-block .kz-line.highlight.del {
+  background: var(--kz-del-bg);
+}
+
+/* Left accent bar via inset box-shadow (no layout shift) */
+.kazari-block .kz-line.highlight {
+  box-shadow: inset var(--kz-mark-border-width) 0 0 0 var(--kz-mark-border);
+}
+.kazari-block .kz-line.highlight.ins {
+  box-shadow: inset var(--kz-mark-border-width) 0 0 0 var(--kz-ins-border);
+}
+.kazari-block .kz-line.highlight.del {
+  box-shadow: inset var(--kz-mark-border-width) 0 0 0 var(--kz-del-border);
+}
+
+/* Diff indicators via ::before on .kz-code */
+.kazari-block .kz-line.ins .kz-code,
+.kazari-block .kz-line.del .kz-code {
+  position: relative;
+}
+.kazari-block .kz-line.ins .kz-code::before {
+  content: var(--kz-ins-indicator);
+  color: var(--kz-ins-indicator-color);
+  position: absolute;
+  left: 0;
+  margin-left: var(--kz-diff-indicator-margin);
+  white-space: pre;
+  pointer-events: none;
+}
+.kazari-block .kz-line.del .kz-code::before {
+  content: var(--kz-del-indicator);
+  color: var(--kz-del-indicator-color);
+  position: absolute;
+  left: 0;
+  margin-left: var(--kz-diff-indicator-margin);
+  white-space: pre;
+  pointer-events: none;
+}
+
+/* Labeled range line backgrounds (stronger than single-line markers) */
+.kazari-block .kz-line.highlight.mark.tm-label {
+  background: var(--kz-label-mark-bg);
+}
+.kazari-block .kz-line.highlight.ins.tm-label {
+  background: var(--kz-label-ins-bg);
+}
+.kazari-block .kz-line.highlight.del.tm-label {
+  background: var(--kz-label-del-bg);
+}
+
+/* Labeled ranges — badge at the left edge of the code area.
+   data-label on .kz-code div, read via attr().
+   On ins/del lines, this overrides the diff indicator ::before. */
+.kazari-block .kz-line.tm-label .kz-code {
+  position: relative;
+}
+.kazari-block .kz-line.tm-label .kz-code::before {
+  content: attr(data-label);
+  display: block;
+  position: absolute;
+  left: 0;
+  margin-left: 0;
+  z-index: 1;
+  color: var(--kz-label-fg);
+  padding: var(--kz-label-padding);
+  font-size: var(--kz-label-font-size);
+  border-radius: var(--kz-label-radius);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.kazari-block .kz-line.mark.tm-label .kz-code::before {
+  background: var(--kz-mark-border);
+}
+.kazari-block .kz-line.ins.tm-label .kz-code::before {
+  background: var(--kz-ins-border);
+}
+.kazari-block .kz-line.del.tm-label .kz-code::before {
+  background: var(--kz-del-border);
+}

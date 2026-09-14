@@ -1,0 +1,4 @@
+.kazari-block ::selection {
+  background: var(--kz-selection-bg);
+  color: var(--kz-selection-fg);
+}

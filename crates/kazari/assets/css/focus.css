@@ -1,0 +1,7 @@
+/* Focus lines — container-level class, CSS handles dimming */
+.kazari-block code.has-focus .kz-line:not(.focused) {
+  opacity: var(--kz-focus-dimmed-opacity);
+}
+.kazari-block code.has-focus .kz-line.highlight:not(.focused) {
+  opacity: var(--kz-focus-dimmed-opacity);
+}

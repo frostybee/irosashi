@@ -1,0 +1,13 @@
+.kazari-block .kz-terminal-dots {
+  display: flex;
+  gap: 0.4rem;
+  z-index: 1;
+}
+.kazari-block .kz-terminal-dots span {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+}
+.kazari-block .kz-terminal-dots span:nth-child(1) { background: var(--kz-terminal-dot-red); }
+.kazari-block .kz-terminal-dots span:nth-child(2) { background: var(--kz-terminal-dot-yellow); }
+.kazari-block .kz-terminal-dots span:nth-child(3) { background: var(--kz-terminal-dot-green); }

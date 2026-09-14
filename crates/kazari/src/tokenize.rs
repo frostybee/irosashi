@@ -9,6 +9,7 @@ pub struct Tokens {
     dark_slot: Option<usize>,
 }
 
+#[allow(dead_code)]
 impl Tokens {
     pub fn result(&self) -> &TokensResult {
         &self.result
@@ -40,8 +41,7 @@ impl Tokens {
     }
 
     pub fn dark_style(&self, token: &iro::ThemedToken) -> Option<TokenStyle> {
-        self.dark_slot
-            .map(|slot| self.result.style_in(token, slot))
+        self.dark_slot.map(|slot| self.result.style_in(token, slot))
     }
 
     pub fn light_color(&self, id: ColorId) -> &str {
@@ -49,8 +49,7 @@ impl Tokens {
     }
 
     pub fn dark_color(&self, id: ColorId) -> Option<&str> {
-        self.dark_slot
-            .map(|slot| self.result.color_in(slot, id))
+        self.dark_slot.map(|slot| self.result.color_in(slot, id))
     }
 
     pub fn light_fg(&self) -> &str {
@@ -97,11 +96,7 @@ pub fn tokenize(
 }
 
 fn find_slot(result: &TokensResult, key: &str) -> usize {
-    result
-        .themes
-        .iter()
-        .position(|s| s.key == key)
-        .unwrap_or(0)
+    result.themes.iter().position(|s| s.key == key).unwrap_or(0)
 }
 
 pub fn expand_tabs(code: &str, tab_width: usize) -> String {
@@ -112,6 +107,7 @@ pub fn expand_tabs(code: &str, tab_width: usize) -> String {
     code.replace('\t', &spaces)
 }
 
+#[allow(dead_code)]
 pub fn format_font_style(fs: FontStyle) -> (&'static str, &'static str, &'static str) {
     let font_style = if fs.contains(FontStyle::ITALIC) {
         "italic"
@@ -172,14 +168,8 @@ mod tests {
 
     #[test]
     fn format_font_style_combinations() {
-        assert_eq!(
-            format_font_style(FontStyle::empty()),
-            ("", "", "")
-        );
-        assert_eq!(
-            format_font_style(FontStyle::ITALIC),
-            ("italic", "", "")
-        );
+        assert_eq!(format_font_style(FontStyle::empty()), ("", "", ""));
+        assert_eq!(format_font_style(FontStyle::ITALIC), ("italic", "", ""));
         assert_eq!(
             format_font_style(FontStyle::BOLD | FontStyle::UNDERLINE),
             ("", "bold", "underline")

@@ -9,6 +9,7 @@ repository.workspace = true
 
 [dependencies]
 iro = { path = "../iro" }
+regex = "1"
 thiserror.workspace = true
 
 [dev-dependencies]

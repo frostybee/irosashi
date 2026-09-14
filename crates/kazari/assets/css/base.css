@@ -1,0 +1,68 @@
+.kazari-block {
+  position: relative;
+  margin: 1rem 0;
+  min-width: 0;
+}
+.kazari-block pre {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: var(--kz-editor-bg);
+  color: var(--kz-editor-fg);
+  font-family: var(--kz-font-family);
+  font-size: var(--kz-font-size);
+  font-weight: var(--kz-font-weight);
+  line-height: var(--kz-line-height);
+  border-radius: var(--kz-radius);
+  overflow-x: auto;
+}
+.kazari-block .frame pre {
+  border-radius: 0;
+}
+.kazari-block .frame.is-terminal pre {
+  background: var(--kz-terminal-bg);
+}
+.kazari-block pre code {
+  display: block;
+  padding: var(--kz-code-padding-block) 0;
+  font-family: inherit;
+}
+.kazari-block .kz-line {
+  display: grid;
+  grid-template-areas: 'gutter code';
+  grid-template-columns: auto 1fr;
+  min-height: 1lh;
+}
+.kazari-block .kz-line .kz-code {
+  grid-area: code;
+  padding-inline: var(--kz-code-padding-inline);
+  white-space: pre;
+}
+.kazari-block pre.wrap .kz-line .kz-code {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  text-indent: calc(var(--kz-indent, 0ch) * -1);
+  padding-inline-start: calc(var(--kz-code-padding-inline) + var(--kz-indent, 0ch));
+}
+.kazari-block pre.wrap .kz-line .kz-code .indent {
+  white-space: pre;
+}
+.kazari-block button:focus-visible {
+  outline: 2px solid var(--kz-focus-ring, currentColor);
+  outline-offset: 2px;
+}
+.kazari-block [role="tab"]:focus-visible {
+  outline: 2px solid var(--kz-focus-ring, currentColor);
+  outline-offset: -2px;
+}
+.kazari-block, .kazari-block *, .kazari-block *::before, .kazari-block *::after {
+  transition: none !important;
+}
+.kazari-block .kz-sr-announce {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,38 @@
+/* Inline text markers */
+.kazari-block mark,
+.kazari-block ins,
+.kazari-block del {
+  background: var(--kz-inline-mark-bg);
+  border: var(--kz-inline-mark-border-width) solid var(--kz-inline-mark-border);
+  border-radius: var(--kz-inline-mark-radius);
+  padding: var(--kz-inline-mark-padding);
+  text-decoration: none;
+}
+.kazari-block ins {
+  background: var(--kz-inline-ins-bg);
+  border-color: var(--kz-inline-ins-border);
+  text-decoration: none;
+}
+.kazari-block del {
+  background: var(--kz-inline-del-bg);
+  border-color: var(--kz-inline-del-border);
+  text-decoration: none;
+}
+
+/* Multi-token spanning — remove borders/radius at joins */
+.kazari-block mark.open-start,
+.kazari-block ins.open-start,
+.kazari-block del.open-start {
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 0;
+}
+.kazari-block mark.open-end,
+.kazari-block ins.open-end,
+.kazari-block del.open-end {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-right: 0;
+}

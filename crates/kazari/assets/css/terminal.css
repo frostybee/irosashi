@@ -1,0 +1,36 @@
+.kazari-block .kz-terminal-header {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: var(--kz-terminal-header-padding);
+  background: var(--kz-terminal-titlebar-bg);
+  border-bottom: 1px solid var(--kz-toolbar-border);
+  position: relative;
+}
+.kazari-block .kz-terminal-header .kz-terminal-dots {
+  flex-shrink: 0;
+}
+/* The title is a flex item, not an absolutely centered overlay, so it can
+   shrink and ellipsize instead of rendering behind the dots or the action
+   buttons when the header runs out of room. It centers in the space
+   between its neighbors, which sits slightly off true center when the
+   two sides differ in width. */
+.kazari-block .kz-terminal-header .kz-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: 0.875rem;
+  font-family: var(--kz-ui-font-family);
+  color: var(--kz-editor-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kazari-block .kz-terminal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+  flex-shrink: 0;
+  z-index: 1;
+}

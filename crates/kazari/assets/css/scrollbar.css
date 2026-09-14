@@ -1,0 +1,21 @@
+.kazari-block pre::-webkit-scrollbar {
+  width: var(--kz-scrollbar-width);
+  height: var(--kz-scrollbar-height);
+}
+.kazari-block pre::-webkit-scrollbar-thumb {
+  background: var(--kz-scrollbar-thumb);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 999px;
+}
+.kazari-block pre::-webkit-scrollbar-thumb:hover {
+  background: var(--kz-scrollbar-thumb-hover);
+  background-clip: padding-box;
+}
+.kazari-block pre::-webkit-scrollbar-track {
+  background: var(--kz-scrollbar-track);
+}
+.kazari-block pre {
+  scrollbar-width: thin;
+  scrollbar-color: var(--kz-scrollbar-thumb) transparent;
+}

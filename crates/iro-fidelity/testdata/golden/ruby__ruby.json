@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "ruby",
   "grammarSourceHash": "sha256:b7d3f3580903b556e78cad7f432b1dcb87b4c3ca97efc8a3b7cdf2bd2fcf4193",
+  "injections": true,
   "source": "class LotteryTicket\n\n  NUMERIC_RANGE = 1..25\n\n  attr_reader :picks, :purchased\n\n  def initialize( *picks )\n    if picks.length != 3\n      raise ArgumentError, \"three numbers must be picked\"\n    elsif picks.uniq.length != 0x3\n      raise ArgumentError, \"the three picks must be different numbers\"\n    elsif picks.detect { |p| not NUMERIC_RANGE === p }\n      raise ArgumentError, \"the three picks must be numbers between 1 and 25\"\n    end\n    @picks = picks\n    @purchased = Time.now\n  end\n\nend\n\n# From https://poignant.guide/book/chapter-5.html\n",
   "themes": {
     "github-dark": {

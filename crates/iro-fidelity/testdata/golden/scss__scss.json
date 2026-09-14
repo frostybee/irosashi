@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "scss",
   "grammarSourceHash": "sha256:267d92553a1073c8ae4e9094c8df03e941f754a73bfbd51c5969a002b3d25537",
+  "injections": true,
   "source": "nav {\n  ul {\n    margin: 0;\n    padding: 0;\n    list-style: none;\n  }\n\n  li { display: inline-block; }\n\n  a {\n    display: block;\n    padding: 6px 12px;\n    text-decoration: none;\n  }\n}\n\n// From https://sass-lang.com/guide/\n",
   "themes": {
     "github-dark": {

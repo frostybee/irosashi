@@ -1,0 +1,3 @@
+# Grammars in the full 234-grammar matrix allowed to be non-identical to
+# vscode-textmate on the tested themes. Empty: every fixture is byte-identical.
+held = []

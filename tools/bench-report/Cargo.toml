@@ -1,0 +1,12 @@
+[package]
+name = "bench-report"
+version = "0.1.0"
+description = "Prints a markdown table from criterion's saved estimates"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true

@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "python",
   "grammarSourceHash": "sha256:987c10175247c6c9735628d2304e252561ce17cb6e91b08331e8d0a05bac0e26",
+  "injections": true,
   "source": "def fib(n):    # write Fibonacci series up to n\n    \"\"\"Print a Fibonacci series up to n.\"\"\"\n    a, b = 0, 1\n    while a < n:\n        print(a, end=' ')\n        a, b = b, a+b\n    print()\n\n# Now call the function we just defined:\nfib(2000)\n\n# From https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
   "themes": {
     "github-dark": {

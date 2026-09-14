@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "rust",
   "grammarSourceHash": "sha256:9ff55359cf42616ce5c6b9405483ccfb78175c18ce0d960bebcffa86adb36d7a",
+  "injections": true,
   "source": "// Unlike C/C++, there's no restriction on the order of function definitions\nfn main() {\n    // We can use this function here, and define it somewhere later\n    fizzbuzz_to(100);\n}\n\n// Function that returns a boolean value\nfn is_divisible_by(lhs: u32, rhs: u32) -> bool {\n    // Corner case, early return\n    if rhs == 0 {\n        return false;\n    }\n\n    // This is an expression, the `return` keyword is not necessary here\n    lhs % rhs == 0\n}\n\n// Functions that \"don't\" return a value, actually return the unit type `()`\nfn fizzbuzz(n: u32) -> () {\n    if is_divisible_by(n, 15) {\n        println!(\"fizzbuzz\");\n    } else if is_divisible_by(n, 3) {\n        println!(\"fizz\");\n    } else if is_divisible_by(n, 5) {\n        println!(\"buzz\");\n    } else {\n        println!(\"{}\", n);\n    }\n}\n\n// When a function returns `()`, the return type can be omitted from the\n// signature\nfn fizzbuzz_to(n: u32) {\n    for n in 1..=n {\n        fizzbuzz(n);\n    }\n}\n\n// From https://doc.rust-lang.org/rust-by-example/fn.html\n",
   "themes": {
     "github-dark": {

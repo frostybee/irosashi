@@ -4,6 +4,7 @@ members = [
     "crates/kazari",
     "crates/iro-fidelity",
     "tools/sync-assets",
+    "tools/bench-report",
 ]
 exclude = ["fuzz"]
 resolver = "3"
@@ -18,3 +19,7 @@ thiserror = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }
 bitflags = "2"
+criterion = { version = "0.8", default-features = false, features = ["cargo_bench_support"] }
+
+[profile.bench]
+debug = 1

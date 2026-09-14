@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "csharp",
   "grammarSourceHash": "sha256:c763d27e4a2ca7a067791a2e537200b89468bd04406a160b8439914e8f92ec5d",
+  "injections": true,
   "source": "using KCTest.Infrastructure.Database;\nusing Microsoft.AspNetCore.Hosting;\nusing Microsoft.EntityFrameworkCore;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Hosting;\n\nnamespace KCTest.API\n{\n    public class Program\n    {\n        public static void Main(string[] args)\n        {\n            var host = CreateHostBuilder(args).Build();\n\n            using (var scope = host.Services.CreateScope())\n            {\n                var db = scope.ServiceProvider.GetRequiredService<KCTestContext>();\n                db.Database.Migrate();\n            }\n\n            host.Run();\n        }\n\n        public static IHostBuilder CreateHostBuilder(string[] args) =>\n            Host.CreateDefaultBuilder(args)\n                .ConfigureWebHostDefaults(webBuilder =>\n                {\n                    webBuilder.UseStartup<Startup>();\n                });\n    }\n}\n\n// From https://github.com/Jadhielv/KCTest/blob/master/Backend/src/KCTest.API/Program.cs",
   "themes": {
     "github-dark": {

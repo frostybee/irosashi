@@ -47,6 +47,69 @@ pub fn render_markdown(report: &FidelityReport, themes: &[String]) -> String {
     out
 }
 
+pub const FULL_MATRIX_HEADING: &str = "## Full matrix";
+
+/// Renders the section for the full grammar matrix, appended to the core report when
+/// the fixtures are available. A failing grammar is `held` when listed in `held`,
+/// otherwise `failing`.
+pub fn render_full_matrix(report: &FidelityReport, themes: &[String], held: &[String]) -> String {
+    let mut out = String::new();
+    let _ = writeln!(out, "\n{FULL_MATRIX_HEADING}\n");
+    let failing = report.failing_grammars();
+    let grammars = report.by_grammar.len();
+    let _ = writeln!(
+        out,
+        "**Overall**: {} / {} pass ({:.1}%), {} / {} grammars\n",
+        report.global.pass,
+        report.global.total,
+        report.global.rate() * 100.0,
+        grammars - failing.len(),
+        grammars
+    );
+    let _ = writeln!(
+        out,
+        "Held (allowed to differ, see `crates/iro-fidelity/held-all.toml`): {}\n",
+        if held.is_empty() {
+            "none".to_owned()
+        } else {
+            held.join(", ")
+        }
+    );
+
+    out.push_str("| Grammar |");
+    for theme in themes {
+        let _ = write!(out, " {theme} |");
+    }
+    out.push_str(" Status |\n");
+    out.push_str("|---------|");
+    for _ in themes {
+        out.push_str(":---:|");
+    }
+    out.push_str("----------|\n");
+
+    for grammar in report.by_grammar.keys() {
+        let _ = write!(out, "| {grammar} |");
+        let mut all_pass = true;
+        for theme in themes {
+            if report.triple_pass(grammar, theme) {
+                out.push_str(" ✅ |");
+            } else {
+                out.push_str(" ❌ |");
+                all_pass = false;
+            }
+        }
+        let status = if all_pass {
+            "shipping"
+        } else if held.iter().any(|h| h == grammar) {
+            "held"
+        } else {
+            "failing"
+        };
+        let _ = writeln!(out, " {status} |");
+    }
+    out
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -92,5 +155,20 @@ mod tests {
 | bat | ❌ | ✅ | held |\n\
 | go | ✅ | ✅ | shipping |\n";
         assert_eq!(render_markdown(&report, &themes), expected);
+
+        let full = render_full_matrix(&report, &themes, &[]);
+        assert_eq!(
+            full,
+            "\n## Full matrix\n\n\
+**Overall**: 3 / 4 pass (75.0%), 1 / 2 grammars\n\n\
+Held (allowed to differ, see `crates/iro-fidelity/held-all.toml`): none\n\n\
+| Grammar | github-dark | github-light | Status |\n\
+|---------|:---:|:---:|----------|\n\
+| bat | ❌ | ✅ | failing |\n\
+| go | ✅ | ✅ | shipping |\n"
+        );
+        let held = render_full_matrix(&report, &themes, &["bat".to_owned()]);
+        assert!(held.contains("held-all.toml`): bat\n"));
+        assert!(held.contains("| bat | ❌ | ✅ | held |\n"));
     }
 }

@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "cpp",
   "grammarSourceHash": "sha256:7a335a692ac973c88119ecd5331aa1073ca285a0e0fba6bfc79a659b21839e86",
+  "injections": true,
   "source": "// Working of implicit type-conversion\n\n#include <iostream>\nusing namespace std;\n\nint main() {\n\n   int num_int;\n   double num_double = 9.99;\n\n   // implicit conversion\n   // assigning a double value to an int variable\n   num_int = num_double;\n\n   cout << \"num_int = \" << num_int << endl;\n   cout << \"num_double = \" << num_double << endl;\n\n   return 0;\n}\n\n// From https://www.programiz.com/cpp-programming/type-conversion",
   "themes": {
     "github-dark": {

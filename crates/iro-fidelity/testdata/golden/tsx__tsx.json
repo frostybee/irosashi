@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "tsx",
   "grammarSourceHash": "sha256:555694135f36e3b2d8d2900b929defbd75a6e68938b182274ffaf4db268b94ed",
+  "injections": true,
   "source": "// posts will be populated at build time by getStaticProps()\nfunction Blog({ posts }) {\n  return (\n    <ul>\n      {posts.map((post) => (\n        <li>{post.title}</li>\n      ))}\n    </ul>\n  )\n}\n\n// This function gets called at build time on server-side.\nexport async function getStaticProps() {\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  return {\n    props: {\n      posts\n    }\n  }\n}\n\nexport default Blog\n\n// From https://nextjs.org/docs/basic-features/data-fetching\n",
   "themes": {
     "github-dark": {

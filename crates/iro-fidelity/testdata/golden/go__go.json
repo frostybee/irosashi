@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "go",
   "grammarSourceHash": "sha256:e555e47bc4760e521e5449fc05931c5dffb7204b3ef16efe724b6a4c9761a5e4",
+  "injections": true,
   "source": "package main\n\nimport (\n    \"fmt\"\n    \"log\"\n    \"net/http\"\n)\n\nfunc handler(w http.ResponseWriter, r *http.Request) {\n    fmt.Fprintf(w, \"Hi there, I love %s!\", r.URL.Path[1:])\n}\n\nfunc main() {\n    http.HandleFunc(\"/\", handler)\n    log.Fatal(http.ListenAndServe(\":8080\", nil))\n}\n\n// From https://golang.org/doc/articles/wiki/#tmp_3",
   "themes": {
     "github-dark": {

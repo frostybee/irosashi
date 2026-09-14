@@ -22,4 +22,4 @@ pub use token::{
     Diagnostic, DiagnosticKind, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token, TokenStyle,
     TokensResult,
 };
-pub use tokenizer::{Session, StateStack, TokenizeOptions};
+pub use tokenizer::{Session, SessionStats, StateStack, TokenizeOptions};

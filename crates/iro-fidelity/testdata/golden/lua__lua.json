@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "lua",
   "grammarSourceHash": "sha256:7b04d8d3ab86147105a4be29a3eae7cd365e734226e99cac4d3845c841860db8",
+  "injections": true,
   "source": "ball = {\n  xpos = 60,\n  ypos = 60,\n\n  -- without the colon syntax, must mention self argument explicitly\n  move = function(self, newx, newy)\n    self.xpos = newx\n    self.ypos = newy\n  end\n}\n\n-- using the colon, ball is passed as self automatically\nball:move(100, 120)\n\n-- using the dot, must pass self explicitly\nball.move(ball, 100, 120)\n\n-- From https://pico-8.fandom.com/wiki/Lua\n",
   "themes": {
     "github-dark": {

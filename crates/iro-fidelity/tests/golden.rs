@@ -1,8 +1,8 @@
 use std::fs;
 
 use iro_fidelity::{
-    FidelityReport, golden_all_dir, golden_dir, held_path, highlighter, load_held, render_markdown,
-    report_path, run_suite,
+    FULL_MATRIX_HEADING, FidelityReport, golden_all_dir, golden_dir, held_all_path, held_path,
+    highlighter, load_held, render_full_matrix, render_markdown, report_path, run_suite,
 };
 
 fn core_report() -> (FidelityReport, Vec<String>) {
@@ -14,7 +14,18 @@ fn held() -> Vec<String> {
     load_held(&held_path()).expect("held.toml parses")
 }
 
-fn describe_failures(report: &FidelityReport, grammars: &[&str]) -> String {
+fn held_all() -> Vec<String> {
+    load_held(&held_all_path()).expect("held-all.toml parses")
+}
+
+fn diffs_to_show() -> usize {
+    std::env::var("IRO_GOLDEN_ALL_DIFFS")
+        .ok()
+        .and_then(|v| v.parse().ok())
+        .unwrap_or(10)
+}
+
+fn describe_failures(report: &FidelityReport, grammars: &[&str], limit: usize) -> String {
     let mut out = String::new();
     for result in &report.results {
         if result.pass() || !grammars.contains(&result.grammar.as_str()) {
@@ -23,7 +34,7 @@ fn describe_failures(report: &FidelityReport, grammars: &[&str]) -> String {
         let shown: Vec<String> = result
             .diffs
             .iter()
-            .take(10)
+            .take(limit)
             .map(|d| d.to_string())
             .collect();
         out.push_str(&format!(
@@ -37,26 +48,32 @@ fn describe_failures(report: &FidelityReport, grammars: &[&str]) -> String {
     out
 }
 
-/// Every core grammar not in `held.toml` must be byte-identical on every theme, and
-/// every held grammar must still fail somewhere (otherwise un-hold it).
-#[test]
-fn core_gate() {
-    let (report, _) = core_report();
-    let held = held();
+/// Non-held failures and holds that now pass, for one report against one held list.
+fn gate<'r>(report: &'r FidelityReport, held: &[String]) -> (Vec<&'r str>, Vec<String>) {
     let failing = report.failing_grammars();
     let regressions: Vec<&str> = failing
         .iter()
         .copied()
         .filter(|g| !held.iter().any(|h| h == g))
         .collect();
-    let stale_holds: Vec<&String> = held
+    let stale_holds: Vec<String> = held
         .iter()
         .filter(|h| !failing.contains(&h.as_str()))
+        .cloned()
         .collect();
+    (regressions, stale_holds)
+}
+
+/// Every core grammar not in `held.toml` must be byte-identical on every theme, and
+/// every held grammar must still fail somewhere (otherwise un-hold it).
+#[test]
+fn core_gate() {
+    let (report, _) = core_report();
+    let (regressions, stale_holds) = gate(&report, &held());
     assert!(
         regressions.is_empty(),
         "non-held grammars are not identical: {regressions:?}{}",
-        describe_failures(&report, &regressions)
+        describe_failures(&report, &regressions, 10)
     );
     assert!(
         stale_holds.is_empty(),
@@ -82,26 +99,51 @@ fn core_ships_green() {
 }
 
 /// `FIDELITY.md` must match the current results byte for byte. Set
-/// `IRO_WRITE_REPORT=1` to regenerate it.
+/// `IRO_WRITE_REPORT=1` to regenerate it. The full-matrix section needs the synced
+/// `golden-all` fixtures; without them only the core section is checked.
 #[test]
 fn fidelity_report() {
     let (report, themes) = core_report();
-    let markdown = render_markdown(&report, &themes);
+    let mut markdown = render_markdown(&report, &themes);
+    let all_dir = golden_all_dir();
+    let has_all = all_dir.is_dir();
+    if has_all {
+        let highlighter = highlighter();
+        let (all, all_themes) =
+            run_suite(&highlighter, &all_dir).expect("golden-all fixtures load");
+        markdown.push_str(&render_full_matrix(&all, &all_themes, &held_all()));
+    }
     let path = report_path();
     if std::env::var_os("IRO_WRITE_REPORT").is_some() {
+        assert!(
+            has_all,
+            "regenerating FIDELITY.md needs the golden-all fixtures (run sync-assets)"
+        );
         fs::write(&path, &markdown).expect("write FIDELITY.md");
         println!("wrote {}", path.display());
         return;
     }
     let existing = fs::read_to_string(&path).unwrap_or_default();
+    let core_only = |text: &str| {
+        text.split(&format!("\n{FULL_MATRIX_HEADING}"))
+            .next()
+            .unwrap_or_default()
+            .to_owned()
+    };
+    let (want, got) = if has_all {
+        (existing.clone(), markdown.clone())
+    } else {
+        (core_only(&existing), core_only(&markdown))
+    };
     assert!(
-        existing == markdown,
+        want == got,
         "FIDELITY.md is stale or missing; run `IRO_WRITE_REPORT=1 cargo test -p iro-fidelity --test golden fidelity_report`"
     );
 }
 
-/// Informational: the full 234-grammar matrix. Skips when the fixtures are not
-/// synced; prints the score and the grammars that would be held.
+/// The full 234-grammar matrix, gated by `held-all.toml`. Skips when the fixtures are
+/// not synced. `IRO_GOLDEN_ALL_DIFFS=N` controls how many diffs are shown per failing
+/// triple.
 #[test]
 #[ignore]
 fn golden_all() {
@@ -120,15 +162,15 @@ fn golden_all() {
         report.by_grammar.len() - failing.len(),
         report.by_grammar.len()
     );
-    println!("would be held: {failing:?}");
-    for grammar in &failing {
-        let first = report
-            .results
-            .iter()
-            .find(|r| r.grammar == *grammar && !r.pass())
-            .and_then(|r| r.diffs.first())
-            .map(|d| d.to_string())
-            .unwrap_or_default();
-        println!("  {grammar}: {first}");
-    }
+    println!("failing: {failing:?}");
+    println!("{}", describe_failures(&report, &failing, diffs_to_show()));
+    let (regressions, stale_holds) = gate(&report, &held_all());
+    assert!(
+        regressions.is_empty(),
+        "non-held grammars are not identical: {regressions:?}"
+    );
+    assert!(
+        stale_holds.is_empty(),
+        "held grammars now pass; remove them from held-all.toml: {stale_holds:?}"
+    );
 }

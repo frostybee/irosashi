@@ -75,12 +75,14 @@ impl StateStack {
     }
 }
 
-/// A frame plus the per-line positions that vscode-textmate resets on every line.
+/// A frame plus the per-line positions that vscode-textmate resets on every line,
+/// and the memo id of the frame's scanner context once resolved.
 #[derive(Debug, Clone)]
 pub(crate) struct WorkFrame {
     pub frame: StackFrame,
     pub anchor_position: Option<usize>,
     pub enter_position: Option<usize>,
+    pub set: Option<usize>,
 }
 
 impl WorkFrame {
@@ -89,6 +91,7 @@ impl WorkFrame {
             frame,
             anchor_position: None,
             enter_position: None,
+            set: None,
         }
     }
 }
@@ -97,23 +100,40 @@ impl WorkFrame {
 #[derive(Debug)]
 pub(crate) struct WorkStack {
     frames: Vec<WorkFrame>,
+    source: Option<StateStack>,
+    dirty: bool,
 }
 
 impl WorkStack {
     pub fn root(frame: StackFrame) -> Self {
         Self {
             frames: vec![WorkFrame::new(frame)],
+            source: None,
+            dirty: true,
         }
     }
 
     pub fn from_snapshot(state: &StateStack) -> Self {
         Self {
             frames: state.frames().iter().cloned().map(WorkFrame::new).collect(),
+            source: Some(state.clone()),
+            dirty: false,
         }
     }
 
+    /// The state to carry to the next line; the incoming snapshot itself when no
+    /// frame was pushed or popped.
     pub fn snapshot(&self) -> StateStack {
-        StateStack(self.frames.iter().map(|w| w.frame.clone()).collect())
+        match &self.source {
+            Some(source) if !self.dirty => source.clone(),
+            _ => StateStack(self.frames.iter().map(|w| w.frame.clone()).collect()),
+        }
+    }
+
+    pub fn top_mut(&mut self) -> &mut WorkFrame {
+        self.frames
+            .last_mut()
+            .expect("a work stack always has a root frame")
     }
 
     #[cfg(test)]
@@ -136,6 +156,7 @@ impl WorkStack {
     }
 
     pub fn push(&mut self, frame: WorkFrame) {
+        self.dirty = true;
         self.frames.push(frame);
     }
 
@@ -144,18 +165,28 @@ impl WorkStack {
         if self.frames.len() <= 1 {
             return self.frames[0].clone();
         }
+        self.dirty = true;
         self.frames.pop().expect("checked non-empty")
     }
 
     pub fn safe_pop(&mut self) {
         if self.frames.len() > 1 {
+            self.dirty = true;
             self.frames.pop();
         }
     }
 
     /// Keeps the first `len` frames, and always at least the root.
     pub fn truncate(&mut self, len: usize) {
-        self.frames.truncate(len.max(1));
+        let len = len.max(1);
+        if len < self.frames.len() {
+            self.dirty = true;
+            self.frames.truncate(len);
+        }
+    }
+
+    pub fn has_while_frames(&self) -> bool {
+        self.frames.iter().any(|w| w.frame.while_pattern.is_some())
     }
 
     /// Whether the top frame's rule is already open in a frame entered at the same
@@ -215,7 +246,23 @@ mod tests {
             frame: frame(grammar, rule),
             anchor_position: None,
             enter_position: enter,
+            set: None,
         }
+    }
+
+    #[test]
+    fn unchanged_stacks_reuse_the_incoming_snapshot() {
+        let g = grammar();
+        let mut a = WorkStack::root(frame(&g, ROOT_RULE_ID));
+        a.push(work(&g, RuleId(1), Some(3)));
+        let snap = a.snapshot();
+        let mut b = WorkStack::from_snapshot(&snap);
+        b.truncate(5);
+        b.top_mut().set = Some(7);
+        assert!(Arc::ptr_eq(&b.snapshot().0, &snap.0));
+        b.pop();
+        assert!(!Arc::ptr_eq(&b.snapshot().0, &snap.0));
+        assert_eq!(b.snapshot().depth(), 1);
     }
 
     #[test]

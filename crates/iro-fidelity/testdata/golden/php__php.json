@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "php",
   "grammarSourceHash": "sha256:151296fb5dbdd8b955448ceb76c7c8a4b487b60ac57ffec076fd154ac690c4d2",
+  "injections": true,
   "source": "<?php\n\nnamespace App\\Console;\n\nuse Illuminate\\Console\\Scheduling\\Schedule;\nuse Illuminate\\Foundation\\Console\\Kernel as ConsoleKernel;\n\nclass Kernel extends ConsoleKernel\n{\n    /**\n     * Define the application's command schedule.\n     */\n    protected function schedule(Schedule $schedule): void\n    {\n        // $schedule->command('inspire')->hourly();\n    }\n\n    /**\n     * Register the commands for the application.\n     */\n    protected function commands(): void\n    {\n        $this->load(__DIR__.'/Commands');\n\n        require base_path('routes/console.php');\n    }\n}\n\n// From https://github.com/laravel/laravel/blob/10.x/app/Console/Kernel.php\n",
   "themes": {
     "github-dark": {

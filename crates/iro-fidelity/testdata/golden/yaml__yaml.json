@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "yaml",
   "grammarSourceHash": "sha256:7c8bbcfe1d6bbf7777ff044cc14ca59916cde2881e3c5d22fbc2c8528abe97ed",
+  "injections": true,
   "source": "name: Check dist/\n\non:\n  push:\n    branches:\n      - main\n    paths-ignore:\n      - '**.md'\n  pull_request:\n    paths-ignore:\n      - '**.md'\n\njobs:\n  check-dist:\n    runs-on: ubuntu-latest\n\n    steps:\n      - uses: actions/checkout@v3\n\n      - name: Set Node.js 16.x\n        uses: actions/setup-node@v3\n        with:\n          node-version: 16.x\n          cache: npm\n\n      - name: Install dependencies\n        run: npm ci\n\n      - name: Rebuild the dist/ directory\n        run: |\n          npm run build:compile\n          npm run build:package\n\n      - name: Compare the expected and actual dist/ directories\n        run: |\n          if [ \"$(git diff --ignore-space-at-eol dist/ | wc -l)\" -gt \"0\" ]; then\n            echo \"Detected uncommitted changes after build.  See status below:\"\n            git diff\n            exit 1\n          fi\n        id: diff\n\n      # If index.js was different than expected, upload the expected version as an artifact\n      - uses: actions/upload-artifact@v3\n        if: ${{ failure() && steps.diff.conclusion == 'failure' }}\n        with:\n          name: dist\n          path: dist/\n\n# From https://github.com/actions/add-to-project/blob/main/.github/workflows/check-dist.yml\n",
   "themes": {
     "github-dark": {

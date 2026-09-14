@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "java",
   "grammarSourceHash": "sha256:0566131d8c9a73b7251d21649dcd05813d133e2bc2d4ab37f540086bf767e8c8",
+  "injections": true,
   "source": "import java.awt.Rectangle;\n\npublic class ObjectVarsAsParameters\n{\tpublic static void main(String[] args)\n\t{\tgo();\n\t}\n\n\tpublic static void go()\n\t{\tRectangle r1 = new Rectangle(0,0,5,5);\n\t\tSystem.out.println(\"In method go. r1 \" + r1 + \"\\n\");\n\t\t// could have been\n\t\t//System.out.prinltn(\"r1\" + r1.toString());\n\t\tr1.setSize(10, 15);\n\t\tSystem.out.println(\"In method go. r1 \" + r1 + \"\\n\");\n\t\talterPointee(r1);\n\t\tSystem.out.println(\"In method go. r1 \" + r1 + \"\\n\");\n\n\t\talterPointer(r1);\n\t\tSystem.out.println(\"In method go. r1 \" + r1 + \"\\n\");\n\t}\n\n\tpublic static void alterPointee(Rectangle r)\n\t{\tSystem.out.println(\"In method alterPointee. r \" + r + \"\\n\");\n\t\tr.setSize(20, 30);\n\t\tSystem.out.println(\"In method alterPointee. r \" + r + \"\\n\");\n\t}\n\n\tpublic static void alterPointer(Rectangle r)\n\t{\tSystem.out.println(\"In method alterPointer. r \" + r + \"\\n\");\n\t\tr = new Rectangle(5, 10, 30, 35);\n\t\tSystem.out.println(\"In method alterPointer. r \" + r + \"\\n\");\n\t}\n\n}\n\n// From https://www.cs.utexas.edu/~scottm/cs307/javacode/codeSamples/ObjectVarsAsParameters.java\n",
   "themes": {
     "github-dark": {

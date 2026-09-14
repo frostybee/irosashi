@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "graphql",
   "grammarSourceHash": "sha256:f56631b49a3c65686e4f192c4c1e3ef23144b54a0cd9633e9ee025c5d7548044",
+  "injections": true,
   "source": "query($number_of_repos:Int!) {\n  viewer {\n    name\n     repositories(last: $number_of_repos) {\n       nodes {\n         name\n       }\n     }\n   }\n}\nvariables {\n   \"number_of_repos\": 3\n}\n\n# From https://docs.github.com/en/graphql/guides/forming-calls-with-graphql\n",
   "themes": {
     "github-dark": {

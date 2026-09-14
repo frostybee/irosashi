@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "jsx",
   "grammarSourceHash": "sha256:6bc4ddbfe2f322dec6590fd9b58d7df40cb78460bfd9ed2eacf71df30a086ded",
+  "injections": true,
   "source": "function Item({ name, isPacked }) {\n  if (isPacked) {\n    return null;\n  }\n  return <li className=\"item\">{name}</li>;\n}\n\nexport default function PackingList() {\n  return (\n    <section>\n      <h1>Sally Ride's Packing List</h1>\n      <ul>\n        <Item\n          isPacked={true}\n          name=\"Space suit\"\n        />\n        <Item\n          isPacked={true}\n          name=\"Helmet with a golden leaf\"\n        />\n        <Item\n          isPacked={false}\n          name=\"Photo of Tam\"\n        />\n      </ul>\n    </section>\n  );\n}\n\n// From https://react.dev/learn/conditional-rendering\n",
   "themes": {
     "github-dark": {

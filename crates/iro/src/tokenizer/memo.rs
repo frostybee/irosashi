@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::mem;
 use std::sync::Arc;
 
 use crate::Error;
@@ -92,34 +93,75 @@ impl CompiledSet {
     }
 }
 
+/// Index of a compiled context within one `Memo`; valid only for that memo.
+pub(crate) type SetId = usize;
+
+pub(crate) type CaptureBuf = Vec<Option<(usize, usize)>>;
+
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub(crate) struct MemoStats {
+    pub hits: u64,
+    pub misses: u64,
+    pub errors: u64,
+    pub while_hits: u64,
+    pub while_misses: u64,
+}
+
 /// Per-session cache of compiled scanner contexts and while patterns.
 #[derive(Debug, Default)]
 pub(crate) struct Memo {
-    sets: HashMap<MemoKey, Result<CompiledSet, Arc<Error>>>,
+    sets: Vec<Result<CompiledSet, Arc<Error>>>,
+    index: HashMap<MemoKey, SetId>,
     whiles: HashMap<Arc<str>, Result<PatternSet, Arc<Error>>>,
+    stats: MemoStats,
 }
 
 impl Memo {
-    /// Searches the context identified by `key`, compiling it on first use. Returns
-    /// the match and a clone of the winning entry so no borrow of the cache escapes.
-    pub fn search(
+    /// The id of the context identified by `key`, compiling it on first use.
+    pub fn resolve(
         &mut self,
         key: MemoKey,
         compile: impl FnOnce() -> Result<CompiledSet, Error>,
+    ) -> SetId {
+        if let Some(&id) = self.index.get(&key) {
+            self.stats.hits += 1;
+            return id;
+        }
+        self.stats.misses += 1;
+        let compiled = compile().map_err(Arc::new);
+        if compiled.is_err() {
+            self.stats.errors += 1;
+        }
+        self.sets.push(compiled);
+        let id = self.sets.len() - 1;
+        self.index.insert(key, id);
+        id
+    }
+
+    /// Searches a resolved context. The capture groups are written into `captures`,
+    /// whose allocation the returned `Match` takes over; the caller hands it back
+    /// after use so a line reuses one buffer.
+    pub fn search(
+        &mut self,
+        id: SetId,
         text: &str,
         pos: usize,
         options: SearchOptions,
+        captures: &mut CaptureBuf,
     ) -> Result<Option<(Match, EntryRule)>, Arc<Error>> {
-        let entry = self
-            .sets
-            .entry(key)
-            .or_insert_with(|| compile().map_err(Arc::new));
-        match entry {
+        match &mut self.sets[id] {
             Err(err) => Err(Arc::clone(err)),
-            Ok(compiled) => Ok(compiled.set.find_next_match(text, pos, options).map(|m| {
-                let rule = compiled.rules[m.index].clone();
-                (m, rule)
-            })),
+            Ok(compiled) => Ok(compiled
+                .set
+                .find_next_match_into(text, pos, options, captures)
+                .map(|index| {
+                    let rule = compiled.rules[index].clone();
+                    let m = Match {
+                        index,
+                        captures: mem::take(captures),
+                    };
+                    (m, rule)
+                })),
         }
     }
 
@@ -130,6 +172,11 @@ impl Memo {
         pos: usize,
         options: SearchOptions,
     ) -> Result<Option<Match>, Arc<Error>> {
+        if self.whiles.contains_key(pattern) {
+            self.stats.while_hits += 1;
+        } else {
+            self.stats.while_misses += 1;
+        }
         let entry = self
             .whiles
             .entry(Arc::clone(pattern))
@@ -144,9 +191,17 @@ impl Memo {
         self.sets.len() + self.whiles.len()
     }
 
+    pub fn stats(&self) -> MemoStats {
+        self.stats
+    }
+
+    pub fn reset_stats(&mut self) {
+        self.stats = MemoStats::default();
+    }
+
     #[cfg(test)]
     pub fn entry_len(&self, key: &MemoKey) -> Option<usize> {
-        match self.sets.get(key)? {
+        match &self.sets[*self.index.get(key)?] {
             Ok(compiled) => Some(compiled.rules.len()),
             Err(_) => None,
         }
@@ -168,6 +223,21 @@ mod tests {
             )
             .unwrap(),
         )
+    }
+
+    fn search_key(
+        memo: &mut Memo,
+        g: &Arc<Grammar>,
+        key: &MemoKey,
+    ) -> Result<Option<usize>, Arc<Error>> {
+        let override_end = key.end.clone();
+        let rule = key.rule;
+        let id = memo.resolve(key.clone(), || {
+            CompiledSet::compile(g, rule, g, &(), override_end.as_deref())
+        });
+        let mut buf = CaptureBuf::new();
+        memo.search(id, "(x)\n", 0, SearchOptions::NONE, &mut buf)
+            .map(|m| m.map(|(m, _)| m.start()))
     }
 
     #[test]
@@ -195,20 +265,14 @@ mod tests {
         assert_ne!(root, static_end);
         assert_ne!(empty_end, static_end);
         for key in [&root, &empty_end, &static_end] {
-            let k = key.clone();
-            let override_end = key.end.clone();
-            memo.search(
-                k,
-                || CompiledSet::compile(&g, key.rule, &g, &(), override_end.as_deref()),
-                "(x)\n",
-                0,
-                SearchOptions::NONE,
-            )
-            .unwrap();
+            search_key(&mut memo, &g, key).unwrap();
         }
         assert_eq!(memo.entry_len(&root), Some(2));
         assert_eq!(memo.entry_len(&empty_end), Some(2));
         assert_eq!(memo.entry_len(&static_end), Some(2));
+        search_key(&mut memo, &g, &root).unwrap();
+        assert_eq!(memo.stats().misses, 3);
+        assert_eq!(memo.stats().hits, 1);
     }
 
     #[test]
@@ -217,15 +281,14 @@ mod tests {
         let paren = g.root_patterns()[0];
         let mut memo = Memo::default();
         let key = MemoKey::new(&g, paren, &g, Some(Arc::from("(")));
-        let compile = || CompiledSet::compile(&g, paren, &g, &(), Some("("));
+        assert!(search_key(&mut memo, &g, &key).is_err());
+        let id = memo.resolve(key, || unreachable!());
+        let mut buf = CaptureBuf::new();
         assert!(
-            memo.search(key.clone(), compile, "x\n", 0, SearchOptions::NONE)
+            memo.search(id, "x\n", 0, SearchOptions::NONE, &mut buf)
                 .is_err()
         );
-        assert!(
-            memo.search(key, || unreachable!(), "x\n", 0, SearchOptions::NONE)
-                .is_err()
-        );
+        assert_eq!(memo.stats().errors, 1);
         assert!(
             memo.search_while(&Arc::from("["), "x\n", 0, SearchOptions::NONE)
                 .is_err()

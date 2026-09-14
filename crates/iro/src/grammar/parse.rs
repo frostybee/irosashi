@@ -21,7 +21,11 @@ impl Grammar {
             .filter(|name| !name.is_empty())
             .ok_or_else(|| Error::GrammarParse("missing scopeName".to_owned()))?;
 
-        let mut parser = Parser { rules: Vec::new() };
+        let mut parser = Parser {
+            rules: Vec::new(),
+            enclosing: Vec::new(),
+            repo_stack: Vec::new(),
+        };
         let root = parser.reserve();
         let patterns = parser.parse_list(&raw.patterns);
         parser.rules[root.index()] = Rule::Collection {
@@ -47,6 +51,7 @@ impl Grammar {
             scope_name,
             name: raw.name,
             rules: parser.rules,
+            enclosing: parser.enclosing,
             repository,
             injections,
             injection_selector: raw.injection_selector.as_deref().map(Selector::parse),
@@ -57,12 +62,15 @@ impl Grammar {
 
 struct Parser {
     rules: Vec<Rule>,
+    enclosing: Vec<Option<RuleId>>,
+    repo_stack: Vec<RuleId>,
 }
 
 impl Parser {
     fn reserve(&mut self) -> RuleId {
         let id = RuleId(u32::try_from(self.rules.len()).expect("rule arena fits in u32"));
         self.rules.push(Rule::Noop);
+        self.enclosing.push(self.repo_stack.last().copied());
         id
     }
 
@@ -88,7 +96,7 @@ impl Parser {
     /// every sibling key; elsewhere `match`, then `begin`, then `patterns` win over it.
     fn parse_rule(&mut self, raw: &RawRule, in_pattern_list: bool) -> Option<RuleId> {
         let match_ = raw.match_.as_deref();
-        let begin = raw.begin.as_deref().filter(|b| !b.is_empty());
+        let begin = raw.begin.as_deref();
         let has_patterns = !raw.patterns.is_empty();
 
         if let Some(include) = raw.include.as_deref()
@@ -161,10 +169,19 @@ impl Parser {
         None
     }
 
+    /// A collection with its own repository scopes every rule parsed under it, its
+    /// repository entries included, so includes inside resolve through it later.
     fn parse_collection(&mut self, patterns: &[RawRule], repository: &RawRepository) -> RuleId {
         let id = self.reserve();
-        let repository = (!repository.0.is_empty()).then(|| self.parse_repository(repository));
-        let patterns = self.parse_list(patterns);
+        let (repository, patterns) = if repository.0.is_empty() {
+            (None, self.parse_list(patterns))
+        } else {
+            self.repo_stack.push(id);
+            let repository = self.parse_repository(repository);
+            let patterns = self.parse_list(patterns);
+            self.repo_stack.pop();
+            (Some(repository), patterns)
+        };
         self.rules[id.index()] = Rule::Collection {
             patterns,
             repository,
@@ -433,15 +450,17 @@ mod tests {
     }
 
     #[test]
-    fn empty_begin_falls_through_to_collection_or_noop() {
+    fn empty_begin_is_a_zero_width_begin_rule() {
         let g = with_patterns(
             r#"[{"begin": "", "end": "e", "patterns": [{"match": "m"}]}, {"begin": "", "end": "e"}]"#,
         );
-        assert_eq!(g.root_patterns().len(), 1);
-        assert!(matches!(
-            g.rule(g.root_patterns()[0]),
-            Rule::Collection { .. }
-        ));
+        assert_eq!(g.root_patterns().len(), 2);
+        for &id in g.root_patterns() {
+            assert!(matches!(
+                g.rule(id),
+                Rule::BeginEnd { begin, .. } if begin.source().is_empty()
+            ));
+        }
     }
 
     #[test]

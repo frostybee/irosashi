@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "bat",
   "grammarSourceHash": "sha256:927af9a1851d3da672a42e340df47cf01f3ad5f7d71ccea05edad808a1bd98ac",
+  "injections": true,
   "source": "rem\nrem  Alternate form of if-elseif-else structure with goto for else\nrem  case.  That way, you can group code together in a \"more logical\"\nrem  or \"more natural\" manner.\nrem\n\nif .%1 == .1 goto 1\nif .%1 == .2 goto 2\ngoto else\n:1\necho You selected 1\ngoto endif\n:2\necho You selected 2\ngoto endif\n:else\necho else (neither 1 nor 2)\ngoto endif\n:endif\n\n:: From https://github.com/Archive-projects/Batch-File-examples/blob/master/files/tf5.bat\n",
   "themes": {
     "github-dark": {

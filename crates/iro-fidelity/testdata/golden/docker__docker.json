@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "docker",
   "grammarSourceHash": "sha256:772f17e3f6703aacddfa7500bfdac4a7d93d96e2cfa3a93b02699e65ecc68568",
+  "injections": true,
   "source": "# syntax=docker/dockerfile:1\nFROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env\nWORKDIR /app\n\n# Copy csproj and restore as distinct layers\nCOPY *.csproj ./\nRUN dotnet restore\n\n# Copy everything else and build\nCOPY ../engine/examples ./\nRUN dotnet publish -c Release -o out\n\n# Build runtime image\nFROM mcr.microsoft.com/dotnet/aspnet:3.1\nWORKDIR /app\nCOPY --from=build-env /app/out .\nENTRYPOINT [\"dotnet\", \"aspnetapp.dll\"]\n\n# From https://docs.docker.com/samples/dotnetcore/",
   "themes": {
     "github-dark": {

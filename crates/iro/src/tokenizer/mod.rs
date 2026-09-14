@@ -10,16 +10,16 @@ use std::ops::Range;
 use std::panic::{AssertUnwindSafe, catch_unwind};
 use std::sync::Arc;
 
-use crate::grammar::{Grammar, GrammarResolver, Priority, ROOT_RULE_ID};
+use crate::grammar::{Grammar, GrammarResolver, ROOT_RULE_ID};
 use crate::scope::{ScopeInterner, ScopeListId};
 use crate::theme::{Theme, ThemeId};
 use crate::token::{
     Diagnostic, DiagnosticKind, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token, TokenStyle,
     TokensResult,
 };
-use crate::tokenizer::injections::InjectionEntry;
+use crate::tokenizer::injections::{InjectionEntry, InjectionHits};
 use crate::tokenizer::line::{LineCtx, TokenBuilder, run_line};
-use crate::tokenizer::memo::Memo;
+use crate::tokenizer::memo::{CaptureBuf, Memo};
 use crate::tokenizer::state::{RuleRef, StackFrame, WorkStack};
 
 pub use injections::InjectionProvider;
@@ -60,6 +60,27 @@ pub struct SessionFootprint {
     pub compiled_sets: usize,
 }
 
+/// Counters accumulated over a session's life, for cache tuning and benchmarks.
+/// A memo lookup happens once per open frame per line; a scan step is one regset
+/// search of the grammar's context.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct SessionStats {
+    pub lines: u64,
+    pub scan_steps: u64,
+    pub memo_hits: u64,
+    pub memo_misses: u64,
+    pub memo_errors: u64,
+    pub while_hits: u64,
+    pub while_misses: u64,
+    pub injection_list_hits: u64,
+    pub injection_list_misses: u64,
+    pub injection_searches: u64,
+    pub injection_set_compiles: u64,
+    pub capture_retokenizations: u64,
+    pub style_hits: u64,
+    pub style_misses: u64,
+}
+
 struct Styler {
     theme: Arc<Theme>,
     by_list: Vec<Option<TokenStyle>>,
@@ -74,8 +95,10 @@ pub struct Session {
     interner: ScopeInterner,
     memo: Memo,
     injections: Vec<InjectionEntry>,
-    injection_hits: HashMap<ScopeListId, Vec<(usize, Priority)>>,
+    injection_hits: InjectionHits,
     scan_bufs: Vec<String>,
+    capture_buf: CaptureBuf,
+    stats: SessionStats,
     styles: HashMap<ThemeId, Styler>,
     initial: StateStack,
 }
@@ -99,11 +122,31 @@ impl Session {
             interner,
             memo: Memo::default(),
             injections,
-            injection_hits: HashMap::new(),
+            injection_hits: Vec::new(),
             scan_bufs: vec![String::new()],
+            capture_buf: Vec::new(),
+            stats: SessionStats::default(),
             styles: HashMap::new(),
             initial: root.snapshot(),
         }
+    }
+
+    /// Counters since the session was created or `reset_stats` was called.
+    pub fn stats(&self) -> SessionStats {
+        let memo = self.memo.stats();
+        SessionStats {
+            memo_hits: memo.hits,
+            memo_misses: memo.misses,
+            memo_errors: memo.errors,
+            while_hits: memo.while_hits,
+            while_misses: memo.while_misses,
+            ..self.stats
+        }
+    }
+
+    pub fn reset_stats(&mut self) {
+        self.stats = SessionStats::default();
+        self.memo.reset_stats();
     }
 
     pub fn grammar(&self) -> &Arc<Grammar> {
@@ -163,14 +206,19 @@ impl Session {
             injections,
             injection_hits,
             scan_bufs,
+            capture_buf,
+            stats,
             ..
         } = self;
+        stats.lines += 1;
         let mut cx = LineCtx {
             memo,
             interner,
             injections,
             injection_hits,
             scan_bufs,
+            capture_buf,
+            stats,
             resolver: resolver.as_ref(),
             base: grammar,
         };
@@ -237,14 +285,21 @@ impl Session {
         include_scopes: bool,
     ) -> TokensResult {
         assert!(!themes.is_empty(), "themed needs at least one theme");
-        let raw = self.tokenize(code, options);
         let ranges = split_lines(code);
         let multi = themes.len() > 1;
         let mut styles: HashMap<ScopeListId, Box<[TokenStyle]>> = HashMap::new();
         let mut used: HashSet<ScopeListId> = HashSet::new();
+        let mut diagnostics = Vec::new();
 
-        let mut lines = Vec::with_capacity(raw.lines.len());
-        for (tokens, range) in raw.lines.into_iter().zip(ranges) {
+        let mut lines = Vec::with_capacity(ranges.len());
+        let mut state = self.initial_state();
+        for (index, range) in ranges.into_iter().enumerate() {
+            let line = self.tokenize_line(&code[range.clone()], &state, index == 0, options);
+            if let Some(kind) = line.diagnostic {
+                diagnostics.push(Diagnostic { line: index, kind });
+            }
+            state = line.state;
+            let tokens = line.tokens;
             let mut themed = Vec::with_capacity(tokens.len());
             for t in tokens {
                 if t.start >= t.end {
@@ -278,14 +333,7 @@ impl Session {
                     .collect(),
             )
         });
-        TokensResult::new(
-            code.to_owned(),
-            lines,
-            themes,
-            styles,
-            scopes,
-            raw.diagnostics,
-        )
+        TokensResult::new(code.to_owned(), lines, themes, styles, scopes, diagnostics)
     }
 
     /// Resolves the style of a scope stack against `theme`, cached per stack.
@@ -302,8 +350,10 @@ impl Session {
                 .resize(interner.list_count().max(index + 1), None);
         }
         if let Some(style) = styler.by_list[index] {
+            self.stats.style_hits += 1;
             return style;
         }
+        self.stats.style_misses += 1;
         let names = interner.names(scopes);
         let settings = styler.theme.resolve(&names);
         let style = TokenStyle {
@@ -381,6 +431,42 @@ mod tests {
     fn session(json: &str) -> Session {
         let grammar = Arc::new(Grammar::parse(json.as_bytes()).unwrap());
         Session::new(grammar, Arc::new(()))
+    }
+
+    #[test]
+    fn stats_count_memo_hits_after_the_first_pass() {
+        let mut s = session(
+            r#"{"scopeName": "source.t", "patterns": [
+                {"begin": "\\(", "end": "\\)", "patterns": [{"match": "x", "name": "x"}]}]}"#,
+        );
+        s.tokenize("(x)\n(x x)", NO_OPTS);
+        let first = s.stats();
+        assert_eq!(first.lines, 2);
+        assert_eq!(first.memo_misses, 2);
+        assert!(first.scan_steps >= 6);
+        s.tokenize("(x)\n(x x)", NO_OPTS);
+        let second = s.stats();
+        assert_eq!(second.memo_misses, 2);
+        assert!(second.memo_hits > first.memo_hits);
+        s.reset_stats();
+        assert_eq!(s.stats(), SessionStats::default());
+    }
+
+    #[test]
+    fn empty_begin_pushes_a_zero_width_scope() {
+        let mut s = session(
+            r#"{"scopeName": "source.t", "patterns": [
+                {"begin": "(if)\\s+", "end": "$", "name": "flow", "captures": {"1": {"name": "kw"}},
+                 "patterns": [{"begin": "", "end": "$", "name": "embedded",
+                               "patterns": [{"match": "\\w+", "name": "w"}]}]}]}"#,
+        );
+        let r = s.tokenize("if cond", NO_OPTS);
+        let last = r.lines[0].last().unwrap();
+        assert_eq!((last.start, last.end), (3, 7));
+        assert_eq!(
+            s.scope_names(last.scopes),
+            ["source.t", "flow", "embedded", "w"]
+        );
     }
 
     #[test]

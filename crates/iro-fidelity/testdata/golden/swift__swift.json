@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "swift",
   "grammarSourceHash": "sha256:03e8218898ecb5a25aae40a9e374165b0bc12ce82d3219094f6b5c75cb2b7b1c",
+  "injections": true,
   "source": "class Residence {\n    var rooms: [Room] = []\n    var numberOfRooms: Int {\n        return rooms.count\n    }\n    subscript(i: Int) -> Room {\n        get {\n            return rooms[i]\n        }\n        set {\n            rooms[i] = newValue\n        }\n    }\n    func printNumberOfRooms() {\n        print(\"The number of rooms is \\(numberOfRooms)\")\n    }\n    var address: Address?\n}\n\n// From https://docs.swift.org/swift-book/documentation/the-swift-programming-language/optionalchaining#Defining-Model-Classes-for-Optional-Chaining\n",
   "themes": {
     "github-dark": {

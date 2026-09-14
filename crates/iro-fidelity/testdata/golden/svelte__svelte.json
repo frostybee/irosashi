@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "svelte",
   "grammarSourceHash": "sha256:f7a36cc472a387564ce78f8275d47bcb72c707f0143b8b11be21a5734291b8d6",
+  "injections": true,
   "source": "<script>\n\tlet files;\n\n\t$: if (files) {\n\t\t// Note that `files` is of type `FileList`, not an Array:\n\t\t// https://developer.mozilla.org/en-US/docs/Web/API/FileList\n\t\tconsole.log(files);\n\n\t\tfor (const file of files) {\n\t\t\tconsole.log(`${file.name}: ${file.size} bytes`);\n\t\t}\n\t}\n</script>\n\n<label for=\"avatar\">Upload a picture:</label>\n<input accept=\"image/png, image/jpeg\" bind:files id=\"avatar\" name=\"avatar\" type=\"file\" />\n\n<label for=\"many\">Upload multiple files of any type:</label>\n<input bind:files id=\"many\" multiple type=\"file\" />\n\n{#if files}\n\t<h2>Selected files:</h2>\n\t{#each Array.from(files) as file}\n\t\t<p>{file.name} ({file.size} bytes)</p>\n\t{/each}\n{/if}\n\n// From https://svelte.dev/examples/file-inputs\n",
   "themes": {
     "github-dark": {

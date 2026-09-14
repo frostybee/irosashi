@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "sql",
   "grammarSourceHash": "sha256:9ad0fbe07a5e8cd4c7396d526c2280c4d6021e18f2e20a8d5956a0502da8cee4",
+  "injections": true,
   "source": "USE AdventureWorks2022;\nGO\nIF OBJECT_ID('dbo.NewProducts', 'U') IS NOT NULL\n    DROP TABLE dbo.NewProducts;\nGO\nALTER DATABASE AdventureWorks2022 SET RECOVERY BULK_LOGGED;\nGO\n\nSELECT * INTO dbo.NewProducts\nFROM Production.Product\nWHERE ListPrice > $25\nAND ListPrice < $100;\nGO\nALTER DATABASE AdventureWorks2022 SET RECOVERY FULL;\nGO\n\n-- From https://learn.microsoft.com/en-us/sql/t-sql/queries/select-examples-transact-sql\n",
   "themes": {
     "github-dark": {

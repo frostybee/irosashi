@@ -7,7 +7,17 @@ license.workspace = true
 repository.workspace = true
 publish = false
 
+[lib]
+bench = false
+
 [dependencies]
 iro = { path = "../iro" }
 serde.workspace = true
 serde_json.workspace = true
+
+[dev-dependencies]
+criterion.workspace = true
+
+[[bench]]
+name = "highlight"
+harness = false

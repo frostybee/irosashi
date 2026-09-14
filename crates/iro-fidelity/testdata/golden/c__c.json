@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "c",
   "grammarSourceHash": "sha256:f315a45eaaf8cd90856867d26fe02eb7f6f4c3be86a1368b0b9d780a1b838173",
+  "injections": true,
   "source": "#include <stdio.h>\n\n#define ARR_LEN 7\n\nvoid qsort(int v[], int left, int right);\nvoid printArr(int v[], int len);\n\nint main()\n{\n\tint i;\n\tint v[ARR_LEN] = { 4, 3, 1, 7, 9, 6, 2 };\n\tprintArr(v, ARR_LEN);\n\tqsort(v, 0, ARR_LEN-1);\n\tprintArr(v, ARR_LEN);\n\treturn 0;\n}\n\nvoid qsort(int v[], int left, int right)\n{\n\tint i, last;\n\tvoid swap(int v[], int i, int j);\n\n\tif (left >= right)\n\t\treturn;\n\tswap(v, left, (left + right) / 2);\n\tlast = left;\n\tfor (i = left+1; i <= right; i++)\n\t\tif (v[i] < v[left])\n\t\t\tswap(v, ++last, i);\n\tswap(v, left, last);\n\tqsort(v, left, last-1);\n\tqsort(v, last+1, right);\n}\n\nvoid swap(int v[], int i, int j)\n{\n\tint temp;\n\n\ttemp = v[i];\n\tv[i] = v[j];\n\tv[j] = temp;\n}\n\nvoid printArr(int v[], int len)\n{\n\tint i;\n\tfor (i = 0; i < len; i++)\n\t\tprintf(\"%d \", v[i]);\n\tprintf(\"\\n\");\n}\n\n// From https://github.com/Heatwave/The-C-Programming-Language-2nd-Edition/blob/master/chapter-4-functions-and-program-structure/8.qsort.c",
   "themes": {
     "github-dark": {

@@ -74,20 +74,36 @@ impl PatternSet {
         start: usize,
         options: SearchOptions,
     ) -> Option<Match> {
+        let mut captures = Vec::new();
+        let index = self.find_next_match_into(text, start, options, &mut captures)?;
+        Some(Match { index, captures })
+    }
+
+    /// `find_next_match` writing the capture groups into a caller-owned buffer, so a
+    /// tokenizer loop allocates once per line rather than once per search. Returns
+    /// the winning pattern index.
+    pub fn find_next_match_into(
+        &mut self,
+        text: &str,
+        start: usize,
+        options: SearchOptions,
+        captures: &mut Vec<Option<(usize, usize)>>,
+    ) -> Option<usize> {
         debug_assert!(text.is_char_boundary(start));
         let regset = self.regset.as_ref()?;
         if text.is_empty() || start > text.len() {
             return None;
         }
-        let (index, captures) = regset.captures_with_options(
+        let (index, region) = regset.captures_with_options(
             text,
             start,
             text.len(),
             RegSetLead::Position,
             options.into_onig(),
         )?;
-        let captures = (0..captures.len()).map(|i| captures.pos(i)).collect();
-        Some(Match { index, captures })
+        captures.clear();
+        captures.extend((0..region.len()).map(|i| region.pos(i)));
+        Some(index)
     }
 }
 

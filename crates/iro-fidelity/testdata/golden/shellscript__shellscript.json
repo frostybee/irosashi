@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "shellscript",
   "grammarSourceHash": "sha256:d644a0bd0e8f3285cbb544332422d0fb703e869f2001a8a0e9f1e710ebd0316d",
+  "injections": true,
   "source": "#!/bin/bash\n# weather.sh\n# Copyright 2018 computer-geek64. All rights reserved.\n\nprogram=Weather\nversion=1.1\nyear=2018\ndeveloper=computer-geek64\n\ncase $1 in\n-h | --help)\n\techo \"$program $version\"\n\techo \"Copyright $year $developer. All rights reserved.\"\n\techo\n\techo \"Usage: weather [options]\"\n\techo \"Option          Long Option             Description\"\n\techo \"-h              --help                  Show the help screen\"\n\techo \"-l [location]   --location [location]   Specifies the location\"\n\t;;\n-l | --location)\n\tcurl https://wttr.in/$2\n\t;;\n*)\n\tcurl https://wttr.in\n\t;;\nesac\n\n# From https://github.com/ruanyf/simple-bash-scripts/blob/master/scripts/weather.sh\n",
   "themes": {
     "github-dark": {

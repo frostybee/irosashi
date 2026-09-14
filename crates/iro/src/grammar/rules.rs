@@ -161,6 +161,10 @@ pub struct Grammar {
     pub name: Option<String>,
     /// `rules[0]` is the root `Collection` holding the top-level patterns.
     pub rules: Vec<Rule>,
+    /// Per rule, the nearest enclosing collection that carries a local repository,
+    /// so includes inside it resolve through that repository even when the rule is
+    /// compiled on its own later.
+    pub enclosing: Vec<Option<RuleId>>,
     pub repository: Repository,
     /// In source order; vscode-textmate stable-sorts injections by priority.
     pub injections: Vec<Injection>,

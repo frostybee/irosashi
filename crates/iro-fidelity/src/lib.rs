@@ -1,6 +1,8 @@
 //! Fixture loader, comparator, scoring and report for checking `iro` against
 //! vscode-textmate goldens.
 
+pub mod alloc;
+pub mod bench_inputs;
 pub mod compare;
 pub mod fixture;
 pub mod held;
@@ -14,7 +16,7 @@ use iro::{CodeToTokensOptions, Highlighter, HighlighterBuilder};
 pub use compare::{DiffKind, TokenDiff, compare_theme_tokens, normalize_color};
 pub use fixture::{Fixture, FixtureToken, ThemeFixture, load_fixture, load_fixtures};
 pub use held::{load_held, parse_held};
-pub use report::render_markdown;
+pub use report::{FULL_MATRIX_HEADING, render_full_matrix, render_markdown};
 pub use score::{FidelityReport, Score, TripleResult, compute_report};
 
 /// Path of the `iro` crate's `assets/` directory.
@@ -34,6 +36,11 @@ pub fn golden_all_dir() -> PathBuf {
 
 pub fn held_path() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("held.toml")
+}
+
+/// Path of the held list for the full matrix.
+pub fn held_all_path() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("held-all.toml")
 }
 
 /// Path of the report at the repository root.
@@ -117,6 +124,18 @@ pub fn run_suite(
     dir: &Path,
 ) -> std::io::Result<(FidelityReport, Vec<String>)> {
     let fixtures = load_fixtures(dir)?;
+    let stale: Vec<&str> = fixtures
+        .iter()
+        .filter(|f| !f.injections)
+        .map(|f| f.grammar.as_str())
+        .collect();
+    if !stale.is_empty() {
+        println!(
+            "warning: {} fixture(s) in {} were generated without injectTo injections: {stale:?}",
+            stale.len(),
+            dir.display()
+        );
+    }
     let mut results = Vec::new();
     let mut themes = std::collections::BTreeSet::new();
     for fixture in &fixtures {

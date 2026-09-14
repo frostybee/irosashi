@@ -1,16 +1,16 @@
-use std::collections::HashMap;
 use std::sync::Arc;
 
 use crate::Error;
-use crate::grammar::{
-    Grammar, GrammarResolver, Priority, Rule, resolve_backrefs, resolve_scope_backrefs,
-};
+use crate::grammar::{Grammar, GrammarResolver, Rule, resolve_backrefs, resolve_scope_backrefs};
 use crate::regex::{AnchorActive, Match};
 use crate::scope::{ScopeInterner, ScopeListId};
 use crate::token::Token;
+use crate::tokenizer::SessionStats;
 use crate::tokenizer::captures::handle_captures;
-use crate::tokenizer::injections::{InjectionEntry, match_injections, pick_best_match};
-use crate::tokenizer::memo::{CompiledSet, EntryRule, Memo, MemoKey};
+use crate::tokenizer::injections::{
+    InjectionEntry, InjectionHits, match_injections, pick_best_match,
+};
+use crate::tokenizer::memo::{CaptureBuf, CompiledSet, EntryRule, Memo, MemoKey};
 use crate::tokenizer::state::{RuleRef, StackFrame, WorkFrame, WorkStack};
 
 /// Disjoint borrows of the session's mutable state for one line, so the line
@@ -19,8 +19,10 @@ pub(crate) struct LineCtx<'s> {
     pub memo: &'s mut Memo,
     pub interner: &'s mut ScopeInterner,
     pub injections: &'s mut Vec<InjectionEntry>,
-    pub injection_hits: &'s mut HashMap<ScopeListId, Vec<(usize, Priority)>>,
+    pub injection_hits: &'s mut InjectionHits,
     pub scan_bufs: &'s mut Vec<String>,
+    pub capture_buf: &'s mut CaptureBuf,
+    pub stats: &'s mut SessionStats,
     pub resolver: &'s dyn GrammarResolver,
     pub base: &'s Arc<Grammar>,
 }
@@ -116,34 +118,39 @@ pub(crate) fn run_line(
             check_while_conditions(cx, scan, stack, out, &mut is_first_line, depth)?;
         pos = line_pos;
         anchor_position = anchor;
+    } else {
+        cx.stats.capture_retokenizations += 1;
     }
 
     let scan_len = scan.len();
     while pos <= scan_len {
         debug_assert!(scan.is_char_boundary(pos));
-        let top = stack.top();
-        let rule = top.frame.rule.clone();
-        let end_override = top.frame.end_override.clone();
+        cx.stats.scan_steps += 1;
         let options = AnchorActive::new(is_first_line, anchor_position, pos).to_search_options();
 
-        let key = MemoKey::new(&rule.grammar, rule.rule, cx.base, end_override.clone());
-        let base = cx.base;
-        let resolver = cx.resolver;
-        let grammar_match = cx.memo.search(
-            key,
-            || {
-                CompiledSet::compile(
-                    &rule.grammar,
-                    rule.rule,
-                    base,
-                    resolver,
-                    end_override.as_deref(),
-                )
-            },
-            scan,
-            pos,
-            options,
-        )?;
+        let set_id = match stack.top().set {
+            Some(id) => id,
+            None => {
+                let top = stack.top();
+                let rule = top.frame.rule.clone();
+                let end_override = top.frame.end_override.clone();
+                let key = MemoKey::new(&rule.grammar, rule.rule, cx.base, end_override.clone());
+                let base = cx.base;
+                let resolver = cx.resolver;
+                let id = cx.memo.resolve(key, || {
+                    CompiledSet::compile(
+                        &rule.grammar,
+                        rule.rule,
+                        base,
+                        resolver,
+                        end_override.as_deref(),
+                    )
+                });
+                stack.top_mut().set = Some(id);
+                id
+            }
+        };
+        let grammar_match = cx.memo.search(set_id, scan, pos, options, cx.capture_buf)?;
 
         let injection = if top_level {
             match_injections(cx, stack.scopes(), scan, pos, options)
@@ -221,6 +228,9 @@ pub(crate) fn run_line(
             pos = match_end;
             is_first_line = false;
         }
+        let mut recycled = m.captures;
+        recycled.clear();
+        *cx.capture_buf = recycled;
     }
     Ok(())
 }
@@ -243,6 +253,9 @@ fn check_while_conditions(
         None
     };
 
+    if !stack.has_while_frames() {
+        return Ok((line_pos, anchor_position));
+    }
     for idx in stack.while_frame_indices() {
         let frame = &stack.frame(idx).frame;
         let pattern = frame
@@ -426,6 +439,7 @@ fn handle_begin_rule(
         },
         anchor_position: Some(m.end()),
         enter_position: Some(pos),
+        set: None,
     });
 }
 

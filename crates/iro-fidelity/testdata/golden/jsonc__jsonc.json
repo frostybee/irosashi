@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "jsonc",
   "grammarSourceHash": "sha256:b0c4589662a035e250d9db2f766b5030d49383447ec449af0eb884816fa4b672",
+  "injections": true,
   "source": "// A jsonc example document\n{\n owner:{\n  name:`komkom`\n  dob: /* just some random dob */ `1975-01-25T12:00:00-02:00`\n }\n\n database:{ // our live db\n  server:`192.168.1.1`\n  ports:[8001,8002,8003]\n  connectionMax:5000\n  enabled:true\n }\n\n servers:{ // a server\n  alpha:{\n   ip: /* is soon invalid */ `10.0.0.1`\n   dc:`eqdc10`\n  }\n\n  beta:{\n   ip:`10.0.0.2`\n   dc:`eqdc10`\n  }\n }\n\n clients:{\n  data:[[\"gamma\",\"delta\"],[1,2]]\n }\n\n hosts:[alpha,omega]\n}\n\n// From https://github.com/komkom/jsonc\n",
   "themes": {
     "github-dark": {

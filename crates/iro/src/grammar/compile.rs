@@ -55,7 +55,7 @@ pub fn compile_patterns(
         visited: HashSet::new(),
         out: Vec::new(),
     };
-    let context = Context::root(grammar);
+    let context = Context::for_rule(grammar, rule);
     match grammar.rule(rule) {
         Rule::Collection {
             patterns,
@@ -129,6 +129,30 @@ impl Context {
         }
     }
 
+    /// The repository chain in force where `rule` is defined: the grammar's
+    /// repository, then every enclosing collection that carries one, outermost first.
+    /// vscode-textmate resolves includes against this merged view, so a rule compiled
+    /// later on its own (from a stack frame) still sees the same keys.
+    fn for_rule(grammar: &Arc<Grammar>, rule: RuleId) -> Self {
+        let mut chain = Vec::new();
+        let mut current = grammar.enclosing.get(rule.index()).copied().flatten();
+        while let Some(collection) = current {
+            chain.push(collection);
+            current = grammar.enclosing[collection.index()];
+        }
+        let mut repos = vec![RepoRef::Root(Arc::clone(grammar))];
+        repos.extend(
+            chain
+                .into_iter()
+                .rev()
+                .map(|collection| RepoRef::Local(Arc::clone(grammar), collection)),
+        );
+        Self {
+            grammar: Arc::clone(grammar),
+            repos,
+        }
+    }
+
     fn with_local(&self, collection: RuleId) -> Self {
         let mut repos = self.repos.clone();
         repos.push(RepoRef::Local(Arc::clone(&self.grammar), collection));
@@ -159,13 +183,8 @@ impl Compiler<'_> {
                         self.emit(context, id);
                     }
                 }
-                Rule::BeginEnd {
-                    begin, patterns, ..
-                }
-                | Rule::BeginWhile {
-                    begin, patterns, ..
-                } => {
-                    if !begin.source().is_empty() && !self.all_unresolvable(context, patterns) {
+                Rule::BeginEnd { .. } | Rule::BeginWhile { .. } => {
+                    if !self.is_hollow(context, id, &mut HashSet::new()) {
                         self.emit(context, id);
                     }
                 }
@@ -209,7 +228,7 @@ impl Compiler<'_> {
                 })
             }
             Include::Local(key) => match context.lookup(key) {
-                Some(id) => self.compile_resolved(context, id),
+                Some(id) => self.compile_resolved(&Context::for_rule(&context.grammar, id), id),
                 None => Ok(()),
             },
             Include::Scope(scope) => match self.resolver.grammar_by_scope(scope) {
@@ -223,7 +242,7 @@ impl Compiler<'_> {
             },
             Include::ScopeKey(scope, key) => match self.resolver.grammar_by_scope(scope) {
                 Some(foreign) => match foreign.repository.get(key) {
-                    Some(id) => self.compile_resolved(&Context::root(&foreign), id),
+                    Some(id) => self.compile_resolved(&Context::for_rule(&foreign, id), id),
                     None => Ok(()),
                 },
                 None => Ok(()),
@@ -268,26 +287,77 @@ impl Compiler<'_> {
         result
     }
 
-    /// vscode-textmate drops a begin rule from the scanner when every child is an
-    /// include whose target does not exist. Existence only: a self-include counts as
-    /// resolvable.
-    fn all_unresolvable(&self, context: &Context, patterns: &[RuleId]) -> bool {
-        !patterns.is_empty()
-            && patterns.iter().all(|&id| match context.grammar.rule(id) {
-                Rule::Include(include) => !self.include_exists(context, include),
-                _ => false,
-            })
+    /// vscode-textmate drops a rule from the scanner when it declared child patterns
+    /// and every one fell away: an include whose target does not exist, an include
+    /// resolving to a rule that fell away itself, or a nested rule that did. The
+    /// check cascades upward, so a begin rule whose only child is such a hollow rule
+    /// is hollow too. A rule met again while being checked counts as present.
+    fn is_hollow(
+        &self,
+        context: &Context,
+        id: RuleId,
+        visiting: &mut HashSet<(usize, RuleId)>,
+    ) -> bool {
+        let (patterns, local) = match context.grammar.rule(id) {
+            Rule::Collection {
+                patterns,
+                repository,
+            } => (
+                patterns,
+                if repository.is_some() {
+                    context.with_local(id)
+                } else {
+                    context.clone()
+                },
+            ),
+            Rule::BeginEnd { patterns, .. } | Rule::BeginWhile { patterns, .. } => {
+                (patterns, context.clone())
+            }
+            Rule::Match { .. } | Rule::Include(_) | Rule::Noop => return false,
+        };
+        if patterns.is_empty() {
+            return false;
+        }
+        let key = (Arc::as_ptr(&context.grammar) as usize, id);
+        if !visiting.insert(key) {
+            return false;
+        }
+        let hollow = patterns
+            .iter()
+            .all(|&child| self.child_fell_away(&local, child, visiting));
+        visiting.remove(&key);
+        hollow
     }
 
-    fn include_exists(&self, context: &Context, include: &Include) -> bool {
-        match include {
-            Include::SelfRef | Include::Base => true,
-            Include::Local(key) => context.lookup(key).is_some(),
-            Include::Scope(scope) => self.resolver.grammar_by_scope(scope).is_some(),
-            Include::ScopeKey(scope, key) => self
-                .resolver
-                .grammar_by_scope(scope)
-                .is_some_and(|foreign| foreign.repository.get(key).is_some()),
+    fn child_fell_away(
+        &self,
+        context: &Context,
+        child: RuleId,
+        visiting: &mut HashSet<(usize, RuleId)>,
+    ) -> bool {
+        match context.grammar.rule(child) {
+            Rule::Include(include) => match include {
+                Include::SelfRef | Include::Base => false,
+                Include::Local(key) => match context.lookup(key) {
+                    Some(target) => self.is_hollow(
+                        &Context::for_rule(&context.grammar, target),
+                        target,
+                        visiting,
+                    ),
+                    None => true,
+                },
+                Include::Scope(scope) => self.resolver.grammar_by_scope(scope).is_none(),
+                Include::ScopeKey(scope, key) => match self.resolver.grammar_by_scope(scope) {
+                    Some(foreign) => match foreign.repository.get(key) {
+                        Some(target) => {
+                            self.is_hollow(&Context::for_rule(&foreign, target), target, visiting)
+                        }
+                        None => true,
+                    },
+                    None => true,
+                },
+            },
+            _ => self.is_hollow(context, child, visiting),
         }
     }
 }
@@ -315,6 +385,54 @@ mod tests {
             .iter()
             .map(|c| c.pattern().to_owned())
             .collect()
+    }
+
+    #[test]
+    fn nested_repository_scopes_rules_compiled_on_their_own() {
+        let g = grammar(
+            r##"{"scopeName": "source.t", "patterns": [{"include": "#lang"}],
+                "repository": {"lang": {
+                    "patterns": [{"include": "#comments"}],
+                    "repository": {
+                        "comments": {"patterns": [
+                            {"begin": "c", "end": "e", "patterns": [{"include": "#cont"}]}]},
+                        "cont": {"match": "k"}
+                    }}}}"##,
+        );
+        assert_eq!(root(&g), ["c"]);
+        let lang = g.repository.get("lang").unwrap();
+        let Rule::Collection { repository, .. } = g.rule(lang) else {
+            panic!("collection");
+        };
+        let comments = repository.as_ref().unwrap().get("comments").unwrap();
+        let Rule::Collection {
+            patterns: children, ..
+        } = g.rule(comments)
+        else {
+            panic!("collection");
+        };
+        let begin = children[0];
+        assert_eq!(g.enclosing[begin.index()], Some(lang));
+        assert_eq!(patterns(&g, begin, &g, &()), ["k"]);
+    }
+
+    #[test]
+    fn hollow_rules_cascade_upward() {
+        let g = grammar(
+            r##"{"scopeName": "source.t", "patterns": [
+                {"begin": "outer", "end": "x", "patterns": [
+                    {"begin": "inner", "end": "y", "patterns": [{"include": "#missing"}]}]},
+                {"begin": "kept", "end": "x", "patterns": [
+                    {"begin": "inner", "end": "y", "patterns": [{"include": "#missing"}]},
+                    {"match": "m"}]},
+                {"begin": "viacoll", "end": "x", "patterns": [{"include": "#hollow"}]},
+                {"begin": "viaself", "end": "x", "patterns": [{"include": "$self"}]},
+                {"begin": "empty", "end": "x"}
+            ], "repository": {"hollow": {"patterns": [{"include": "#missing"}]}}}"##,
+        );
+        assert_eq!(root(&g), ["kept", "viaself", "empty"]);
+        let kept = g.root_patterns()[1];
+        assert_eq!(patterns(&g, kept, &g, &()), ["m"]);
     }
 
     fn root(grammar: &Arc<Grammar>) -> Vec<String> {

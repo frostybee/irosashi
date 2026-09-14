@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "vue",
   "grammarSourceHash": "sha256:884f503df2f554a12e622116a2e55ac8e4f2a0dde49ae3ae2d921d3f87b7df77",
+  "injections": true,
   "source": "<script setup>\nimport { ref } from 'vue'\n\nconst message = ref('Hello World!')\n\nfunction reverseMessage() {\n  // Access/mutate the value of a ref via\n  // its .value property.\n  message.value = message.value.split('').reverse().join('')\n}\n\nfunction notify() {\n  alert('navigation was prevented.')\n}\n</script>\n\n<template>\n  <h1>{{ message }}</h1>\n  <button @click=\"reverseMessage\">Reverse Message</button>\n  <button @click=\"message += '!'\">Append \"!\"</button>\n  <a href=\"https://vuejs.org\" @click.prevent=\"notify\">\n    A link with e.preventDefault()\n  </a>\n</template>\n\n<style>\nbutton, a {\n  display: block;\n  margin-bottom: 1em;\n}\n</style>\n\n<!-- from https://vuejs.org/examples/#handling-input -->\n",
   "themes": {
     "github-dark": {

@@ -2,6 +2,7 @@
   "vsctmVersion": "9.3.2",
   "grammar": "toml",
   "grammarSourceHash": "sha256:24ad19a355cf69e5731df120825c4d891e2c44621ec6761637ee99aa559bd158",
+  "injections": true,
   "source": "# This is a TOML document\n\ntitle = \"TOML Example\"\n\n[owner]\nname = \"Tom Preston-Werner\"\ndob = 1979-05-27T07:32:00-08:00\n\n[database]\nenabled = true\nports = [ 8000, 8001, 8002 ]\ndata = [ [\"delta\", \"phi\"], [3.14] ]\ntemp_targets = { cpu = 79.5, case = 72.0 }\n\n[servers]\n\n[servers.alpha]\nip = \"10.0.0.1\"\nrole = \"frontend\"\n\n[servers.beta]\nip = \"10.0.0.2\"\nrole = \"backend\"\n\n# From https://toml.io/en/\n",
   "themes": {
     "github-dark": {

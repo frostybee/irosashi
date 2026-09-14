@@ -1,10 +1,12 @@
 use std::collections::HashMap;
+use std::mem;
 use std::sync::Arc;
 
 use crate::Error;
 use crate::grammar::{Grammar, Priority, RuleId, Selector, compile_rule_list};
 use crate::regex::{Match, SearchOptions};
 use crate::scope::{ScopeInterner, ScopeListId};
+use crate::tokenizer::SessionStats;
 use crate::tokenizer::line::LineCtx;
 use crate::tokenizer::memo::{CompiledSet, EntryRule};
 
@@ -33,6 +35,10 @@ pub(crate) struct InjectionEntry {
     pub selector: Selector,
     pub set: Option<Result<CompiledSet, Arc<Error>>>,
 }
+
+/// Per scope list, the injections whose selector matches it, indexed by
+/// `ScopeListId`; `None` until first seen.
+pub(crate) type InjectionHits = Vec<Option<Box<[(usize, Priority)]>>>;
 
 /// Grammar-local injections in source order, then external injectors.
 pub(crate) fn collect_injections(
@@ -73,21 +79,31 @@ pub(crate) struct InjectionMatch {
     pub priority: Priority,
 }
 
-/// Injections whose selector matches `scopes`, with the matching priority.
-fn matching_injections<'a>(
-    hits: &'a mut HashMap<ScopeListId, Vec<(usize, Priority)>>,
+/// Fills the hit slot for `scopes` on first sight.
+fn ensure_hits(
+    hits: &mut InjectionHits,
     injections: &[InjectionEntry],
     interner: &ScopeInterner,
     scopes: ScopeListId,
-) -> &'a [(usize, Priority)] {
-    hits.entry(scopes).or_insert_with(|| {
-        let names = interner.names(scopes);
+    stats: &mut SessionStats,
+) {
+    let idx = scopes.index();
+    if hits.len() <= idx {
+        hits.resize_with(interner.list_count().max(idx + 1), || None);
+    }
+    if hits[idx].is_some() {
+        stats.injection_list_hits += 1;
+        return;
+    }
+    stats.injection_list_misses += 1;
+    let names = interner.names(scopes);
+    hits[idx] = Some(
         injections
             .iter()
             .enumerate()
             .filter_map(|(i, inj)| inj.selector.matches(&names).map(|p| (i, p)))
-            .collect()
-    })
+            .collect(),
+    );
 }
 
 /// The earliest injection match at or after `pos`. On equal starts an `L:` injection
@@ -103,28 +119,43 @@ pub(crate) fn match_injections(
     if cx.injections.is_empty() {
         return None;
     }
-    let candidates =
-        matching_injections(cx.injection_hits, cx.injections, cx.interner, scopes).to_vec();
+    let LineCtx {
+        injections,
+        injection_hits,
+        interner,
+        resolver,
+        base,
+        stats,
+        capture_buf,
+        ..
+    } = cx;
+    ensure_hits(injection_hits, injections, interner, scopes, stats);
+    let hits: &[(usize, Priority)] = injection_hits[scopes.index()].as_deref().unwrap_or(&[]);
     let mut best: Option<InjectionMatch> = None;
-    for (index, priority) in candidates {
-        let entry = &mut cx.injections[index];
-        let base = cx.base;
-        let resolver = cx.resolver;
-        let set = entry.set.get_or_insert_with(|| {
-            compile_rule_list(&entry.grammar, &entry.rules, base, resolver)
-                .and_then(CompiledSet::from_rules)
-                .map_err(Arc::new)
-        });
-        let Ok(compiled) = set else {
+    for &(index, priority) in hits {
+        let entry = &mut injections[index];
+        if entry.set.is_none() {
+            stats.injection_set_compiles += 1;
+            entry.set = Some(
+                compile_rule_list(&entry.grammar, &entry.rules, base, *resolver)
+                    .and_then(CompiledSet::from_rules)
+                    .map_err(Arc::new),
+            );
+        }
+        let Some(Ok(compiled)) = &mut entry.set else {
             continue;
         };
         if compiled.rules.is_empty() {
             continue;
         }
-        let Some(m) = compiled.set.find_next_match(text, pos, options) else {
+        stats.injection_searches += 1;
+        let Some(match_index) = compiled
+            .set
+            .find_next_match_into(text, pos, options, capture_buf)
+        else {
             continue;
         };
-        let start = m.start();
+        let start = capture_buf[0].map_or(pos, |(s, _)| s);
         let replace = match &best {
             None => true,
             Some(current) => {
@@ -135,8 +166,18 @@ pub(crate) fn match_injections(
             }
         };
         if replace {
-            let rule = compiled.rules[m.index].clone();
-            best = Some(InjectionMatch { m, rule, priority });
+            let rule = compiled.rules[match_index].clone();
+            let recycled = best.take().map(|b| b.m.captures).unwrap_or_default();
+            let captures = mem::replace(*capture_buf, recycled);
+            capture_buf.clear();
+            best = Some(InjectionMatch {
+                m: Match {
+                    index: match_index,
+                    captures,
+                },
+                rule,
+                priority,
+            });
         }
     }
     best

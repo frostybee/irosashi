@@ -15,6 +15,10 @@ pub struct Fixture {
     pub grammar: String,
     #[serde(default)]
     pub grammar_source_hash: String,
+    /// Whether the generator honoured cross-grammar `injectTo` injections. Fixtures
+    /// generated without them cannot match an engine that applies them.
+    #[serde(default)]
+    pub injections: bool,
     pub source: String,
     pub themes: BTreeMap<String, ThemeFixture>,
 }

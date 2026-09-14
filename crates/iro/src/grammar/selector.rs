@@ -128,6 +128,10 @@ impl Expression {
     }
 }
 
+fn is_path_start(b: u8) -> bool {
+    b.is_ascii_alphanumeric() || matches!(b, b'.' | b':' | b'_')
+}
+
 /// `selector` is a prefix of `scope` ending at a dot boundary.
 fn scope_matches(selector: &str, scope: &str) -> bool {
     match scope.strip_prefix(selector) {
@@ -166,7 +170,11 @@ impl Parser<'_> {
         while let Some(c) = self.peek()
             && !matches!(c, b',' | b')' | b'|')
         {
-            expressions.push(self.parse_expression());
+            if c == b'-' || c == b'(' || is_path_start(c) {
+                expressions.push(self.parse_expression());
+            } else {
+                self.advance();
+            }
         }
         Composite {
             priority,
@@ -205,15 +213,18 @@ impl Parser<'_> {
         alternatives
     }
 
+    /// A path token as vscode-textmate's selector tokenizer reads it: `[\w.:]` then
+    /// `[\w.:-]*`. Any other character between tokens is skipped, so
+    /// `source.ts#meta.decorator.ts` reads as two paths.
     fn parse_scope_path(&mut self) -> String {
         let start = self.pos;
-        let len = self
-            .rest()
-            .bytes()
-            .take_while(|b| {
-                b.is_ascii_alphanumeric() || matches!(b, b'.' | b'-' | b'_' | b'*' | b'#')
-            })
-            .count();
+        let mut bytes = self.rest().bytes();
+        let len = match bytes.next() {
+            Some(first) if is_path_start(first) => {
+                1 + bytes.take_while(|&b| is_path_start(b) || b == b'-').count()
+            }
+            _ => 0,
+        };
         self.pos += len;
         self.input[start..self.pos].to_owned()
     }
@@ -265,6 +276,28 @@ mod tests {
             Selector::parse("source.python").composites[0].priority,
             Priority::None
         );
+    }
+
+    #[test]
+    fn skips_characters_outside_the_token_set() {
+        let selector = Selector::parse("L:source.ts#meta.decorator.ts -comment");
+        let expressions = &selector.composites[0].expressions;
+        assert_eq!(expressions.len(), 3);
+        assert_eq!(path(&expressions[0]), "source.ts");
+        assert_eq!(path(&expressions[1]), "meta.decorator.ts");
+        assert!(expressions[2].negate);
+        assert_eq!(
+            selector.matches(&["source.ts.ng", "meta.decorator.ts", "meta.objectliteral.ts"]),
+            Some(Priority::Left)
+        );
+        assert!(
+            selector
+                .matches(&["source.ts.ng", "comment.line"])
+                .is_none()
+        );
+        let dashed = Selector::parse("meta.tag-name -a_b.c");
+        assert_eq!(path(&dashed.composites[0].expressions[0]), "meta.tag-name");
+        assert_eq!(path(&dashed.composites[0].expressions[1]), "a_b.c");
     }
 
     #[test]

@@ -7,7 +7,6 @@ use std::sync::atomic::{AtomicU64, Ordering};
 
 use bitflags::bitflags;
 
-
 bitflags! {
     /// Font style bits, matching vscode-textmate's numeric encoding.
     /// `empty()` is "no styling"; "not set" is `Option<FontStyle>::None`.

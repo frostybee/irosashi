@@ -8,3 +8,8 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
+iro = { path = "../iro" }
+thiserror.workspace = true
+
+[dev-dependencies]
+insta = "1"

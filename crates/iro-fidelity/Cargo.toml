@@ -8,3 +8,6 @@ repository.workspace = true
 publish = false
 
 [dependencies]
+iro = { path = "../iro" }
+serde.workspace = true
+serde_json.workspace = true

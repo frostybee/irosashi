@@ -12,6 +12,12 @@ pub enum Error {
     #[error("theme not found: {0}")]
     ThemeNotFound(String),
 
+    #[error("theme parse failed: {0}")]
+    ThemeParse(String),
+
+    #[error("io error: {0}")]
+    Io(String),
+
     #[error("grammar include cycle detected")]
     GrammarCycle,
 

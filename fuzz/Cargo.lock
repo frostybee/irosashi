@@ -75,6 +75,7 @@ dependencies = [
 name = "iro"
 version = "0.1.0"
 dependencies = [
+ "bitflags",
  "onig-regset",
  "serde",
  "serde_json",

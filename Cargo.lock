@@ -130,6 +130,7 @@ dependencies = [
 name = "iro"
 version = "0.1.0"
 dependencies = [
+ "bitflags",
  "onig-regset",
  "serde",
  "serde_json",
@@ -139,6 +140,11 @@ dependencies = [
 [[package]]
 name = "iro-fidelity"
 version = "0.1.0"
+dependencies = [
+ "iro",
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "itoa"

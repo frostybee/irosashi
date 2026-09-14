@@ -74,6 +74,25 @@ pub fn compile_patterns(
     Ok(compiler.out)
 }
 
+/// Flattens an explicit list of rules of `grammar` into scanner order. Unlike
+/// `compile_patterns`, a `Match` or `BeginEnd` rule in `ids` contributes itself rather
+/// than its children, which is what injections need.
+pub fn compile_rule_list(
+    grammar: &Arc<Grammar>,
+    ids: &[RuleId],
+    base: &Arc<Grammar>,
+    resolver: &dyn GrammarResolver,
+) -> Result<Vec<CompiledRule>, Error> {
+    let mut compiler = Compiler {
+        base,
+        resolver,
+        visited: HashSet::new(),
+        out: Vec::new(),
+    };
+    compiler.compile_list(&Context::root(grammar), ids)?;
+    Ok(compiler.out)
+}
+
 #[derive(Clone)]
 enum RepoRef {
     Root(Arc<Grammar>),

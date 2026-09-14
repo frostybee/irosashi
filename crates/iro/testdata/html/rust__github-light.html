@@ -1,0 +1,39 @@
+<pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#6A737D">// Unlike C/C++, there's no restriction on the order of function definitions</span></span>
+<span class="line"><span style="color:#D73A49">fn</span><span style="color:#6F42C1"> main</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#6A737D">    // We can use this function here, and define it somewhere later</span></span>
+<span class="line"><span style="color:#6F42C1">    fizzbuzz_to</span><span style="color:#24292E">(</span><span style="color:#005CC5">100</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Function that returns a boolean value</span></span>
+<span class="line"><span style="color:#D73A49">fn</span><span style="color:#6F42C1"> is_divisible_by</span><span style="color:#24292E">(lhs</span><span style="color:#D73A49">:</span><span style="color:#6F42C1"> u32</span><span style="color:#24292E">, rhs</span><span style="color:#D73A49">:</span><span style="color:#6F42C1"> u32</span><span style="color:#24292E">) </span><span style="color:#D73A49">-></span><span style="color:#6F42C1"> bool</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // Corner case, early return</span></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#24292E"> rhs </span><span style="color:#D73A49">==</span><span style="color:#005CC5"> 0</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">        return</span><span style="color:#005CC5"> false</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // This is an expression, the `return` keyword is not necessary here</span></span>
+<span class="line"><span style="color:#24292E">    lhs </span><span style="color:#D73A49">%</span><span style="color:#24292E"> rhs </span><span style="color:#D73A49">==</span><span style="color:#005CC5"> 0</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Functions that "don't" return a value, actually return the unit type `()`</span></span>
+<span class="line"><span style="color:#D73A49">fn</span><span style="color:#6F42C1"> fizzbuzz</span><span style="color:#24292E">(n</span><span style="color:#D73A49">:</span><span style="color:#6F42C1"> u32</span><span style="color:#24292E">) </span><span style="color:#D73A49">-></span><span style="color:#24292E"> () {</span></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#6F42C1"> is_divisible_by</span><span style="color:#24292E">(n, </span><span style="color:#005CC5">15</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#6F42C1">        println!</span><span style="color:#24292E">(</span><span style="color:#032F62">"fizzbuzz"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">    } </span><span style="color:#D73A49">else</span><span style="color:#D73A49"> if</span><span style="color:#6F42C1"> is_divisible_by</span><span style="color:#24292E">(n, </span><span style="color:#005CC5">3</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#6F42C1">        println!</span><span style="color:#24292E">(</span><span style="color:#032F62">"fizz"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">    } </span><span style="color:#D73A49">else</span><span style="color:#D73A49"> if</span><span style="color:#6F42C1"> is_divisible_by</span><span style="color:#24292E">(n, </span><span style="color:#005CC5">5</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#6F42C1">        println!</span><span style="color:#24292E">(</span><span style="color:#032F62">"buzz"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">    } </span><span style="color:#D73A49">else</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#6F42C1">        println!</span><span style="color:#24292E">(</span><span style="color:#032F62">"{}"</span><span style="color:#24292E">, n);</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// When a function returns `()`, the return type can be omitted from the</span></span>
+<span class="line"><span style="color:#6A737D">// signature</span></span>
+<span class="line"><span style="color:#D73A49">fn</span><span style="color:#6F42C1"> fizzbuzz_to</span><span style="color:#24292E">(n</span><span style="color:#D73A49">:</span><span style="color:#6F42C1"> u32</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">    for</span><span style="color:#24292E"> n </span><span style="color:#D73A49">in</span><span style="color:#005CC5"> 1</span><span style="color:#D73A49">..=</span><span style="color:#24292E">n {</span></span>
+<span class="line"><span style="color:#6F42C1">        fizzbuzz</span><span style="color:#24292E">(n);</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// From https://doc.rust-lang.org/rust-by-example/fn.html</span></span></code></pre>

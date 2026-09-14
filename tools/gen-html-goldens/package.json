@@ -1,0 +1,13 @@
+{
+  "name": "iro-gen-html-goldens",
+  "private": true,
+  "type": "module",
+  "description": "Generate HTML goldens for iro from Shiki's codeToHtml",
+  "scripts": {
+    "generate": "node generate.mjs"
+  },
+  "dependencies": {
+    "@shikijs/core": "4.4.3",
+    "@shikijs/engine-oniguruma": "4.4.3"
+  }
+}

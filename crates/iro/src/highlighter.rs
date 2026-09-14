@@ -4,6 +4,7 @@ use std::sync::{Arc, Mutex, PoisonError};
 
 use crate::Error;
 use crate::registry::{AssetSource, PLAINTEXT_NAMES, Registry, RegistryBuilder, ThemeColors};
+use crate::render::{DefaultColor, HtmlOptions, HtmlRenderer, Renderer};
 use crate::scope::ScopeListId;
 use crate::token::{
     Diagnostic, DiagnosticKind, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, TokenStyle,
@@ -33,6 +34,39 @@ impl CodeToTokensOptions {
             theme: theme.to_owned(),
             ..Self::default()
         }
+    }
+}
+
+/// Options for one `code_to_html` call.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CodeToHtmlOptions {
+    pub tokens: CodeToTokensOptions,
+    /// Key to theme name. Non-empty selects multi-theme output; `tokens.theme` is then
+    /// ignored.
+    pub themes: BTreeMap<String, String>,
+    pub html: HtmlOptions,
+}
+
+impl CodeToHtmlOptions {
+    pub fn new(lang: &str, theme: &str) -> Self {
+        Self {
+            tokens: CodeToTokensOptions::new(lang, theme),
+            ..Self::default()
+        }
+    }
+
+    pub fn multi(lang: &str, themes: BTreeMap<String, String>) -> Self {
+        Self {
+            tokens: CodeToTokensOptions::new(lang, ""),
+            themes,
+            ..Self::default()
+        }
+    }
+
+    /// Switches the output to the Shiki preset.
+    pub fn shiki(mut self) -> Self {
+        self.html = HtmlOptions::shiki();
+        self
     }
 }
 
@@ -203,6 +237,41 @@ impl Highlighter {
             });
         }
         self.highlight(code, options, slots)
+    }
+
+    /// Tokenizes and renders `code` as HTML.
+    pub fn code_to_html(&self, code: &str, options: &CodeToHtmlOptions) -> Result<String, Error> {
+        self.code_to_html_with(code, options, &mut HtmlRenderer::new())
+    }
+
+    /// Like `code_to_html` with a caller-owned renderer, for style-to-class output.
+    pub fn code_to_html_with(
+        &self,
+        code: &str,
+        options: &CodeToHtmlOptions,
+        renderer: &mut HtmlRenderer<'_>,
+    ) -> Result<String, Error> {
+        let mut tokens = options.tokens.clone();
+        tokens.include_scopes |= options.html.merge_same_metadata;
+        let result = if options.themes.is_empty() {
+            self.code_to_tokens(code, &tokens)?
+        } else {
+            if let DefaultColor::Key(key) = &options.html.default_color
+                && !options.themes.contains_key(key)
+            {
+                return Err(Error::ThemeNotFound(key.clone()));
+            }
+            self.code_to_tokens_multi(code, &options.themes, &tokens)?
+        };
+        let html = if options.themes.is_empty() || options.html.multi_theme.is_some() {
+            &options.html
+        } else {
+            &HtmlOptions {
+                multi_theme: Some(true),
+                ..options.html.clone()
+            }
+        };
+        Ok(renderer.render(&result, html))
     }
 
     /// A fresh session for `lang`, for incremental per-line tokenization. The caller

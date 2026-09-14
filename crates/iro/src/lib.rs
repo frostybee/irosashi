@@ -11,8 +11,11 @@ pub mod tokenizer;
 mod error;
 
 pub use error::Error;
-pub use highlighter::{CodeToTokensOptions, Highlighter, HighlighterBuilder};
+pub use highlighter::{CodeToHtmlOptions, CodeToTokensOptions, Highlighter, HighlighterBuilder};
 pub use registry::{AssetSource, Registry, RegistryBuilder, ThemeColors};
+pub use render::{
+    DefaultColor, Dialect, Escape, HtmlOptions, HtmlRenderer, Node, Renderer, StyleClassMap,
+};
 pub use scope::{ScopeId, ScopeListId};
 pub use theme::{FontStyle, Theme};
 pub use token::{

@@ -1,0 +1,151 @@
+<pre class="shiki github-light" style="background-color:#fff;color:#24292e" tabindex="0"><code><span class="line"><span style="color:#6A737D">// --- Demonstration of imports ---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Importing named exports and the default export</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> defaultAnimal, { person, add } </span><span style="color:#D73A49">from</span><span style="color:#032F62"> './module.js'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Importing everything from the module as an alias</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#005CC5"> *</span><span style="color:#D73A49"> as</span><span style="color:#24292E"> Module </span><span style="color:#D73A49">from</span><span style="color:#032F62"> './module.js'</span><span style="color:#24292E">;</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// --- Demonstration of exports ---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Named exports</span></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> const</span><span style="color:#005CC5"> person</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> { name: </span><span style="color:#032F62">"Alice"</span><span style="color:#24292E">, age: </span><span style="color:#005CC5">30</span><span style="color:#24292E"> };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> function</span><span style="color:#6F42C1"> add</span><span style="color:#24292E">(</span><span style="color:#E36209">x</span><span style="color:#24292E">, </span><span style="color:#E36209">y</span><span style="color:#D73A49"> =</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> x </span><span style="color:#D73A49">+</span><span style="color:#24292E"> y;</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Default export</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> defaultAnimal</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> { name: </span><span style="color:#032F62">"Default Animal"</span><span style="color:#24292E"> };</span></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> default</span><span style="color:#24292E"> defaultAnimal;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Generator function</span></span>
+<span class="line"><span style="color:#D73A49">export</span><span style="color:#D73A49"> function*</span><span style="color:#6F42C1"> idGenerator</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#D73A49">  let</span><span style="color:#24292E"> id </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">  while</span><span style="color:#24292E"> (</span><span style="color:#005CC5">true</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">    yield</span><span style="color:#24292E"> id</span><span style="color:#D73A49">++</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Using typeof for runtime type checks</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(</span><span style="color:#D73A49">typeof</span><span style="color:#24292E"> person);  </span><span style="color:#6A737D">// object</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(</span><span style="color:#005CC5">2</span><span style="color:#24292E">, </span><span style="color:#005CC5">3</span><span style="color:#24292E">));      </span><span style="color:#6A737D">// 5</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(defaultAnimal);  </span><span style="color:#6A737D">// { name: "Default Animal" }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Emulating 'satisfies' behavior using runtime checks</span></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> createAnimal</span><span style="color:#24292E">(</span><span style="color:#E36209">animal</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">typeof</span><span style="color:#24292E"> animal.name </span><span style="color:#D73A49">===</span><span style="color:#032F62"> 'string'</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">    return</span><span style="color:#24292E"> animal;  </span><span style="color:#6A737D">// Ensures the animal has a 'name' property</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#D73A49">  throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span><span style="color:#032F62">"Animal must have a name"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> dog</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> createAnimal</span><span style="color:#24292E">({ name: </span><span style="color:#032F62">"Buddy"</span><span style="color:#24292E">, breed: </span><span style="color:#032F62">"Golden Retriever"</span><span style="color:#24292E"> });</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(dog);  </span><span style="color:#6A737D">// { name: 'Buddy', breed: 'Golden Retriever' }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Generator usage</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> generator</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> Module.</span><span style="color:#6F42C1">idGenerator</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(generator.</span><span style="color:#6F42C1">next</span><span style="color:#24292E">().value);  </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(generator.</span><span style="color:#6F42C1">next</span><span style="color:#24292E">().value);  </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(generator.</span><span style="color:#6F42C1">next</span><span style="color:#24292E">().value);  </span><span style="color:#6A737D">// 2</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Handling a generic-like behavior by allowing any type and runtime checks</span></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> identity</span><span style="color:#24292E">(</span><span style="color:#E36209">arg</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> arg;</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> str </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> identity</span><span style="color:#24292E">(</span><span style="color:#032F62">"Hello"</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">let</span><span style="color:#24292E"> num </span><span style="color:#D73A49">=</span><span style="color:#6F42C1"> identity</span><span style="color:#24292E">(</span><span style="color:#005CC5">42</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(str, num);  </span><span style="color:#6A737D">// "Hello", 42</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Emulating default generics by using default parameters</span></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> wrapInArray</span><span style="color:#24292E">(</span><span style="color:#E36209">value</span><span style="color:#D73A49"> =</span><span style="color:#032F62"> ""</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> [value];</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> stringArray</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> wrapInArray</span><span style="color:#24292E">();  </span><span style="color:#6A737D">// Default is empty string</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> numberArray</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> wrapInArray</span><span style="color:#24292E">(</span><span style="color:#005CC5">42</span><span style="color:#24292E">);  </span><span style="color:#6A737D">// Passes 42 explicitly</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(stringArray, numberArray);  </span><span style="color:#6A737D">// [""] , [42]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// --- for-of and for-in loops ---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// for-of: Iterates over iterable objects like arrays, strings, maps, etc.</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> fruits</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> [</span><span style="color:#032F62">"apple"</span><span style="color:#24292E">, </span><span style="color:#032F62">"banana"</span><span style="color:#24292E">, </span><span style="color:#032F62">"cherry"</span><span style="color:#24292E">];</span></span>
+<span class="line"><span style="color:#D73A49">for</span><span style="color:#24292E"> (</span><span style="color:#D73A49">const</span><span style="color:#005CC5"> fruit</span><span style="color:#D73A49"> of</span><span style="color:#24292E"> fruits) {</span></span>
+<span class="line"><span style="color:#24292E">  console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(fruit);  </span><span style="color:#6A737D">// Outputs: apple, banana, cherry</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// for-in: Iterates over enumerable properties of an object</span></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> car</span><span style="color:#D73A49"> =</span><span style="color:#24292E"> { make: </span><span style="color:#032F62">"Tesla"</span><span style="color:#24292E">, model: </span><span style="color:#032F62">"Model S"</span><span style="color:#24292E">, year: </span><span style="color:#005CC5">2021</span><span style="color:#24292E"> };</span></span>
+<span class="line"><span style="color:#D73A49">for</span><span style="color:#24292E"> (</span><span style="color:#D73A49">const</span><span style="color:#005CC5"> key</span><span style="color:#D73A49"> in</span><span style="color:#24292E"> car) {</span></span>
+<span class="line"><span style="color:#D73A49">  if</span><span style="color:#24292E"> (car.</span><span style="color:#6F42C1">hasOwnProperty</span><span style="color:#24292E">(key)) {</span></span>
+<span class="line"><span style="color:#24292E">    console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(</span><span style="color:#032F62">`${</span><span style="color:#24292E">key</span><span style="color:#032F62">}: ${</span><span style="color:#24292E">car</span><span style="color:#032F62">[</span><span style="color:#24292E">key</span><span style="color:#032F62">]</span><span style="color:#032F62">}`</span><span style="color:#24292E">);  </span><span style="color:#6A737D">// Outputs key-value pairs of car object</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// --- IIFE (Immediately Invoked Function Expression) ---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">(</span><span style="color:#D73A49">function</span><span style="color:#24292E"> () {</span></span>
+<span class="line"><span style="color:#24292E">  console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(</span><span style="color:#032F62">"This IIFE runs immediately after it's defined."</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#D73A49">  const</span><span style="color:#005CC5"> privateVar</span><span style="color:#D73A49"> =</span><span style="color:#032F62"> "I'm private inside the IIFE!"</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(privateVar);  </span><span style="color:#6A737D">// Accessing the private variable inside the IIFE</span></span>
+<span class="line"><span style="color:#24292E">})();</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// --- Using a generator to loop indefinitely ---</span></span>
+<span class="line"><span style="color:#D73A49">function*</span><span style="color:#6F42C1"> infiniteGenerator</span><span style="color:#24292E">() {</span></span>
+<span class="line"><span style="color:#D73A49">  let</span><span style="color:#24292E"> i </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#D73A49">  while</span><span style="color:#24292E"> (</span><span style="color:#005CC5">true</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">    yield</span><span style="color:#24292E"> i</span><span style="color:#D73A49">++</span><span style="color:#24292E">;</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> gen</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> infiniteGenerator</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(gen.</span><span style="color:#6F42C1">next</span><span style="color:#24292E">().value);  </span><span style="color:#6A737D">// 0</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(gen.</span><span style="color:#6F42C1">next</span><span style="color:#24292E">().value);  </span><span style="color:#6A737D">// 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// --- Async and Await ---</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">async</span><span style="color:#D73A49"> function</span><span style="color:#6F42C1"> fetchData</span><span style="color:#24292E">(</span><span style="color:#E36209">url</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  try</span><span style="color:#24292E"> {</span></span>
+<span class="line"><span style="color:#D73A49">    const</span><span style="color:#005CC5"> response</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#6F42C1"> fetch</span><span style="color:#24292E">(url);</span></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#24292E"> (</span><span style="color:#D73A49">!</span><span style="color:#24292E">response.ok) {</span></span>
+<span class="line"><span style="color:#D73A49">      throw</span><span style="color:#D73A49"> new</span><span style="color:#6F42C1"> Error</span><span style="color:#24292E">(</span><span style="color:#032F62">'Network response was not ok'</span><span style="color:#24292E">);</span></span>
+<span class="line"><span style="color:#24292E">    }</span></span>
+<span class="line"><span style="color:#D73A49">    const</span><span style="color:#005CC5"> data</span><span style="color:#D73A49"> =</span><span style="color:#D73A49"> await</span><span style="color:#24292E"> response.</span><span style="color:#6F42C1">json</span><span style="color:#24292E">();</span></span>
+<span class="line"><span style="color:#D73A49">    return</span><span style="color:#24292E"> data;</span></span>
+<span class="line"><span style="color:#24292E">  } </span><span style="color:#D73A49">catch</span><span style="color:#24292E"> (error) {</span></span>
+<span class="line"><span style="color:#24292E">    console.</span><span style="color:#6F42C1">error</span><span style="color:#24292E">(</span><span style="color:#032F62">'There has been a problem with your fetch operation:'</span><span style="color:#24292E">, error);</span></span>
+<span class="line"><span style="color:#24292E">  }</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Example usage of async function</span></span>
+<span class="line"><span style="color:#6F42C1">fetchData</span><span style="color:#24292E">(</span><span style="color:#032F62">'https://jsonplaceholder.typicode.com/todos/1'</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">  .</span><span style="color:#6F42C1">then</span><span style="color:#24292E">(</span><span style="color:#E36209">data</span><span style="color:#D73A49"> =></span><span style="color:#24292E"> console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(data))  </span><span style="color:#6A737D">// Outputs fetched data</span></span>
+<span class="line"><span style="color:#24292E">  .</span><span style="color:#6F42C1">catch</span><span style="color:#24292E">(</span><span style="color:#E36209">error</span><span style="color:#D73A49"> =></span><span style="color:#24292E"> console.</span><span style="color:#6F42C1">error</span><span style="color:#24292E">(error));</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// JSDoc type annotations</span></span>
+<span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#D73A49">@typedef</span><span style="color:#6F42C1"> {Object}</span><span style="color:#6F42C1"> Task</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#D73A49">@property</span><span style="color:#6F42C1"> {string}</span><span style="color:#24292E"> title</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#D73A49">@property</span><span style="color:#6F42C1"> {boolean}</span><span style="color:#24292E"> completed</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">/**</span></span>
+<span class="line"><span style="color:#6A737D"> * Create a task</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#D73A49">@param</span><span style="color:#6F42C1"> {Task}</span><span style="color:#24292E"> task</span></span>
+<span class="line"><span style="color:#6A737D"> * </span><span style="color:#D73A49">@returns</span><span style="color:#6F42C1"> {Task}</span></span>
+<span class="line"><span style="color:#6A737D"> */</span></span>
+<span class="line"><span style="color:#D73A49">function</span><span style="color:#6F42C1"> createTask</span><span style="color:#24292E">(</span><span style="color:#E36209">task</span><span style="color:#24292E">) {</span></span>
+<span class="line"><span style="color:#D73A49">  return</span><span style="color:#24292E"> task;</span></span>
+<span class="line"><span style="color:#24292E">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">const</span><span style="color:#005CC5"> myTask</span><span style="color:#D73A49"> =</span><span style="color:#6F42C1"> createTask</span><span style="color:#24292E">({</span></span>
+<span class="line"><span style="color:#24292E">  title: </span><span style="color:#032F62">"Learn JavaScript"</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">  completed: </span><span style="color:#005CC5">false</span><span style="color:#24292E">,</span></span>
+<span class="line"><span style="color:#24292E">});</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(myTask);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Importing everything as a namespace (simulated for demonstration)</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(Module.person);  </span><span style="color:#6A737D">// { name: "Alice", age: 30 }</span></span>
+<span class="line"><span style="color:#24292E">console.</span><span style="color:#6F42C1">log</span><span style="color:#24292E">(Module.</span><span style="color:#6F42C1">add</span><span style="color:#24292E">(</span><span style="color:#005CC5">10</span><span style="color:#24292E">, </span><span style="color:#005CC5">20</span><span style="color:#24292E">));  </span><span style="color:#6A737D">// 30</span></span></code></pre>

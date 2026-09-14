@@ -45,6 +45,7 @@ function cases() {
   }
   const json = fixtureSource('json');
   list.push({ name: 'json__themes-nodefault', lang: 'json', source: json, themes: DUAL, default_color: false });
+  list.push({ name: 'json__themes-lightdark', lang: 'json', source: json, themes: DUAL, default_color: 'light-dark()' });
   list.push({ name: `json__${DARK}-nomerge`, lang: 'json', source: json, theme: DARK, merge_whitespace: false });
   list.push({ name: `escaping__${DARK}`, lang: 'javascript', source: ESCAPING_SOURCE, theme: DARK });
   list.push({ name: 'escaping__themes', lang: 'javascript', source: ESCAPING_SOURCE, themes: DUAL, default_color: 'light' });

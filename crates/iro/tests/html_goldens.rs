@@ -42,6 +42,9 @@ fn options(case: &Case) -> CodeToHtmlOptions {
     match &case.default_color {
         None => {}
         Some(serde_json::Value::Bool(false)) => options.html.default_color = DefaultColor::Off,
+        Some(serde_json::Value::String(key)) if key == "light-dark()" => {
+            options.html.default_color = DefaultColor::LightDark;
+        }
         Some(serde_json::Value::String(key)) => {
             options.html.default_color = DefaultColor::Key(key.clone());
         }

@@ -82,6 +82,19 @@ let themes = BTreeMap::from([
 ]);
 let html = highlighter.code_to_html("fn main() {}", &CodeToHtmlOptions::multi("rust", themes))?;
 
+// Native light/dark switching with the CSS light-dark() function, no variables or
+// media queries needed. Requires theme keys "light" and "dark".
+let themes = BTreeMap::from([
+    ("dark".to_owned(), "github-dark".to_owned()),
+    ("light".to_owned(), "github-light".to_owned()),
+]);
+let html = highlighter.code_to_html("fn main() {}", &CodeToHtmlOptions {
+    themes,
+    html: iro::HtmlOptions { default_color: iro::DefaultColor::LightDark, ..Default::default() },
+    ..Default::default()
+})?;
+// Emits: <span style="color:light-dark(#d73a49, #f97583)">fn</span>
+
 // Hashed classes instead of inline styles, one stylesheet for the whole page.
 let mut classes = StyleClassMap::new();
 let html = highlighter.code_to_html_with(

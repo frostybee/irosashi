@@ -35,6 +35,10 @@ pub enum DefaultColor {
     Key(String),
     /// Every theme is emitted as variables only; nothing is inline.
     Off,
+    /// Uses the CSS `light-dark()` function: `color: light-dark(#light, #dark)`.
+    /// Requires exactly two theme slots with keys `light` and `dark`. Font-style
+    /// properties stay as CSS variables because `light-dark()` only wraps color values.
+    LightDark,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -121,13 +125,23 @@ impl<'m> HtmlRenderer<'m> {
     pub fn tree(&mut self, result: &TokensResult, options: &HtmlOptions) -> Node {
         let multi = options.multi_theme.unwrap_or(result.themes.len() > 1);
         let order = variant_order(result, options);
+        let light_dark = options.default_color == DefaultColor::LightDark;
         let emit_default = options.default_color != DefaultColor::Off;
+        let light_slot = light_dark
+            .then(|| result.themes.iter().position(|s| s.key == "light"))
+            .flatten();
+        let dark_slot = light_dark
+            .then(|| result.themes.iter().position(|s| s.key == "dark"))
+            .flatten();
         let ctx = Ctx {
             result,
             options,
             multi,
             order: &order,
             emit_default,
+            light_dark,
+            light_slot,
+            dark_slot,
         };
 
         let mut code = Node::element("code");
@@ -240,6 +254,8 @@ impl Renderer for HtmlRenderer<'_> {
 }
 
 /// Theme slots in emission order: the default color's slot first, then the rest.
+/// `LightDark` does not reorder: the `light-dark()` function itself picks values
+/// by key, and the slot order stays as the caller provided it.
 fn variant_order(result: &TokensResult, options: &HtmlOptions) -> Vec<usize> {
     let mut order: Vec<usize> = (0..result.themes.len()).collect();
     if let DefaultColor::Key(key) = &options.default_color
@@ -257,7 +273,16 @@ struct Ctx<'a> {
     multi: bool,
     order: &'a [usize],
     emit_default: bool,
+    light_dark: bool,
+    light_slot: Option<usize>,
+    dark_slot: Option<usize>,
 }
+
+fn light_dark_value(light: &str, dark: &str) -> String {
+    format!("light-dark({light}, {dark})")
+}
+
+const COLOR_KEYS: [&str; 2] = ["color", "background-color"];
 
 impl Ctx<'_> {
     fn key(&self, slot: usize) -> &str {
@@ -280,15 +305,44 @@ impl Ctx<'_> {
         match dialect {
             Dialect::Iro => {
                 let mut props = Props::new();
-                for (i, &slot) in self.order.iter().enumerate() {
-                    let slot_props = slot_props(self.result, token, slot, dialect);
-                    if i == 0 {
-                        if self.emit_default {
-                            props.extend(slot_props);
+                if self.light_dark
+                    && let (Some(ls), Some(ds)) = (self.light_slot, self.dark_slot)
+                {
+                    let light = slot_props(self.result, token, ls, dialect);
+                    let dark = slot_props(self.result, token, ds, dialect);
+                    for key in COLOR_KEYS {
+                        let l = light
+                            .iter()
+                            .find(|(k, _)| k == key)
+                            .map(|(_, v)| v.as_str());
+                        let d = dark.iter().find(|(k, _)| k == key).map(|(_, v)| v.as_str());
+                        if let (Some(l), Some(d)) = (l, d) {
+                            props.push((key.to_owned(), light_dark_value(l, d)));
+                        } else if let Some(v) = l.or(d) {
+                            props.push((key.to_owned(), v.to_owned()));
                         }
-                    } else {
-                        for (prop, value) in slot_props {
-                            props.push((self.var(slot, &prop), value));
+                    }
+                    for (prop, value) in &dark {
+                        if !COLOR_KEYS.contains(&prop.as_str()) {
+                            props.push((self.var(ds, prop), value.clone()));
+                        }
+                    }
+                    for (prop, value) in &light {
+                        if !COLOR_KEYS.contains(&prop.as_str()) {
+                            props.push((self.var(ls, prop), value.clone()));
+                        }
+                    }
+                } else {
+                    for (i, &slot) in self.order.iter().enumerate() {
+                        let slot_props = slot_props(self.result, token, slot, dialect);
+                        if i == 0 {
+                            if self.emit_default {
+                                props.extend(slot_props);
+                            }
+                        } else {
+                            for (prop, value) in slot_props {
+                                props.push((self.var(slot, &prop), value));
+                            }
                         }
                     }
                 }
@@ -310,19 +364,52 @@ impl Ctx<'_> {
                     }
                 }
                 let mut props = Props::new();
-                for (i, style) in styles.iter().enumerate() {
+                if self.light_dark
+                    && let (Some(ls), Some(ds)) = (self.light_slot, self.dark_slot)
+                {
+                    let ls_idx = self.order.iter().position(|&s| s == ls);
+                    let ds_idx = self.order.iter().position(|&s| s == ds);
                     for &key in &keys {
-                        let value = style
-                            .iter()
-                            .find(|(k, _)| k == key)
-                            .map_or("inherit", |(_, v)| v.as_str());
-                        if i == 0
-                            && self.emit_default
-                            && (key == "color" || key == "background-color")
-                        {
-                            props.push((key.to_owned(), value.to_owned()));
-                        } else {
+                        let l = ls_idx.and_then(|i| {
+                            styles[i]
+                                .iter()
+                                .find(|(k, _)| k == key)
+                                .map(|(_, v)| v.as_str())
+                        });
+                        let d = ds_idx.and_then(|i| {
+                            styles[i]
+                                .iter()
+                                .find(|(k, _)| k == key)
+                                .map(|(_, v)| v.as_str())
+                        });
+                        if COLOR_KEYS.contains(&key) {
+                            let lv = l.unwrap_or("inherit");
+                            let dv = d.unwrap_or("inherit");
+                            props.push((key.to_owned(), light_dark_value(lv, dv)));
+                        }
+                        for (i, style) in styles.iter().enumerate() {
+                            let value = style
+                                .iter()
+                                .find(|(k, _)| k == key)
+                                .map_or("inherit", |(_, v)| v.as_str());
                             props.push((self.var(self.order[i], key), value.to_owned()));
+                        }
+                    }
+                } else {
+                    for (i, style) in styles.iter().enumerate() {
+                        for &key in &keys {
+                            let value = style
+                                .iter()
+                                .find(|(k, _)| k == key)
+                                .map_or("inherit", |(_, v)| v.as_str());
+                            if i == 0
+                                && self.emit_default
+                                && (key == "color" || key == "background-color")
+                            {
+                                props.push((key.to_owned(), value.to_owned()));
+                            } else {
+                                props.push((self.var(self.order[i], key), value.to_owned()));
+                            }
                         }
                     }
                 }
@@ -340,48 +427,81 @@ impl Ctx<'_> {
             ];
         }
         let mut props = Props::new();
-        match self.options.dialect {
-            Dialect::Iro => {
-                for (i, &slot) in self.order.iter().enumerate() {
-                    if i == 0 {
-                        if self.emit_default {
+        if self.light_dark
+            && let (Some(light), Some(dark)) = (self.light_slot, self.dark_slot)
+        {
+            match self.options.dialect {
+                Dialect::Iro => {
+                    props.push((
+                        "background-color".to_owned(),
+                        light_dark_value(result.bg_of(light), result.bg_of(dark)),
+                    ));
+                    props.push((
+                        "color".to_owned(),
+                        light_dark_value(result.fg_of(light), result.fg_of(dark)),
+                    ));
+                    sort_props(&mut props);
+                }
+                Dialect::Shiki => {
+                    let ld_chain =
+                        |prop: &str, light_val: &str, dark_val: &str, props: &mut Props| {
+                            props.push((prop.to_owned(), light_dark_value(light_val, dark_val)));
+                            props.push((self.var(dark, prop), dark_val.to_owned()));
+                            props.push((self.var(light, prop), light_val.to_owned()));
+                        };
+                    ld_chain(
+                        "background-color",
+                        result.bg_of(light),
+                        result.bg_of(dark),
+                        &mut props,
+                    );
+                    ld_chain("color", result.fg_of(light), result.fg_of(dark), &mut props);
+                }
+            }
+        } else {
+            match self.options.dialect {
+                Dialect::Iro => {
+                    for (i, &slot) in self.order.iter().enumerate() {
+                        if i == 0 {
+                            if self.emit_default {
+                                props.push((
+                                    "background-color".to_owned(),
+                                    result.bg_of(slot).to_owned(),
+                                ));
+                                props.push(("color".to_owned(), result.fg_of(slot).to_owned()));
+                            }
+                        } else {
                             props.push((
-                                "background-color".to_owned(),
+                                self.var(slot, "background-color"),
                                 result.bg_of(slot).to_owned(),
                             ));
-                            props.push(("color".to_owned(), result.fg_of(slot).to_owned()));
+                            props.push((self.var(slot, "color"), result.fg_of(slot).to_owned()));
                         }
-                    } else {
-                        props.push((
-                            self.var(slot, "background-color"),
-                            result.bg_of(slot).to_owned(),
-                        ));
-                        props.push((self.var(slot, "color"), result.fg_of(slot).to_owned()));
                     }
+                    sort_props(&mut props);
                 }
-                sort_props(&mut props);
-            }
-            Dialect::Shiki => {
-                let chain = |prop: &str, props: &mut Props| {
-                    for (i, &slot) in self.order.iter().enumerate() {
-                        let value = if prop == "color" {
-                            result.fg_of(slot)
-                        } else {
-                            result.bg_of(slot)
-                        };
-                        if i == 0 && self.emit_default {
-                            props.push((prop.to_owned(), value.to_owned()));
-                        } else {
-                            props.push((self.var(slot, prop), value.to_owned()));
+                Dialect::Shiki => {
+                    let chain = |prop: &str, props: &mut Props| {
+                        for (i, &slot) in self.order.iter().enumerate() {
+                            let value = if prop == "color" {
+                                result.fg_of(slot)
+                            } else {
+                                result.bg_of(slot)
+                            };
+                            if i == 0 && self.emit_default {
+                                props.push((prop.to_owned(), value.to_owned()));
+                            } else {
+                                props.push((self.var(slot, prop), value.to_owned()));
+                            }
                         }
+                    };
+                    if self.emit_default {
+                        chain("background-color", &mut props);
+                        chain("color", &mut props);
+                    } else {
+                        chain("color", &mut props);
+                        chain("background-color", &mut props);
                     }
-                };
-                if self.emit_default {
-                    chain("background-color", &mut props);
-                    chain("color", &mut props);
-                } else {
-                    chain("color", &mut props);
-                    chain("background-color", &mut props);
                 }
             }
         }

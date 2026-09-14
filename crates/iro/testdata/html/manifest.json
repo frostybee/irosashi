@@ -122,6 +122,16 @@
       "default_color": false
     },
     {
+      "name": "json__themes-lightdark",
+      "lang": "json",
+      "source": "{\n  \"squadName\": \"Super hero squad\",\n  \"homeTown\": \"Metro City\",\n  \"formed\": 2016,\n  \"secretBase\": \"Super tower\",\n  \"active\": true,\n  \"members\": [\n    {\n      \"name\": \"Molecule Man\",\n      \"age\": 29,\n      \"secretIdentity\": \"Dan Jukes\",\n      \"powers\": [\"Radiation resistance\", \"Turning tiny\", \"Radiation blast\"]\n    },\n    {\n      \"name\": \"Madame Uppercut\",\n      \"age\": 39,\n      \"secretIdentity\": \"Jane Wilson\",\n      \"powers\": [\n        \"Million tonne punch\",\n        \"Damage resistance\",\n        \"Superhuman reflexes\"\n      ]\n    },\n    {\n      \"name\": \"Eternal Flame\",\n      \"age\": 1000000,\n      \"secretIdentity\": \"Unknown\",\n      \"powers\": [\n        \"Immortality\",\n        \"Heat Immunity\",\n        \"Inferno\",\n        \"Teleportation\",\n        \"Interdimensional travel\"\n      ]\n    }\n  ],\n  \"from\": \"https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON\"\n}",
+      "themes": {
+        "dark": "github-dark",
+        "light": "github-light"
+      },
+      "default_color": "light-dark()"
+    },
+    {
       "name": "json__github-dark-nomerge",
       "lang": "json",
       "source": "{\n  \"squadName\": \"Super hero squad\",\n  \"homeTown\": \"Metro City\",\n  \"formed\": 2016,\n  \"secretBase\": \"Super tower\",\n  \"active\": true,\n  \"members\": [\n    {\n      \"name\": \"Molecule Man\",\n      \"age\": 29,\n      \"secretIdentity\": \"Dan Jukes\",\n      \"powers\": [\"Radiation resistance\", \"Turning tiny\", \"Radiation blast\"]\n    },\n    {\n      \"name\": \"Madame Uppercut\",\n      \"age\": 39,\n      \"secretIdentity\": \"Jane Wilson\",\n      \"powers\": [\n        \"Million tonne punch\",\n        \"Damage resistance\",\n        \"Superhuman reflexes\"\n      ]\n    },\n    {\n      \"name\": \"Eternal Flame\",\n      \"age\": 1000000,\n      \"secretIdentity\": \"Unknown\",\n      \"powers\": [\n        \"Immortality\",\n        \"Heat Immunity\",\n        \"Inferno\",\n        \"Teleportation\",\n        \"Interdimensional travel\"\n      ]\n    }\n  ],\n  \"from\": \"https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON\"\n}",

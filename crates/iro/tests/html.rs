@@ -164,6 +164,49 @@ fn three_themes_and_font_style_variables() {
 }
 
 #[test]
+fn multi_theme_light_dark() {
+    let h = highlighter();
+    let mut options = CodeToHtmlOptions::multi("go", dual());
+    options.html.default_color = DefaultColor::LightDark;
+    let html = h.code_to_html("package main", &options).unwrap();
+    assert!(html.contains("background-color:light-dark(#fff, #24292e)"));
+    assert!(html.contains("color:light-dark(#24292e, #e1e4e8)"));
+    assert!(html.contains("color:light-dark(#d73a49, #f97583)"));
+    assert!(!html.contains("--iro-light:"));
+    assert!(!html.contains("--iro-dark:"));
+
+    let html = h
+        .code_to_html("*italic*", &{
+            let mut o = CodeToHtmlOptions::multi("markdown", dual());
+            o.html.default_color = DefaultColor::LightDark;
+            o
+        })
+        .unwrap();
+    assert!(html.contains("--iro-light-font-style:italic"));
+    assert!(html.contains("--iro-dark-font-style:italic"));
+
+    let bad = BTreeMap::from([("a".to_owned(), "github-dark".to_owned())]);
+    let mut bad_opts = CodeToHtmlOptions::multi("go", bad);
+    bad_opts.html.default_color = DefaultColor::LightDark;
+    assert!(matches!(
+        h.code_to_html("x", &bad_opts),
+        Err(iro::Error::ThemeNotFound(_))
+    ));
+}
+
+#[test]
+fn multi_theme_light_dark_shiki() {
+    let h = highlighter();
+    let mut options = CodeToHtmlOptions::multi("go", dual()).shiki();
+    options.html.default_color = DefaultColor::LightDark;
+    let html = h.code_to_html("package main", &options).unwrap();
+    assert!(html.contains("background-color:light-dark("));
+    assert!(html.contains("color:light-dark("));
+    assert!(html.contains("--shiki-light-bg:"));
+    assert!(html.contains("--shiki-light:"));
+}
+
+#[test]
 fn one_key_themes_map_uses_the_multi_form() {
     let h = highlighter();
     let themes = BTreeMap::from([("dark".to_owned(), "github-dark".to_owned())]);

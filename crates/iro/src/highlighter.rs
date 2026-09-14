@@ -261,6 +261,13 @@ impl Highlighter {
             {
                 return Err(Error::ThemeNotFound(key.clone()));
             }
+            if options.html.default_color == DefaultColor::LightDark
+                && (!options.themes.contains_key("light") || !options.themes.contains_key("dark"))
+            {
+                return Err(Error::ThemeNotFound(
+                    "light-dark() requires both 'light' and 'dark' theme keys".to_owned(),
+                ));
+            }
             self.code_to_tokens_multi(code, &options.themes, &tokens)?
         };
         let html = if options.themes.is_empty() || options.html.multi_theme.is_some() {

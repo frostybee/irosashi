@@ -1,4 +1,4 @@
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]
 pub enum Error {
     #[error("regex compilation failed for pattern {index}: {message}")]
     RegexCompilation { index: usize, message: String },

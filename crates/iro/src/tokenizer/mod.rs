@@ -4,7 +4,7 @@ mod line;
 mod memo;
 mod state;
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::mem;
 use std::ops::Range;
 use std::panic::{AssertUnwindSafe, catch_unwind};
@@ -14,7 +14,8 @@ use crate::grammar::{Grammar, GrammarResolver, Priority, ROOT_RULE_ID};
 use crate::scope::{ScopeInterner, ScopeListId};
 use crate::theme::{Theme, ThemeId};
 use crate::token::{
-    Diagnostic, DiagnosticKind, ThemedLine, ThemedToken, Token, TokenStyle, TokensResult,
+    Diagnostic, DiagnosticKind, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token, TokenStyle,
+    TokensResult,
 };
 use crate::tokenizer::injections::InjectionEntry;
 use crate::tokenizer::line::{LineCtx, TokenBuilder, run_line};
@@ -25,10 +26,11 @@ pub use injections::InjectionProvider;
 pub use state::StateStack;
 
 /// Everything a session needs from its registry.
-pub trait Resolver: GrammarResolver + InjectionProvider {}
+pub trait Resolver: GrammarResolver + InjectionProvider + Send + Sync {}
 
-impl<T: GrammarResolver + InjectionProvider> Resolver for T {}
+impl<T: GrammarResolver + InjectionProvider + Send + Sync> Resolver for T {}
 
+/// Per-call tokenizer guards.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct TokenizeOptions {
     /// Lines longer than this many bytes are emitted as one unstyled token with a
@@ -51,17 +53,24 @@ pub struct TokenizeResult {
     pub diagnostics: Vec<Diagnostic>,
 }
 
+/// How much a session has accumulated; used to retire pooled sessions.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct SessionFootprint {
+    pub scope_lists: usize,
+    pub compiled_sets: usize,
+}
+
 struct Styler {
     theme: Arc<Theme>,
     by_list: Vec<Option<TokenStyle>>,
 }
 
 /// A tokenizer for one grammar. Owns the scope interner, the compiled scanner cache
-/// and the style caches, so it is used from one thread at a time.
+/// and the style caches, so it is used from one thread at a time. Building one
+/// resolves the grammar's injectors through the resolver.
 pub struct Session {
     grammar: Arc<Grammar>,
     resolver: Arc<dyn Resolver>,
-    options: TokenizeOptions,
     interner: ScopeInterner,
     memo: Memo,
     injections: Vec<InjectionEntry>,
@@ -72,11 +81,7 @@ pub struct Session {
 }
 
 impl Session {
-    pub fn new(
-        grammar: Arc<Grammar>,
-        resolver: Arc<dyn Resolver>,
-        options: TokenizeOptions,
-    ) -> Self {
+    pub fn new(grammar: Arc<Grammar>, resolver: Arc<dyn Resolver>) -> Self {
         let mut interner = ScopeInterner::new();
         let root_scopes = interner.push_names(ScopeListId::EMPTY, &grammar.scope_name);
         let root = WorkStack::root(StackFrame {
@@ -91,7 +96,6 @@ impl Session {
         Self {
             grammar,
             resolver,
-            options,
             interner,
             memo: Memo::default(),
             injections,
@@ -119,14 +123,22 @@ impl Session {
         self.interner.names_owned(scopes)
     }
 
+    pub fn footprint(&self) -> SessionFootprint {
+        SessionFootprint {
+            scope_lists: self.interner.list_count(),
+            compiled_sets: self.memo.len(),
+        }
+    }
+
     /// Tokenizes one bare line (no terminator) starting from `state`.
     pub fn tokenize_line(
         &mut self,
         line: &str,
         state: &StateStack,
         is_first_line: bool,
+        options: TokenizeOptions,
     ) -> LineResult {
-        if let Some(max) = self.options.max_line_length
+        if let Some(max) = options.max_line_length
             && line.len() > max
         {
             return LineResult {
@@ -197,14 +209,14 @@ impl Session {
     }
 
     /// Tokenizes a whole buffer line by line.
-    pub fn tokenize(&mut self, code: &str) -> TokenizeResult {
+    pub fn tokenize(&mut self, code: &str, options: TokenizeOptions) -> TokenizeResult {
         let mut result = TokenizeResult {
             lines: Vec::new(),
             diagnostics: Vec::new(),
         };
         let mut state = self.initial_state();
         for (index, range) in split_lines(code).into_iter().enumerate() {
-            let line = self.tokenize_line(&code[range], &state, index == 0);
+            let line = self.tokenize_line(&code[range], &state, index == 0, options);
             if let Some(kind) = line.diagnostic {
                 result.diagnostics.push(Diagnostic { line: index, kind });
             }
@@ -214,34 +226,66 @@ impl Session {
         result
     }
 
-    /// Tokenizes and resolves every token's style against `theme`.
-    pub fn themed(&mut self, code: &str, theme: &Arc<Theme>) -> TokensResult {
-        let raw = self.tokenize(code);
+    /// Tokenizes and resolves every token's style against each theme slot. Slot 0 is
+    /// the default theme carried inline by the tokens; with more than one slot the
+    /// result's `styles` table holds every slot's style per scope stack.
+    pub fn themed(
+        &mut self,
+        code: &str,
+        options: TokenizeOptions,
+        themes: Vec<ThemeSlot>,
+        include_scopes: bool,
+    ) -> TokensResult {
+        assert!(!themes.is_empty(), "themed needs at least one theme");
+        let raw = self.tokenize(code, options);
         let ranges = split_lines(code);
-        let lines = raw
-            .lines
-            .into_iter()
-            .zip(ranges)
-            .map(|(tokens, range)| ThemedLine {
-                tokens: tokens
-                    .into_iter()
-                    .filter(|t| t.start < t.end)
-                    .map(|t| ThemedToken {
-                        start: t.start,
-                        end: t.end,
-                        style: self.style(theme, t.scopes),
-                        scopes: t.scopes,
-                    })
-                    .collect(),
-                range,
-            })
-            .collect();
-        TokensResult {
-            source: code.to_owned(),
-            lines,
-            theme: Arc::clone(theme),
-            diagnostics: raw.diagnostics,
+        let multi = themes.len() > 1;
+        let mut styles: HashMap<ScopeListId, Box<[TokenStyle]>> = HashMap::new();
+        let mut used: HashSet<ScopeListId> = HashSet::new();
+
+        let mut lines = Vec::with_capacity(raw.lines.len());
+        for (tokens, range) in raw.lines.into_iter().zip(ranges) {
+            let mut themed = Vec::with_capacity(tokens.len());
+            for t in tokens {
+                if t.start >= t.end {
+                    continue;
+                }
+                let style = self.style(&themes[0].theme, t.scopes);
+                if multi && !styles.contains_key(&t.scopes) {
+                    let all: Box<[TokenStyle]> = themes
+                        .iter()
+                        .map(|slot| self.style(&slot.theme, t.scopes))
+                        .collect();
+                    styles.insert(t.scopes, all);
+                }
+                if include_scopes {
+                    used.insert(t.scopes);
+                }
+                themed.push(ThemedToken {
+                    start: t.start,
+                    end: t.end,
+                    style,
+                    scopes: t.scopes,
+                });
+            }
+            lines.push(ThemedLine::new(range, themed));
         }
+
+        let scopes = include_scopes.then(|| {
+            ScopeTable::new(
+                used.into_iter()
+                    .map(|id| (id, self.interner.names_shared(id)))
+                    .collect(),
+            )
+        });
+        TokensResult::new(
+            code.to_owned(),
+            lines,
+            themes,
+            styles,
+            scopes,
+            raw.diagnostics,
+        )
     }
 
     /// Resolves the style of a scope stack against `theme`, cached per stack.
@@ -314,6 +358,16 @@ pub fn split_lines(code: &str) -> Vec<Range<usize>> {
 mod tests {
     use super::*;
 
+    const NO_OPTS: TokenizeOptions = TokenizeOptions {
+        max_line_length: None,
+    };
+
+    #[test]
+    fn session_is_send() {
+        fn assert_send<T: Send>() {}
+        assert_send::<Session>();
+    }
+
     #[test]
     #[allow(clippy::single_range_in_vec_init)]
     fn split_lines_strips_terminators_and_trailing_newline() {
@@ -326,15 +380,15 @@ mod tests {
 
     fn session(json: &str) -> Session {
         let grammar = Arc::new(Grammar::parse(json.as_bytes()).unwrap());
-        Session::new(grammar, Arc::new(()), TokenizeOptions::default())
+        Session::new(grammar, Arc::new(()))
     }
 
     #[test]
     fn crlf_and_lf_give_identical_tokens() {
         let mut s =
             session(r#"{"scopeName": "source.t", "patterns": [{"match": "\\w+", "name": "w"}]}"#);
-        let lf = s.tokenize("ab cd\nef");
-        let crlf = s.tokenize("ab cd\r\nef");
+        let lf = s.tokenize("ab cd\nef", NO_OPTS);
+        let crlf = s.tokenize("ab cd\r\nef", NO_OPTS);
         assert_eq!(lf, crlf);
         assert_eq!(lf.lines.len(), 2);
     }
@@ -343,28 +397,23 @@ mod tests {
     fn empty_input_has_no_lines_and_empty_line_has_no_tokens() {
         let mut s =
             session(r#"{"scopeName": "source.t", "patterns": [{"match": "\\w+", "name": "w"}]}"#);
-        assert!(s.tokenize("").lines.is_empty());
-        let r = s.tokenize("a\n\nb");
+        assert!(s.tokenize("", NO_OPTS).lines.is_empty());
+        let r = s.tokenize("a\n\nb", NO_OPTS);
         assert_eq!(r.lines.len(), 3);
         assert!(r.lines[1].is_empty());
     }
 
     #[test]
     fn max_line_length_emits_one_unstyled_token_and_keeps_state() {
-        let grammar = Arc::new(
-            Grammar::parse(
-                br#"{"scopeName": "source.t", "patterns": [{"begin": "\\(", "end": "\\)", "name": "paren", "patterns": [{"match": "x", "name": "x"}]}]}"#,
-            )
-            .unwrap(),
+        let mut s = session(
+            r#"{"scopeName": "source.t", "patterns": [{"begin": "\\(", "end": "\\)", "name": "paren", "patterns": [{"match": "x", "name": "x"}]}]}"#,
         );
-        let mut s = Session::new(
-            grammar,
-            Arc::new(()),
+        let r = s.tokenize(
+            "(x\nxxxxxxxx\nx)",
             TokenizeOptions {
                 max_line_length: Some(4),
             },
         );
-        let r = s.tokenize("(x\nxxxxxxxx\nx)");
         assert_eq!(
             r.diagnostics,
             [Diagnostic {
@@ -385,7 +434,7 @@ mod tests {
         let mut s = session(
             r#"{"scopeName": "source.t", "patterns": [{"begin": "\\(", "end": "\\)", "name": "q", "patterns": [{"match": "[", "name": "bad"}]}]}"#,
         );
-        let r = s.tokenize("(x)\ny");
+        let r = s.tokenize("(x)\ny", NO_OPTS);
         assert_eq!(r.lines[0].len(), 1);
         assert_eq!(s.scope_names(r.lines[0][0].scopes), ["source.t"]);
         assert_eq!(
@@ -404,11 +453,54 @@ mod tests {
             r#"{"scopeName": "source.t", "patterns": [{"begin": "\\(", "end": "\\)", "name": "paren", "patterns": [{"match": "x", "name": "x"}]}]}"#,
         );
         let initial = s.initial_state();
-        let a = s.tokenize_line("(x", &initial, true);
-        let b = s.tokenize_line("x x", &a.state, false);
+        let a = s.tokenize_line("(x", &initial, true, NO_OPTS);
+        let b = s.tokenize_line("x x", &a.state, false, NO_OPTS);
         assert_eq!(a.state, b.state);
         assert_ne!(a.state, initial);
-        let c = s.tokenize_line(")", &b.state, false);
+        let c = s.tokenize_line(")", &b.state, false, NO_OPTS);
         assert_eq!(c.state, initial);
+    }
+
+    #[test]
+    fn themed_multi_fills_a_style_per_slot_and_scopes_on_request() {
+        let mut s = session(
+            r#"{"scopeName": "source.t", "patterns": [{"match": "\\d+", "name": "constant.numeric"}]}"#,
+        );
+        let dark = Arc::new(
+            Theme::parse(
+                br##"{"name": "d", "colors": {"editor.foreground": "#111111"}, "tokenColors": [{"scope": "constant", "settings": {"foreground": "#aaaaaa"}}]}"##,
+            )
+            .unwrap(),
+        );
+        let light = Arc::new(
+            Theme::parse(
+                br##"{"name": "l", "colors": {"editor.foreground": "#222222"}, "tokenColors": [{"scope": "constant", "settings": {"foreground": "#bbbbbb"}}]}"##,
+            )
+            .unwrap(),
+        );
+        let slots = vec![
+            ThemeSlot {
+                key: "dark".into(),
+                theme: dark,
+            },
+            ThemeSlot {
+                key: "light".into(),
+                theme: light,
+            },
+        ];
+        let r = s.themed("a 42", NO_OPTS, slots, true);
+        assert!(r.is_multi());
+        let line = &r.lines[0];
+        let num = line.tokens[1];
+        assert_eq!(r.color_in(0, r.style_in(&num, 0).color.unwrap()), "#aaaaaa");
+        assert_eq!(r.color_in(1, r.style_in(&num, 1).color.unwrap()), "#bbbbbb");
+        let plain = line.tokens[0];
+        assert_eq!(
+            r.color_in(1, r.style_in(&plain, 1).color.unwrap()),
+            "#222222"
+        );
+        assert_eq!(r.styles.len(), 2);
+        let names: Vec<&str> = r.scopes_of(&num).unwrap().iter().map(|s| &**s).collect();
+        assert_eq!(names, ["source.t", "constant.numeric"]);
     }
 }

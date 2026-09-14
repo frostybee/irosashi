@@ -57,11 +57,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let grammars = sync_gunzip(
         &nuri_root.join("bundle/full/grammars"),
-        &iro_root.join("assets/grammars"),
+        &iro_root.join("crates/iro/assets/grammars"),
     )?;
     let themes = sync_gunzip(
         &nuri_root.join("bundle/full/themes"),
-        &iro_root.join("assets/themes"),
+        &iro_root.join("crates/iro/assets/themes"),
     )?;
     let mini = sync_copy(
         &nuri_root.join("internal/tokenizer/testdata/mini"),
@@ -96,7 +96,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     };
     let mut json = serde_json::to_string_pretty(&lock)?;
     json.push('\n');
-    let lock_path = iro_root.join("assets/provenance.lock.json");
+    let lock_path = iro_root.join("crates/iro/assets/provenance.lock.json");
     fs::write(&lock_path, json)?;
     println!("wrote {}", lock_path.display());
     Ok(())

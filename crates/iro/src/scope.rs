@@ -115,6 +115,18 @@ impl ScopeInterner {
     pub fn names_owned(&self, list: ScopeListId) -> Vec<String> {
         self.names(list).into_iter().map(str::to_owned).collect()
     }
+
+    /// Scope names of `list` sharing the interner's allocations.
+    pub fn names_shared(&self, list: ScopeListId) -> Box<[Arc<str>]> {
+        let mut out = Vec::with_capacity(self.len(list));
+        let mut current = list;
+        while let Some((parent, scope)) = self.nodes[current.index()] {
+            out.push(Arc::clone(&self.names[scope.0 as usize]));
+            current = parent;
+        }
+        out.reverse();
+        out.into_boxed_slice()
+    }
 }
 
 #[cfg(test)]

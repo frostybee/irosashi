@@ -15,7 +15,7 @@ fn session(name: &str) -> Session {
         .join(name);
     let bytes = std::fs::read(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
     let grammar = Arc::new(Grammar::parse(&bytes).expect("mini grammar parses"));
-    Session::new(grammar, Arc::new(()), TokenizeOptions::default())
+    Session::new(grammar, Arc::new(()))
 }
 
 struct Line<'a> {
@@ -24,7 +24,7 @@ struct Line<'a> {
 }
 
 fn tokenize<'a>(session: &mut Session, code: &'a str) -> Vec<Line<'a>> {
-    let result = session.tokenize(code);
+    let result = session.tokenize(code, TokenizeOptions::default());
     assert!(
         result.diagnostics.is_empty(),
         "diagnostics: {:?}",
@@ -373,11 +373,11 @@ fn non_ascii_offsets_are_bytes_on_char_boundaries() {
 fn tokenize_line_api_matches_whole_buffer() {
     let mut s = session("begin_end.json");
     let code = "a \"b\nc\" d";
-    let whole = s.tokenize(code);
+    let whole = s.tokenize(code, TokenizeOptions::default());
     let mut state = s.initial_state();
     let mut per_line = Vec::new();
     for (i, range) in split_lines(code).into_iter().enumerate() {
-        let r = s.tokenize_line(&code[range], &state, i == 0);
+        let r = s.tokenize_line(&code[range], &state, i == 0, TokenizeOptions::default());
         per_line.push(r.tokens);
         state = r.state;
     }

@@ -1,4 +1,5 @@
 pub mod grammar;
+pub mod highlighter;
 pub mod regex;
 pub mod registry;
 pub mod render;
@@ -10,10 +11,12 @@ pub mod tokenizer;
 mod error;
 
 pub use error::Error;
-pub use registry::Registry;
+pub use highlighter::{CodeToTokensOptions, Highlighter, HighlighterBuilder};
+pub use registry::{AssetSource, Registry, RegistryBuilder, ThemeColors};
 pub use scope::{ScopeId, ScopeListId};
 pub use theme::{FontStyle, Theme};
 pub use token::{
-    Diagnostic, DiagnosticKind, ThemedLine, ThemedToken, Token, TokenStyle, TokensResult,
+    Diagnostic, DiagnosticKind, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token, TokenStyle,
+    TokensResult,
 };
 pub use tokenizer::{Session, StateStack, TokenizeOptions};

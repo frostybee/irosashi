@@ -140,6 +140,10 @@ impl Memo {
         }
     }
 
+    pub fn len(&self) -> usize {
+        self.sets.len() + self.whiles.len()
+    }
+
     #[cfg(test)]
     pub fn entry_len(&self, key: &MemoKey) -> Option<usize> {
         match self.sets.get(key)? {

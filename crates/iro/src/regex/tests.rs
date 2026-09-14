@@ -300,7 +300,7 @@ fn test_anchor_active_mapping() {
 }
 
 fn go_grammar() -> serde_json::Value {
-    let path = concat!(env!("CARGO_MANIFEST_DIR"), "/../../assets/grammars/go.json");
+    let path = concat!(env!("CARGO_MANIFEST_DIR"), "/assets/grammars/go.json");
     let data = std::fs::read(path).expect("assets/grammars/go.json (run sync-assets)");
     serde_json::from_slice(&data).expect("go.json parses")
 }

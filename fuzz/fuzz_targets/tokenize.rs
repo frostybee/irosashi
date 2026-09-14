@@ -20,7 +20,7 @@ const GRAMMARS: &[&[u8]] = &[
     include_bytes!("../../crates/iro/testdata/mini/injection_self.json"),
     include_bytes!("../../crates/iro/testdata/mini/match_only.json"),
     include_bytes!("../../crates/iro/testdata/mini/overlapping_captures.json"),
-    include_bytes!("../../assets/grammars/json.json"),
+    include_bytes!("../../crates/iro/assets/grammars/json.json"),
 ];
 
 fn grammars() -> &'static [Arc<Grammar>] {
@@ -41,8 +41,8 @@ fuzz_target!(|data: &[u8]| {
         return;
     };
     let grammar = Arc::clone(&grammars()[selector as usize % GRAMMARS.len()]);
-    let mut session = Session::new(grammar, Arc::new(()), TokenizeOptions::default());
-    let result = session.tokenize(code);
+    let mut session = Session::new(grammar, Arc::new(()));
+    let result = session.tokenize(code, TokenizeOptions::default());
     let lines = split_lines(code);
     assert_eq!(result.lines.len(), lines.len());
     for (range, tokens) in lines.into_iter().zip(&result.lines) {

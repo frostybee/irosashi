@@ -41,7 +41,7 @@ impl HtmlRenderer {
         let pre_class = options
             .pre_class
             .clone()
-            .unwrap_or_else(|| format!("iro {}", result.theme.name));
+            .unwrap_or_else(|| format!("iro {}", result.theme().name));
         Node::element("pre")
             .attr("class", &pre_class)
             .attr(

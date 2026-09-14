@@ -6,7 +6,7 @@ use std::sync::Arc;
 use iro::grammar::{Grammar, ROOT_RULE_ID, Rule, RuleId, compile_patterns};
 
 fn grammars_dir() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("../../assets/grammars")
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("assets/grammars")
 }
 
 fn load_all() -> Vec<(String, Arc<Grammar>)> {

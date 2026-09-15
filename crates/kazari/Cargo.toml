@@ -10,6 +10,8 @@ repository.workspace = true
 [dependencies]
 iro = { path = "../iro" }
 regex = "1"
+serde.workspace = true
+serde_yaml_ng = "0.10"
 thiserror.workspace = true
 
 [dev-dependencies]

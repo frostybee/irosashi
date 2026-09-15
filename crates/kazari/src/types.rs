@@ -1,6 +1,7 @@
 use std::collections::BTreeMap;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default, serde::Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum Frame {
     #[default]
     Auto,
@@ -30,7 +31,8 @@ impl Default for DarkMode {
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default, serde::Deserialize)]
+#[serde(rename_all = "lowercase")]
 pub enum TerminalDotStyle {
     #[default]
     Colored,

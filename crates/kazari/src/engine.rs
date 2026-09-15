@@ -220,6 +220,12 @@ impl KazariBuilder {
         self
     }
 
+    pub fn config_file(mut self, yaml_str: &str) -> Result<Self, Error> {
+        let file_config = crate::config::FileConfig::from_yaml(yaml_str)?;
+        file_config.apply(&mut self.config)?;
+        Ok(self)
+    }
+
     pub fn build(self) -> Result<Kazari, Error> {
         let light_colors = self.highlighter.theme_colors(&self.config.light_theme)?;
         let light_info = ThemeInfo::from_iro(&light_colors);
@@ -472,5 +478,26 @@ mod tests {
             .render_with_meta("let x = 1;", "javascript \"x\"")
             .unwrap();
         assert!(html.contains("<mark>"));
+    }
+
+    #[test]
+    fn builder_config_file() {
+        let yaml = r#"
+themes:
+  light: github-light
+  dark: github-dark
+copyButton: false
+tabWidth: 4
+"#;
+        let hl = iro::Highlighter::new().unwrap();
+        let kz = Kazari::builder(hl)
+            .config_file(yaml)
+            .unwrap()
+            .build()
+            .unwrap();
+        assert!(!kz.config().copy_button);
+        assert_eq!(kz.config().tab_width, 4);
+        let html = kz.render_with_meta("let x = 1;", "javascript").unwrap();
+        assert!(html.contains("kazari-block"));
     }
 }

@@ -14,7 +14,7 @@ pub(crate) mod theme_css;
 pub(crate) mod tokenize;
 pub(crate) mod types;
 
-pub use config::Config;
+pub use config::{Config, FileConfig};
 pub use engine::{Kazari, KazariBuilder, Options};
 pub use error::Error;
 pub use types::{

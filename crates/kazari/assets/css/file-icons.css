@@ -1,0 +1,34 @@
+/* An empty slot a site fills with background-image. The background
+   properties live here so a site only supplies the image itself.
+
+   background-origin matters because the separator rule below pads this box.
+   Backgrounds resolve against the padding box by default, so contain would
+   size the image to the padded width and center would place it across that
+   width, pulling the icon off its square and toward the separator. Binding
+   it to the content box keeps the padding as separator spacing only. */
+.kazari-block .kz-file-icon {
+  display: inline-block;
+  width: var(--kz-file-icon-size);
+  height: var(--kz-file-icon-size);
+  margin: var(--kz-file-icon-margin);
+  opacity: var(--kz-file-icon-opacity);
+  vertical-align: middle;
+  flex-shrink: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: content-box;
+}
+/* The toolbar row is flex with a 0.5rem gap, and that gap already sits
+   between the language badge and this box, so the margin only tops it up
+   to 0.625rem, matching the padding on the other side of the border. A
+   full 0.625rem margin here would double count the gap and push the
+   separator off center. */
+.kazari-block .kz-lang + .kz-file-icon {
+  margin-left: 0.125rem;
+  padding-left: 0.625rem;
+  border-left: 1px solid var(--kz-separator-color);
+}
+.kazari-block .kz-file-icon + .kz-title {
+  margin-left: 0;
+}

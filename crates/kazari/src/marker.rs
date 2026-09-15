@@ -2,7 +2,7 @@ use std::collections::{HashMap, HashSet};
 
 use regex::Regex;
 
-use crate::types::{InlineMarker, LineMarker, LineRange, MarkerType};
+use crate::types::{InlineMarker, LineMarker, LineRange, LinkAnnotation, MarkerType};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ResolvedLine {
@@ -73,11 +73,14 @@ pub fn resolve_focus_set(focus_lines: &[LineRange]) -> Option<HashSet<usize>> {
 // Inline marker processing
 // ---------------------------------------------------------------------------
 
+/// What a segment carries: a marker kind, a link, or both when a link overlaps a
+/// marker.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct InlineAnnotation {
-    pub marker_type: MarkerType,
+    pub kind: Option<MarkerType>,
     pub open_start: bool,
     pub open_end: bool,
+    pub link: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -97,8 +100,9 @@ pub struct AnnotatedToken {
 struct InlineMatch {
     start: usize,
     end: usize,
-    marker_type: MarkerType,
+    kind: Option<MarkerType>,
     priority: u8,
+    link: Option<String>,
 }
 
 pub fn process_inline_markers(
@@ -117,6 +121,115 @@ pub fn process_inline_markers(
 
     let matches = resolve_inline_overlaps(matches);
     Some(split_tokens(token_ranges, &matches))
+}
+
+/// Splits tokens at link boundaries. Links never overlap each other.
+pub fn process_links(
+    token_ranges: &[(usize, usize)],
+    links: &[LinkAnnotation],
+) -> Option<Vec<AnnotatedToken>> {
+    if links.is_empty() {
+        return None;
+    }
+    let matches: Vec<InlineMatch> = links
+        .iter()
+        .map(|l| InlineMatch {
+            start: l.start,
+            end: l.end,
+            kind: None,
+            priority: 0,
+            link: Some(l.url.clone()),
+        })
+        .collect();
+    Some(split_tokens(token_ranges, &matches))
+}
+
+/// Inline markers first, then links split the resulting segments further; a
+/// segment under both keeps the marker kind and gains the link.
+pub fn process_inline_markers_and_links(
+    plain_text: &str,
+    token_ranges: &[(usize, usize)],
+    markers: &[InlineMarker],
+    links: &[LinkAnnotation],
+) -> Option<Vec<AnnotatedToken>> {
+    match process_inline_markers(plain_text, token_ranges, markers) {
+        None => process_links(token_ranges, links),
+        Some(annotated) if links.is_empty() => Some(annotated),
+        Some(annotated) => Some(apply_links_to_segmented(annotated, links)),
+    }
+}
+
+fn apply_links_to_segmented(
+    annotated: Vec<AnnotatedToken>,
+    links: &[LinkAnnotation],
+) -> Vec<AnnotatedToken> {
+    let mut li = 0;
+    annotated
+        .into_iter()
+        .map(|at| {
+            let mut segments = Vec::with_capacity(at.segments.len());
+            for seg in at.segments {
+                let mut pos = seg.start;
+                let mut parts = Vec::new();
+                while li < links.len() && pos < seg.end {
+                    let l = &links[li];
+                    if l.start >= seg.end {
+                        break;
+                    }
+                    if l.end <= pos {
+                        li += 1;
+                        continue;
+                    }
+                    let l_start = l.start.max(pos);
+                    let l_end = l.end.min(seg.end);
+                    if l_start > pos {
+                        parts.push(Segment {
+                            start: pos,
+                            end: l_start,
+                            marker: seg.marker.clone(),
+                        });
+                    }
+                    let mut ann = InlineAnnotation {
+                        kind: None,
+                        open_start: l.start < seg.start,
+                        open_end: l.end > seg.end,
+                        link: Some(l.url.clone()),
+                    };
+                    if let Some(m) = &seg.marker {
+                        ann.kind = m.kind;
+                        ann.open_start |= m.open_start;
+                        ann.open_end |= m.open_end;
+                    }
+                    parts.push(Segment {
+                        start: l_start,
+                        end: l_end,
+                        marker: Some(ann),
+                    });
+                    pos = l_end;
+                    if l.end <= seg.end {
+                        li += 1;
+                    } else {
+                        break;
+                    }
+                }
+                if pos < seg.end {
+                    parts.push(Segment {
+                        start: pos,
+                        end: seg.end,
+                        marker: seg.marker.clone(),
+                    });
+                }
+                if parts.is_empty() {
+                    parts.push(seg);
+                }
+                segments.extend(parts);
+            }
+            AnnotatedToken {
+                token_idx: at.token_idx,
+                segments,
+            }
+        })
+        .collect()
 }
 
 fn find_all_matches(text: &str, markers: &[InlineMarker]) -> Vec<InlineMatch> {
@@ -139,8 +252,9 @@ fn find_all_matches(text: &str, markers: &[InlineMarker]) -> Vec<InlineMatch> {
                         matches.push(InlineMatch {
                             start,
                             end,
-                            marker_type: m.marker_type,
+                            kind: Some(m.marker_type),
                             priority: m.marker_type as u8,
+                            link: None,
                         });
                     }
                 } else {
@@ -148,8 +262,9 @@ fn find_all_matches(text: &str, markers: &[InlineMarker]) -> Vec<InlineMatch> {
                         matches.push(InlineMatch {
                             start: mat.start(),
                             end: mat.end(),
-                            marker_type: m.marker_type,
+                            kind: Some(m.marker_type),
                             priority: m.marker_type as u8,
+                            link: None,
                         });
                     }
                 }
@@ -163,8 +278,9 @@ fn find_all_matches(text: &str, markers: &[InlineMarker]) -> Vec<InlineMatch> {
                 matches.push(InlineMatch {
                     start,
                     end,
-                    marker_type: m.marker_type,
+                    kind: Some(m.marker_type),
                     priority: m.marker_type as u8,
+                    link: None,
                 });
                 offset = end;
             }
@@ -211,16 +327,14 @@ fn subtract_claimed_range(
             out.push(InlineMatch {
                 start: f.start,
                 end: claim_start,
-                marker_type: f.marker_type,
-                priority: f.priority,
+                ..f.clone()
             });
         }
         if f.end > claim_end {
             out.push(InlineMatch {
                 start: claim_end,
                 end: f.end,
-                marker_type: f.marker_type,
-                priority: f.priority,
+                ..f.clone()
             });
         }
     }
@@ -273,9 +387,10 @@ fn split_tokens(token_ranges: &[(usize, usize)], matches: &[InlineMatch]) -> Vec
                 start: seg_start,
                 end: seg_end,
                 marker: Some(InlineAnnotation {
-                    marker_type: m.marker_type,
+                    kind: m.kind,
                     open_start: m.start < tok_start,
                     open_end: m.end > tok_end,
+                    link: m.link.clone(),
                 }),
             });
 
@@ -479,8 +594,8 @@ mod tests {
         assert_eq!(&text[segs[1].start..segs[1].end], "x");
         assert!(segs[1].marker.is_some());
         assert_eq!(
-            segs[1].marker.as_ref().unwrap().marker_type,
-            MarkerType::Mark
+            segs[1].marker.as_ref().unwrap().kind,
+            Some(MarkerType::Mark)
         );
         assert!(!segs[1].marker.as_ref().unwrap().open_start);
         assert!(!segs[1].marker.as_ref().unwrap().open_end);
@@ -566,7 +681,7 @@ mod tests {
             .map(|s| {
                 (
                     &text[s.start..s.end],
-                    s.marker.as_ref().unwrap().marker_type,
+                    s.marker.as_ref().unwrap().kind.unwrap(),
                 )
             })
             .collect();
@@ -574,6 +689,78 @@ mod tests {
         assert_eq!(marked[0], ("b", MarkerType::Mark));
         assert_eq!(marked[1], ("cd", MarkerType::Ins));
         assert_eq!(marked[2], ("e", MarkerType::Mark));
+    }
+
+    fn link(start: usize, end: usize, url: &str) -> LinkAnnotation {
+        LinkAnnotation {
+            start,
+            end,
+            url: url.to_owned(),
+        }
+    }
+
+    fn describe(text: &str, annotated: &[AnnotatedToken]) -> Vec<String> {
+        annotated
+            .iter()
+            .flat_map(|at| at.segments.iter())
+            .map(|s| {
+                let t = &text[s.start..s.end];
+                match &s.marker {
+                    None => t.to_owned(),
+                    Some(a) => format!(
+                        "{t}[{}{}{}{}]",
+                        a.kind.map(|k| format!("{k:?}")).unwrap_or_default(),
+                        a.link
+                            .as_deref()
+                            .map(|u| format!("@{u}"))
+                            .unwrap_or_default(),
+                        if a.open_start { "<" } else { "" },
+                        if a.open_end { ">" } else { "" },
+                    ),
+                }
+            })
+            .collect()
+    }
+
+    #[test]
+    fn links_split_tokens_and_span_boundaries() {
+        let text = "see docs now";
+        let ranges = [(0, 4), (4, 12)];
+        let out = process_links(&ranges, &[link(4, 8, "/d")]).unwrap();
+        assert_eq!(describe(text, &out), ["see ", "docs[@/d]", " now"]);
+        let out = process_links(&ranges, &[link(2, 6, "/d")]).unwrap();
+        assert_eq!(
+            describe(text, &out),
+            ["se", "e [@/d>]", "do[@/d<]", "cs now"]
+        );
+        assert!(process_links(&ranges, &[]).is_none());
+    }
+
+    #[test]
+    fn links_overlapping_inline_markers_keep_both() {
+        let text = "abcdefgh";
+        let ranges = [(0, 8)];
+        let out = process_inline_markers_and_links(
+            text,
+            &ranges,
+            &[mark("cde")],
+            &[link(1, 4, "/x"), link(7, 8, "/y")],
+        )
+        .unwrap();
+        assert_eq!(
+            describe(text, &out),
+            ["a", "b[@/x>]", "cd[Mark@/x<]", "e[Mark]", "fg", "h[@/y]"]
+        );
+    }
+
+    #[test]
+    fn links_alone_when_markers_do_not_match() {
+        let text = "abc";
+        let out =
+            process_inline_markers_and_links(text, &[(0, 3)], &[mark("zzz")], &[link(0, 1, "/a")])
+                .unwrap();
+        assert_eq!(describe(text, &out), ["a[@/a]", "bc"]);
+        assert!(process_inline_markers_and_links(text, &[(0, 3)], &[mark("zzz")], &[]).is_none());
     }
 
     #[test]

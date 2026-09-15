@@ -1,0 +1,280 @@
+/* --- Threshold-based collapse --- */
+
+.kazari-block .kz-collapse-content {
+    position: relative;
+}
+
+.kazari-block .kz-collapse-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4em;
+    background: linear-gradient(
+        to bottom,
+        var(--kz-collapse-gradient-start),
+        var(--kz-collapse-gradient-end)
+    );
+    pointer-events: none;
+    transition: opacity var(--kz-collapse-transition);
+    z-index: 1;
+}
+
+.kazari-block .kz-collapse-bar {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+    background: var(--kz-editor-bg);
+    position: relative;
+    z-index: 2;
+}
+
+.kazari-block .kz-collapse-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.375rem 1rem;
+    border: 1px solid var(--kz-collapse-btn-border);
+    border-radius: 1rem;
+    background: var(--kz-collapse-btn-bg);
+    color: var(--kz-collapse-btn-fg);
+    font-size: 0.8rem;
+    font-family: var(--kz-ui-font-family);
+    cursor: pointer;
+    transition: background 200ms ease, border-color 200ms ease;
+}
+
+.kazari-block .kz-collapse-btn:hover {
+    background: var(--kz-collapse-btn-hover-bg);
+    border-color: var(--kz-collapse-btn-border-hover);
+}
+
+/* --- Toolbar collapse toggle --- */
+
+.kazari-block .kz-collapse-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem;
+    border: 1px solid transparent;
+    border-radius: var(--kz-copy-radius);
+    background: transparent;
+    color: var(--kz-copy-fg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.kazari-block .kz-collapse-toggle:hover {
+    background: var(--kz-copy-bg-hover);
+    color: var(--kz-copy-fg-hover);
+}
+
+.kazari-block .kz-collapse-toggle-icon {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.kazari-block:not(.kz-collapsed) .kz-collapse-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.kazari-block .frame {
+    position: relative;
+}
+
+
+.kazari-block.kz-collapsed .kz-hidden {
+    display: none;
+}
+
+.kazari-block:not(.kz-collapsed) .kz-hidden {
+    display: grid;
+}
+
+.kazari-block:not(.kz-collapsed) .kz-collapse-gradient {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.kazari-block:not(.kz-collapsed) .kz-gap {
+    display: none;
+}
+
+/* --- Range-based collapse sections --- */
+
+.kazari-block .kz-section {
+    position: relative;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.kazari-block .kz-section summary {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    list-style: none;
+    -webkit-user-select: none;
+    user-select: none;
+    color: var(--kz-collapse-closed-fg);
+    background-color: var(--kz-collapse-closed-bg);
+    --cs-border-color: var(--kz-collapse-closed-border);
+    --cs-border-width: var(--kz-collapse-closed-border-width);
+    box-shadow: inset 0 calc(-1 * var(--cs-border-width)) var(--cs-border-color),
+                inset 0 var(--cs-border-width) var(--cs-border-color);
+    margin: 0;
+    padding: 0;
+    font-family: var(--kz-collapse-closed-font-family);
+    font-size: var(--kz-collapse-closed-font-size);
+    line-height: var(--kz-collapse-closed-line-height);
+}
+
+.kazari-block .kz-section summary::marker {
+    display: inline-block;
+    content: "";
+    width: 16px;
+    height: 16px;
+}
+
+.kazari-block .kz-section summary::-webkit-details-marker {
+    display: none;
+}
+
+.kazari-block .kz-section summary .kz-code {
+    padding-block: var(--kz-collapse-closed-padding);
+    padding-left: var(--kz-indent, 0ch);
+    text-indent: 0;
+}
+
+/* Expand & collapse icons (Octicons, MIT licensed) */
+.kazari-block .kz-section .expand,
+.kazari-block .kz-section .collapse {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+    opacity: 0.75;
+}
+
+.kazari-block .kz-section .expand::after,
+.kazari-block .kz-section .collapse::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    inset: 0;
+    background-color: var(--kz-collapse-closed-fg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    line-height: 0;
+}
+
+.kazari-block .kz-section .expand::after {
+    -webkit-mask-image: var(--kz-collapse-expand-icon);
+    mask-image: var(--kz-collapse-expand-icon);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.kazari-block .kz-section .collapse {
+    display: none;
+}
+
+.kazari-block .kz-section .collapse::after {
+    -webkit-mask-image: var(--kz-collapse-collapse-icon);
+    mask-image: var(--kz-collapse-collapse-icon);
+}
+
+.kazari-block .kz-section .text {
+    margin-left: 1em;
+}
+
+/* Common open section styles */
+.kazari-block .kz-section[open],
+.kazari-block .kz-section details[open] + .content-lines {
+    --cs-border-color: var(--kz-collapse-open-border);
+    --cs-border-width: var(--kz-collapse-open-border-width);
+    box-shadow: inset 0 calc(-1 * var(--cs-border-width)) var(--cs-border-color),
+                inset 0 var(--cs-border-width) var(--cs-border-color);
+}
+
+/* --- GitHub style (details is outer element) --- */
+
+.kazari-block details.kz-section[open] > summary {
+    display: none;
+}
+
+.kazari-block details.kz-section[open] {
+    background-color: var(--kz-collapse-open-bg);
+}
+
+/* --- Collapsible-start / collapsible-end styles (re-collapsible) --- */
+
+.kazari-block .kz-section:is(.collapsible-start, .collapsible-end) {
+    display: flex;
+    flex-direction: column;
+}
+
+.kazari-block .kz-section.collapsible-end {
+    flex-direction: column-reverse;
+}
+
+.kazari-block .kz-section:is(.collapsible-start, .collapsible-end) .content-lines {
+    display: none;
+}
+
+.kazari-block .kz-section:is(.collapsible-start, .collapsible-end) details[open] .collapse {
+    display: inline-block;
+}
+
+.kazari-block .kz-section:is(.collapsible-start, .collapsible-end) details[open] .expand,
+.kazari-block .kz-section:is(.collapsible-start, .collapsible-end) details[open] .text {
+    display: none;
+}
+
+.kazari-block .kz-section:is(.collapsible-start, .collapsible-end) details[open] + .content-lines {
+    display: block;
+    background-color: var(--kz-collapse-open-bg-collapsible);
+}
+
+/* --- Gap indicators --- */
+
+.kazari-block .kz-gap {
+    background: var(--kz-collapse-closed-bg);
+    border-block: 1px dashed var(--kz-collapse-closed-border);
+}
+
+.kazari-block .kz-gap .kz-code {
+    text-align: center;
+    padding-block: 0;
+    line-height: 1.2;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.kazari-block .kz-gap .kz-gap-indicator {
+    color: var(--kz-editor-fg);
+    opacity: 0.45;
+    font-size: 1.2em;
+}
+
+/* --- Print --- */
+
+@media print {
+    .kazari-block .kz-collapse-gradient,
+    .kazari-block .kz-collapse-btn {
+        display: none !important;
+    }
+    .kazari-block.kz-collapsed .kz-hidden {
+        display: grid !important;
+    }
+    .kazari-block .kz-gap {
+        display: none !important;
+    }
+    .kazari-block .kz-section:is(.collapsible-start, .collapsible-end) details {
+        display: none !important;
+    }
+    .kazari-block .kz-section:is(.collapsible-start, .collapsible-end) .content-lines {
+        display: block !important;
+    }
+}

@@ -4,7 +4,9 @@ use serde::Deserialize;
 
 use crate::error::Error;
 use crate::meta::BlockOptions;
-use crate::types::{DarkMode, Frame, InlineMarker, LineMarker, LineRange, TerminalDotStyle};
+use crate::types::{
+    DarkMode, Frame, InlineMarker, LineMarker, LineRange, LinkAnnotation, TerminalDotStyle,
+};
 
 #[derive(Debug, Clone)]
 pub struct BlockDefaults {
@@ -33,6 +35,28 @@ pub struct Config {
     pub dark_mode: DarkMode,
     pub copy_button: bool,
     pub wrap_button: bool,
+    /// Fullscreen toggle plus font size controls in the toolbar.
+    pub fullscreen_button: bool,
+    /// Per-block light/dark toggle; rendered only when a dark theme is set.
+    pub theme_toggle: bool,
+    /// Allow `withOutput` blocks to split at the output separator and render the
+    /// remainder in an output panel.
+    pub output_panel: bool,
+    pub output_default_collapsed: bool,
+    /// Line that separates code from output; empty means `---output---`.
+    pub output_separator: String,
+    /// Turn `@[text](url)` in the source into links.
+    pub inline_links: bool,
+    /// Threshold collapsing of long blocks. Range collapse (`collapse={3-5}`) works
+    /// without it.
+    pub collapsible: Option<CollapsibleConfig>,
+    /// Emit a `kz-file-icon` placeholder (with `data-ext`) before titles that have an
+    /// extension; the site's CSS supplies the image.
+    pub file_icons: bool,
+    /// Replaces the placeholder with custom markup for the given extension.
+    #[allow(clippy::type_complexity)]
+    pub file_icon_resolver: Option<Box<dyn Fn(&str) -> String + Send + Sync>>,
+    pub lang_icon_mode: LangIconMode,
     pub frame_detection: bool,
     pub file_name_extraction: bool,
     pub language_badge: bool,
@@ -50,11 +74,155 @@ pub struct Config {
     pub visible_whitespace: bool,
     pub whitespace_tab: String,
     pub whitespace_space: String,
+    /// Locale for the UI strings (`en-US`, `fr-FR`, `ja-JP`; unknown falls back to
+    /// `en-US`), resolved once when the engine is built.
+    pub locale: String,
+    /// Per-key overrides of the UI strings, keyed like `copy.label`.
+    pub ui_string_overrides: HashMap<String, String>,
+    /// Name of the CSS cascade layer the generated stylesheet is wrapped in; empty
+    /// disables the wrapper.
+    pub cascade_layer: String,
+    /// Selector that carries the theme variables.
+    pub theme_css_root: String,
+    /// CSS variable overrides emitted inside the theme scopes, sorted by name.
+    pub style_overrides: BTreeMap<String, StyleValue>,
     pub defaults: BlockDefaults,
     pub language_defaults: BTreeMap<String, BlockDefaults>,
     pub language_aliases: HashMap<String, String>,
     #[allow(clippy::type_complexity)]
     pub warning_handler: Option<Box<dyn Fn(&str) + Send + Sync>>,
+}
+
+/// How the language badge is shown: text only, an icon placeholder, or both.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum LangIconMode {
+    #[default]
+    None,
+    IconOnly,
+    IconAndText,
+}
+
+/// Visual style of a range-based collapsible section.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum CollapseStyle {
+    /// One-way expand; the summary disappears once opened.
+    #[default]
+    Github,
+    /// Re-collapsible, summary above the content.
+    CollapsibleStart,
+    /// Re-collapsible, summary below the content.
+    CollapsibleEnd,
+    /// `CollapsibleEnd` when the range reaches the last line, else `CollapsibleStart`.
+    CollapsibleAuto,
+}
+
+/// Threshold-based collapsing of long blocks; `Some` on `Config` enables it.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CollapsibleConfig {
+    /// Blocks longer than this collapse (0 means 15).
+    pub line_threshold: usize,
+    /// Lines shown while collapsed (0 means 8).
+    pub preview_lines: usize,
+    pub default_collapsed: bool,
+    /// Give range summaries the indentation of their content.
+    pub preserve_indent: bool,
+    pub style: CollapseStyle,
+    /// Empty strings fall back to the locale.
+    pub expand_button_text: String,
+    pub collapse_button_text: String,
+    pub expanded_announcement: String,
+    pub collapsed_announcement: String,
+}
+
+impl Default for CollapsibleConfig {
+    fn default() -> Self {
+        Self {
+            line_threshold: 15,
+            preview_lines: 8,
+            default_collapsed: true,
+            preserve_indent: true,
+            style: CollapseStyle::Github,
+            expand_button_text: String::new(),
+            collapse_button_text: String::new(),
+            expanded_announcement: String::new(),
+            collapsed_announcement: String::new(),
+        }
+    }
+}
+
+/// Per-block collapse directives from the fence meta or `Options`.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct CollapseSpec {
+    pub enabled: bool,
+    pub disabled: bool,
+    pub ranges: Vec<LineRange>,
+    pub style: Option<CollapseStyle>,
+    pub threshold: Option<usize>,
+}
+
+/// A validated range-based section, ready to render.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CollapseRange {
+    pub start: usize,
+    pub end: usize,
+    pub line_count: usize,
+    pub min_indent: usize,
+    pub style: CollapseStyle,
+}
+
+/// A contiguous run of lines that stays visible in a threshold preview.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct PreviewSegment {
+    pub start: usize,
+    pub end: usize,
+}
+
+/// A CSS variable override that is either the same in both themes or split per
+/// theme.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct StyleValue {
+    pub value: String,
+    pub light: String,
+    pub dark: String,
+}
+
+impl StyleValue {
+    pub fn plain(value: &str) -> Self {
+        Self {
+            value: value.to_owned(),
+            ..Default::default()
+        }
+    }
+
+    pub fn themed(light: &str, dark: &str) -> Self {
+        Self {
+            value: String::new(),
+            light: light.to_owned(),
+            dark: dark.to_owned(),
+        }
+    }
+
+    pub fn is_themed(&self) -> bool {
+        !self.light.is_empty() || !self.dark.is_empty()
+    }
+
+    pub fn light_value(&self) -> &str {
+        if self.is_themed() {
+            &self.light
+        } else {
+            &self.value
+        }
+    }
+
+    pub fn dark_value(&self) -> &str {
+        if self.is_themed() {
+            &self.dark
+        } else {
+            &self.value
+        }
+    }
 }
 
 impl std::fmt::Debug for Config {
@@ -74,6 +242,16 @@ impl Default for Config {
             dark_mode: DarkMode::default(),
             copy_button: true,
             wrap_button: true,
+            fullscreen_button: true,
+            theme_toggle: false,
+            output_panel: false,
+            output_default_collapsed: false,
+            output_separator: String::new(),
+            inline_links: false,
+            collapsible: None,
+            file_icons: true,
+            file_icon_resolver: None,
+            lang_icon_mode: LangIconMode::None,
             frame_detection: true,
             file_name_extraction: true,
             language_badge: true,
@@ -88,6 +266,11 @@ impl Default for Config {
             visible_whitespace: false,
             whitespace_tab: "\u{2192}".to_owned(),
             whitespace_space: "\u{b7}".to_owned(),
+            locale: "en-US".to_owned(),
+            ui_string_overrides: HashMap::new(),
+            cascade_layer: "kazari".to_owned(),
+            theme_css_root: ":root".to_owned(),
+            style_overrides: BTreeMap::new(),
             defaults: BlockDefaults::default(),
             language_defaults: BTreeMap::new(),
             language_aliases: HashMap::new(),
@@ -112,6 +295,18 @@ pub struct ResolvedBlock {
     pub line_markers: Vec<LineMarker>,
     pub inline_markers: Vec<InlineMarker>,
     pub focus_lines: Vec<LineRange>,
+    pub with_output: bool,
+    pub output_collapsed: bool,
+    pub output_label: String,
+    pub output_text: String,
+    /// Link annotations per source line, byte offsets into the cleaned line.
+    pub links: Vec<Vec<LinkAnnotation>>,
+    pub collapse_spec: Option<CollapseSpec>,
+    pub collapse_threshold: bool,
+    pub collapse_ranges: Vec<CollapseRange>,
+    pub collapse_segments: Vec<PreviewSegment>,
+    /// Marked lines past the preview cap, shown as a badge on the expand button.
+    pub collapse_beyond_cap: usize,
 }
 
 impl Config {
@@ -124,6 +319,7 @@ impl Config {
             wrap: self.defaults.wrap,
             preserve_indent: self.defaults.preserve_indent,
             hanging_indent: self.defaults.hanging_indent,
+            output_collapsed: self.output_default_collapsed,
             ..Default::default()
         };
 
@@ -165,6 +361,15 @@ impl Config {
             }
             if let Some(hi) = opts.hanging_indent {
                 resolved.hanging_indent = hi;
+            }
+            if let Some(v) = opts.with_output {
+                resolved.with_output = v;
+            }
+            if let Some(v) = opts.output_collapsed {
+                resolved.output_collapsed = v;
+            }
+            if !opts.output_label.is_empty() {
+                resolved.output_label = opts.output_label.clone();
             }
         }
 
@@ -220,13 +425,67 @@ pub struct BlockDefaultsFile {
     pub frame: Option<Frame>,
 }
 
+/// A `styleOverrides` entry: a bare string or a `{ light, dark }` map.
+#[derive(Debug, Deserialize)]
+#[serde(untagged)]
+pub enum StyleValueFile {
+    Themed {
+        #[serde(default)]
+        light: String,
+        #[serde(default)]
+        dark: String,
+    },
+    Plain(String),
+    Int(i64),
+    Float(f64),
+}
+
+impl From<StyleValueFile> for StyleValue {
+    fn from(v: StyleValueFile) -> Self {
+        match v {
+            StyleValueFile::Themed { light, dark } => StyleValue::themed(&light, &dark),
+            StyleValueFile::Plain(value) => StyleValue::plain(&value),
+            StyleValueFile::Int(n) => StyleValue::plain(&n.to_string()),
+            StyleValueFile::Float(n) => StyleValue::plain(&n.to_string()),
+        }
+    }
+}
+
+#[derive(Debug, Deserialize, Default)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct CollapsibleFile {
+    pub line_threshold: Option<usize>,
+    pub preview_lines: Option<usize>,
+    pub default_collapsed: Option<bool>,
+    pub preserve_indent: Option<bool>,
+    pub style: Option<CollapseStyle>,
+    pub expand_button_text: Option<String>,
+    pub collapse_button_text: Option<String>,
+    pub expanded_announcement: Option<String>,
+    pub collapsed_announcement: Option<String>,
+}
+
 #[derive(Debug, Deserialize, Default)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct FileConfig {
     pub themes: Option<ThemesFile>,
+    pub collapsible: Option<CollapsibleFile>,
+    pub locale: Option<String>,
+    pub ui_strings: Option<HashMap<String, String>>,
+    pub cascade_layer: Option<String>,
+    pub theme_css_root: Option<String>,
+    pub style_overrides: Option<BTreeMap<String, StyleValueFile>>,
     pub dark_mode: Option<DarkModeFile>,
     pub copy_button: Option<bool>,
     pub wrap_button: Option<bool>,
+    pub fullscreen_button: Option<bool>,
+    pub theme_toggle: Option<bool>,
+    pub output_panel: Option<bool>,
+    pub output_default_collapsed: Option<bool>,
+    pub output_separator: Option<String>,
+    pub inline_links: Option<bool>,
+    pub file_icons: Option<bool>,
+    pub lang_icon_mode: Option<LangIconMode>,
     pub line_numbers: Option<bool>,
     pub frame_detection: Option<bool>,
     pub file_name_extraction: Option<bool>,
@@ -268,6 +527,61 @@ impl FileConfig {
         }
         if let Some(v) = self.wrap_button {
             cfg.wrap_button = v;
+        }
+        if let Some(v) = self.fullscreen_button {
+            cfg.fullscreen_button = v;
+        }
+        if let Some(v) = self.theme_toggle {
+            cfg.theme_toggle = v;
+        }
+        if let Some(v) = self.output_panel {
+            cfg.output_panel = v;
+        }
+        if let Some(v) = self.output_default_collapsed {
+            cfg.output_default_collapsed = v;
+        }
+        if let Some(v) = self.output_separator {
+            cfg.output_separator = v;
+        }
+        if let Some(v) = self.inline_links {
+            cfg.inline_links = v;
+        }
+        if let Some(v) = self.file_icons {
+            cfg.file_icons = v;
+        }
+        if let Some(v) = self.lang_icon_mode {
+            cfg.lang_icon_mode = v;
+        }
+        if let Some(file) = self.collapsible {
+            let mut c = cfg.collapsible.take().unwrap_or_default();
+            if let Some(v) = file.line_threshold {
+                c.line_threshold = v;
+            }
+            if let Some(v) = file.preview_lines {
+                c.preview_lines = v;
+            }
+            if let Some(v) = file.default_collapsed {
+                c.default_collapsed = v;
+            }
+            if let Some(v) = file.preserve_indent {
+                c.preserve_indent = v;
+            }
+            if let Some(v) = file.style {
+                c.style = v;
+            }
+            if let Some(v) = file.expand_button_text {
+                c.expand_button_text = v;
+            }
+            if let Some(v) = file.collapse_button_text {
+                c.collapse_button_text = v;
+            }
+            if let Some(v) = file.expanded_announcement {
+                c.expanded_announcement = v;
+            }
+            if let Some(v) = file.collapsed_announcement {
+                c.collapsed_announcement = v;
+            }
+            cfg.collapsible = Some(c);
         }
         if let Some(v) = self.line_numbers {
             cfg.defaults.line_numbers = v;
@@ -328,6 +642,22 @@ impl FileConfig {
         if let Some(aliases) = self.language_aliases {
             cfg.language_aliases.extend(aliases);
         }
+        if let Some(v) = self.locale.filter(|s| !s.is_empty()) {
+            cfg.locale = v;
+        }
+        if let Some(overrides) = self.ui_strings {
+            cfg.ui_string_overrides.extend(overrides);
+        }
+        if let Some(v) = self.cascade_layer {
+            cfg.cascade_layer = v;
+        }
+        if let Some(v) = self.theme_css_root.filter(|s| !s.is_empty()) {
+            cfg.theme_css_root = v;
+        }
+        if let Some(overrides) = self.style_overrides {
+            cfg.style_overrides
+                .extend(overrides.into_iter().map(|(k, v)| (k, v.into())));
+        }
         Ok(())
     }
 
@@ -356,6 +686,18 @@ impl FileConfig {
             && themes.light.is_empty()
         {
             return Err(Error::Config("themes.light is required".into()));
+        }
+        if let Some(c) = &self.collapsible {
+            if c.line_threshold == Some(0) {
+                return Err(Error::Config(
+                    "collapsible.lineThreshold must be at least 1".into(),
+                ));
+            }
+            if c.preview_lines == Some(0) {
+                return Err(Error::Config(
+                    "collapsible.previewLines must be at least 1".into(),
+                ));
+            }
         }
         Ok(())
     }
@@ -702,6 +1044,111 @@ languageAliases:
         fc.apply(&mut cfg).unwrap();
         assert!(cfg.language_defaults["go"].line_numbers);
         assert!(cfg.language_defaults["go"].wrap);
+    }
+
+    #[test]
+    fn file_config_locale_and_css_fields() {
+        let yaml = r##"
+locale: fr-FR
+uiStrings:
+  copy.label: Kopieren
+cascadeLayer: ""
+themeCssRoot: ".docs"
+styleOverrides:
+  --kz-radius: 0
+  --kz-editor-bg:
+    light: "#fff"
+    dark: "#000"
+  --kz-font-size:
+    dark: 1rem
+"##;
+        let fc = FileConfig::from_yaml(yaml).unwrap();
+        let mut cfg = Config::default();
+        fc.apply(&mut cfg).unwrap();
+        assert_eq!(cfg.locale, "fr-FR");
+        assert_eq!(cfg.ui_string_overrides["copy.label"], "Kopieren");
+        assert_eq!(cfg.cascade_layer, "");
+        assert_eq!(cfg.theme_css_root, ".docs");
+        assert_eq!(cfg.style_overrides["--kz-radius"], StyleValue::plain("0"));
+        assert_eq!(
+            cfg.style_overrides["--kz-editor-bg"],
+            StyleValue::themed("#fff", "#000")
+        );
+        assert_eq!(cfg.style_overrides["--kz-font-size"].light_value(), "");
+        assert_eq!(cfg.style_overrides["--kz-font-size"].dark_value(), "1rem");
+    }
+
+    #[test]
+    fn file_config_toolbar_and_output_fields() {
+        let yaml = "fullscreenButton: false\nthemeToggle: true\noutputPanel: true\noutputDefaultCollapsed: true\noutputSeparator: '==='\ninlineLinks: true\nfileIcons: false\nlangIconMode: iconAndText\n";
+        let fc = FileConfig::from_yaml(yaml).unwrap();
+        let mut cfg = Config::default();
+        fc.apply(&mut cfg).unwrap();
+        assert!(!cfg.fullscreen_button);
+        assert!(cfg.theme_toggle);
+        assert!(cfg.output_panel);
+        assert!(cfg.output_default_collapsed);
+        assert_eq!(cfg.output_separator, "===");
+        assert!(cfg.inline_links);
+        assert!(!cfg.file_icons);
+        assert_eq!(cfg.lang_icon_mode, LangIconMode::IconAndText);
+        assert!(FileConfig::from_yaml("langIconMode: pictures\n").is_err());
+    }
+
+    #[test]
+    fn output_options_cascade() {
+        let cfg = Config {
+            output_default_collapsed: true,
+            ..Default::default()
+        };
+        let r = cfg.resolve("py", None);
+        assert!(!r.with_output);
+        assert!(r.output_collapsed);
+        let opts = BlockOptions {
+            with_output: Some(true),
+            output_collapsed: Some(false),
+            output_label: "Result".into(),
+            ..Default::default()
+        };
+        let r = cfg.resolve("py", Some(&opts));
+        assert!(r.with_output);
+        assert!(!r.output_collapsed);
+        assert_eq!(r.output_label, "Result");
+    }
+
+    #[test]
+    fn file_config_collapsible() {
+        let yaml = "collapsible:\n  lineThreshold: 20\n  style: collapsibleAuto\n  expandButtonText: More\n";
+        let fc = FileConfig::from_yaml(yaml).unwrap();
+        let mut cfg = Config::default();
+        fc.apply(&mut cfg).unwrap();
+        let c = cfg.collapsible.as_ref().unwrap();
+        assert_eq!(c.line_threshold, 20);
+        assert_eq!(c.preview_lines, 8);
+        assert!(c.default_collapsed);
+        assert_eq!(c.style, CollapseStyle::CollapsibleAuto);
+        assert_eq!(c.expand_button_text, "More");
+
+        let fc = FileConfig::from_yaml("collapsible: {}\n").unwrap();
+        let mut cfg = Config::default();
+        fc.apply(&mut cfg).unwrap();
+        assert_eq!(cfg.collapsible, Some(CollapsibleConfig::default()));
+
+        assert!(FileConfig::from_yaml("collapsible:\n  style: sideways\n").is_err());
+        assert!(FileConfig::from_yaml("collapsible:\n  lineThreshold: 0\n").is_err());
+        assert!(FileConfig::from_yaml("collapsible:\n  previewLines: 0\n").is_err());
+    }
+
+    #[test]
+    fn style_value_accessors() {
+        let plain = StyleValue::plain("1px");
+        assert!(!plain.is_themed());
+        assert_eq!(plain.light_value(), "1px");
+        assert_eq!(plain.dark_value(), "1px");
+        let themed = StyleValue::themed("#fff", "#000");
+        assert!(themed.is_themed());
+        assert_eq!(themed.light_value(), "#fff");
+        assert_eq!(themed.dark_value(), "#000");
     }
 
     #[test]

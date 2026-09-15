@@ -8,7 +8,7 @@ use crate::escape::escape_typst_string;
 use crate::marker::{self, ResolvedLine, Segment};
 use crate::render::digit_count;
 use crate::tokenize::Tokens;
-use crate::types::MarkerType;
+use crate::types::{LinkAnnotation, MarkerType};
 
 const CODE_BLOCK_TYP: &str = include_str!("../assets/typst/code-block.typ");
 
@@ -119,9 +119,16 @@ fn render_line(
             .as_ref()
             .is_some_and(|f| f.contains(&line_num));
 
+    let line_links = lctx
+        .resolved
+        .links
+        .get(line_idx)
+        .map(Vec::as_slice)
+        .unwrap_or(&[]);
+
     if blank {
         sb.push_str("#text(\" \")");
-    } else if lctx.resolved.inline_markers.is_empty() {
+    } else if lctx.resolved.inline_markers.is_empty() && line_links.is_empty() {
         for token in line_tokens {
             let text = token.text(line_text);
             if !text.is_empty() {
@@ -129,7 +136,7 @@ fn render_line(
             }
         }
     } else {
-        render_with_inline_markers(sb, tokens, line_text, line_tokens, lctx, dimmed);
+        render_with_inline_markers(sb, tokens, line_text, line_tokens, line_links, lctx, dimmed);
     }
 
     sb.push_str("]\n");
@@ -140,6 +147,7 @@ fn render_with_inline_markers(
     tokens: &Tokens,
     line_text: &str,
     line_tokens: &[iro::ThemedToken],
+    line_links: &[LinkAnnotation],
     lctx: &LineCtx<'_>,
     dimmed: bool,
 ) {
@@ -157,9 +165,12 @@ fn render_with_inline_markers(
         renderable.push(token);
     }
 
-    let Some(annotated) =
-        marker::process_inline_markers(&plain_text, &token_ranges, &lctx.resolved.inline_markers)
-    else {
+    let Some(annotated) = marker::process_inline_markers_and_links(
+        &plain_text,
+        &token_ranges,
+        &lctx.resolved.inline_markers,
+        line_links,
+    ) else {
         for token in renderable {
             write_token(
                 sb,
@@ -197,14 +208,25 @@ fn write_segment(
     }
     match &seg.marker {
         Some(ann) => {
-            write!(
-                sb,
-                "#highlight(fill: kz-marker-colors.{})[",
-                marker_name(ann.marker_type)
-            )
-            .unwrap();
-            write_token(sb, text, style, tokens, fg, dimmed);
-            sb.push(']');
+            if let Some(url) = &ann.link {
+                write!(sb, "#link(\"{}\")[", escape_typst_string(url)).unwrap();
+            }
+            match ann.kind {
+                Some(kind) => {
+                    write!(
+                        sb,
+                        "#highlight(fill: kz-marker-colors.{})[",
+                        marker_name(kind)
+                    )
+                    .unwrap();
+                    write_token(sb, text, style, tokens, fg, dimmed);
+                    sb.push(']');
+                }
+                None => write_token(sb, text, style, tokens, fg, dimmed),
+            }
+            if ann.link.is_some() {
+                sb.push(']');
+            }
         }
         None => write_token(sb, text, style, tokens, fg, dimmed),
     }

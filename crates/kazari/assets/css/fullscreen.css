@@ -1,0 +1,126 @@
+.kazari-block .kz-fs-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem;
+  border: 1px solid transparent;
+  border-radius: var(--kz-copy-radius);
+  background: transparent;
+  color: var(--kz-copy-fg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.kazari-block .kz-fs-btn:hover {
+  background: var(--kz-copy-bg-hover);
+  color: var(--kz-copy-fg-hover);
+}
+.kazari-block .kz-fs-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.kazari-block .kz-fs-exit-icon {
+  display: none;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.kazari-block .kz-font-controls {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+}
+.kazari-block .kz-font-inc,
+.kazari-block .kz-font-dec {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem;
+  border: 1px solid transparent;
+  border-radius: var(--kz-copy-radius);
+  background: transparent;
+  color: var(--kz-copy-fg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.kazari-block .kz-font-inc:hover,
+.kazari-block .kz-font-dec:hover {
+  background: var(--kz-copy-bg-hover);
+  color: var(--kz-copy-fg-hover);
+}
+.kazari-block .kz-font-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.kazari-block:fullscreen .kz-font-controls,
+.kazari-block:-webkit-full-screen .kz-font-controls {
+  display: flex;
+}
+.kazari-block:fullscreen .kz-fs-icon,
+.kazari-block:-webkit-full-screen .kz-fs-icon {
+  display: none;
+}
+.kazari-block:fullscreen .kz-fs-exit-icon,
+.kazari-block:-webkit-full-screen .kz-fs-exit-icon {
+  display: inline;
+}
+.kazari-block:fullscreen,
+.kazari-block:-webkit-full-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: var(--kz-editor-bg);
+  padding: 2rem;
+}
+.kazari-block:fullscreen .frame,
+.kazari-block:-webkit-full-screen .frame {
+  width: 100%;
+  max-width: none;
+  border-radius: var(--kz-radius);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  overflow: auto;
+  font-size: calc(1em * var(--kz-fs-font-scale));
+}
+.kazari-block:fullscreen pre,
+.kazari-block:-webkit-full-screen pre {
+  font-size: calc(var(--kz-font-size) * var(--kz-fs-font-scale));
+}
+.kazari-block:fullscreen .kz-lang,
+.kazari-block:-webkit-full-screen .kz-lang {
+  font-size: calc(var(--kz-lang-font-size) * var(--kz-fs-font-scale));
+}
+.kazari-block:fullscreen .kz-title,
+.kazari-block:-webkit-full-screen .kz-title {
+  font-size: calc(0.875rem * var(--kz-fs-font-scale));
+}
+@media (max-width: 768px) {
+  .kazari-block:fullscreen,
+  .kazari-block:-webkit-full-screen {
+    padding: 0.75rem;
+  }
+  .kazari-block .kz-font-inc,
+  .kazari-block .kz-font-dec {
+    padding: 0.5rem;
+  }
+  .kazari-block .kz-font-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  .kazari-block .kz-fs-btn {
+    padding: 0.5rem;
+  }
+  .kazari-block .kz-fs-icon,
+  .kazari-block .kz-fs-exit-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+@media (hover: none) and (pointer: coarse) {
+  .kazari-block .kz-fs-btn:hover {
+    background: transparent;
+    transform: none;
+  }
+  .kazari-block .kz-font-inc:hover,
+  .kazari-block .kz-font-dec:hover {
+    background: transparent;
+    transform: none;
+  }
+}

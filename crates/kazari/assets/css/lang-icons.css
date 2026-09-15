@@ -1,0 +1,16 @@
+/* Same empty background-image slot as .kz-file-icon, carrying the same
+   background defaults so the two behave alike and a site supplies only the
+   image. */
+.kazari-block .kz-lang-icon {
+  display: inline-block;
+  width: var(--kz-lang-icon-size);
+  height: var(--kz-lang-icon-size);
+  margin: var(--kz-lang-icon-margin);
+  opacity: var(--kz-lang-icon-opacity);
+  vertical-align: middle;
+  flex-shrink: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-origin: content-box;
+}

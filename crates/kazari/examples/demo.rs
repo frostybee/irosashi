@@ -1,5 +1,7 @@
 //! Renders several code blocks as a standalone HTML page showcasing Kazari features.
 //! `cargo run -p kazari --example demo > demo.html`, then open the file in a browser.
+//! The toolbar buttons (copy, wrap, theme toggle, font size, fullscreen), the collapse
+//! bar and the output panel are wired by the bundled JS.
 
 use kazari::Kazari;
 
@@ -8,6 +10,10 @@ fn main() -> Result<(), kazari::Error> {
     let kz = Kazari::builder(hl)
         .themes("github-light", Some("github-dark"))
         .notation_comments(true)
+        .inline_links(true)
+        .output_panel(true)
+        .theme_toggle(true)
+        .collapsible(kazari::CollapsibleConfig::default())
         .build()?;
 
     let blocks: Vec<(&str, &str, &str)> = vec![
@@ -51,6 +57,26 @@ fn main() -> Result<(), kazari::Error> {
             "Comment notation (engine built with notation_comments)",
             "javascript showLineNumbers",
             "const total = 0; // [!code --]\nlet total = 0; // [!code ++]\nfor (const n of items) total += n; // [!code highlight]\nreturn totl; // [!code error]\n// [!code word:total]\n",
+        ),
+        (
+            "Inline links (engine built with inline_links)",
+            r#"rust title="lib.rs""#,
+            "// See @[Iterator](https://doc.rust-lang.org/std/iter/trait.Iterator.html) and @[the book](/book/ch13-02).\nfn evens(v: &[u32]) -> Vec<u32> {\n    v.iter().copied().filter(|n| n % 2 == 0).collect()\n}\n",
+        ),
+        (
+            "Output panel (engine built with output_panel)",
+            r#"python withOutput outputLabel="Result""#,
+            "for i in range(3):\n    print(i * i)\n---output---\n0\n1\n4\n",
+        ),
+        (
+            "Collapsed range",
+            "json showLineNumbers collapse={3-7} collapseStyle=collapsible-auto",
+            "{\n  \"name\": \"kazari\",\n  \"dependencies\": {\n    \"iro\": \"0.1\",\n    \"regex\": \"1\",\n    \"serde\": \"1\"\n  },\n  \"version\": \"0.1.0\"\n}\n",
+        ),
+        (
+            "Threshold collapse (engine built with collapsible, 15-line threshold)",
+            "javascript showLineNumbers {18}",
+            "const days = [\n  'Monday',\n  'Tuesday',\n  'Wednesday',\n  'Thursday',\n  'Friday',\n  'Saturday',\n  'Sunday',\n];\n\nfunction isWeekend(day) {\n  return day === 'Saturday' || day === 'Sunday';\n}\n\nfunction next(day) {\n  const i = days.indexOf(day);\n  if (i < 0) {\n    throw new Error(`unknown day ${day}`);\n  }\n  return days[(i + 1) % days.length];\n}\n",
         ),
     ];
 

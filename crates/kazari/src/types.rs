@@ -77,6 +77,15 @@ pub struct InlineMarker {
     pub is_regex: bool,
 }
 
+/// A link extracted from `@[text](url)` syntax: byte offsets of the visible text
+/// within the cleaned line, and the target.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LinkAnnotation {
+    pub start: usize,
+    pub end: usize,
+    pub url: String,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct ThemeInfo {
     pub fg: String,

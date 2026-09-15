@@ -1,3 +1,4 @@
+use crate::config::{CollapseSpec, CollapseStyle};
 use crate::types::{Frame, InlineMarker, LineMarker, LineRange, MarkerType};
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -11,6 +12,9 @@ pub struct BlockOptions {
     pub wrap: Option<bool>,
     pub preserve_indent: Option<bool>,
     pub hanging_indent: Option<usize>,
+    pub with_output: Option<bool>,
+    pub output_collapsed: Option<bool>,
+    pub output_label: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Default)]
@@ -20,6 +24,7 @@ pub struct ParseResult {
     pub inline_markers: Vec<InlineMarker>,
     pub focus_lines: Vec<LineRange>,
     pub diff_lang: String,
+    pub collapse: Option<CollapseSpec>,
 }
 
 pub fn parse(meta: &str) -> ParseResult {
@@ -43,6 +48,39 @@ pub fn parse(meta: &str) -> ParseResult {
             if let Ok(n) = val.parse::<usize>() {
                 result.block_options.hanging_indent = Some(n);
             }
+        } else if tok == "withOutput" {
+            result.block_options.with_output = Some(true);
+        } else if tok == "outputCollapsed" {
+            result.block_options.output_collapsed = Some(true);
+        } else if tok == "outputCollapsed=false" {
+            result.block_options.output_collapsed = Some(false);
+        } else if let Some(val) = tok.strip_prefix("outputLabel=") {
+            result.block_options.output_label = unquote(val);
+        } else if tok == "collapse" {
+            result.collapse.get_or_insert_default().enabled = true;
+        } else if tok == "nocollapse" {
+            result.collapse.get_or_insert_default().disabled = true;
+        } else if let Some(val) = tok.strip_prefix("collapseStyle=") {
+            let style = match unquote(val).as_str() {
+                "collapsible-start" => CollapseStyle::CollapsibleStart,
+                "collapsible-end" => CollapseStyle::CollapsibleEnd,
+                "collapsible-auto" => CollapseStyle::CollapsibleAuto,
+                _ => CollapseStyle::Github,
+            };
+            result.collapse.get_or_insert_default().style = Some(style);
+        } else if let Some(val) = tok.strip_prefix("collapseThreshold=") {
+            if let Ok(n) = val.parse::<usize>()
+                && n > 0
+            {
+                result.collapse.get_or_insert_default().threshold = Some(n);
+            }
+        } else if let Some(val) = tok.strip_prefix("collapse=") {
+            let ranges = parse_ranges(&extract_braces(val));
+            result
+                .collapse
+                .get_or_insert_default()
+                .ranges
+                .extend(ranges);
         } else if let Some(val) = tok.strip_prefix("title=") {
             result.block_options.title = unquote(val);
         } else if let Some(val) = tok.strip_prefix("theme=") {
@@ -538,9 +576,54 @@ mod tests {
 
     #[test]
     fn unknown_tokens_are_ignored() {
-        let r = parse("js collapse nocollapse withOutput");
+        let r = parse("js frobnicate zap=1");
         assert_eq!(r.block_options.lang, "js");
         assert!(r.line_markers.is_empty());
+    }
+
+    #[test]
+    fn collapse_tokens() {
+        assert!(parse("js").collapse.is_none());
+        let c = parse("js collapse").collapse.unwrap();
+        assert!(c.enabled && !c.disabled && c.ranges.is_empty());
+        let c = parse("js nocollapse").collapse.unwrap();
+        assert!(c.disabled && !c.enabled);
+        let c = parse(
+            "js collapse={3-5,9} collapse={12} collapseStyle=collapsible-auto collapseThreshold=25",
+        )
+        .collapse
+        .unwrap();
+        assert_eq!(
+            c.ranges,
+            [
+                LineRange::new(3, 5),
+                LineRange::single(9),
+                LineRange::single(12)
+            ]
+        );
+        assert_eq!(c.style, Some(CollapseStyle::CollapsibleAuto));
+        assert_eq!(c.threshold, Some(25));
+        assert!(!c.enabled);
+        let c = parse("js collapseStyle=\"collapsible-end\" collapseThreshold=0")
+            .collapse
+            .unwrap();
+        assert_eq!(c.style, Some(CollapseStyle::CollapsibleEnd));
+        assert_eq!(c.threshold, None);
+        assert_eq!(
+            parse("js collapseStyle=other").collapse.unwrap().style,
+            Some(CollapseStyle::Github)
+        );
+    }
+
+    #[test]
+    fn output_tokens() {
+        let r = parse("py withOutput outputCollapsed outputLabel=\"Result\"");
+        assert_eq!(r.block_options.with_output, Some(true));
+        assert_eq!(r.block_options.output_collapsed, Some(true));
+        assert_eq!(r.block_options.output_label, "Result");
+        let r = parse("py outputCollapsed=false");
+        assert_eq!(r.block_options.with_output, None);
+        assert_eq!(r.block_options.output_collapsed, Some(false));
     }
 
     #[test]

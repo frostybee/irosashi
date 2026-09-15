@@ -216,14 +216,12 @@ pub struct Diagnostic {
 }
 
 /// A one-based inclusive line range.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[allow(dead_code)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LineRange {
     pub start: usize,
     pub end: usize,
 }
 
-#[allow(dead_code)]
 impl LineRange {
     pub fn new(start: usize, end: usize) -> Self {
         Self { start, end }
@@ -238,7 +236,6 @@ impl LineRange {
     }
 }
 
-#[allow(dead_code)]
 pub fn in_ranges(ranges: &[LineRange], line: usize) -> bool {
     ranges.iter().any(|range| range.contains(line))
 }

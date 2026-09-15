@@ -16,3 +16,4 @@ thiserror.workspace = true
 
 [dev-dependencies]
 insta = "1"
+iro = { path = "../iro" }

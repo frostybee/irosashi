@@ -66,3 +66,7 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
 }
+.kazari-block .kz-line .ws-tab,
+.kazari-block .kz-line .ws-space {
+  opacity: 0.4;
+}

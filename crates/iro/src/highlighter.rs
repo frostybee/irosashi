@@ -1,14 +1,14 @@
 use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
-use std::sync::{Arc, Mutex, PoisonError};
+use std::sync::{Arc, Mutex, PoisonError, RwLock};
 
 use crate::Error;
 use crate::registry::{AssetSource, PLAINTEXT_NAMES, Registry, RegistryBuilder, ThemeColors};
 use crate::render::{DefaultColor, HtmlOptions, HtmlRenderer, Renderer};
 use crate::scope::ScopeListId;
 use crate::token::{
-    Diagnostic, DiagnosticKind, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, TokenStyle,
-    TokensResult,
+    Diagnostic, DiagnosticKind, LineRange, ScopeTable, ThemeSlot, ThemedLine, ThemedToken,
+    TokenStyle, TokensResult,
 };
 use crate::tokenizer::{Resolver, Session, TokenizeOptions, split_lines};
 
@@ -76,6 +76,7 @@ pub struct HighlighterBuilder {
     registry: RegistryBuilder,
     max_line_length: Option<usize>,
     retire_scope_lists: usize,
+    html_defaults: Option<CodeToHtmlOptions>,
 }
 
 impl HighlighterBuilder {
@@ -84,6 +85,7 @@ impl HighlighterBuilder {
             registry: RegistryBuilder::new(source),
             max_line_length: None,
             retire_scope_lists: DEFAULT_RETIRE_SCOPE_LISTS,
+            html_defaults: None,
         }
     }
 
@@ -139,9 +141,20 @@ impl HighlighterBuilder {
         self
     }
 
+    /// Options merged under every `code_to_html` call: a per-call language, theme,
+    /// theme map or line-length override wins, `include_scopes` is ORed, and the
+    /// per-call `html` block wins whole when it differs from `HtmlOptions::default()`
+    /// (its line ranges are appended to the defaults'). `code_to_tokens` is not
+    /// affected. Transformers live on the renderer and cannot be defaulted.
+    pub fn html_defaults(mut self, defaults: CodeToHtmlOptions) -> Self {
+        self.html_defaults = Some(defaults);
+        self
+    }
+
     pub fn build(self) -> Result<Highlighter, Error> {
         Ok(Highlighter {
-            registry: Arc::new(self.registry.build()?),
+            registry: RwLock::new(Arc::new(self.registry.build()?)),
+            html_defaults: self.html_defaults,
             max_line_length: self.max_line_length,
             retire_scope_lists: self.retire_scope_lists,
             pool: Mutex::new(HashMap::new()),
@@ -151,8 +164,13 @@ impl HighlighterBuilder {
 
 /// The batteries-included entry point: resolves languages and themes, tokenizes, and
 /// styles. Safe to share across threads; warm sessions are pooled per grammar.
+///
+/// The registry behind it is an immutable snapshot swapped as a whole by the
+/// `load_*` and `register_*` methods, so reads never take a lock for long and a
+/// `Session` keeps the snapshot it was created from.
 pub struct Highlighter {
-    registry: Arc<Registry>,
+    registry: RwLock<Arc<Registry>>,
+    html_defaults: Option<CodeToHtmlOptions>,
     max_line_length: Option<usize>,
     retire_scope_lists: usize,
     pool: Mutex<HashMap<String, Vec<Session>>>,
@@ -161,7 +179,7 @@ pub struct Highlighter {
 impl std::fmt::Debug for Highlighter {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("Highlighter")
-            .field("registry", &self.registry)
+            .field("registry", &self.registry())
             .field("max_line_length", &self.max_line_length)
             .finish()
     }
@@ -179,28 +197,85 @@ impl Highlighter {
         HighlighterBuilder::embedded()
     }
 
-    pub fn registry(&self) -> &Arc<Registry> {
-        &self.registry
+    /// The current registry snapshot.
+    pub fn registry(&self) -> Arc<Registry> {
+        Arc::clone(&self.registry.read().unwrap_or_else(PoisonError::into_inner))
     }
 
-    pub fn languages(&self) -> Vec<&str> {
-        self.registry.languages().collect()
+    /// Every registered grammar name, sorted.
+    pub fn languages(&self) -> Vec<String> {
+        self.registry().languages().map(str::to_owned).collect()
     }
 
-    pub fn themes(&self) -> Vec<&str> {
-        self.registry.themes().collect()
+    /// Every registered theme name, sorted.
+    pub fn themes(&self) -> Vec<String> {
+        self.registry().themes().map(str::to_owned).collect()
     }
 
-    pub fn detect_language(&self, filename: &str) -> Option<&str> {
-        self.registry.detect_by_filename(filename)
+    /// The grammars parsed so far, sorted; grows as languages are highlighted.
+    pub fn loaded_languages(&self) -> Vec<String> {
+        self.registry().loaded_languages()
     }
 
-    pub fn detect_language_by_first_line(&self, line: &str) -> Option<&str> {
-        self.registry.detect_by_first_line(line)
+    /// The themes parsed so far, sorted.
+    pub fn loaded_themes(&self) -> Vec<String> {
+        self.registry().loaded_themes()
+    }
+
+    pub fn detect_language(&self, filename: &str) -> Option<String> {
+        self.registry()
+            .detect_by_filename(filename)
+            .map(str::to_owned)
+    }
+
+    pub fn detect_language_by_first_line(&self, line: &str) -> Option<String> {
+        self.registry()
+            .detect_by_first_line(line)
+            .map(str::to_owned)
     }
 
     pub fn theme_colors(&self, name: &str) -> Result<ThemeColors, Error> {
-        self.registry.theme_colors(name)
+        self.registry().theme_colors(name)
+    }
+
+    /// Parses `json` and registers it as grammar `name`, replacing a grammar of that
+    /// name. Pooled sessions are dropped so every later call sees the new registry.
+    pub fn load_language(&self, name: &str, json: impl Into<Arc<[u8]>>) -> Result<(), Error> {
+        self.update(|r| r.with_grammar(name, json))
+    }
+
+    /// Parses `json` and registers it as theme `name`, replacing a theme of that name.
+    pub fn load_theme(&self, name: &str, json: impl Into<Arc<[u8]>>) -> Result<(), Error> {
+        self.update(|r| r.with_theme(name, json))
+    }
+
+    pub fn register_alias(&self, alias: &str, target: &str) {
+        let _ = self.update(|r| Ok(r.with_alias(alias, target)));
+    }
+
+    /// Maps a file extension (without the dot) to a grammar name.
+    pub fn register_extension(&self, ext: &str, lang: &str) {
+        let _ = self.update(|r| Ok(r.with_extension(ext, lang)));
+    }
+
+    /// Maps an exact file name to a grammar name.
+    pub fn register_filename(&self, filename: &str, lang: &str) {
+        let _ = self.update(|r| Ok(r.with_filename(filename, lang)));
+    }
+
+    fn update(&self, f: impl FnOnce(&Registry) -> Result<Registry, Error>) -> Result<(), Error> {
+        let mut registry = self
+            .registry
+            .write()
+            .unwrap_or_else(PoisonError::into_inner);
+        let next = f(&registry)?;
+        *registry = Arc::new(next);
+        drop(registry);
+        self.pool
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner)
+            .clear();
+        Ok(())
     }
 
     /// Tokenizes `code` and styles it with one theme. An unknown language yields
@@ -210,12 +285,13 @@ impl Highlighter {
         code: &str,
         options: &CodeToTokensOptions,
     ) -> Result<TokensResult, Error> {
-        let theme = self.registry.theme(&options.theme)?;
+        let registry = self.registry();
+        let theme = registry.theme(&options.theme)?;
         let slots = vec![ThemeSlot {
             key: options.theme.clone(),
             theme,
         }];
-        self.highlight(code, options, slots)
+        self.highlight(&registry, code, options, slots)
     }
 
     /// Tokenizes once and styles with every theme in `themes` (key to theme name).
@@ -229,14 +305,15 @@ impl Highlighter {
         if themes.is_empty() {
             return Err(Error::ThemeNotFound("no themes given".to_owned()));
         }
+        let registry = self.registry();
         let mut slots = Vec::with_capacity(themes.len());
         for (key, name) in themes {
             slots.push(ThemeSlot {
                 key: key.clone(),
-                theme: self.registry.theme(name)?,
+                theme: registry.theme(name)?,
             });
         }
-        self.highlight(code, options, slots)
+        self.highlight(&registry, code, options, slots)
     }
 
     /// Tokenizes and renders `code` as HTML.
@@ -244,16 +321,28 @@ impl Highlighter {
         self.code_to_html_with(code, options, &mut HtmlRenderer::new())
     }
 
-    /// Like `code_to_html` with a caller-owned renderer, for style-to-class output.
+    /// Like `code_to_html` with a caller-owned renderer, for style-to-class output and
+    /// transformers. Runs the renderer's transformers in hook order: `preprocess`,
+    /// `tokens`, the tree hooks, `postprocess`.
     pub fn code_to_html_with(
         &self,
         code: &str,
         options: &CodeToHtmlOptions,
         renderer: &mut HtmlRenderer<'_>,
     ) -> Result<String, Error> {
+        let merged;
+        let options = match &self.html_defaults {
+            Some(defaults) => {
+                merged = merge_options(defaults, options);
+                &merged
+            }
+            None => options,
+        };
+        let preprocessed = renderer.preprocess(code);
+        let code = preprocessed.as_deref().unwrap_or(code);
         let mut tokens = options.tokens.clone();
         tokens.include_scopes |= options.html.merge_same_metadata;
-        let result = if options.themes.is_empty() {
+        let mut result = if options.themes.is_empty() {
             self.code_to_tokens(code, &tokens)?
         } else {
             if let DefaultColor::Key(key) = &options.html.default_color
@@ -270,6 +359,7 @@ impl Highlighter {
             }
             self.code_to_tokens_multi(code, &options.themes, &tokens)?
         };
+        renderer.transform_tokens(&mut result);
         let html = if options.themes.is_empty() || options.html.multi_theme.is_some() {
             &options.html
         } else {
@@ -278,19 +368,17 @@ impl Highlighter {
                 ..options.html.clone()
             }
         };
-        Ok(renderer.render(&result, html))
+        let out = renderer.render(&result, html);
+        Ok(renderer.postprocess(out))
     }
 
     /// A fresh session for `lang`, for incremental per-line tokenization. The caller
-    /// owns it; it is not pooled.
+    /// owns it; it is not pooled, and it keeps the registry snapshot of this moment.
     pub fn session(&self, lang: &str) -> Result<Session, Error> {
         let lang = lang.to_ascii_lowercase();
-        let grammar = self.registry.grammar(&lang)?;
-        Ok(Session::new(grammar, self.resolver()))
-    }
-
-    fn resolver(&self) -> Arc<dyn Resolver> {
-        Arc::clone(&self.registry) as Arc<dyn Resolver>
+        let registry = self.registry();
+        let grammar = registry.grammar(&lang)?;
+        Ok(Session::new(grammar, resolver(&registry)))
     }
 
     fn tokenize_options(&self, options: &CodeToTokensOptions) -> TokenizeOptions {
@@ -305,6 +393,7 @@ impl Highlighter {
 
     fn highlight(
         &self,
+        registry: &Arc<Registry>,
         code: &str,
         options: &CodeToTokensOptions,
         slots: Vec<ThemeSlot>,
@@ -313,15 +402,15 @@ impl Highlighter {
         if PLAINTEXT_NAMES.contains(&lang.as_str()) {
             return Ok(plaintext(code, slots, options.include_scopes, false));
         }
-        let Some(name) = self.registry.resolve_language(&lang) else {
+        let Some(name) = registry.resolve_language(&lang) else {
             return Ok(plaintext(code, slots, options.include_scopes, true));
         };
         let name = name.to_owned();
-        let grammar = self.registry.grammar(&name)?;
+        let grammar = registry.grammar(&name)?;
 
         let mut session = self
             .checkout(&name)
-            .unwrap_or_else(|| Session::new(grammar, self.resolver()));
+            .unwrap_or_else(|| Session::new(grammar, resolver(registry)));
         let result = session.themed(
             code,
             self.tokenize_options(options),
@@ -350,6 +439,40 @@ impl Highlighter {
         let pool = self.pool.lock().unwrap_or_else(PoisonError::into_inner);
         pool.get(name).map_or(0, Vec::len)
     }
+}
+
+fn resolver(registry: &Arc<Registry>) -> Arc<dyn Resolver> {
+    Arc::clone(registry) as Arc<dyn Resolver>
+}
+
+/// Defaults first, then whatever the call set: see `HighlighterBuilder::html_defaults`.
+fn merge_options(defaults: &CodeToHtmlOptions, call: &CodeToHtmlOptions) -> CodeToHtmlOptions {
+    let mut out = defaults.clone();
+    if !call.tokens.lang.is_empty() {
+        out.tokens.lang = call.tokens.lang.clone();
+    }
+    if !call.tokens.theme.is_empty() {
+        out.tokens.theme = call.tokens.theme.clone();
+    }
+    if call.tokens.max_line_length.is_some() {
+        out.tokens.max_line_length = call.tokens.max_line_length;
+    }
+    out.tokens.include_scopes |= call.tokens.include_scopes;
+    if !call.themes.is_empty() {
+        out.themes = call.themes.clone();
+    }
+    if call.html != HtmlOptions::default() {
+        let mut html = call.html.clone();
+        let append = |base: &[LineRange], extra: &[LineRange]| {
+            base.iter().chain(extra).copied().collect::<Vec<_>>()
+        };
+        html.highlight_lines = append(&defaults.html.highlight_lines, &call.html.highlight_lines);
+        html.focus_lines = append(&defaults.html.focus_lines, &call.html.focus_lines);
+        html.inserted_lines = append(&defaults.html.inserted_lines, &call.html.inserted_lines);
+        html.deleted_lines = append(&defaults.html.deleted_lines, &call.html.deleted_lines);
+        out.html = html;
+    }
+    out
 }
 
 /// One unstyled token per line in every theme's default foreground.
@@ -582,6 +705,166 @@ mod tests {
         for handle in handles {
             handle.join().unwrap();
         }
+    }
+
+    fn assert_send_sync<T: Send + Sync>() {}
+
+    #[test]
+    fn runtime_registration_replaces_assets_and_flushes_the_pool() {
+        assert_send_sync::<Highlighter>();
+        let h = highlighter();
+        let options = CodeToTokensOptions::new("json", "github-dark");
+        h.code_to_tokens("{}", &options).unwrap();
+        assert_eq!(h.pooled("json"), 1);
+        assert_eq!(h.loaded_languages(), ["json"]);
+        assert_eq!(h.loaded_themes(), ["github-dark"]);
+
+        let custom = br#"{"scopeName": "source.custom", "fileTypes": ["cst"], "patterns": [{"match": "\\{", "name": "brace.custom"}]}"#;
+        h.load_language("json", &custom[..]).unwrap();
+        assert_eq!(h.pooled("json"), 0);
+        let mut scoped = options.clone();
+        scoped.include_scopes = true;
+        let r = h.code_to_tokens("{}", &scoped).unwrap();
+        let names: Vec<&str> = r
+            .scopes_of(&r.lines[0].tokens[0])
+            .unwrap()
+            .iter()
+            .map(|s| &**s)
+            .collect();
+        assert_eq!(names, ["source.custom", "brace.custom"]);
+        assert_eq!(h.detect_language("a.cst").as_deref(), Some("json"));
+        assert_eq!(h.languages().len(), 257);
+        assert!(h.loaded_languages().contains(&"json".to_owned()));
+
+        h.load_theme(
+            "mine",
+            &br##"{"name":"mine","type":"dark","colors":{"editor.foreground":"#123456","editor.background":"#222222"},"tokenColors":[]}"##[..],
+        )
+        .unwrap();
+        let r = h
+            .code_to_tokens("x", &CodeToTokensOptions::new("text", "mine"))
+            .unwrap();
+        assert_eq!(r.fg(), "#123456");
+        assert!(h.themes().contains(&"mine".to_owned()));
+        assert!(h.loaded_themes().contains(&"mine".to_owned()));
+
+        h.register_alias("jason", "json");
+        h.register_extension("JSN", "json");
+        h.register_filename("CONFIG", "json");
+        assert!(
+            h.code_to_tokens("{}", &CodeToTokensOptions::new("jason", "github-dark"))
+                .unwrap()
+                .diagnostics
+                .is_empty()
+        );
+        assert_eq!(h.detect_language("x.jsn").as_deref(), Some("json"));
+        assert_eq!(h.detect_language("dir/CONFIG").as_deref(), Some("json"));
+
+        assert!(matches!(
+            h.load_language("bad", &b"{"[..]),
+            Err(Error::GrammarParse(_))
+        ));
+        assert!(h.load_theme("bad", &b"["[..]).is_err());
+        assert_eq!(h.detect_language("x.jsn").as_deref(), Some("json"));
+    }
+
+    #[test]
+    fn sessions_keep_their_snapshot() {
+        let h = highlighter();
+        let mut session = h.session("json").unwrap();
+        h.load_language(
+            "json",
+            &br#"{"scopeName": "source.custom", "patterns": [{"match": "\\{", "name": "brace.custom"}]}"#[..],
+        )
+        .unwrap();
+        let old = session.tokenize("{}", TokenizeOptions::default());
+        assert_ne!(
+            session.scope_names(old.lines[0][0].scopes),
+            ["source.custom", "brace.custom"]
+        );
+        let mut fresh = h.session("json").unwrap();
+        let new = fresh.tokenize("{}", TokenizeOptions::default());
+        assert_eq!(
+            fresh.scope_names(new.lines[0][0].scopes),
+            ["source.custom", "brace.custom"]
+        );
+    }
+
+    #[test]
+    fn readers_keep_working_while_assets_are_loaded() {
+        let h = Arc::new(highlighter());
+        let readers: Vec<_> = (0..3)
+            .map(|_| {
+                let h = Arc::clone(&h);
+                std::thread::spawn(move || {
+                    for _ in 0..20 {
+                        let r = h
+                            .code_to_tokens(
+                                "let x = 1;",
+                                &CodeToTokensOptions::new("js", "github-dark"),
+                            )
+                            .unwrap();
+                        assert!(r.lines[0].tokens.len() > 3);
+                    }
+                })
+            })
+            .collect();
+        for i in 0..5 {
+            h.load_theme(
+                &format!("t{i}"),
+                &br##"{"name":"t","type":"dark","colors":{"editor.foreground":"#111111","editor.background":"#222222"},"tokenColors":[]}"##[..],
+            )
+            .unwrap();
+            h.register_alias(&format!("a{i}"), "javascript");
+        }
+        for reader in readers {
+            reader.join().unwrap();
+        }
+        assert_eq!(
+            h.themes()
+                .iter()
+                .filter(|t| t.starts_with('t') && t.len() == 2)
+                .count(),
+            5
+        );
+    }
+
+    #[test]
+    fn html_defaults_fill_in_and_per_call_wins() {
+        let assets = Path::new(env!("CARGO_MANIFEST_DIR")).join("assets");
+        let mut defaults = CodeToHtmlOptions::new("rust", "github-dark").shiki();
+        defaults.html.highlight_lines = vec![LineRange::single(1)];
+        let h = HighlighterBuilder::from_dir(&assets)
+            .html_defaults(defaults)
+            .build()
+            .unwrap();
+        let plain = HighlighterBuilder::from_dir(&assets).build().unwrap();
+        let code = "fn main() {}\nfn other() {}";
+
+        let from_defaults = h.code_to_html(code, &CodeToHtmlOptions::default()).unwrap();
+        let mut explicit = CodeToHtmlOptions::new("rust", "github-dark").shiki();
+        explicit.html.highlight_lines = vec![LineRange::single(1)];
+        assert_eq!(from_defaults, plain.code_to_html(code, &explicit).unwrap());
+        assert!(from_defaults.starts_with("<pre class=\"shiki github-dark\""));
+        assert!(from_defaults.contains("<span class=\"line highlighted\">"));
+
+        let overridden = h
+            .code_to_html(code, &CodeToHtmlOptions::new("go", "github-light"))
+            .unwrap();
+        assert!(overridden.starts_with("<pre class=\"shiki github-light\""));
+        assert!(overridden.contains("<span class=\"line highlighted\">"));
+
+        let mut own_html = CodeToHtmlOptions::new("rust", "github-dark");
+        own_html.html.deleted_lines = vec![LineRange::single(2)];
+        let merged = h.code_to_html(code, &own_html).unwrap();
+        assert!(merged.starts_with("<pre class=\"iro github-dark\""));
+        assert!(merged.contains("<span class=\"line highlighted\">"));
+        assert!(merged.contains("<span class=\"line diff remove\">"));
+
+        assert!(matches!(
+            h.code_to_tokens(code, &CodeToTokensOptions::new("rust", "")),
+            Err(Error::ThemeNotFound(_))
+        ));
     }
 
     #[test]

@@ -17,6 +17,7 @@ const WRAP_OFF_SVG: &str = r#"<svg class="kz-wrap-off-icon" aria-hidden="true" f
 
 struct LineCtx<'a> {
     resolved: &'a ResolvedBlock,
+    cfg: &'a Config,
     is_dual: bool,
     resolved_markers: Option<HashMap<usize, ResolvedLine>>,
     focus_set: Option<HashSet<usize>>,
@@ -210,9 +211,10 @@ fn display_lang(lang: &str) -> String {
     }
 }
 
-fn render_pre_code(sb: &mut String, tokens: &Tokens, resolved: &ResolvedBlock, _cfg: &Config) {
+fn render_pre_code(sb: &mut String, tokens: &Tokens, resolved: &ResolvedBlock, cfg: &Config) {
     let lctx = LineCtx {
         resolved,
+        cfg,
         is_dual: tokens.is_dual(),
         resolved_markers: marker::resolve_line_markers(&resolved.line_markers),
         focus_set: marker::resolve_focus_set(&resolved.focus_lines),
@@ -280,6 +282,8 @@ fn render_line(
         _marker_type = Some(entry.marker_type);
         match entry.marker_type {
             MarkerType::Mark => classes.push_str(" mark"),
+            MarkerType::Warning => classes.push_str(" warning"),
+            MarkerType::Error => classes.push_str(" error"),
             MarkerType::Del => classes.push_str(" del"),
             MarkerType::Ins => classes.push_str(" ins"),
         }
@@ -408,12 +412,59 @@ fn render_plain_tokens(
         if text.is_empty() {
             continue;
         }
-        let style = build_token_style(tokens, token, lctx);
-        if style.is_empty() {
-            write!(sb, "<span>{}</span>", escape_text(text)).unwrap();
-        } else {
-            write!(sb, "<span style=\"{}\">{}</span>", style, escape_text(text)).unwrap();
+        open_styled_span(sb, tokens, token, lctx);
+        write_text(sb, text, lctx.cfg);
+        sb.push_str("</span>");
+    }
+}
+
+fn open_styled_span(
+    sb: &mut String,
+    tokens: &Tokens,
+    token: &iro::ThemedToken,
+    lctx: &LineCtx<'_>,
+) {
+    let style = build_token_style(tokens, token, lctx);
+    if style.is_empty() {
+        sb.push_str("<span>");
+    } else {
+        write!(sb, "<span style=\"{}\">", style).unwrap();
+    }
+}
+
+/// Escapes `text` into `sb`; with visible whitespace on, every tab and space
+/// becomes a `span.ws-tab` or `span.ws-space` holding the configured symbol.
+fn write_text(sb: &mut String, text: &str, cfg: &Config) {
+    if !cfg.visible_whitespace || !text.contains(['\t', ' ']) {
+        sb.push_str(&escape_text(text));
+        return;
+    }
+    let mut run = String::new();
+    for c in text.chars() {
+        let symbol = match c {
+            '\t' => Some(("ws-tab", cfg.whitespace_tab.as_str())),
+            ' ' => Some(("ws-space", cfg.whitespace_space.as_str())),
+            _ => None,
+        };
+        match symbol {
+            Some((class, symbol)) => {
+                if !run.is_empty() {
+                    sb.push_str(&escape_text(&run));
+                    run.clear();
+                }
+                write!(
+                    sb,
+                    "<span class=\"{}\">{}</span>",
+                    class,
+                    escape_text(symbol)
+                )
+                .unwrap();
+            }
+            None => run.push(c),
         }
+    }
+    if !run.is_empty() {
+        sb.push_str(&escape_text(&run));
     }
 }
 
@@ -422,6 +473,16 @@ fn marker_element(mt: MarkerType) -> &'static str {
         MarkerType::Ins => "ins",
         MarkerType::Del => "del",
         MarkerType::Mark => "mark",
+        MarkerType::Error => "mark class=\"error\"",
+        MarkerType::Warning => "mark class=\"warning\"",
+    }
+}
+
+fn marker_close(mt: MarkerType) -> &'static str {
+    match mt {
+        MarkerType::Ins => "ins",
+        MarkerType::Del => "del",
+        MarkerType::Mark | MarkerType::Error | MarkerType::Warning => "mark",
     }
 }
 
@@ -440,18 +501,9 @@ fn render_annotated_token(
             .iter()
             .map(|s| &plain_text[s.start..s.end])
             .collect();
-        let style = build_token_style(tokens, token, lctx);
-        if style.is_empty() {
-            write!(sb, "<span>{}</span>", escape_text(&text)).unwrap();
-        } else {
-            write!(
-                sb,
-                "<span style=\"{}\">{}</span>",
-                style,
-                escape_text(&text)
-            )
-            .unwrap();
-        }
+        open_styled_span(sb, tokens, token, lctx);
+        write_text(sb, &text, lctx.cfg);
+        sb.push_str("</span>");
         return;
     }
 
@@ -464,7 +516,6 @@ fn render_annotated_token(
     if single_spanning {
         let seg = &segments[0];
         let ann = seg.marker.as_ref().unwrap();
-        let elem = marker_element(ann.marker_type);
         let mut classes = String::new();
         if ann.open_start {
             classes.push_str("open-start");
@@ -475,33 +526,29 @@ fn render_annotated_token(
             }
             classes.push_str("open-end");
         }
-        write!(sb, "<{} class=\"{}\">", elem, classes).unwrap();
-        let style = build_token_style(tokens, token, lctx);
-        let text = &plain_text[seg.start..seg.end];
-        if style.is_empty() {
-            write!(sb, "<span>{}</span>", escape_text(text)).unwrap();
-        } else {
-            write!(sb, "<span style=\"{}\">{}</span>", style, escape_text(text)).unwrap();
+        match ann.marker_type {
+            MarkerType::Error => classes.insert_str(0, "error "),
+            MarkerType::Warning => classes.insert_str(0, "warning "),
+            _ => {}
         }
+        let elem = marker_close(ann.marker_type);
+        write!(sb, "<{} class=\"{}\">", elem, classes.trim_end()).unwrap();
+        open_styled_span(sb, tokens, token, lctx);
+        write_text(sb, &plain_text[seg.start..seg.end], lctx.cfg);
+        sb.push_str("</span>");
         write!(sb, "</{}>", elem).unwrap();
         return;
     }
 
-    let style = build_token_style(tokens, token, lctx);
-    if style.is_empty() {
-        sb.push_str("<span>");
-    } else {
-        write!(sb, "<span style=\"{}\">", style).unwrap();
-    }
+    open_styled_span(sb, tokens, token, lctx);
     for seg in segments {
         let text = &plain_text[seg.start..seg.end];
         if let Some(ann) = &seg.marker {
-            let elem = marker_element(ann.marker_type);
-            write!(sb, "<{}>", elem).unwrap();
-            sb.push_str(&escape_text(text));
-            write!(sb, "</{}>", elem).unwrap();
+            write!(sb, "<{}>", marker_element(ann.marker_type)).unwrap();
+            write_text(sb, text, lctx.cfg);
+            write!(sb, "</{}>", marker_close(ann.marker_type)).unwrap();
         } else {
-            sb.push_str(&escape_text(text));
+            write_text(sb, text, lctx.cfg);
         }
     }
     sb.push_str("</span>");

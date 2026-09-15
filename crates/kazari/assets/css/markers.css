@@ -20,6 +20,16 @@
   box-shadow: inset var(--kz-mark-border-width) 0 0 0 var(--kz-del-border);
 }
 
+/* Error and warning lines */
+.kazari-block .kz-line.highlight.error {
+  background: var(--kz-error-bg);
+  box-shadow: inset var(--kz-mark-border-width) 0 0 0 var(--kz-error-border);
+}
+.kazari-block .kz-line.highlight.warning {
+  background: var(--kz-warning-bg);
+  box-shadow: inset var(--kz-mark-border-width) 0 0 0 var(--kz-warning-border);
+}
+
 /* Diff indicators via ::before on .kz-code */
 .kazari-block .kz-line.ins .kz-code,
 .kazari-block .kz-line.del .kz-code {
@@ -54,6 +64,12 @@
 .kazari-block .kz-line.highlight.del.tm-label {
   background: var(--kz-label-del-bg);
 }
+.kazari-block .kz-line.highlight.error.tm-label {
+  background: var(--kz-label-error-bg);
+}
+.kazari-block .kz-line.highlight.warning.tm-label {
+  background: var(--kz-label-warning-bg);
+}
 
 /* Labeled ranges — badge at the left edge of the code area.
    data-label on .kz-code div, read via attr().
@@ -83,4 +99,10 @@
 }
 .kazari-block .kz-line.del.tm-label .kz-code::before {
   background: var(--kz-del-border);
+}
+.kazari-block .kz-line.error.tm-label .kz-code::before {
+  background: var(--kz-error-border);
+}
+.kazari-block .kz-line.warning.tm-label .kz-code::before {
+  background: var(--kz-warning-border);
 }

@@ -9,6 +9,7 @@ pub(crate) mod frame;
 pub(crate) mod js;
 pub(crate) mod marker;
 pub(crate) mod meta;
+pub(crate) mod notation;
 pub(crate) mod render;
 pub(crate) mod theme_css;
 pub(crate) mod tokenize;

@@ -43,6 +43,13 @@ pub struct Config {
     pub terminal_comment_stripping: bool,
     pub data_line_count: bool,
     pub tab_width: usize,
+    /// Apply `[!code ++]`, `[!code highlight]`, `[!code focus]`, `[!code word:x]` and
+    /// the other comment annotations found in the source.
+    pub notation_comments: bool,
+    /// Render every tab and space as a visible symbol.
+    pub visible_whitespace: bool,
+    pub whitespace_tab: String,
+    pub whitespace_space: String,
     pub defaults: BlockDefaults,
     pub language_defaults: BTreeMap<String, BlockDefaults>,
     pub language_aliases: HashMap<String, String>,
@@ -77,6 +84,10 @@ impl Default for Config {
             terminal_comment_stripping: true,
             data_line_count: true,
             tab_width: 2,
+            notation_comments: false,
+            visible_whitespace: false,
+            whitespace_tab: "\u{2192}".to_owned(),
+            whitespace_space: "\u{b7}".to_owned(),
             defaults: BlockDefaults::default(),
             language_defaults: BTreeMap::new(),
             language_aliases: HashMap::new(),
@@ -227,6 +238,10 @@ pub struct FileConfig {
     pub style_reset: Option<bool>,
     pub tab_width: Option<usize>,
     pub terminal_dot_style: Option<TerminalDotStyle>,
+    pub notation_comments: Option<bool>,
+    pub visible_whitespace: Option<bool>,
+    pub whitespace_tab: Option<String>,
+    pub whitespace_space: Option<String>,
     pub defaults: Option<BlockDefaultsFile>,
     pub language_defaults: Option<BTreeMap<String, BlockDefaultsFile>>,
     pub language_aliases: Option<HashMap<String, String>>,
@@ -286,6 +301,18 @@ impl FileConfig {
         }
         if let Some(v) = self.terminal_dot_style {
             cfg.terminal_dot_style = v;
+        }
+        if let Some(v) = self.notation_comments {
+            cfg.notation_comments = v;
+        }
+        if let Some(v) = self.visible_whitespace {
+            cfg.visible_whitespace = v;
+        }
+        if let Some(v) = self.whitespace_tab.filter(|s| !s.is_empty()) {
+            cfg.whitespace_tab = v;
+        }
+        if let Some(v) = self.whitespace_space.filter(|s| !s.is_empty()) {
+            cfg.whitespace_space = v;
         }
         if let Some(defaults) = self.defaults {
             apply_block_defaults_file(&defaults, &mut cfg.defaults);
@@ -586,6 +613,18 @@ languageAliases:
     }
 
     #[test]
+    fn file_config_notation_and_whitespace() {
+        let yaml = "notationComments: true\nvisibleWhitespace: true\nwhitespaceTab: '>'\nwhitespaceSpace: ''\n";
+        let fc = FileConfig::from_yaml(yaml).unwrap();
+        let mut cfg = Config::default();
+        fc.apply(&mut cfg).unwrap();
+        assert!(cfg.notation_comments);
+        assert!(cfg.visible_whitespace);
+        assert_eq!(cfg.whitespace_tab, ">");
+        assert_eq!(cfg.whitespace_space, "\u{b7}");
+    }
+
+    #[test]
     fn file_config_minimal_yaml() {
         let yaml = "themes:\n  light: dracula\n";
         let fc = FileConfig::from_yaml(yaml).unwrap();
@@ -599,9 +638,11 @@ languageAliases:
 
     #[test]
     fn file_config_apply_merges() {
-        let mut cfg = Config::default();
-        cfg.copy_button = false;
-        cfg.tab_width = 8;
+        let mut cfg = Config {
+            copy_button: false,
+            tab_width: 8,
+            ..Default::default()
+        };
         let yaml = "tabWidth: 4\n";
         let fc = FileConfig::from_yaml(yaml).unwrap();
         fc.apply(&mut cfg).unwrap();

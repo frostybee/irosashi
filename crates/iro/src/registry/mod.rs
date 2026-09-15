@@ -129,6 +129,33 @@ struct ThemeEntry {
     parsed: OnceLock<Result<Arc<Theme>, Error>>,
 }
 
+fn clone_lock<T: Clone>(lock: &OnceLock<T>) -> OnceLock<T> {
+    let copy = OnceLock::new();
+    if let Some(value) = lock.get() {
+        let _ = copy.set(value.clone());
+    }
+    copy
+}
+
+impl Clone for GrammarEntry {
+    fn clone(&self) -> Self {
+        Self {
+            meta: self.meta.clone(),
+            bytes: self.bytes.clone(),
+            parsed: clone_lock(&self.parsed),
+        }
+    }
+}
+
+impl Clone for ThemeEntry {
+    fn clone(&self) -> Self {
+        Self {
+            bytes: self.bytes.clone(),
+            parsed: clone_lock(&self.parsed),
+        }
+    }
+}
+
 /// Configures a `Registry`. Built-in alias, extension and file name tables are applied
 /// first; entries added here override them.
 #[derive(Debug, Clone)]
@@ -273,78 +300,56 @@ impl RegistryBuilder {
             );
         }
 
-        let mut scope_index = HashMap::new();
-        let mut injection_index: HashMap<String, Vec<String>> = HashMap::new();
-        let mut ext_index: HashMap<String, String> = HashMap::new();
-        let mut first_line = Vec::new();
-        for (name, entry) in &grammars {
-            let meta = &entry.meta;
-            if !meta.scope_name.is_empty() {
-                scope_index
-                    .entry(meta.scope_name.clone())
-                    .or_insert_with(|| name.clone());
-            }
-            for target in &meta.inject_to {
-                injection_index
-                    .entry(target.clone())
-                    .or_default()
-                    .push(name.clone());
-            }
-            for ext in &meta.file_types {
-                let ext = ext.trim_start_matches('.').to_ascii_lowercase();
-                if ext.is_empty() {
-                    continue;
-                }
-                if entry.bytes.is_some() {
-                    ext_index.insert(ext, name.clone());
-                } else {
-                    ext_index.entry(ext).or_insert_with(|| name.clone());
-                }
-            }
-            if let Some(pattern) = &meta.first_line_match {
-                first_line.push((name.clone(), LazyRegex::new(pattern)));
-            }
+        let mut registry = Registry {
+            source: self.source,
+            grammars: BTreeMap::new(),
+            themes,
+            aliases: HashMap::new(),
+            ext_index: HashMap::new(),
+            filename_index: HashMap::new(),
+            scope_index: HashMap::new(),
+            injection_index: HashMap::new(),
+            first_line: Vec::new(),
+        };
+        for (name, entry) in grammars {
+            registry.index_grammar(&name, &entry.meta, entry.bytes.is_some(), false);
+            registry.grammars.insert(name, entry);
         }
 
-        let mut filename_index = HashMap::new();
-        let mut aliases = HashMap::new();
         if self.default_tables {
             for (ext, lang) in DEFAULT_EXTENSIONS {
-                ext_index.insert((*ext).to_owned(), (*lang).to_owned());
+                registry
+                    .ext_index
+                    .insert((*ext).to_owned(), (*lang).to_owned());
             }
             for (file, lang) in DEFAULT_FILENAMES {
-                filename_index.insert((*file).to_owned(), (*lang).to_owned());
+                registry
+                    .filename_index
+                    .insert((*file).to_owned(), (*lang).to_owned());
             }
             for (alias, lang) in DEFAULT_ALIASES {
-                aliases.insert((*alias).to_owned(), (*lang).to_owned());
+                registry
+                    .aliases
+                    .insert((*alias).to_owned(), (*lang).to_owned());
             }
         }
         for (ext, lang) in self.extensions {
-            ext_index.insert(ext, lang);
+            registry.ext_index.insert(ext, lang);
         }
         for (file, lang) in self.filenames {
-            filename_index.insert(file, lang);
+            registry.filename_index.insert(file, lang);
         }
         for (alias, lang) in self.aliases {
-            aliases.insert(alias, lang);
+            registry.aliases.insert(alias, lang);
         }
 
-        Ok(Registry {
-            source: self.source,
-            grammars,
-            themes,
-            aliases,
-            ext_index,
-            filename_index,
-            scope_index,
-            injection_index,
-            first_line,
-        })
+        Ok(registry)
     }
 }
 
 /// Grammars and themes, parsed lazily and at most once each. Immutable after build,
-/// so it is shared freely across threads.
+/// so it is shared freely across threads; the `with_*` methods return an updated
+/// copy for callers that need to add assets later.
 pub struct Registry {
     source: AssetSource,
     grammars: BTreeMap<String, GrammarEntry>,
@@ -384,6 +389,167 @@ impl Registry {
     /// Theme names, sorted.
     pub fn themes(&self) -> impl Iterator<Item = &str> {
         self.themes.keys().map(String::as_str)
+    }
+
+    /// Names of the grammars parsed so far, sorted. Grows as languages are used.
+    pub fn loaded_languages(&self) -> Vec<String> {
+        self.grammars
+            .iter()
+            .filter(|(_, e)| matches!(e.parsed.get(), Some(Ok(_))))
+            .map(|(n, _)| n.clone())
+            .collect()
+    }
+
+    /// Names of the themes parsed so far, sorted.
+    pub fn loaded_themes(&self) -> Vec<String> {
+        self.themes
+            .iter()
+            .filter(|(_, e)| matches!(e.parsed.get(), Some(Ok(_))))
+            .map(|(n, _)| n.clone())
+            .collect()
+    }
+
+    fn index_grammar(
+        &mut self,
+        name: &str,
+        meta: &GrammarMeta,
+        ext_overrides: bool,
+        scope_overrides: bool,
+    ) {
+        if !meta.scope_name.is_empty() {
+            if scope_overrides {
+                self.scope_index
+                    .insert(meta.scope_name.clone(), name.to_owned());
+            } else {
+                self.scope_index
+                    .entry(meta.scope_name.clone())
+                    .or_insert_with(|| name.to_owned());
+            }
+        }
+        for target in &meta.inject_to {
+            self.injection_index
+                .entry(target.clone())
+                .or_default()
+                .push(name.to_owned());
+        }
+        for ext in &meta.file_types {
+            let ext = ext.trim_start_matches('.').to_ascii_lowercase();
+            if ext.is_empty() {
+                continue;
+            }
+            if ext_overrides {
+                self.ext_index.insert(ext, name.to_owned());
+            } else {
+                self.ext_index.entry(ext).or_insert_with(|| name.to_owned());
+            }
+        }
+        if let Some(pattern) = &meta.first_line_match {
+            self.first_line
+                .push((name.to_owned(), LazyRegex::new(pattern)));
+        }
+    }
+
+    fn unindex_grammar(&mut self, name: &str, meta: &GrammarMeta) {
+        if self
+            .scope_index
+            .get(&meta.scope_name)
+            .is_some_and(|n| n == name)
+        {
+            self.scope_index.remove(&meta.scope_name);
+        }
+        for target in &meta.inject_to {
+            if let Some(list) = self.injection_index.get_mut(target) {
+                list.retain(|n| n != name);
+                if list.is_empty() {
+                    self.injection_index.remove(target);
+                }
+            }
+        }
+        self.first_line.retain(|(n, _)| n != name);
+    }
+
+    fn copy(&self) -> Self {
+        Self {
+            source: self.source.clone(),
+            grammars: self.grammars.clone(),
+            themes: self.themes.clone(),
+            aliases: self.aliases.clone(),
+            ext_index: self.ext_index.clone(),
+            filename_index: self.filename_index.clone(),
+            scope_index: self.scope_index.clone(),
+            injection_index: self.injection_index.clone(),
+            first_line: self
+                .first_line
+                .iter()
+                .map(|(n, r)| (n.clone(), LazyRegex::new(r.source())))
+                .collect(),
+        }
+    }
+
+    /// A copy with `json` parsed and registered as grammar `name`, replacing a grammar
+    /// of that name. Its scope, injections and file types win over existing entries.
+    pub fn with_grammar(&self, name: &str, json: impl Into<Arc<[u8]>>) -> Result<Self, Error> {
+        let bytes: Arc<[u8]> = json.into();
+        let meta: GrammarMeta = serde_json::from_slice(&bytes)
+            .map_err(|err| Error::GrammarParse(format!("grammar {name:?}: {err}")))?;
+        let grammar = Grammar::parse(&bytes).map(Arc::new)?;
+        let mut next = self.copy();
+        if let Some(old) = next.grammars.remove(name) {
+            next.unindex_grammar(name, &old.meta);
+        }
+        next.index_grammar(name, &meta, true, true);
+        next.first_line.sort_by(|a, b| a.0.cmp(&b.0));
+        let parsed = OnceLock::new();
+        let _ = parsed.set(Ok(grammar));
+        next.grammars.insert(
+            name.to_owned(),
+            GrammarEntry {
+                meta,
+                bytes: Some(bytes),
+                parsed,
+            },
+        );
+        Ok(next)
+    }
+
+    /// A copy with `json` parsed and registered as theme `name`, replacing a theme of
+    /// that name.
+    pub fn with_theme(&self, name: &str, json: impl Into<Arc<[u8]>>) -> Result<Self, Error> {
+        let bytes: Arc<[u8]> = json.into();
+        let theme = Theme::parse(&bytes).map(Arc::new)?;
+        let mut next = self.copy();
+        let parsed = OnceLock::new();
+        let _ = parsed.set(Ok(theme));
+        next.themes.insert(
+            name.to_owned(),
+            ThemeEntry {
+                bytes: Some(bytes),
+                parsed,
+            },
+        );
+        Ok(next)
+    }
+
+    pub fn with_alias(&self, alias: &str, target: &str) -> Self {
+        let mut next = self.copy();
+        next.aliases.insert(alias.to_owned(), target.to_owned());
+        next
+    }
+
+    /// Maps a file extension (without the dot) to a grammar name.
+    pub fn with_extension(&self, ext: &str, lang: &str) -> Self {
+        let mut next = self.copy();
+        next.ext_index
+            .insert(ext.to_ascii_lowercase(), lang.to_owned());
+        next
+    }
+
+    /// Maps an exact file name to a grammar name.
+    pub fn with_filename(&self, filename: &str, lang: &str) -> Self {
+        let mut next = self.copy();
+        next.filename_index
+            .insert(filename.to_owned(), lang.to_owned());
+        next
     }
 
     pub fn grammar_meta(&self, name: &str) -> Option<&GrammarMeta> {
@@ -600,6 +766,72 @@ mod tests {
             &r.theme("github-dark").unwrap(),
             &r.theme("github-dark").unwrap()
         ));
+    }
+
+    #[test]
+    fn copies_keep_parsed_assets_and_add_new_ones() {
+        let r = registry();
+        r.grammar("go").unwrap();
+        r.theme("github-dark").unwrap();
+        assert_eq!(r.loaded_languages(), ["go"]);
+        assert_eq!(r.loaded_themes(), ["github-dark"]);
+
+        let json = br#"{"scopeName": "source.custom", "fileTypes": ["cst"], "injectTo": ["source.go"], "firstLineMatch": "^#!custom", "patterns": [{"match": "x", "name": "x"}]}"#;
+        let next = r.with_grammar("custom", &json[..]).unwrap();
+        assert!(Arc::ptr_eq(
+            &r.grammar("go").unwrap(),
+            &next.grammar("go").unwrap()
+        ));
+        assert_eq!(next.loaded_languages(), ["custom", "go"]);
+        assert_eq!(
+            next.grammar_by_scope("source.custom").unwrap().scope_name,
+            "source.custom"
+        );
+        assert_eq!(next.detect_by_filename("a.CST"), Some("custom"));
+        assert_eq!(next.detect_by_first_line("#!custom"), Some("custom"));
+        assert_eq!(next.injectors_for("source.go").len(), 1);
+        assert!(r.injectors_for("source.go").is_empty());
+        assert_eq!(r.detect_by_filename("a.cst"), None);
+
+        let replaced = next
+            .with_grammar(
+                "custom",
+                &br#"{"scopeName": "source.other", "patterns": []}"#[..],
+            )
+            .unwrap();
+        assert!(matches!(
+            replaced.grammar_by_scope("source.custom"),
+            Err(Error::LanguageNotFound(_))
+        ));
+        assert!(replaced.injectors_for("source.go").is_empty());
+        assert_eq!(replaced.detect_by_first_line("#!custom"), None);
+        assert_eq!(
+            replaced.grammar("custom").unwrap().scope_name,
+            "source.other"
+        );
+
+        assert!(matches!(
+            r.with_grammar("bad", &b"{"[..]),
+            Err(Error::GrammarParse(_))
+        ));
+        assert!(r.with_theme("bad", &b"nope"[..]).is_err());
+        let themed = r
+            .with_theme(
+                "mine",
+                &br##"{"name":"mine","type":"dark","colors":{"editor.foreground":"#111111","editor.background":"#222222"},"tokenColors":[]}"##[..],
+            )
+            .unwrap();
+        assert_eq!(themed.theme_colors("mine").unwrap().background, "#222222");
+        assert!(matches!(r.theme("mine"), Err(Error::ThemeNotFound(_))));
+
+        let aliased = r
+            .with_alias("golang2", "go")
+            .with_extension("GoX", "go")
+            .with_filename("GOFILE", "go");
+        assert_eq!(aliased.resolve_language("golang2"), Some("go"));
+        assert_eq!(aliased.detect_by_filename("x.gox"), Some("go"));
+        assert_eq!(aliased.detect_by_filename("GOFILE"), Some("go"));
+        assert_eq!(r.resolve_language("golang2"), None);
     }
 
     #[cfg(feature = "embedded-assets")]

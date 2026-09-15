@@ -2,11 +2,14 @@ pub mod html;
 mod merge;
 mod style;
 mod style_class;
+pub mod transformer;
+pub mod transformers;
 
 use crate::token::TokensResult;
 
 pub use html::{DefaultColor, Dialect, Escape, HtmlOptions, HtmlRenderer};
 pub use style_class::StyleClassMap;
+pub use transformer::{SpanContext, Transformer};
 
 /// A minimal output tree shared by renderers. Attributes keep insertion order; the
 /// renderer that builds the tree decides the order it wants serialized.
@@ -36,19 +39,35 @@ impl Node {
 
     /// Sets an attribute, replacing the value in place when the key already exists.
     pub fn attr(mut self, key: &str, value: &str) -> Self {
-        if let Self::Element { attrs, .. } = &mut self {
-            match attrs.iter_mut().find(|(k, _)| k == key) {
-                Some((_, v)) => *v = value.to_owned(),
-                None => attrs.push((key.to_owned(), value.to_owned())),
-            }
-        }
+        self.set_attr(key, value);
         self
     }
 
     /// Appends a class token, creating the `class` attribute at the front when absent.
     /// A token already present is not repeated.
     pub fn add_class(mut self, class: &str) -> Self {
-        if let Self::Element { attrs, .. } = &mut self {
+        self.push_class(class);
+        self
+    }
+
+    pub fn child(mut self, node: Node) -> Self {
+        self.push_child(node);
+        self
+    }
+
+    /// In-place form of [`Node::attr`]; a no-op on text nodes.
+    pub fn set_attr(&mut self, key: &str, value: &str) {
+        if let Self::Element { attrs, .. } = self {
+            match attrs.iter_mut().find(|(k, _)| k == key) {
+                Some((_, v)) => *v = value.to_owned(),
+                None => attrs.push((key.to_owned(), value.to_owned())),
+            }
+        }
+    }
+
+    /// In-place form of [`Node::add_class`]; a no-op on text nodes.
+    pub fn push_class(&mut self, class: &str) {
+        if let Self::Element { attrs, .. } = self {
             match attrs.iter_mut().find(|(k, _)| k == "class") {
                 Some((_, v)) => {
                     if !v.split(' ').any(|c| c == class) {
@@ -61,19 +80,54 @@ impl Node {
                 None => attrs.insert(0, ("class".to_owned(), class.to_owned())),
             }
         }
-        self
     }
 
-    pub fn child(mut self, node: Node) -> Self {
-        if let Self::Element { children, .. } = &mut self {
+    /// In-place form of [`Node::child`]; a no-op on text nodes.
+    pub fn push_child(&mut self, node: Node) {
+        if let Self::Element { children, .. } = self {
             children.push(node);
         }
-        self
+    }
+
+    /// Replaces the content of a text node; a no-op on elements.
+    pub fn set_text(&mut self, text: &str) {
+        if let Self::Text(content) = self {
+            *content = text.to_owned();
+        }
+    }
+
+    pub fn tag(&self) -> Option<&str> {
+        match self {
+            Self::Element { tag, .. } => Some(tag),
+            Self::Text(_) => None,
+        }
+    }
+
+    /// The content of a text node.
+    pub fn text_content(&self) -> Option<&str> {
+        match self {
+            Self::Element { .. } => None,
+            Self::Text(text) => Some(text),
+        }
     }
 
     pub fn attrs(&self) -> &[(String, String)] {
         match self {
             Self::Element { attrs, .. } => attrs,
+            Self::Text(_) => &[],
+        }
+    }
+
+    pub fn get_attr(&self, key: &str) -> Option<&str> {
+        self.attrs()
+            .iter()
+            .find(|(k, _)| k == key)
+            .map(|(_, v)| v.as_str())
+    }
+
+    pub fn children(&self) -> &[Node] {
+        match self {
+            Self::Element { children, .. } => children,
             Self::Text(_) => &[],
         }
     }

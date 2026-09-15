@@ -2,8 +2,9 @@ use std::collections::{BTreeMap, HashMap};
 
 use crate::render::merge::{merge_same_metadata, merge_whitespace};
 use crate::render::style::{Props, join_props, slot_props, sort_props, var_name};
+use crate::render::transformer::{SpanContext, Transformer};
 use crate::render::{Node, Renderer, StyleClassMap};
-use crate::token::{ThemedToken, TokensResult};
+use crate::token::{LineRange, ThemedToken, TokensResult, in_ranges};
 
 /// Which characters are escaped and how.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -68,6 +69,15 @@ pub struct HtmlOptions {
     /// Use the multi-theme form even for a single theme slot; `None` uses it only
     /// when the result has more than one slot.
     pub multi_theme: Option<bool>,
+    /// One-based inclusive line ranges that get the `highlighted` class.
+    pub highlight_lines: Vec<LineRange>,
+    /// Lines that get `focused`; when non-empty every other line gets `dimmed` and
+    /// `pre` gets `has-focused`.
+    pub focus_lines: Vec<LineRange>,
+    /// Lines that get `diff add`.
+    pub inserted_lines: Vec<LineRange>,
+    /// Lines that get `diff remove`.
+    pub deleted_lines: Vec<LineRange>,
 }
 
 impl Default for HtmlOptions {
@@ -86,6 +96,10 @@ impl Default for HtmlOptions {
             merge_same_metadata: false,
             merge_whitespace: false,
             multi_theme: None,
+            highlight_lines: Vec::new(),
+            focus_lines: Vec::new(),
+            inserted_lines: Vec::new(),
+            deleted_lines: Vec::new(),
         }
     }
 }
@@ -108,9 +122,26 @@ impl HtmlOptions {
 }
 
 /// The batteries-included HTML shape: `pre > code > span.line > span[style]`.
-#[derive(Debug, Default)]
+#[derive(Default)]
 pub struct HtmlRenderer<'m> {
     class_map: Option<&'m mut StyleClassMap>,
+    transformers: Vec<Box<dyn Transformer>>,
+}
+
+impl std::fmt::Debug for HtmlRenderer<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("HtmlRenderer")
+            .field("class_map", &self.class_map)
+            .field(
+                "transformers",
+                &self
+                    .transformers
+                    .iter()
+                    .map(|t| t.name())
+                    .collect::<Vec<_>>(),
+            )
+            .finish()
+    }
 }
 
 impl<'m> HtmlRenderer<'m> {
@@ -122,7 +153,52 @@ impl<'m> HtmlRenderer<'m> {
     pub fn with_class_map(map: &'m mut StyleClassMap) -> Self {
         Self {
             class_map: Some(map),
+            transformers: Vec::new(),
         }
+    }
+
+    /// Replaces the transformer list; hooks run in list order.
+    pub fn with_transformers(mut self, transformers: Vec<Box<dyn Transformer>>) -> Self {
+        self.transformers = transformers;
+        self
+    }
+
+    pub fn push_transformer(&mut self, transformer: impl Transformer + 'static) {
+        self.transformers.push(Box::new(transformer));
+    }
+
+    pub fn transformers(&self) -> &[Box<dyn Transformer>] {
+        &self.transformers
+    }
+
+    /// Runs every transformer's `preprocess`, each seeing the previous one's output.
+    /// `None` when no transformer changed the code.
+    pub fn preprocess(&mut self, code: &str) -> Option<String> {
+        let mut current: Option<String> = None;
+        for transformer in &mut self.transformers {
+            if let Some(next) = transformer.preprocess(current.as_deref().unwrap_or(code)) {
+                current = Some(next);
+            }
+        }
+        current
+    }
+
+    /// Runs every transformer's `tokens` hook in order.
+    pub fn transform_tokens(&mut self, result: &mut TokensResult) {
+        for transformer in &mut self.transformers {
+            transformer.tokens(result);
+        }
+    }
+
+    /// Runs every transformer's `postprocess`, each seeing the previous one's output.
+    pub fn postprocess(&mut self, html: String) -> String {
+        let mut html = html;
+        for transformer in &mut self.transformers {
+            if let Some(next) = transformer.postprocess(&html) {
+                html = next;
+            }
+        }
+        html
     }
 
     pub fn tree(&mut self, result: &TokensResult, options: &HtmlOptions) -> Node {
@@ -165,6 +241,7 @@ impl<'m> HtmlRenderer<'m> {
                     .map(|line| (result.line_text(line), &line.tokens))
                     .collect()
             };
+        let has_focus = !options.focus_lines.is_empty();
         let mut types = HashMap::new();
         let mut by_metadata;
         let mut by_whitespace;
@@ -184,13 +261,52 @@ impl<'m> HtmlRenderer<'m> {
             } else {
                 tokens
             };
+            let line_num = index + 1;
             let mut line = Node::element("span").attr("class", "line");
+            if in_ranges(&options.highlight_lines, line_num) {
+                line.push_class("highlighted");
+            }
+            if has_focus {
+                line.push_class(if in_ranges(&options.focus_lines, line_num) {
+                    "focused"
+                } else {
+                    "dimmed"
+                });
+            }
+            if in_ranges(&options.inserted_lines, line_num) {
+                line.push_class("diff");
+                line.push_class("add");
+            }
+            if in_ranges(&options.deleted_lines, line_num) {
+                line.push_class("diff");
+                line.push_class("remove");
+            }
             for token in tokens {
                 let props = ctx.token_props(token);
-                let node = self.styled(Node::element("span"), &props);
-                line = line.child(node.child(Node::text(token.text(text))));
+                let token_text = token.text(text);
+                let mut node = self
+                    .styled(Node::element("span"), &props)
+                    .child(Node::text(token_text));
+                if !self.transformers.is_empty() {
+                    let span_ctx = SpanContext {
+                        line: line_num,
+                        col: token.start,
+                        text: token_text,
+                        token,
+                    };
+                    for transformer in &mut self.transformers {
+                        transformer.span(&mut node, &mut line, &span_ctx);
+                    }
+                }
+                line.push_child(node);
             }
-            code = code.child(line);
+            for transformer in &mut self.transformers {
+                transformer.line(&mut line, line_num);
+            }
+            code.push_child(line);
+        }
+        for transformer in &mut self.transformers {
+            transformer.code(&mut code);
         }
 
         let pre_props = ctx.pre_props();
@@ -203,6 +319,9 @@ impl<'m> HtmlRenderer<'m> {
             }
         } else if !pre_props.is_empty() {
             style = Some(join_props(&pre_props));
+        }
+        if has_focus {
+            classes.push("has-focused".to_owned());
         }
         if let Some(class) = &options.pre_class {
             classes.push(class.clone());
@@ -231,7 +350,14 @@ impl<'m> HtmlRenderer<'m> {
                 }
             }
         }
-        pre.child(code)
+        pre.push_child(code);
+        for transformer in &mut self.transformers {
+            transformer.pre(&mut pre);
+        }
+        for transformer in &mut self.transformers {
+            transformer.root(&mut pre);
+        }
+        pre
     }
 
     fn styled(&mut self, node: Node, props: &Props) -> Node {

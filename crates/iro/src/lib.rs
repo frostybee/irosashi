@@ -42,12 +42,13 @@ pub use error::Error;
 pub use highlighter::{CodeToHtmlOptions, CodeToTokensOptions, Highlighter, HighlighterBuilder};
 pub use registry::{AssetSource, Registry, RegistryBuilder, ThemeColors};
 pub use render::{
-    DefaultColor, Dialect, Escape, HtmlOptions, HtmlRenderer, Node, Renderer, StyleClassMap,
+    DefaultColor, Dialect, Escape, HtmlOptions, HtmlRenderer, Node, Renderer, SpanContext,
+    StyleClassMap, Transformer, transformers,
 };
 pub use scope::{ScopeId, ScopeListId};
 pub use theme::{ColorId, FontStyle, Theme};
 pub use token::{
-    Diagnostic, DiagnosticKind, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token, TokenStyle,
-    TokensResult,
+    Diagnostic, DiagnosticKind, LineRange, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token,
+    TokenStyle, TokensResult, in_ranges,
 };
 pub use tokenizer::{Session, SessionStats, StateStack, TokenizeOptions, split_lines};

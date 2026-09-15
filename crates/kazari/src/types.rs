@@ -10,12 +10,16 @@ pub enum Frame {
     None,
 }
 
+/// Line and inline marker kinds, ordered by the priority that wins when markers
+/// overlap: a plain mark loses to warning and error, which lose to diff markers.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 #[repr(u8)]
 pub enum MarkerType {
     Mark = 0,
-    Del = 1,
-    Ins = 2,
+    Warning = 1,
+    Error = 2,
+    Del = 3,
+    Ins = 4,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -156,7 +160,9 @@ mod tests {
 
     #[test]
     fn marker_type_priority_order() {
-        assert!(MarkerType::Mark < MarkerType::Del);
+        assert!(MarkerType::Mark < MarkerType::Warning);
+        assert!(MarkerType::Warning < MarkerType::Error);
+        assert!(MarkerType::Error < MarkerType::Del);
         assert!(MarkerType::Del < MarkerType::Ins);
     }
 

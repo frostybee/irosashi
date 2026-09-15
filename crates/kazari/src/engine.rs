@@ -3,6 +3,7 @@ use crate::diff;
 use crate::error::Error;
 use crate::frame;
 use crate::meta;
+use crate::notation;
 use crate::render;
 use crate::tokenize::{self, expand_tabs};
 use crate::types::{Frame, InlineMarker, LineMarker, LineRange, ThemeInfo, Themes};
@@ -144,6 +145,20 @@ impl Kazari {
             (code.to_owned(), resolved.lang.clone())
         };
 
+        let code = if self.config.notation_comments {
+            let n = notation::process_notation(&code);
+            for warning in &n.warnings {
+                self.config.warn(warning);
+            }
+            resolved.line_markers.extend(n.line_markers);
+            resolved.focus_lines.extend(n.focus_lines);
+            resolved.inline_markers.extend(n.inline_markers);
+            resolved.raw_code = notation::process_notation(&resolved.raw_code).code;
+            n.code
+        } else {
+            code
+        };
+
         if self.config.frame_detection {
             resolved.frame = frame::detect_frame_type(&code, &lang, resolved.frame);
         }
@@ -212,6 +227,28 @@ impl KazariBuilder {
 
     pub fn tab_width(mut self, width: usize) -> Self {
         self.config.tab_width = width;
+        self
+    }
+
+    pub fn notation_comments(mut self, enabled: bool) -> Self {
+        self.config.notation_comments = enabled;
+        self
+    }
+
+    pub fn visible_whitespace(mut self, enabled: bool) -> Self {
+        self.config.visible_whitespace = enabled;
+        self
+    }
+
+    /// The symbols shown for tabs and spaces when whitespace is visible; an empty
+    /// string keeps the default.
+    pub fn whitespace_symbols(mut self, tab: &str, space: &str) -> Self {
+        if !tab.is_empty() {
+            self.config.whitespace_tab = tab.to_owned();
+        }
+        if !space.is_empty() {
+            self.config.whitespace_space = space.to_owned();
+        }
         self
     }
 
@@ -478,6 +515,133 @@ mod tests {
             .render_with_meta("let x = 1;", "javascript \"x\"")
             .unwrap();
         assert!(html.contains("<mark>"));
+    }
+
+    fn notation_engine() -> Kazari {
+        let hl = iro::Highlighter::new().unwrap();
+        Kazari::builder(hl)
+            .themes("github-light", Some("github-dark"))
+            .notation_comments(true)
+            .build()
+            .unwrap()
+    }
+
+    #[test]
+    fn notation_is_off_by_default() {
+        let kz = test_engine();
+        let html = kz
+            .render_with_meta("a // [!code ++]", "javascript")
+            .unwrap();
+        assert!(html.contains("[!code"));
+        assert!(!html.contains("highlight"));
+    }
+
+    #[test]
+    fn notation_diff_highlight_error_warning() {
+        let kz = notation_engine();
+        let html = kz
+            .render_with_meta(
+                "a // [!code ++]\nb // [!code --]\nc // [!code highlight]\nd // [!code error]\ne // [!code warning]\nf",
+                "javascript",
+            )
+            .unwrap();
+        assert!(!html.contains("[!code"));
+        assert!(html.contains("kz-line highlight ins"));
+        assert!(html.contains("kz-line highlight del"));
+        assert!(html.contains("kz-line highlight mark"));
+        assert!(html.contains("kz-line highlight error"));
+        assert!(html.contains("kz-line highlight warning"));
+        assert!(html.contains("data-lines=\"6\""));
+    }
+
+    #[test]
+    fn notation_focus_and_word() {
+        let kz = notation_engine();
+        let html = kz
+            .render_with_meta(
+                "foo // [!code focus]\nbar foo // [!code word:foo]",
+                "javascript",
+            )
+            .unwrap();
+        assert!(html.contains("has-focus"));
+        assert!(html.contains("kz-line focused"));
+        assert_eq!(html.matches("<mark>foo</mark>").count(), 2);
+    }
+
+    #[test]
+    fn notation_removes_blank_lines_and_combines_with_meta_markers() {
+        let kz = notation_engine();
+        let html = kz
+            .render_with_meta("x\n// [!code ++]\ny // [!code highlight]", "javascript {1}")
+            .unwrap();
+        assert!(html.contains("data-lines=\"2\""));
+        assert_eq!(html.matches("kz-line highlight mark").count(), 2);
+        assert!(!html.contains("highlight ins"));
+    }
+
+    #[test]
+    fn notation_unknown_annotation_warns() {
+        use std::sync::{Arc, Mutex};
+        let seen = Arc::new(Mutex::new(Vec::new()));
+        let sink = Arc::clone(&seen);
+        let hl = iro::Highlighter::new().unwrap();
+        let config = Config {
+            notation_comments: true,
+            warning_handler: Some(Box::new(move |msg: &str| {
+                sink.lock().unwrap().push(msg.to_owned());
+            })),
+            ..Default::default()
+        };
+        let kz = Kazari::builder(hl).config(config).build().unwrap();
+        kz.render_with_meta("a // [!code nope]", "javascript")
+            .unwrap();
+        assert_eq!(
+            *seen.lock().unwrap(),
+            ["unknown code notation [!code nope]"]
+        );
+    }
+
+    #[test]
+    fn visible_whitespace_wraps_spaces_and_tabs() {
+        let hl = iro::Highlighter::new().unwrap();
+        let kz = Kazari::builder(hl)
+            .themes("github-light", None)
+            .visible_whitespace(true)
+            .build()
+            .unwrap();
+        let html = kz.render_with_meta("a b", "text").unwrap();
+        assert!(html.contains("a<span class=\"ws-space\">\u{b7}</span>b"));
+
+        let hl = iro::Highlighter::new().unwrap();
+        let kz = Kazari::builder(hl)
+            .themes("github-light", None)
+            .visible_whitespace(true)
+            .whitespace_symbols(">", "_")
+            .build()
+            .unwrap();
+        let html = kz
+            .render(
+                "a b c",
+                &Options {
+                    lang: "text".into(),
+                    inline_markers: vec![InlineMarker {
+                        marker_type: MarkerType::Mark,
+                        text: "b c".into(),
+                        is_regex: false,
+                    }],
+                    ..Default::default()
+                },
+            )
+            .unwrap();
+        assert!(
+            html.contains(
+                "a<span class=\"ws-space\">_</span><mark>b<span class=\"ws-space\">_</span>c</mark>"
+            ),
+            "{html}"
+        );
+
+        let plain = test_engine().render_with_meta("a b", "text").unwrap();
+        assert!(!plain.contains("ws-space"));
     }
 
     #[test]

@@ -1,0 +1,9 @@
+---
+source: crates/kazari/tests/typst_snapshots.rs
+expression: "render(\"const a = 1;\\nconst b = 2;\\nconst c = 3;\", \"typescript focus={2}\")"
+---
+#code-block(lang: "typescript", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 3)[
+#code-line[#text(fill: rgb("#d73a49").transparentize(60%), "const")#text(fill: rgb("#24292e").transparentize(60%), " ")#text(fill: rgb("#005cc5").transparentize(60%), "a")#text(fill: rgb("#24292e").transparentize(60%), " ")#text(fill: rgb("#d73a49").transparentize(60%), "=")#text(fill: rgb("#24292e").transparentize(60%), " ")#text(fill: rgb("#005cc5").transparentize(60%), "1")#text(fill: rgb("#24292e").transparentize(60%), ";")]
+#code-line[#text(fill: rgb("#d73a49"), "const")#text(" ")#text(fill: rgb("#005cc5"), "b")#text(" ")#text(fill: rgb("#d73a49"), "=")#text(" ")#text(fill: rgb("#005cc5"), "2")#text(";")]
+#code-line[#text(fill: rgb("#d73a49").transparentize(60%), "const")#text(fill: rgb("#24292e").transparentize(60%), " ")#text(fill: rgb("#005cc5").transparentize(60%), "c")#text(fill: rgb("#24292e").transparentize(60%), " ")#text(fill: rgb("#d73a49").transparentize(60%), "=")#text(fill: rgb("#24292e").transparentize(60%), " ")#text(fill: rgb("#005cc5").transparentize(60%), "3")#text(fill: rgb("#24292e").transparentize(60%), ";")]
+]

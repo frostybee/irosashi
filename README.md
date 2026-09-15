@@ -38,8 +38,9 @@ Where Iro actually earns its place:
   Rust crate offers.
 - **The per-line API** with an explicit state handle is designed for editors and previews
   that re-tokenize from a dirty line. Shiki's `codeToHtml` is whole-document.
-- **Typst output** is coming through Kazari, for PDF export in the same process that renders
-  the preview.
+- **Typst output** through Kazari, for PDF export in the same process that renders the
+  preview: `render_with_meta_typst` emits a `#code-block(...)` call with the same colours
+  as the HTML, and `kazari::typst_preamble()` ships the template that draws it.
 
 ### Comparison
 
@@ -207,7 +208,9 @@ resolution, embedded assets (257 grammars, 65 themes), the fidelity gate, and HT
 in two dialects. See `FIDELITY.md`: all 234 grammars are byte-identical to `vscode-textmate`
 (468 of 468 grammar/theme pairs). The Shiki HTML preset is byte-identical to Shiki 4.4.3 on
 generated goldens. Benchmarks are in `my-docs/perf/`. The `kazari` presentation layer
-(line numbers, markers, decorated HTML, Typst output) is next.
+renders decorated HTML (line numbers, markers, focus, diff, frames, titles, dual themes)
+and Typst (`cargo run -p kazari --example demo_typst > demo.typ`, then `typst compile`).
+Kazari breadth (toolbar extras, collapsible sections, output panels) is next.
 
 ## Licence
 

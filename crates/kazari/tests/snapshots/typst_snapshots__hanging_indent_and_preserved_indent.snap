@@ -1,0 +1,8 @@
+---
+source: crates/kazari/tests/typst_snapshots.rs
+expression: "render(\"    indented line\\nflush line\", \"text hangingIndent=2\")"
+---
+#code-block(lang: "text", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 2)[
+#code-line(indent: 6 * 0.6em)[#text("    indented line")]
+#code-line(indent: 2 * 0.6em)[#text("flush line")]
+]

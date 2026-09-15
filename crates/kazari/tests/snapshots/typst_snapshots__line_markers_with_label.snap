@@ -1,0 +1,12 @@
+---
+source: crates/kazari/tests/typst_snapshots.rs
+expression: "render(\"a\\nb\\nc\\nd\\ne\\nf\",\nr#\"text {1} ins={2} del={3} {\"API\":4} error={5} warning={6}\"#)"
+---
+#code-block(lang: "text", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 6)[
+#code-line(mark: "mark")[#text("a")]
+#code-line(mark: "ins")[#text("b")]
+#code-line(mark: "del")[#text("c")]
+#code-line(mark: "mark", label: "API")[#text("d")]
+#code-line[#text("e")]
+#code-line[#text("f")]
+]

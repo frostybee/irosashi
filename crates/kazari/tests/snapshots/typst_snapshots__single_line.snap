@@ -1,0 +1,7 @@
+---
+source: crates/kazari/tests/typst_snapshots.rs
+expression: "render(\"let x = 1;\", \"javascript\")"
+---
+#code-block(lang: "javascript", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 1)[
+#code-line[#text(fill: rgb("#d73a49"), "let")#text(" ")#text("x")#text(" ")#text(fill: rgb("#d73a49"), "=")#text(" ")#text(fill: rgb("#005cc5"), "1")#text(";")]
+]

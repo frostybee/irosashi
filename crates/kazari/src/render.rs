@@ -637,7 +637,7 @@ fn encode_for_data_code(code: &str) -> String {
     code.replace('\n', "\x7f")
 }
 
-fn digit_count(n: usize) -> usize {
+pub(crate) fn digit_count(n: usize) -> usize {
     if n == 0 {
         return 1;
     }

@@ -1,0 +1,10 @@
+---
+source: crates/kazari/tests/typst_snapshots.rs
+expression: "render(\"a\\n\\n   \\nb\", \"text showLineNumbers\")"
+---
+#code-block(lang: "text", fg: rgb("#24292e"), bg: rgb("#fff"), numbers: true, gutter-width: 1 * 0.65em, lines: 4)[
+#code-line(num: 1)[#text("a")]
+#code-line(num: 2)[#text(" ")]
+#code-line(num: 3)[#text(" ")]
+#code-line(num: 4)[#text("b")]
+]

@@ -1,0 +1,7 @@
+---
+source: crates/kazari/tests/typst_snapshots.rs
+expression: "render(\"fn main() {}\", r#\"rust title=\"app.rs\"\"#)"
+---
+#code-block(lang: "rust", title: "app.rs", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 1)[
+#code-line[#text(fill: rgb("#d73a49"), "fn")#text(" ")#text(fill: rgb("#6f42c1"), "main")#text("(")#text(")")#text(" ")#text("{")#text("}")]
+]

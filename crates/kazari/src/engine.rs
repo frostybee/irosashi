@@ -5,7 +5,8 @@ use crate::frame;
 use crate::meta;
 use crate::notation;
 use crate::render;
-use crate::tokenize::{self, expand_tabs};
+use crate::render_typst;
+use crate::tokenize::{self, Tokens, expand_tabs};
 use crate::types::{Frame, InlineMarker, LineMarker, LineRange, ThemeInfo, Themes};
 
 #[derive(Default)]
@@ -40,6 +41,33 @@ impl Kazari {
     }
 
     pub fn render_with_meta(&self, code: &str, meta_str: &str) -> Result<String, Error> {
+        let mut resolved = self.resolve_meta(meta_str);
+        let tokens = self.prepare_and_tokenize(code, &mut resolved, false)?;
+        Ok(render::render_block(&tokens, &resolved, &self.config))
+    }
+
+    pub fn render(&self, code: &str, options: &Options) -> Result<String, Error> {
+        let mut resolved = self.resolve_options(options);
+        let tokens = self.prepare_and_tokenize(code, &mut resolved, false)?;
+        Ok(render::render_block(&tokens, &resolved, &self.config))
+    }
+
+    /// Renders the block as a `#code-block(...)` call for the functions defined by
+    /// [`typst_preamble`]. Only the light theme is used.
+    pub fn render_with_meta_typst(&self, code: &str, meta_str: &str) -> Result<String, Error> {
+        let mut resolved = self.resolve_meta(meta_str);
+        let tokens = self.prepare_and_tokenize(code, &mut resolved, true)?;
+        Ok(render_typst::render_block(&tokens, &resolved))
+    }
+
+    /// Same as [`Kazari::render_with_meta_typst`] with programmatic options.
+    pub fn render_typst(&self, code: &str, options: &Options) -> Result<String, Error> {
+        let mut resolved = self.resolve_options(options);
+        let tokens = self.prepare_and_tokenize(code, &mut resolved, true)?;
+        Ok(render_typst::render_block(&tokens, &resolved))
+    }
+
+    fn resolve_meta(&self, meta_str: &str) -> ResolvedBlock {
         let parsed = meta::parse(meta_str);
 
         let lang = if !parsed.block_options.lang.is_empty() {
@@ -53,11 +81,10 @@ impl Kazari {
         resolved.inline_markers = parsed.inline_markers;
         resolved.focus_lines = parsed.focus_lines;
         resolved.diff_lang = parsed.diff_lang;
-
-        self.render_resolved(code, &mut resolved)
+        resolved
     }
 
-    pub fn render(&self, code: &str, options: &Options) -> Result<String, Error> {
+    fn resolve_options(&self, options: &Options) -> ResolvedBlock {
         let lang = if !options.lang.is_empty() {
             self.config.resolve_language(&options.lang)
         } else {
@@ -80,8 +107,7 @@ impl Kazari {
         resolved.line_markers = options.line_markers.clone();
         resolved.inline_markers = options.inline_markers.clone();
         resolved.focus_lines = options.focus_lines.clone();
-
-        self.render_resolved(code, &mut resolved)
+        resolved
     }
 
     pub fn css(&self) -> String {
@@ -104,21 +130,23 @@ impl Kazari {
         self.dark_info.as_ref()
     }
 
-    fn render_resolved(&self, code: &str, resolved: &mut ResolvedBlock) -> Result<String, Error> {
-        let code = expand_tabs(code, self.config.tab_width);
+    /// Runs every source-level step (tab expansion, filename extraction, terminal
+    /// comment stripping, diff, notation, frame detection) and tokenizes. With
+    /// `single_theme` only the light theme is resolved.
+    fn prepare_and_tokenize(
+        &self,
+        code: &str,
+        resolved: &mut ResolvedBlock,
+        single_theme: bool,
+    ) -> Result<Tokens, Error> {
+        let mut code = expand_tabs(code, self.config.tab_width);
 
         if self.config.file_name_extraction
             && resolved.title.is_empty()
             && let Some((title, modified)) = frame::extract_file_name(&code, &resolved.lang)
         {
             resolved.title = title;
-            resolved.raw_code =
-                if self.config.terminal_comment_stripping && resolved.frame == Frame::Terminal {
-                    frame::strip_terminal_comments(&modified)
-                } else {
-                    modified.clone()
-                };
-            return self.tokenize_and_render(&modified, resolved);
+            code = modified;
         }
 
         resolved.raw_code =
@@ -128,21 +156,13 @@ impl Kazari {
                 code.clone()
             };
 
-        self.tokenize_and_render(&code, resolved)
-    }
-
-    fn tokenize_and_render(
-        &self,
-        code: &str,
-        resolved: &mut ResolvedBlock,
-    ) -> Result<String, Error> {
         let (code, lang) = if resolved.lang == "diff" && !resolved.diff_lang.is_empty() {
-            let (stripped, markers) = diff::process_diff_block(code);
+            let (stripped, markers) = diff::process_diff_block(&code);
             resolved.line_markers.extend(markers);
             resolved.lang = self.config.resolve_language(&resolved.diff_lang);
             (stripped, resolved.lang.clone())
         } else {
-            (code.to_owned(), resolved.lang.clone())
+            (code, resolved.lang.clone())
         };
 
         let code = if self.config.notation_comments {
@@ -163,7 +183,7 @@ impl Kazari {
             resolved.frame = frame::detect_frame_type(&code, &lang, resolved.frame);
         }
 
-        let themes = if !resolved.theme.is_empty() {
+        let mut themes = if !resolved.theme.is_empty() {
             Themes::parse_override(&resolved.theme)
         } else {
             Themes {
@@ -171,6 +191,9 @@ impl Kazari {
                 dark: self.config.dark_theme.clone(),
             }
         };
+        if single_theme {
+            themes.dark = None;
+        }
 
         let tokens = tokenize::tokenize(&self.highlighter, &code, &lang, &themes)?;
         if lang == "ansi" {
@@ -180,7 +203,7 @@ impl Kazari {
                 .join("\n");
         }
 
-        Ok(render::render_block(&tokens, resolved, &self.config))
+        Ok(tokens)
     }
 }
 
@@ -659,6 +682,117 @@ mod tests {
         assert!(html.contains("--sl:#cd3131"));
         assert!(html.contains(">red</span>"));
         assert!(!html.contains('\x1b'));
+    }
+
+    #[test]
+    fn render_with_meta_typst_basic() {
+        let kz = test_engine();
+        let out = kz
+            .render_with_meta_typst("let x = 1;", "javascript")
+            .unwrap();
+        assert!(
+            out.starts_with("#code-block(lang: \"javascript\", fg: rgb(\""),
+            "{out}"
+        );
+        assert!(
+            out.contains("#code-line[#text(fill: rgb(\"#d73a49\"), \"let\")"),
+            "{out}"
+        );
+        assert!(out.ends_with("]\n]"), "{out}");
+    }
+
+    #[test]
+    fn render_with_meta_typst_line_numbers() {
+        let kz = test_engine();
+        let out = kz
+            .render_with_meta_typst("a\nb", "text showLineNumbers startLineNumber=9")
+            .unwrap();
+        assert!(
+            out.contains("numbers: true, gutter-width: 2 * 0.65em"),
+            "{out}"
+        );
+        assert!(out.contains("#code-line(num: 10)[#text(\"b\")]"), "{out}");
+    }
+
+    #[test]
+    fn render_with_meta_typst_markers() {
+        let kz = test_engine();
+        let out = kz
+            .render_with_meta_typst("a\nb\nc", "text {1} ins={2} del={3}")
+            .unwrap();
+        assert!(
+            out.contains("#code-line(mark: \"mark\")[#text(\"a\")]"),
+            "{out}"
+        );
+        assert!(
+            out.contains("#code-line(mark: \"ins\")[#text(\"b\")]"),
+            "{out}"
+        );
+        assert!(
+            out.contains("#code-line(mark: \"del\")[#text(\"c\")]"),
+            "{out}"
+        );
+    }
+
+    #[test]
+    fn render_with_meta_typst_focus() {
+        let kz = test_engine();
+        let out = kz.render_with_meta_typst("a\nb", "text focus={1}").unwrap();
+        assert!(out.contains("#code-line[#text(\"a\")]"), "{out}");
+        assert!(
+            out.contains("#code-line[#text(fill: rgb(\"#24292e\").transparentize(60%), \"b\")]"),
+            "{out}"
+        );
+    }
+
+    #[test]
+    fn render_with_meta_typst_title() {
+        let kz = test_engine();
+        let out = kz
+            .render_with_meta_typst("x", r#"rust title="app.rs""#)
+            .unwrap();
+        assert!(out.contains("title: \"app.rs\", "), "{out}");
+    }
+
+    #[test]
+    fn render_typst_uses_light_theme_only() {
+        let kz = test_engine();
+        let code = "fn main() { let s = \"x\"; }";
+        let html = kz.render_with_meta(code, "rust").unwrap();
+        let typ = kz.render_with_meta_typst(code, "rust").unwrap();
+        for color in ["#d73a49", "#6f42c1", "#032f62"] {
+            assert!(html.contains(&format!("--sl:{color}")), "{html}");
+            assert!(typ.contains(&format!("fill: rgb(\"{color}\")")), "{typ}");
+        }
+        let dark_only = "#f97583";
+        assert!(html.contains(&format!("--sd:{dark_only}")), "{html}");
+        assert!(!typ.contains(dark_only), "{typ}");
+    }
+
+    #[test]
+    fn render_typst_with_options() {
+        let kz = test_engine();
+        let out = kz
+            .render_typst(
+                "a",
+                &Options {
+                    lang: "text".into(),
+                    title: "t".into(),
+                    line_numbers: Some(true),
+                    ..Default::default()
+                },
+            )
+            .unwrap();
+        assert!(out.contains("title: \"t\", "), "{out}");
+        assert!(out.contains("#code-line(num: 1)[#text(\"a\")]"), "{out}");
+    }
+
+    #[test]
+    fn typst_preamble_defines_functions() {
+        let p = crate::typst_preamble();
+        assert!(p.contains("#let code-block("));
+        assert!(p.contains("#let code-line("));
+        assert!(p.contains("#let kz-marker-colors"));
     }
 
     #[test]

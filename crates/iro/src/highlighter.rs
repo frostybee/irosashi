@@ -4,15 +4,21 @@ use std::sync::{Arc, Mutex, PoisonError, RwLock};
 
 use crate::Error;
 use crate::registry::{AssetSource, PLAINTEXT_NAMES, Registry, RegistryBuilder, ThemeColors};
-use crate::render::{DefaultColor, HtmlOptions, HtmlRenderer, Renderer};
+use crate::render::{
+    AnsiOptions, AnsiRenderer, DefaultColor, HtmlOptions, HtmlRenderer, JsonOptions, JsonRenderer,
+    PlainTextRenderer, Renderer, SvgOptions, SvgRenderer,
+};
 use crate::scope::ScopeListId;
+use crate::theme::Theme;
 use crate::token::{
     Diagnostic, DiagnosticKind, LineRange, ScopeTable, ThemeSlot, ThemedLine, ThemedToken,
     TokenStyle, TokensResult,
 };
+use crate::tokenizer::ansi::{AnsiStyle, tokenize_ansi};
 use crate::tokenizer::{Resolver, Session, TokenizeOptions, split_lines};
 
 const DEFAULT_RETIRE_SCOPE_LISTS: usize = 1 << 16;
+const ANSI_LANG: &str = "ansi";
 
 /// Options for one `code_to_tokens` call.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
@@ -70,6 +76,57 @@ impl CodeToHtmlOptions {
     }
 }
 
+/// Options for one `code_to_ansi` call.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CodeToAnsiOptions {
+    pub tokens: CodeToTokensOptions,
+    pub ansi: AnsiOptions,
+}
+
+impl CodeToAnsiOptions {
+    pub fn new(lang: &str, theme: &str) -> Self {
+        Self {
+            tokens: CodeToTokensOptions::new(lang, theme),
+            ansi: AnsiOptions::default(),
+        }
+    }
+}
+
+/// Options for one `code_to_svg` call.
+#[derive(Debug, Clone, Default, PartialEq)]
+pub struct CodeToSvgOptions {
+    pub tokens: CodeToTokensOptions,
+    pub svg: SvgOptions,
+}
+
+impl CodeToSvgOptions {
+    pub fn new(lang: &str, theme: &str) -> Self {
+        Self {
+            tokens: CodeToTokensOptions::new(lang, theme),
+            svg: SvgOptions::default(),
+        }
+    }
+}
+
+/// Options for one `code_to_json` call.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CodeToJsonOptions {
+    pub tokens: CodeToTokensOptions,
+    /// Key to theme name. Non-empty selects multi-theme output; `tokens.theme` is then
+    /// ignored.
+    pub themes: BTreeMap<String, String>,
+    pub indent: bool,
+}
+
+impl CodeToJsonOptions {
+    pub fn new(lang: &str, theme: &str) -> Self {
+        Self {
+            tokens: CodeToTokensOptions::new(lang, theme),
+            ..Self::default()
+        }
+    }
+}
+
 /// Configures a `Highlighter`.
 #[derive(Debug, Clone)]
 pub struct HighlighterBuilder {
@@ -77,6 +134,7 @@ pub struct HighlighterBuilder {
     max_line_length: Option<usize>,
     retire_scope_lists: usize,
     html_defaults: Option<CodeToHtmlOptions>,
+    min_contrast: f64,
 }
 
 impl HighlighterBuilder {
@@ -86,7 +144,17 @@ impl HighlighterBuilder {
             max_line_length: None,
             retire_scope_lists: DEFAULT_RETIRE_SCOPE_LISTS,
             html_defaults: None,
+            min_contrast: 0.0,
         }
+    }
+
+    /// Adjusts every theme's foregrounds toward black or white until they reach this
+    /// WCAG contrast ratio against the theme's background (Nuri defaults to 5.5). Off
+    /// by default so output stays byte-identical to the fixtures. Backgrounds are
+    /// never changed; the adjusted theme is cached per theme name.
+    pub fn min_contrast(mut self, ratio: f64) -> Self {
+        self.min_contrast = ratio;
+        self
     }
 
     /// Loads grammars and themes from `root/grammars` and `root/themes`.
@@ -157,6 +225,8 @@ impl HighlighterBuilder {
             html_defaults: self.html_defaults,
             max_line_length: self.max_line_length,
             retire_scope_lists: self.retire_scope_lists,
+            min_contrast: self.min_contrast,
+            adjusted: RwLock::new(HashMap::new()),
             pool: Mutex::new(HashMap::new()),
         })
     }
@@ -173,6 +243,8 @@ pub struct Highlighter {
     html_defaults: Option<CodeToHtmlOptions>,
     max_line_length: Option<usize>,
     retire_scope_lists: usize,
+    min_contrast: f64,
+    adjusted: RwLock<HashMap<String, Arc<Theme>>>,
     pool: Mutex<HashMap<String, Vec<Session>>>,
 }
 
@@ -234,8 +306,33 @@ impl Highlighter {
             .map(str::to_owned)
     }
 
+    /// The theme's colours, with the foreground adjusted when `min_contrast` is set.
     pub fn theme_colors(&self, name: &str) -> Result<ThemeColors, Error> {
-        self.registry().theme_colors(name)
+        let theme = self.theme(&self.registry(), name)?;
+        Ok(ThemeColors::from_theme(&theme))
+    }
+
+    fn theme(&self, registry: &Registry, name: &str) -> Result<Arc<Theme>, Error> {
+        let theme = registry.theme(name)?;
+        if self.min_contrast <= 0.0 {
+            return Ok(theme);
+        }
+        if let Some(adjusted) = self
+            .adjusted
+            .read()
+            .unwrap_or_else(PoisonError::into_inner)
+            .get(name)
+        {
+            return Ok(Arc::clone(adjusted));
+        }
+        let adjusted = Arc::new(theme.with_min_contrast(self.min_contrast));
+        Ok(Arc::clone(
+            self.adjusted
+                .write()
+                .unwrap_or_else(PoisonError::into_inner)
+                .entry(name.to_owned())
+                .or_insert(adjusted),
+        ))
     }
 
     /// Parses `json` and registers it as grammar `name`, replacing a grammar of that
@@ -271,6 +368,10 @@ impl Highlighter {
         let next = f(&registry)?;
         *registry = Arc::new(next);
         drop(registry);
+        self.adjusted
+            .write()
+            .unwrap_or_else(PoisonError::into_inner)
+            .clear();
         self.pool
             .lock()
             .unwrap_or_else(PoisonError::into_inner)
@@ -280,13 +381,15 @@ impl Highlighter {
 
     /// Tokenizes `code` and styles it with one theme. An unknown language yields
     /// plain text with an `UnknownLanguage` diagnostic; an unknown theme is an error.
+    /// The language `ansi` is not a grammar: its SGR escape sequences (`ESC [ ... m`)
+    /// become token styles and are removed from the text.
     pub fn code_to_tokens(
         &self,
         code: &str,
         options: &CodeToTokensOptions,
     ) -> Result<TokensResult, Error> {
         let registry = self.registry();
-        let theme = registry.theme(&options.theme)?;
+        let theme = self.theme(&registry, &options.theme)?;
         let slots = vec![ThemeSlot {
             key: options.theme.clone(),
             theme,
@@ -310,10 +413,48 @@ impl Highlighter {
         for (key, name) in themes {
             slots.push(ThemeSlot {
                 key: key.clone(),
-                theme: registry.theme(name)?,
+                theme: self.theme(&registry, name)?,
             });
         }
         self.highlight(&registry, code, options, slots)
+    }
+
+    /// Tokenizes and renders `code` as plain text: every token's text, lines joined
+    /// by `\n`.
+    pub fn code_to_plaintext(
+        &self,
+        code: &str,
+        options: &CodeToTokensOptions,
+    ) -> Result<String, Error> {
+        let result = self.code_to_tokens(code, options)?;
+        Ok(PlainTextRenderer.render(&result, &()))
+    }
+
+    /// Tokenizes and renders `code` with SGR escape sequences for a terminal.
+    pub fn code_to_ansi(&self, code: &str, options: &CodeToAnsiOptions) -> Result<String, Error> {
+        let result = self.code_to_tokens(code, &options.tokens)?;
+        Ok(AnsiRenderer.render(&result, &options.ansi))
+    }
+
+    /// Tokenizes and renders `code` as a standalone SVG document.
+    pub fn code_to_svg(&self, code: &str, options: &CodeToSvgOptions) -> Result<String, Error> {
+        let result = self.code_to_tokens(code, &options.tokens)?;
+        Ok(SvgRenderer.render(&result, &options.svg))
+    }
+
+    /// Tokenizes `code` and serializes the result as JSON.
+    pub fn code_to_json(&self, code: &str, options: &CodeToJsonOptions) -> Result<String, Error> {
+        let result = if options.themes.is_empty() {
+            self.code_to_tokens(code, &options.tokens)?
+        } else {
+            self.code_to_tokens_multi(code, &options.themes, &options.tokens)?
+        };
+        Ok(JsonRenderer.render(
+            &result,
+            &JsonOptions {
+                indent: options.indent,
+            },
+        ))
     }
 
     /// Tokenizes and renders `code` as HTML.
@@ -402,6 +543,14 @@ impl Highlighter {
         if PLAINTEXT_NAMES.contains(&lang.as_str()) {
             return Ok(plaintext(code, slots, options.include_scopes, false));
         }
+        if lang == ANSI_LANG {
+            return Ok(ansi(
+                code,
+                slots,
+                options.include_scopes,
+                self.tokenize_options(options),
+            ));
+        }
         let Some(name) = registry.resolve_language(&lang) else {
             return Ok(plaintext(code, slots, options.include_scopes, true));
         };
@@ -474,6 +623,106 @@ fn merge_options(defaults: &CodeToHtmlOptions, call: &CodeToHtmlOptions) -> Code
     }
     out
 }
+
+/// Styles from SGR escape sequences. Explicit colours are result-level extra colours;
+/// a token without one takes each slot's default foreground, which is the only thing
+/// that differs between themes. Each distinct style gets its own synthetic scope id.
+fn ansi(
+    code: &str,
+    slots: Vec<ThemeSlot>,
+    include_scopes: bool,
+    options: TokenizeOptions,
+) -> TokensResult {
+    let (cleaned, ansi_lines) = tokenize_ansi(code);
+    let multi = slots.len() > 1;
+    let mut result =
+        TokensResult::new(cleaned, Vec::new(), slots, HashMap::new(), None, Vec::new());
+    let mut ids: HashMap<AnsiStyle, ScopeListId> = HashMap::new();
+    let mut used = Vec::new();
+    let mut lines = Vec::with_capacity(ansi_lines.len());
+    for (index, line) in ansi_lines.into_iter().enumerate() {
+        let too_long = options
+            .max_line_length
+            .is_some_and(|max| line.range.len() > max);
+        let mut tokens = Vec::with_capacity(line.tokens.len());
+        if too_long {
+            result.diagnostics.push(Diagnostic {
+                line: index,
+                kind: DiagnosticKind::TooLong,
+            });
+            if !line.range.is_empty() {
+                let style = TokenStyle {
+                    color: Some(result.themes[0].theme.default_foreground_id()),
+                    bg: None,
+                    font_style: FontStyleDefault::default(),
+                };
+                tokens.push(ThemedToken {
+                    start: 0,
+                    end: line.range.len(),
+                    style,
+                    scopes: ScopeListId::EMPTY,
+                });
+                if multi && !result.styles.contains_key(&ScopeListId::EMPTY) {
+                    let all: Box<[TokenStyle]> = result
+                        .themes
+                        .iter()
+                        .map(|slot| TokenStyle {
+                            color: Some(slot.theme.default_foreground_id()),
+                            ..style
+                        })
+                        .collect();
+                    result.styles.insert(ScopeListId::EMPTY, all);
+                }
+                used.push(ScopeListId::EMPTY);
+            }
+            lines.push(ThemedLine::new(line.range, tokens));
+            continue;
+        }
+        for token in line.tokens {
+            let next = ids.len() as u32 + 1;
+            let id = *ids.entry(token.style.clone()).or_insert(ScopeListId(next));
+            let fg = token.style.fg.as_deref().map(|hex| result.add_color(hex));
+            let bg = token.style.bg.as_deref().map(|hex| result.add_color(hex));
+            let style_for = |theme: &Theme| TokenStyle {
+                color: Some(fg.unwrap_or_else(|| theme.default_foreground_id())),
+                bg,
+                font_style: token.style.font_style,
+            };
+            let style = style_for(&result.themes[0].theme);
+            if multi && !result.styles.contains_key(&id) {
+                let all: Box<[TokenStyle]> = result
+                    .themes
+                    .iter()
+                    .map(|slot| style_for(&slot.theme))
+                    .collect();
+                result.styles.insert(id, all);
+            }
+            if id.0 as usize == ids.len() {
+                used.push(id);
+            }
+            tokens.push(ThemedToken {
+                start: token.range.start,
+                end: token.range.end,
+                style,
+                scopes: id,
+            });
+        }
+        lines.push(ThemedLine::new(line.range, tokens));
+    }
+    result.lines = lines;
+    if include_scopes {
+        used.sort_by_key(|id| id.0);
+        used.dedup();
+        result.scopes = Some(ScopeTable::new(
+            used.into_iter()
+                .map(|id| (id, Vec::new().into_boxed_slice()))
+                .collect(),
+        ));
+    }
+    result
+}
+
+type FontStyleDefault = crate::theme::FontStyle;
 
 /// One unstyled token per line in every theme's default foreground.
 fn plaintext(
@@ -865,6 +1114,150 @@ mod tests {
             h.code_to_tokens(code, &CodeToTokensOptions::new("rust", "")),
             Err(Error::ThemeNotFound(_))
         ));
+    }
+
+    #[test]
+    fn ansi_input_becomes_styled_tokens() {
+        let h = highlighter();
+        let mut options = CodeToTokensOptions::new("ansi", "github-dark");
+        options.include_scopes = true;
+        let r = h
+            .code_to_tokens("\x1b[1;31mred\x1b[0m plain\n\x1b[44mblue bg", &options)
+            .unwrap();
+        assert_eq!(r.source, "red plain\nblue bg");
+        assert!(r.diagnostics.is_empty());
+        assert_eq!(texts(&r), [vec!["red", " plain"], vec!["blue bg"]]);
+        let red = r.lines[0].tokens[0].style;
+        assert_eq!(r.color(red.color.unwrap()), "#cd3131");
+        assert!(red.font_style.is_bold());
+        let plain = r.lines[0].tokens[1].style;
+        assert_eq!(r.color(plain.color.unwrap()), r.fg());
+        let bg = r.lines[1].tokens[0].style;
+        assert_eq!(r.color(bg.bg.unwrap()), "#2472c8");
+        assert_eq!(r.color(bg.color.unwrap()), r.fg());
+        assert_ne!(r.lines[0].tokens[0].scopes, r.lines[0].tokens[1].scopes);
+        assert!(r.scopes_of(&r.lines[0].tokens[0]).unwrap().is_empty());
+        assert_eq!(r.scopes.as_ref().unwrap().len(), 3);
+
+        let empty = h.code_to_tokens("", &options).unwrap();
+        assert!(empty.lines.is_empty());
+
+        let html = h
+            .code_to_html(
+                "\x1b[31mred\x1b[0m",
+                &CodeToHtmlOptions::new("ansi", "github-dark"),
+            )
+            .unwrap();
+        assert!(html.contains("<span style=\"color:#cd3131\">red</span>"));
+        assert!(!html.contains('\x1b'));
+    }
+
+    #[test]
+    fn ansi_input_multi_theme_falls_back_per_slot() {
+        let h = highlighter();
+        let themes = BTreeMap::from([
+            ("light".to_owned(), "github-light".to_owned()),
+            ("dark".to_owned(), "github-dark".to_owned()),
+        ]);
+        let r = h
+            .code_to_tokens_multi(
+                "\x1b[32mgreen\x1b[0m plain",
+                &themes,
+                &CodeToTokensOptions::new("ansi", ""),
+            )
+            .unwrap();
+        let green = &r.lines[0].tokens[0];
+        let plain = &r.lines[0].tokens[1];
+        for slot in 0..2 {
+            assert_eq!(
+                r.color_in(slot, r.style_in(green, slot).color.unwrap()),
+                "#0dbc79"
+            );
+            assert_eq!(
+                r.color_in(slot, r.style_in(plain, slot).color.unwrap()),
+                r.fg_of(slot)
+            );
+        }
+        assert_ne!(r.fg_of(0), r.fg_of(1));
+
+        let tiny =
+            HighlighterBuilder::from_dir(Path::new(env!("CARGO_MANIFEST_DIR")).join("assets"))
+                .max_line_length(Some(3))
+                .build()
+                .unwrap();
+        let r = tiny
+            .code_to_tokens(
+                "\x1b[31mlong line",
+                &CodeToTokensOptions::new("ansi", "github-dark"),
+            )
+            .unwrap();
+        assert_eq!(r.diagnostics[0].kind, DiagnosticKind::TooLong);
+        assert_eq!(texts(&r), [vec!["long line"]]);
+        assert_eq!(r.color(r.lines[0].tokens[0].style.color.unwrap()), r.fg());
+    }
+
+    #[test]
+    fn min_contrast_adjusts_themes_once_and_is_off_by_default() {
+        let assets = Path::new(env!("CARGO_MANIFEST_DIR")).join("assets");
+        let theme = br##"{"name":"t","type":"light","colors":{"editor.foreground":"#777777","editor.background":"#ffffff"},"tokenColors":[{"scope":"source","settings":{"foreground":"#f0e8b0"}}]}"##;
+        let off = HighlighterBuilder::from_dir(&assets)
+            .theme("t", &theme[..])
+            .unwrap()
+            .build()
+            .unwrap();
+        let r = off
+            .code_to_tokens("x", &CodeToTokensOptions::new("rust", "t"))
+            .unwrap();
+        assert_eq!(
+            r.color(r.lines[0].tokens[0].style.color.unwrap()),
+            "#f0e8b0"
+        );
+        assert_eq!(off.theme_colors("t").unwrap().foreground, "#777777");
+
+        let on = HighlighterBuilder::from_dir(&assets)
+            .theme("t", &theme[..])
+            .unwrap()
+            .min_contrast(5.5)
+            .build()
+            .unwrap();
+        let first = on
+            .code_to_tokens("x", &CodeToTokensOptions::new("rust", "t"))
+            .unwrap();
+        let color = first.color(first.lines[0].tokens[0].style.color.unwrap());
+        assert_ne!(color, "#f0e8b0");
+        assert!(crate::contrast::contrast_ratio(color, "#ffffff") >= 5.5);
+        assert_eq!(first.bg(), "#ffffff");
+        let colors = on.theme_colors("t").unwrap();
+        assert_ne!(colors.foreground, "#777777");
+        assert!(crate::contrast::contrast_ratio(&colors.foreground, "#ffffff") >= 5.5);
+        let second = on
+            .code_to_tokens("y", &CodeToTokensOptions::new("rust", "t"))
+            .unwrap();
+        assert!(Arc::ptr_eq(first.theme(), second.theme()));
+
+        on.load_theme(
+            "t",
+            &br##"{"name":"t","type":"dark","colors":{"editor.foreground":"#ffffff","editor.background":"#000000"},"tokenColors":[]}"##[..],
+        )
+        .unwrap();
+        let reloaded = on
+            .code_to_tokens("x", &CodeToTokensOptions::new("rust", "t"))
+            .unwrap();
+        assert_eq!(reloaded.bg(), "#000000");
+        assert!(!Arc::ptr_eq(first.theme(), reloaded.theme()));
+
+        let themes = BTreeMap::from([
+            ("a".to_owned(), "t".to_owned()),
+            ("b".to_owned(), "github-light".to_owned()),
+        ]);
+        let multi = on
+            .code_to_tokens_multi("x", &themes, &CodeToTokensOptions::new("rust", ""))
+            .unwrap();
+        for slot in 0..2 {
+            let token = &multi.lines[0].tokens[0];
+            let fg = multi.color_in(slot, multi.style_in(token, slot).color.unwrap());
+            assert!(crate::contrast::contrast_ratio(fg, multi.bg_of(slot)) >= 5.5);
+        }
     }
 
     #[test]

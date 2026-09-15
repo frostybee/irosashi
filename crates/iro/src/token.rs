@@ -107,7 +107,11 @@ pub struct TokensResult {
     pub styles: HashMap<ScopeListId, Box<[TokenStyle]>>,
     pub scopes: Option<ScopeTable>,
     pub diagnostics: Vec<Diagnostic>,
+    /// Colours that belong to no theme (ANSI input); see `add_color`.
+    pub extra_colors: Vec<String>,
 }
+
+const EXTRA_COLOR: u32 = 1 << 31;
 
 impl TokensResult {
     pub fn new(
@@ -126,7 +130,21 @@ impl TokensResult {
             styles,
             scopes,
             diagnostics,
+            extra_colors: Vec::new(),
         }
+    }
+
+    /// Registers a colour outside every theme's table and returns an id that resolves
+    /// to it in every slot of this result.
+    pub fn add_color(&mut self, hex: &str) -> ColorId {
+        let index = match self.extra_colors.iter().position(|c| c == hex) {
+            Some(index) => index,
+            None => {
+                self.extra_colors.push(hex.to_owned());
+                self.extra_colors.len() - 1
+            }
+        };
+        ColorId(index as u32 | EXTRA_COLOR)
     }
 
     /// The default theme (slot 0).
@@ -154,7 +172,11 @@ impl TokensResult {
     }
 
     pub fn color_in(&self, slot: usize, id: ColorId) -> &str {
-        self.themes[slot].theme.color(id)
+        if id.0 & EXTRA_COLOR != 0 {
+            &self.extra_colors[(id.0 & !EXTRA_COLOR) as usize]
+        } else {
+            self.themes[slot].theme.color(id)
+        }
     }
 
     pub fn fg_of(&self, slot: usize) -> &str {

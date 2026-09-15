@@ -1,3 +1,4 @@
+pub mod contrast;
 mod matcher;
 mod normalize;
 mod parse;

@@ -1,14 +1,24 @@
+pub mod ansi;
+mod ansi_palette;
 pub mod html;
+pub mod json;
 mod merge;
+pub mod plaintext;
 mod style;
 mod style_class;
+pub mod svg;
 pub mod transformer;
 pub mod transformers;
 
 use crate::token::TokensResult;
 
+pub use ansi::{AnsiOptions, AnsiRenderer};
+pub use ansi_palette::ColorDepth;
 pub use html::{DefaultColor, Dialect, Escape, HtmlOptions, HtmlRenderer};
+pub use json::{JsonOptions, JsonRenderer};
+pub use plaintext::PlainTextRenderer;
 pub use style_class::StyleClassMap;
+pub use svg::{SvgOptions, SvgRenderer};
 pub use transformer::{SpanContext, Transformer};
 
 /// A minimal output tree shared by renderers. Attributes keep insertion order; the

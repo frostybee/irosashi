@@ -40,6 +40,19 @@ pub struct GrammarMeta {
     pub first_line_match: Option<String>,
 }
 
+impl ThemeColors {
+    pub fn from_theme(theme: &Theme) -> Self {
+        Self {
+            kind: theme.kind.clone(),
+            foreground: theme.default_foreground().to_owned(),
+            background: theme.default_background().to_owned(),
+            selection_background: theme.colors.get("editor.selectionBackground").cloned(),
+            line_highlight_background: theme.colors.get("editor.lineHighlightBackground").cloned(),
+            colors: theme.colors.clone(),
+        }
+    }
+}
+
 #[derive(Debug, Deserialize)]
 struct Index {
     version: u32,
@@ -617,14 +630,7 @@ impl Registry {
 
     pub fn theme_colors(&self, name: &str) -> Result<ThemeColors, Error> {
         let theme = self.theme(name)?;
-        Ok(ThemeColors {
-            kind: theme.kind.clone(),
-            foreground: theme.default_foreground().to_owned(),
-            background: theme.default_background().to_owned(),
-            selection_background: theme.colors.get("editor.selectionBackground").cloned(),
-            line_highlight_background: theme.colors.get("editor.lineHighlightBackground").cloned(),
-            colors: theme.colors.clone(),
-        })
+        Ok(ThemeColors::from_theme(&theme))
     }
 
     /// Exact file name first, then the lowercased extension.

@@ -39,14 +39,18 @@ pub(crate) mod tokenizer;
 mod error;
 
 pub use error::Error;
-pub use highlighter::{CodeToHtmlOptions, CodeToTokensOptions, Highlighter, HighlighterBuilder};
+pub use highlighter::{
+    CodeToAnsiOptions, CodeToHtmlOptions, CodeToJsonOptions, CodeToSvgOptions, CodeToTokensOptions,
+    Highlighter, HighlighterBuilder,
+};
 pub use registry::{AssetSource, Registry, RegistryBuilder, ThemeColors};
 pub use render::{
-    DefaultColor, Dialect, Escape, HtmlOptions, HtmlRenderer, Node, Renderer, SpanContext,
-    StyleClassMap, Transformer, transformers,
+    AnsiOptions, AnsiRenderer, ColorDepth, DefaultColor, Dialect, Escape, HtmlOptions,
+    HtmlRenderer, JsonOptions, JsonRenderer, Node, PlainTextRenderer, Renderer, SpanContext,
+    StyleClassMap, SvgOptions, SvgRenderer, Transformer, transformers,
 };
 pub use scope::{ScopeId, ScopeListId};
-pub use theme::{ColorId, FontStyle, Theme};
+pub use theme::{ColorId, FontStyle, Theme, contrast};
 pub use token::{
     Diagnostic, DiagnosticKind, LineRange, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token,
     TokenStyle, TokensResult, in_ranges,

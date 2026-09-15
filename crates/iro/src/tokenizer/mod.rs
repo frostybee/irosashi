@@ -15,6 +15,8 @@ use std::sync::Arc;
 
 use crate::grammar::{Grammar, GrammarResolver, ROOT_RULE_ID};
 use crate::scope::{ScopeInterner, ScopeListId};
+pub(crate) mod ansi;
+
 use crate::theme::{Theme, ThemeId};
 use crate::token::{
     Diagnostic, DiagnosticKind, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token, TokenStyle,

@@ -173,6 +173,12 @@ impl Kazari {
         };
 
         let tokens = tokenize::tokenize(&self.highlighter, &code, &lang, &themes)?;
+        if lang == "ansi" {
+            resolved.raw_code = (0..tokens.line_count())
+                .map(|i| tokens.line_text(i))
+                .collect::<Vec<_>>()
+                .join("\n");
+        }
 
         Ok(render::render_block(&tokens, resolved, &self.config))
     }
@@ -642,6 +648,17 @@ mod tests {
 
         let plain = test_engine().render_with_meta("a b", "text").unwrap();
         assert!(!plain.contains("ws-space"));
+    }
+
+    #[test]
+    fn ansi_input_renders_through_kazari() {
+        let kz = test_engine();
+        let html = kz
+            .render_with_meta("\x1b[31mred\x1b[0m plain", "ansi")
+            .unwrap();
+        assert!(html.contains("--sl:#cd3131"));
+        assert!(html.contains(">red</span>"));
+        assert!(!html.contains('\x1b'));
     }
 
     #[test]

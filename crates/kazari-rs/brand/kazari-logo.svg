@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Kazari Frame logo concept three</title>
+  <desc id="desc">A code window with a folded ornamental ribbon creating a bold letter K.</desc>
+  <defs>
+    <linearGradient id="panel" x1="88" y1="88" x2="424" y2="424" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#23243A"/>
+      <stop offset="1" stop-color="#171821"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="156" y1="154" x2="328" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#43C6D9"/>
+      <stop offset="0.5" stop-color="#7C5CFC"/>
+      <stop offset="1" stop-color="#FF6B81"/>
+    </linearGradient>
+  </defs>
+  <rect x="72" y="72" width="368" height="368" rx="72" fill="url(#panel)"/>
+  <path d="M72 160h368" stroke="#353650" stroke-width="12"/>
+  <circle cx="124" cy="116" r="12" fill="#FF6B81"/>
+  <circle cx="164" cy="116" r="12" fill="#F7C85E"/>
+  <circle cx="204" cy="116" r="12" fill="#43C6D9"/>
+  <path d="M160 196v152" stroke="#F5F3FF" stroke-width="30" stroke-linecap="round"/>
+  <path d="M160 270l104-76 28 38-56 40 62 57-32 35-106-94z" fill="url(#ribbon)" stroke-linejoin="round"/>
+  <path d="M334 208h50" fill="none" stroke="#FF6B81" stroke-width="16" stroke-linecap="round"/>
+  <path d="M334 256h34" fill="none" stroke="#43C6D9" stroke-width="16" stroke-linecap="round"/>
+  <path d="M334 304h58" fill="none" stroke="#F7C85E" stroke-width="16" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Kazari</title>
+  <!-- Favicon variant of kazari.svg. The K is drawn as three plain strokes
+       rather than the logo's folded ribbon, whose interior notch fills in at
+       16px. The tile is mid slate blue so the icon keeps its edges against
+       both light and dark browser chrome, and the arm gradient is lightened
+       from the logo's to stay legible against it. -->
+  <defs>
+    <linearGradient id="tile" x1="16" y1="16" x2="496" y2="496" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5B6BA8"/>
+      <stop offset="1" stop-color="#3E4A7A"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="170" y1="140" x2="360" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#43C6D9"/>
+      <stop offset="0.5" stop-color="#B3A4FF"/>
+      <stop offset="1" stop-color="#FF8FA3"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#tile)"/>
+  <g fill="none" stroke-width="56" stroke-linecap="round">
+    <path d="M168 140v232" stroke="#FFFFFF"/>
+    <path d="M186 256L344 146" stroke="url(#ribbon)"/>
+    <path d="M186 256L344 366" stroke="url(#ribbon)"/>
+  </g>
+</svg>

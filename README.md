@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="brand/irosashi-logo.svg" alt="Irosashi" width="160">
+  <img src="https://raw.githubusercontent.com/frostybee/irosashi/main/brand/irosashi-logo.svg" alt="Irosashi" width="160">
 </p>
 
 <h1 align="center">Irosashi</h1>
@@ -7,14 +7,14 @@
 <p align="center">
   <a href="https://crates.io/crates/irosashi"><img src="https://img.shields.io/crates/v/irosashi.svg" alt="crates.io"></a>
   <a href="https://docs.rs/irosashi"><img src="https://docs.rs/irosashi/badge.svg" alt="docs.rs"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://github.com/frostybee/irosashi/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
   <img src="https://img.shields.io/badge/Rust-%E2%89%A51.93-f74c00" alt="Rust Version">
 </p>
 
 <p align="center">
   <a href="https://docs.rs/irosashi">API reference</a> ·
-  <a href="FIDELITY.md">Fidelity report</a> ·
-  <a href="docs/perf/2026-09-14-bench.md">Benchmarks</a> ·
+  <a href="https://github.com/frostybee/irosashi/blob/main/FIDELITY.md">Fidelity report</a> ·
+  <a href="https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md">Benchmarks</a> ·
   <a href="https://github.com/frostybee/irosashi/releases">Releases</a>
 </p>
 
@@ -48,10 +48,10 @@ per call, for bug-for-bug compatibility with Shiki's tokenizer.
 234 of 234 tested grammars (100%) produce output byte-identical to Shiki, verified against
 [vscode-textmate](https://github.com/microsoft/vscode-textmate) across both `github-dark` and
 `github-light` (468 of 468 grammar/theme pairs). The Shiki HTML preset is byte-identical to
-Shiki 4.4.3 on generated goldens. See [FIDELITY.md](FIDELITY.md).
+Shiki 4.4.3 on generated goldens. See [FIDELITY.md](https://github.com/frostybee/irosashi/blob/main/FIDELITY.md).
 
 <p align="center">
-  <img src="example-output.svg" alt="Irosashi output example: Rust code highlighted with the github-dark theme" width="560">
+  <img src="https://raw.githubusercontent.com/frostybee/irosashi/main/example-output.svg" alt="Irosashi output example: Rust code highlighted with the github-dark theme" width="560">
 </p>
 
 <p align="center"><em>Rust code highlighted with <code>github-dark</code>, rendered as SVG by Irosashi (<code>cargo run -p irosashi --example svg</code>).</em></p>
@@ -61,7 +61,8 @@ The workspace has three crates:
 - `irosashi`: tokenizer, grammar compiler, theme resolution, token APIs, renderers (HTML, ANSI,
   SVG, JSON, plain text).
 - `kazari-rs`: presentation layer on top of `irosashi` (fence meta, transformers, line numbers,
-  markers, decorated HTML, Typst output, `kazari.config.yaml`).
+  markers, decorated HTML, Typst output, `kazari.config.yaml`). It has its own
+  [README](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/README.md).
 - `irosashi-fidelity`: fixture comparison and scoring against `vscode-textmate` output, plus
   the benchmarks.
 
@@ -406,7 +407,8 @@ let highlighter = HighlighterBuilder::from_dir("/path/to/assets").build()?;
 
 ## Kazari: the presentation layer
 
-`kazari-rs` turns tokens into the decorated code blocks a documentation site or a PDF wants:
+[`kazari-rs`](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/README.md) turns tokens into the decorated code blocks a
+documentation site or a PDF wants:
 fence meta parsing (`rust title="hello.rs" showLineNumbers {2-3} ins={5}`), line numbers,
 highlight/insert/delete/focus markers, inline markers, titles and frames, dual themes with a
 toggle, collapsible sections, output panels, toolbar buttons, a pulldown-cmark adapter with
@@ -443,7 +445,7 @@ to the same commit Nuri uses.
 **Themes include:** andromeeda, ayu-dark, catppuccin-mocha, dark-plus, dracula,
 everforest-dark, github-dark, github-light, min-dark, monokai, nord, one-dark-pro, rose-pine,
 slack-dark, solarized-dark, tokyo-night, vitesse-dark, and
-[48 more](crates/irosashi/assets/themes/).
+[48 more](https://github.com/frostybee/irosashi/tree/main/crates/irosashi/assets/themes).
 
 List available languages and themes at runtime:
 
@@ -457,7 +459,7 @@ println!("{:?}", highlighter.themes());
 Measured on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, `onig-regset` 6.7.0, theme
 `github-dark`, Criterion medians. Nuri and Shiki numbers are from Nuri's `tools/compare` on the
 same five snippets. Full data, the allocation audit and the cold-start breakdown are in
-[`docs/perf/`](docs/perf/2026-09-14-bench.md).
+[`docs/perf/`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
 
 Warm, small snippets (100 to 300 bytes):
 
@@ -610,7 +612,7 @@ cargo test -p irosashi-fidelity --release --test alloc_audit -- --ignored --noca
 cargo test -p irosashi-fidelity --release --test cold_start -- --ignored --nocapture
 ```
 
-Results are kept in [`docs/perf/`](docs/perf/).
+Results are kept in [`docs/perf/`](https://github.com/frostybee/irosashi/tree/main/docs/perf).
 
 ### Fuzz
 
@@ -663,7 +665,7 @@ override, CSS/JS minification with hashed asset names, a showcase generator, and
 
 Copyright (c) 2026 FrostyBee.
 
-Irosashi is licensed under the [MIT License](LICENSE). You are free to use, modify and
+Irosashi is licensed under the [MIT License](https://github.com/frostybee/irosashi/blob/main/LICENSE). You are free to use, modify and
 distribute it in both open-source and commercial projects.
 
 Irosashi embeds third-party components (Oniguruma through `onig-regset`, TextMate grammars, VS
@@ -672,4 +674,4 @@ Code themes) under their respective licences (BSD-2-Clause, MIT and others).
 ---
 
 API documentation: [docs.rs/irosashi](https://docs.rs/irosashi) · Fidelity report:
-[FIDELITY.md](FIDELITY.md) · Benchmarks: [docs/perf](docs/perf/2026-09-14-bench.md)
+[FIDELITY.md](https://github.com/frostybee/irosashi/blob/main/FIDELITY.md) · Benchmarks: [docs/perf](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md)

@@ -1,5 +1,9 @@
 my-docs/
 
+# Sarde docs build output and cache
+docs/dist/
+docs/.cache/
+
 # Full fidelity matrix (30 MB), synced locally from the Nuri checkout only
 crates/irosashi-fidelity/testdata/golden-all/
 

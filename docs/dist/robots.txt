@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://frostybee.github.io/irosashi/sitemap.xml

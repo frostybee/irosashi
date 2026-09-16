@@ -9,6 +9,8 @@ mod selector;
 mod tests_corpus;
 
 pub(crate) use backref::{resolve_backrefs, resolve_scope_backrefs};
-pub(crate) use compile::{CompiledRule, GrammarResolver, compile_patterns, compile_rule_list};
-pub(crate) use rules::{Captures, Grammar, ROOT_RULE_ID, Rule, RuleId};
+pub use compile::compile_patterns;
+pub(crate) use compile::{CompiledRule, GrammarResolver, compile_rule_list};
+pub(crate) use rules::{Captures, Rule, RuleId};
+pub use rules::{Grammar, ROOT_RULE_ID};
 pub(crate) use selector::{Priority, Selector};

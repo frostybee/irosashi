@@ -6,7 +6,8 @@
 use kazari_rs::Kazari;
 
 fn main() -> Result<(), kazari_rs::Error> {
-    let hl = irosashi::Highlighter::new().map_err(|e| kazari_rs::Error::Highlight(e.to_string()))?;
+    let hl =
+        irosashi::Highlighter::new().map_err(|e| kazari_rs::Error::Highlight(e.to_string()))?;
     let kz = Kazari::builder(hl)
         .themes("github-light", Some("github-dark"))
         .notation_comments(true)
@@ -88,7 +89,8 @@ fn main() -> Result<(), kazari_rs::Error> {
         ));
     }
 
-    let hl = irosashi::Highlighter::new().map_err(|e| kazari_rs::Error::Highlight(e.to_string()))?;
+    let hl =
+        irosashi::Highlighter::new().map_err(|e| kazari_rs::Error::Highlight(e.to_string()))?;
     let visible = Kazari::builder(hl)
         .themes("github-light", Some("github-dark"))
         .visible_whitespace(true)

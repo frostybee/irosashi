@@ -24,4 +24,7 @@ pub enum Error {
 
     #[error("grammar include depth exceeded")]
     GrammarDepth,
+
+    #[error("grammar rule count exceeds the arena limit")]
+    GrammarTooLarge,
 }

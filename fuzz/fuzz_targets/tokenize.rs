@@ -2,7 +2,7 @@
 
 use std::sync::{Arc, OnceLock};
 
-use irosashi::grammar::Grammar;
+use irosashi::fuzz_internals::Grammar;
 use irosashi::{Session, TokenizeOptions, split_lines};
 use libfuzzer_sys::fuzz_target;
 

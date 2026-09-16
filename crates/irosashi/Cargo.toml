@@ -5,6 +5,9 @@ description = "TextMate grammar syntax highlighting with VS Code themes, byte-id
 edition.workspace = true
 license.workspace = true
 repository.workspace = true
+readme = "../../README.md"
+keywords = ["syntax-highlighting", "textmate", "shiki", "vscode", "oniguruma"]
+categories = ["text-processing", "parsing", "development-tools"]
 
 [features]
 default = ["embedded-assets"]

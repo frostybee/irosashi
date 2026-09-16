@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Irosashi</title>
+  <!-- Favicon variant of irosashi-logo.svg. Reduced to four thick bars and the brush
+       stroke divider; the logo's 26 thin code lines, angle brackets, and fude
+       brush all turn to mush below 32px. -->
+  <defs>
+    <linearGradient id="irosashiTrail" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff7b72"/>
+      <stop offset="25%" stop-color="#ffa657"/>
+      <stop offset="50%" stop-color="#7ee787"/>
+      <stop offset="75%" stop-color="#79c0ff"/>
+      <stop offset="100%" stop-color="#d2a8ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="#2b1d14"/>
+
+  <!-- Unhighlighted source above the stroke -->
+  <g fill="#8b949e" opacity="0.45">
+    <rect x="104" y="120" width="228" height="44" rx="22"/>
+    <rect x="104" y="188" width="152" height="44" rx="22"/>
+  </g>
+
+  <!-- Brush stroke divider -->
+  <path d="M96 268 Q256 250 416 264" stroke="url(#irosashiTrail)" stroke-width="26"
+        fill="none" stroke-linecap="round"/>
+
+  <!-- Highlighted source below the stroke -->
+  <rect x="104" y="312" width="228" height="44" rx="22" fill="#7ee787"/>
+  <rect x="104" y="380" width="152" height="44" rx="22" fill="#79c0ff"/>
+</svg>

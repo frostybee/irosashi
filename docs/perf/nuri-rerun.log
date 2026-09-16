@@ -1,0 +1,33 @@
+BenchmarkCodeToTokens/Go-20 	     414	   5697242 ns/op	   0.02 MB/s	  220658 B/op	    1604 allocs/op
+BenchmarkCodeToTokens/JavaScript-20         	      60	  37731092 ns/op	   0.01 MB/s	  567901 B/op	    3082 allocs/op
+BenchmarkCodeToTokens/HTML-20               	     105	  21959118 ns/op	   0.01 MB/s	  447264 B/op	    2227 allocs/op
+BenchmarkCodeToTokens/TypeScript-20         	      92	  23994920 ns/op	   0.01 MB/s	 1674192 B/op	    2742 allocs/op
+BenchmarkCodeToTokens/Markdown-20           	     404	   5581806 ns/op	   0.02 MB/s	  256192 B/op	    1856 allocs/op
+BenchmarkCodeToTokens/go/Medium-20          	     146	  16058909 ns/op	   0.02 MB/s	  237516 B/op	    2205 allocs/op
+BenchmarkCodeToTokens/go/Large-20           	       1	2361057300 ns/op	   0.02 MB/s	 9229816 B/op	  152171 allocs/op
+BenchmarkCodeToTokens/javascript/Medium-20  	       6	 368508967 ns/op	   0.01 MB/s	21692325 B/op	   15052 allocs/op
+BenchmarkCodeToTokens/javascript/Large-20   	       1	3429037000 ns/op	   0.02 MB/s	15982328 B/op	  160108 allocs/op
+BenchmarkCodeToTokens/html/Medium-20        	     135	  17291336 ns/op	   0.10 MB/s	  490657 B/op	    5601 allocs/op
+BenchmarkCodeToTokens/html/Large-20         	       4	 535375200 ns/op	   0.10 MB/s	10992770 B/op	  162064 allocs/op
+BenchmarkCodeToTokens/typescript/Medium-20  	      12	 169567817 ns/op	   0.01 MB/s	 1171280 B/op	    8683 allocs/op
+BenchmarkCodeToTokens/typescript/Large-20   	       1	4115118700 ns/op	   0.01 MB/s	12753080 B/op	  146904 allocs/op
+BenchmarkCodeToTokens/markdown/Medium-20    	      63	  34722089 ns/op	   0.11 MB/s	  560986 B/op	    6246 allocs/op
+BenchmarkCodeToTokens/markdown/Large-20     	       5	 456690200 ns/op	   0.12 MB/s	 4188176 B/op	   64062 allocs/op
+BenchmarkCodeToHTML/Go-20                   	     417	   5652987 ns/op	   0.02 MB/s	  259188 B/op	    1973 allocs/op
+BenchmarkCodeToHTML/JavaScript-20           	      61	  37323600 ns/op	   0.01 MB/s	  662019 B/op	    3868 allocs/op
+BenchmarkCodeToHTML/HTML-20                 	     106	  21379705 ns/op	   0.01 MB/s	  520579 B/op	    2947 allocs/op
+BenchmarkCodeToHTML/TypeScript-20           	     103	  21401216 ns/op	   0.01 MB/s	 1610602 B/op	    3272 allocs/op
+BenchmarkCodeToHTML/Markdown-20             	     403	   5572698 ns/op	   0.02 MB/s	  291318 B/op	    2174 allocs/op
+BenchmarkCodeToHTML/go/Medium-20            	     150	  15718049 ns/op	   0.02 MB/s	  311741 B/op	    2856 allocs/op
+BenchmarkCodeToHTML/go/Large-20             	       1	2270342100 ns/op	   0.02 MB/s	20257320 B/op	  241046 allocs/op
+BenchmarkCodeToHTML/javascript/Medium-20    	       6	 364726133 ns/op	   0.01 MB/s	22412330 B/op	   20989 allocs/op
+BenchmarkCodeToHTML/javascript/Large-20     	       1	3397917000 ns/op	   0.02 MB/s	26066872 B/op	  236915 allocs/op
+BenchmarkCodeToHTML/html/Medium-20          	     134	  17533457 ns/op	   0.09 MB/s	  711781 B/op	    7531 allocs/op
+BenchmarkCodeToHTML/html/Large-20           	       4	 538652600 ns/op	   0.10 MB/s	18007694 B/op	  222793 allocs/op
+BenchmarkCodeToHTML/typescript/Medium-20    	      12	 168544783 ns/op	   0.01 MB/s	 1602776 B/op	   12136 allocs/op
+BenchmarkCodeToHTML/typescript/Large-20     	       1	3498436000 ns/op	   0.02 MB/s	22910040 B/op	  225475 allocs/op
+BenchmarkCodeToHTML/markdown/Medium-20      	      66	  34368374 ns/op	   0.11 MB/s	  840754 B/op	    8628 allocs/op
+BenchmarkCodeToHTML/markdown/Large-20       	       5	 457860240 ns/op	   0.12 MB/s	 8112848 B/op	   97045 allocs/op
+PASS
+ok  	github.com/frostybee/nuri/cmd/bench	73.954s
+NURI-DONE

@@ -4,7 +4,8 @@
 use kazari_rs::Kazari;
 
 fn main() -> Result<(), kazari_rs::Error> {
-    let hl = irosashi::Highlighter::new().map_err(|e| kazari_rs::Error::Highlight(e.to_string()))?;
+    let hl =
+        irosashi::Highlighter::new().map_err(|e| kazari_rs::Error::Highlight(e.to_string()))?;
     let kz = Kazari::builder(hl)
         .themes("github-light", None)
         .notation_comments(true)

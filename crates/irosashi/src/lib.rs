@@ -58,3 +58,9 @@ pub use token::{
 pub use tokenizer::{
     ANSI_STANDARD_COLORS, Session, SessionStats, StateStack, TokenizeOptions, split_lines,
 };
+
+/// Unstable internals for the fuzz targets. Not part of the public API.
+#[doc(hidden)]
+pub mod fuzz_internals {
+    pub use crate::grammar::{Grammar, ROOT_RULE_ID, compile_patterns};
+}

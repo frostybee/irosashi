@@ -1,0 +1,156 @@
+warm/tokens/go/small    time:   [257.15 µs 257.76 µs 258.47 µs]
+                 change:
+                        time:   [−1.3253% −0.8372% −0.3258%] (p = 0.00 < 0.05)
+warm/tokens/go/medium   time:   [498.18 µs 499.52 µs 500.96 µs]
+                 change:
+                        time:   [−0.5201% −0.1389% +0.2431%] (p = 0.46 > 0.05)
+warm/tokens/go/large    time:   [76.418 ms 76.813 ms 77.276 ms]
+                 change:
+                        time:   [−6.2320% −3.1157% −0.5137%] (p = 0.03 < 0.05)
+warm/tokens/javascript/small
+                        time:   [2.2924 ms 2.2965 ms 2.3009 ms]
+                 change:
+                        time:   [+7.7829% +8.0586% +8.3534%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+warm/tokens/javascript/medium
+                        time:   [14.358 ms 14.389 ms 14.421 ms]
+                 change:
+                        time:   [−9.1571% −8.8303% −8.5055%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens/javascript/large
+                        time:   [186.81 ms 187.06 ms 187.33 ms]
+                 change:
+                        time:   [−8.8955% −8.6552% −8.4391%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens/html/small  time:   [293.02 µs 294.42 µs 295.88 µs]
+                 change:
+                        time:   [−8.0182% −6.0773% −4.9128%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens/html/medium time:   [703.42 µs 706.10 µs 708.84 µs]
+                 change:
+                        time:   [−6.3446% −6.0853% −5.8316%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens/html/large  time:   [23.220 ms 23.251 ms 23.285 ms]
+                 change:
+                        time:   [−5.1140% −4.6919% −4.3158%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens/typescript/small
+                        time:   [808.24 µs 810.17 µs 812.34 µs]
+                 change:
+                        time:   [−3.2202% −2.9764% −2.7230%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens/typescript/medium
+                        time:   [7.2956 ms 7.3268 ms 7.3657 ms]
+                 change:
+                        time:   [−1.0487% −0.6130% −0.0143%] (p = 0.01 < 0.05)
+warm/tokens/typescript/large
+                        time:   [177.46 ms 182.47 ms 188.82 ms]
+                 change:
+                        time:   [−2.7425% +0.9057% +5.4095%] (p = 0.67 > 0.05)
+warm/tokens/markdown/small
+                        time:   [267.55 µs 275.58 µs 286.06 µs]
+                 change:
+                        time:   [+1.5334% +4.9801% +9.4165%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+warm/tokens/markdown/medium
+                        time:   [2.3865 ms 2.3891 ms 2.3923 ms]
+                 change:
+                        time:   [−1.5112% −1.3369% −1.1526%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens/markdown/large
+                        time:   [33.392 ms 33.491 ms 33.598 ms]
+                 change:
+                        time:   [−1.1822% −0.7954% −0.3499%] (p = 0.00 < 0.05)
+warm/tokens_multi/go/small
+                        time:   [258.93 µs 259.64 µs 260.39 µs]
+                 change:
+                        time:   [−2.2016% −1.6927% −1.2082%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens_multi/javascript/small
+                        time:   [2.2694 ms 2.2752 ms 2.2827 ms]
+                 change:
+                        time:   [−0.2051% +0.0998% +0.4794%] (p = 0.57 > 0.05)
+warm/tokens_multi/html/small
+                        time:   [303.15 µs 304.55 µs 306.09 µs]
+                 change:
+                        time:   [−4.4376% −4.0283% −3.6484%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokens_multi/typescript/small
+                        time:   [833.22 µs 835.81 µs 838.83 µs]
+                 change:
+                        time:   [+1.6527% +2.0446% +2.4358%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+warm/tokens_multi/markdown/small
+                        time:   [264.79 µs 265.30 µs 265.88 µs]
+                 change:
+                        time:   [−1.9591% −1.6183% −1.2726%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/html/iro/go        time:   [313.31 µs 313.87 µs 314.46 µs]
+                 change:
+                        time:   [−2.7140% −2.4119% −2.0872%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/html/shiki/go      time:   [309.79 µs 310.42 µs 311.16 µs]
+                 change:
+                        time:   [−0.9793% −0.5249% −0.0439%] (p = 0.03 < 0.05)
+warm/html/iro/javascript
+                        time:   [2.4005 ms 2.4068 ms 2.4131 ms]
+                 change:
+                        time:   [−10.117% −6.7102% −3.6594%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/html/shiki/javascript
+                        time:   [2.4074 ms 2.4112 ms 2.4152 ms]
+                 change:
+                        time:   [+0.1998% +0.4085% +0.6362%] (p = 0.00 < 0.05)
+warm/html/iro/html      time:   [382.21 µs 382.79 µs 383.44 µs]
+                 change:
+                        time:   [−5.2661% −4.9780% −4.6995%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/html/shiki/html    time:   [396.92 µs 397.88 µs 398.89 µs]
+                 change:
+                        time:   [−4.2766% −3.9669% −3.6108%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/html/iro/typescript
+                        time:   [901.02 µs 903.31 µs 906.15 µs]
+                 change:
+                        time:   [+0.2351% +0.5972% +0.9555%] (p = 0.00 < 0.05)
+warm/html/shiki/typescript
+                        time:   [901.22 µs 903.29 µs 905.85 µs]
+                 change:
+                        time:   [−0.4298% +0.0050% +0.4331%] (p = 0.98 > 0.05)
+warm/html/iro/markdown  time:   [312.37 µs 319.87 µs 329.90 µs]
+                 change:
+                        time:   [+2.5986% +5.7180% +10.092%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+warm/html/shiki/markdown
+                        time:   [312.05 µs 312.87 µs 313.70 µs]
+                 change:
+                        time:   [+1.0899% +1.4601% +1.8207%] (p = 0.00 < 0.05)
+                        Performance has regressed.
+warm/html/shiki_dual/typescript
+                        time:   [960.30 µs 961.46 µs 962.77 µs]
+                 change:
+                        time:   [+0.8966% +1.1750% +1.4427%] (p = 0.00 < 0.05)
+warm/tokenize_line/go/medium
+                        time:   [479.81 µs 481.16 µs 482.64 µs]
+                 change:
+                        time:   [−1.7163% −1.2700% −0.8473%] (p = 0.00 < 0.05)
+warm/tokenize_line/javascript/medium
+                        time:   [14.792 ms 14.832 ms 14.877 ms]
+                 change:
+                        time:   [−8.6576% −8.3582% −8.0431%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokenize_line/html/medium
+                        time:   [681.31 µs 688.50 µs 698.21 µs]
+                 change:
+                        time:   [−1.2617% +3.3505% +9.1743%] (p = 0.19 > 0.05)
+warm/tokenize_line/typescript/medium
+                        time:   [7.3436 ms 7.3525 ms 7.3639 ms]
+                 change:
+                        time:   [−3.3238% −2.7644% −2.2816%] (p = 0.00 < 0.05)
+                        Performance has improved.
+warm/tokenize_line/markdown/medium
+                        time:   [2.3386 ms 2.3412 ms 2.3441 ms]
+                 change:
+                        time:   [−2.3997% −2.1126% −1.8486%] (p = 0.00 < 0.05)
+                        Performance has improved.
+BENCH-DONE

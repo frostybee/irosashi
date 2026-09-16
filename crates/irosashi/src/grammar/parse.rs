@@ -25,6 +25,7 @@ impl Grammar {
             rules: Vec::new(),
             enclosing: Vec::new(),
             repo_stack: Vec::new(),
+            too_large: false,
         };
         let root = parser.reserve();
         let patterns = parser.parse_list(&raw.patterns);
@@ -46,6 +47,9 @@ impl Grammar {
                 })
             })
             .collect();
+        if parser.too_large {
+            return Err(Error::GrammarTooLarge);
+        }
 
         Ok(Grammar {
             scope_name,
@@ -64,14 +68,20 @@ struct Parser {
     rules: Vec<Rule>,
     enclosing: Vec<Option<RuleId>>,
     repo_stack: Vec<RuleId>,
+    too_large: bool,
 }
 
 impl Parser {
     fn reserve(&mut self) -> RuleId {
-        let id = RuleId(u32::try_from(self.rules.len()).expect("rule arena fits in u32"));
+        let Ok(index) = u32::try_from(self.rules.len()) else {
+            // Past the arena limit: keep handing out the last slot so parsing can
+            // finish, and let `parse` report the error.
+            self.too_large = true;
+            return RuleId(u32::MAX);
+        };
         self.rules.push(Rule::Noop);
         self.enclosing.push(self.repo_stack.last().copied());
-        id
+        RuleId(index)
     }
 
     fn parse_list(&mut self, raws: &[RawRule]) -> Vec<RuleId> {

@@ -258,10 +258,13 @@ fn check_while_conditions(
     }
     for idx in stack.while_frame_indices() {
         let frame = &stack.frame(idx).frame;
-        let pattern = frame
-            .while_pattern
-            .clone()
-            .expect("while frames carry a pattern");
+        debug_assert!(
+            frame.while_pattern.is_some(),
+            "while frames carry a pattern"
+        );
+        let Some(pattern) = frame.while_pattern.clone() else {
+            continue;
+        };
         let rule = frame.rule.clone();
         let scopes = frame.scopes_after_content;
         let options =

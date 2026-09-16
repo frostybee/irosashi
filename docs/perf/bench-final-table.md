@@ -1,0 +1,44 @@
+| bench | median ms | mean ms | MB/s |
+|---|---:|---:|---:|
+| cold/first_tokens/go | 8.794 | 8.798 | 0.01 |
+| cold/first_tokens/html | 29.518 | 29.529 | 0.01 |
+| cold/first_tokens/javascript | 57.875 | 57.950 | 0.01 |
+| cold/first_tokens/markdown | 24.415 | 24.463 | 0.01 |
+| cold/first_tokens/typescript | 67.300 | 67.250 | 0.00 |
+| cold/highlighter_new | 1.446 | 1.449 |  |
+| warm/html/iro/go | 0.309 | 0.310 | 0.36 |
+| warm/html/iro/html | 0.390 | 0.390 | 0.74 |
+| warm/html/iro/javascript | 2.352 | 2.473 | 0.13 |
+| warm/html/iro/markdown | 0.304 | 0.305 | 0.42 |
+| warm/html/iro/typescript | 0.891 | 0.895 | 0.22 |
+| warm/html/shiki/go | 0.305 | 0.304 | 0.37 |
+| warm/html/shiki/html | 0.405 | 0.406 | 0.72 |
+| warm/html/shiki/javascript | 2.325 | 2.330 | 0.13 |
+| warm/html/shiki/markdown | 0.306 | 0.307 | 0.42 |
+| warm/html/shiki/typescript | 0.891 | 0.890 | 0.22 |
+| warm/html/shiki_dual/typescript | 0.944 | 0.945 | 0.21 |
+| warm/tokenize_line/go/medium | 0.479 | 0.478 | 0.66 |
+| warm/tokenize_line/html/medium | 0.672 | 0.673 | 2.27 |
+| warm/tokenize_line/javascript/medium | 14.387 | 14.434 | 0.26 |
+| warm/tokenize_line/markdown/medium | 2.367 | 2.355 | 1.50 |
+| warm/tokenize_line/typescript/medium | 7.437 | 7.452 | 0.28 |
+| warm/tokens/go/large | 73.695 | 73.799 | 0.66 |
+| warm/tokens/go/medium | 0.487 | 0.488 | 0.64 |
+| warm/tokens/go/small | 0.252 | 0.252 | 0.44 |
+| warm/tokens/html/large | 23.040 | 23.177 | 2.18 |
+| warm/tokens/html/medium | 0.696 | 0.712 | 2.19 |
+| warm/tokens/html/small | 0.295 | 0.387 | 0.98 |
+| warm/tokens/javascript/large | 187.538 | 187.803 | 0.26 |
+| warm/tokens/javascript/medium | 14.287 | 14.349 | 0.26 |
+| warm/tokens/javascript/small | 2.089 | 2.096 | 0.14 |
+| warm/tokens/markdown/large | 33.106 | 33.174 | 1.50 |
+| warm/tokens/markdown/medium | 2.361 | 2.361 | 1.50 |
+| warm/tokens/markdown/small | 0.257 | 0.257 | 0.50 |
+| warm/tokens/typescript/large | 176.834 | 177.337 | 0.29 |
+| warm/tokens/typescript/medium | 7.325 | 7.339 | 0.29 |
+| warm/tokens/typescript/small | 0.823 | 0.823 | 0.24 |
+| warm/tokens_multi/go/small | 0.259 | 0.260 | 0.43 |
+| warm/tokens_multi/html/small | 0.302 | 0.315 | 0.96 |
+| warm/tokens_multi/javascript/small | 2.234 | 2.239 | 0.13 |
+| warm/tokens_multi/markdown/small | 0.314 | 0.314 | 0.41 |
+| warm/tokens_multi/typescript/small | 0.818 | 0.820 | 0.24 |

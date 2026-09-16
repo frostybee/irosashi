@@ -3,16 +3,18 @@ name = "kazari-rs"
 version = "0.1.0"
 description = "Presentation layer for irosashi: fence meta, transformers, decorated HTML and Typst output"
 edition.workspace = true
-publish = false
 license.workspace = true
 repository.workspace = true
+readme = "../../README.md"
+keywords = ["syntax-highlighting", "code-blocks", "html", "typst", "markdown"]
+categories = ["text-processing", "web-programming"]
 
 [features]
 markdown = ["dep:pulldown-cmark"]
 
 [dependencies]
 bitflags.workspace = true
-irosashi = { path = "../irosashi" }
+irosashi = { version = "0.1", path = "../irosashi" }
 pulldown-cmark = { version = "0.13", optional = true, default-features = false, features = ["html"] }
 regex = "1"
 serde.workspace = true

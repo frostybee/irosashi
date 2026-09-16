@@ -1,0 +1,260 @@
+   Compiling iro-fidelity v0.1.0 (D:\dev\my-repos\iro\crates\iro-fidelity)
+    Finished `bench` profile [optimized + debuginfo] target(s) in 3.16s
+     Running benches\highlight\main.rs (target\release\deps\highlight-971c5ea21f139e6a.exe)
+| allocs (warm, small) | bytes in | allocs | KB |
+|---|---:|---:|---:|
+| tokens/go | 117 | 160 | 20.6 |
+| tokens/javascript | 309 | 483 | 116.9 |
+| tokens/html | 304 | 384 | 42.4 |
+| tokens/typescript | 203 | 288 | 36.8 |
+| tokens/markdown | 135 | 209 | 20.8 |
+Benchmarking cold/highlighter_new
+cold/highlighter_new    time:   [1.4473 ms 1.4557 ms 1.4632 ms]
+Benchmarking cold/first_tokens/go
+cold/first_tokens/go    time:   [9.0143 ms 9.1677 ms 9.4952 ms]
+                        thrpt:  [12.033 KiB/s 12.463 KiB/s 12.675 KiB/s]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high mild
+Benchmarking cold/first_tokens/javascript
+cold/first_tokens/javascript
+                        time:   [58.021 ms 58.164 ms 58.331 ms]
+                        thrpt:  [5.1732 KiB/s 5.1880 KiB/s 5.2009 KiB/s]
+Benchmarking cold/first_tokens/html
+cold/first_tokens/html  time:   [29.959 ms 30.247 ms 30.834 ms]
+                        thrpt:  [9.6282 KiB/s 9.8149 KiB/s 9.9093 KiB/s]
+Benchmarking cold/first_tokens/typescript
+cold/first_tokens/typescript
+                        time:   [66.962 ms 67.822 ms 70.119 ms]
+                        thrpt:  [2.8272 KiB/s 2.9230 KiB/s 2.9605 KiB/s]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+Benchmarking cold/first_tokens/markdown
+cold/first_tokens/markdown
+                        time:   [24.392 ms 24.440 ms 24.486 ms]
+                        thrpt:  [5.3841 KiB/s 5.3943 KiB/s 5.4048 KiB/s]
+Found 1 outliers among 10 measurements (10.00%)
+  1 (10.00%) high severe
+Benchmarking warm/tokens/go/small
+warm/tokens/go/small    time:   [262.61 µs 263.75 µs 264.94 µs]
+                        thrpt:  [431.26 KiB/s 433.20 KiB/s 435.08 KiB/s]
+Benchmarking warm/tokens/go/medium
+warm/tokens/go/medium   time:   [499.40 µs 500.83 µs 502.49 µs]
+                        thrpt:  [639.39 KiB/s 641.51 KiB/s 643.35 KiB/s]
+Found 8 outliers among 100 measurements (8.00%)
+  3 (3.00%) high mild
+  5 (5.00%) high severe
+Benchmarking warm/tokens/go/large
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 7.7s, or reduce sample count to 60.
+warm/tokens/go/large    time:   [77.235 ms 79.283 ms 81.869 ms]
+                        thrpt:  [612.21 KiB/s 632.18 KiB/s 648.94 KiB/s]
+Found 8 outliers among 100 measurements (8.00%)
+  2 (2.00%) high mild
+  6 (6.00%) high severe
+Benchmarking warm/tokens/javascript/small
+warm/tokens/javascript/small
+                        time:   [2.1214 ms 2.1253 ms 2.1293 ms]
+                        thrpt:  [141.72 KiB/s 141.99 KiB/s 142.25 KiB/s]
+Found 3 outliers among 100 measurements (3.00%)
+  3 (3.00%) high mild
+Benchmarking warm/tokens/javascript/medium
+warm/tokens/javascript/medium
+                        time:   [15.742 ms 15.783 ms 15.828 ms]
+                        thrpt:  [243.45 KiB/s 244.16 KiB/s 244.79 KiB/s]
+Found 7 outliers among 100 measurements (7.00%)
+  4 (4.00%) high mild
+  3 (3.00%) high severe
+Benchmarking warm/tokens/javascript/large
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 20.4s, or reduce sample count to 20.
+warm/tokens/javascript/large
+                        time:   [204.38 ms 204.79 ms 205.24 ms]
+                        thrpt:  [244.08 KiB/s 244.62 KiB/s 245.11 KiB/s]
+Found 13 outliers among 100 measurements (13.00%)
+  1 (1.00%) low mild
+  8 (8.00%) high mild
+  4 (4.00%) high severe
+Benchmarking warm/tokens/html/small
+warm/tokens/html/small  time:   [309.66 µs 319.19 µs 338.39 µs]
+                        thrpt:  [877.31 KiB/s 930.09 KiB/s 958.71 KiB/s]
+Found 6 outliers among 100 measurements (6.00%)
+  2 (2.00%) high mild
+  4 (4.00%) high severe
+Benchmarking warm/tokens/html/medium
+warm/tokens/html/medium time:   [747.95 µs 748.76 µs 749.64 µs]
+                        thrpt:  [2.0304 MiB/s 2.0328 MiB/s 2.0350 MiB/s]
+Found 4 outliers among 100 measurements (4.00%)
+  1 (1.00%) high mild
+  3 (3.00%) high severe
+Benchmarking warm/tokens/html/large
+warm/tokens/html/large  time:   [24.305 ms 24.395 ms 24.500 ms]
+                        thrpt:  [2.0502 MiB/s 2.0589 MiB/s 2.0666 MiB/s]
+Found 7 outliers among 100 measurements (7.00%)
+  6 (6.00%) high mild
+  1 (1.00%) high severe
+Benchmarking warm/tokens/typescript/small
+warm/tokens/typescript/small
+                        time:   [833.09 µs 834.73 µs 836.47 µs]
+                        thrpt:  [237.00 KiB/s 237.49 KiB/s 237.96 KiB/s]
+Found 6 outliers among 100 measurements (6.00%)
+  5 (5.00%) high mild
+  1 (1.00%) high severe
+Benchmarking warm/tokens/typescript/medium
+warm/tokens/typescript/medium
+                        time:   [7.3596 ms 7.3720 ms 7.3847 ms]
+                        thrpt:  [291.59 KiB/s 292.09 KiB/s 292.59 KiB/s]
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+Benchmarking warm/tokens/typescript/large
+Warning: Unable to complete 100 samples in 5.0s. You may wish to increase target time to 21.5s, or reduce sample count to 20.
+warm/tokens/typescript/large
+                        time:   [177.87 ms 180.84 ms 185.47 ms]
+                        thrpt:  [278.64 KiB/s 285.78 KiB/s 290.55 KiB/s]
+Found 10 outliers among 100 measurements (10.00%)
+  6 (6.00%) high mild
+  4 (4.00%) high severe
+Benchmarking warm/tokens/markdown/small
+warm/tokens/markdown/small
+                        time:   [262.52 µs 263.86 µs 265.28 µs]
+                        thrpt:  [496.96 KiB/s 499.64 KiB/s 502.19 KiB/s]
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+Benchmarking warm/tokens/markdown/medium
+warm/tokens/markdown/medium
+                        time:   [2.4183 ms 2.4215 ms 2.4250 ms]
+                        thrpt:  [1.4649 MiB/s 1.4671 MiB/s 1.4690 MiB/s]
+Found 10 outliers among 100 measurements (10.00%)
+  7 (7.00%) high mild
+  3 (3.00%) high severe
+Benchmarking warm/tokens/markdown/large
+warm/tokens/markdown/large
+                        time:   [33.659 ms 33.760 ms 33.862 ms]
+                        thrpt:  [1.4687 MiB/s 1.4732 MiB/s 1.4776 MiB/s]
+Benchmarking warm/tokens_multi/go/small
+warm/tokens_multi/go/small
+                        time:   [265.92 µs 266.89 µs 267.97 µs]
+                        thrpt:  [426.38 KiB/s 428.10 KiB/s 429.67 KiB/s]
+Benchmarking warm/tokens_multi/javascript/small
+warm/tokens_multi/javascript/small
+                        time:   [2.2697 ms 2.2729 ms 2.2763 ms]
+                        thrpt:  [132.56 KiB/s 132.76 KiB/s 132.95 KiB/s]
+Found 9 outliers among 100 measurements (9.00%)
+  8 (8.00%) high mild
+  1 (1.00%) high severe
+Benchmarking warm/tokens_multi/html/small
+warm/tokens_multi/html/small
+                        time:   [314.20 µs 314.84 µs 315.50 µs]
+                        thrpt:  [940.96 KiB/s 942.94 KiB/s 944.86 KiB/s]
+Found 3 outliers among 100 measurements (3.00%)
+  2 (2.00%) high mild
+  1 (1.00%) high severe
+Benchmarking warm/tokens_multi/typescript/small
+warm/tokens_multi/typescript/small
+                        time:   [823.72 µs 825.34 µs 827.37 µs]
+                        thrpt:  [239.61 KiB/s 240.19 KiB/s 240.67 KiB/s]
+Found 5 outliers among 100 measurements (5.00%)
+  1 (1.00%) high mild
+  4 (4.00%) high severe
+Benchmarking warm/tokens_multi/markdown/small
+warm/tokens_multi/markdown/small
+                        time:   [269.12 µs 269.95 µs 270.79 µs]
+                        thrpt:  [486.86 KiB/s 488.37 KiB/s 489.88 KiB/s]
+Benchmarking warm/html/iro/go
+warm/html/iro/go        time:   [318.12 µs 318.93 µs 319.85 µs]
+                        thrpt:  [357.22 KiB/s 358.26 KiB/s 359.17 KiB/s]
+Benchmarking warm/html/shiki/go
+warm/html/shiki/go      time:   [312.81 µs 314.09 µs 315.47 µs]
+                        thrpt:  [362.19 KiB/s 363.77 KiB/s 365.26 KiB/s]
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+Benchmarking warm/html/iro/javascript
+warm/html/iro/javascript
+                        time:   [2.4984 ms 2.5800 ms 2.6785 ms]
+                        thrpt:  [112.66 KiB/s 116.96 KiB/s 120.78 KiB/s]
+Found 11 outliers among 100 measurements (11.00%)
+  2 (2.00%) high mild
+  9 (9.00%) high severe
+Benchmarking warm/html/shiki/javascript
+warm/html/shiki/javascript
+                        time:   [2.3981 ms 2.4014 ms 2.4050 ms]
+                        thrpt:  [125.47 KiB/s 125.66 KiB/s 125.83 KiB/s]
+Found 4 outliers among 100 measurements (4.00%)
+  3 (3.00%) high mild
+  1 (1.00%) high severe
+Benchmarking warm/html/iro/html
+warm/html/iro/html      time:   [402.76 µs 404.12 µs 405.48 µs]
+                        thrpt:  [732.16 KiB/s 734.62 KiB/s 737.10 KiB/s]
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+Benchmarking warm/html/shiki/html
+warm/html/shiki/html    time:   [415.13 µs 415.60 µs 416.11 µs]
+                        thrpt:  [713.46 KiB/s 714.33 KiB/s 715.13 KiB/s]
+Found 5 outliers among 100 measurements (5.00%)
+  5 (5.00%) high mild
+Benchmarking warm/html/iro/typescript
+warm/html/iro/typescript
+                        time:   [898.90 µs 902.19 µs 905.92 µs]
+                        thrpt:  [218.83 KiB/s 219.74 KiB/s 220.54 KiB/s]
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+Benchmarking warm/html/shiki/typescript
+warm/html/shiki/typescript
+                        time:   [902.89 µs 906.46 µs 910.18 µs]
+                        thrpt:  [217.80 KiB/s 218.70 KiB/s 219.56 KiB/s]
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+Benchmarking warm/html/iro/markdown
+warm/html/iro/markdown  time:   [307.37 µs 307.76 µs 308.19 µs]
+                        thrpt:  [427.78 KiB/s 428.37 KiB/s 428.91 KiB/s]
+Found 7 outliers among 100 measurements (7.00%)
+  4 (4.00%) high mild
+  3 (3.00%) high severe
+Benchmarking warm/html/shiki/markdown
+warm/html/shiki/markdown
+                        time:   [308.59 µs 309.12 µs 309.71 µs]
+                        thrpt:  [425.67 KiB/s 426.49 KiB/s 427.21 KiB/s]
+Found 5 outliers among 100 measurements (5.00%)
+  1 (1.00%) high mild
+  4 (4.00%) high severe
+Benchmarking warm/html/shiki_dual/typescript
+warm/html/shiki_dual/typescript
+                        time:   [949.50 µs 951.95 µs 954.66 µs]
+                        thrpt:  [207.66 KiB/s 208.25 KiB/s 208.79 KiB/s]
+Found 3 outliers among 100 measurements (3.00%)
+  3 (3.00%) high mild
+Benchmarking warm/tokenize_line/go/medium
+warm/tokenize_line/go/medium
+                        time:   [486.41 µs 487.94 µs 489.57 µs]
+                        thrpt:  [656.27 KiB/s 658.47 KiB/s 660.54 KiB/s]
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+Benchmarking warm/tokenize_line/javascript/medium
+warm/tokenize_line/javascript/medium
+                        time:   [16.153 ms 16.185 ms 16.216 ms]
+                        thrpt:  [237.63 KiB/s 238.10 KiB/s 238.56 KiB/s]
+Found 8 outliers among 100 measurements (8.00%)
+  3 (3.00%) low mild
+  3 (3.00%) high mild
+  2 (2.00%) high severe
+Benchmarking warm/tokenize_line/html/medium
+warm/tokenize_line/html/medium
+                        time:   [711.89 µs 712.65 µs 713.49 µs]
+                        thrpt:  [2.1333 MiB/s 2.1358 MiB/s 2.1381 MiB/s]
+Found 8 outliers among 100 measurements (8.00%)
+  4 (4.00%) high mild
+  4 (4.00%) high severe
+Benchmarking warm/tokenize_line/typescript/medium
+warm/tokenize_line/typescript/medium
+                        time:   [7.5266 ms 7.5615 ms 7.6043 ms]
+                        thrpt:  [283.17 KiB/s 284.77 KiB/s 286.09 KiB/s]
+Found 12 outliers among 100 measurements (12.00%)
+  6 (6.00%) low mild
+  4 (4.00%) high mild
+  2 (2.00%) high severe
+Benchmarking warm/tokenize_line/markdown/medium
+warm/tokenize_line/markdown/medium
+                        time:   [2.3861 ms 2.3917 ms 2.3982 ms]
+                        thrpt:  [1.4813 MiB/s 1.4853 MiB/s 1.4888 MiB/s]
+Found 10 outliers among 100 measurements (10.00%)
+  3 (3.00%) low mild
+  5 (5.00%) high mild
+  2 (2.00%) high severe
+BENCH-DONE

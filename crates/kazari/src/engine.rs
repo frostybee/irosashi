@@ -54,6 +54,9 @@ impl Kazari {
 
     pub fn render_with_meta(&self, code: &str, meta_str: &str) -> Result<String, Error> {
         let mut resolved = self.resolve_meta(meta_str);
+        if self.is_mermaid(&resolved) {
+            return Ok(render_mermaid_block(code));
+        }
         let tokens = self.prepare_and_tokenize(code, &mut resolved, false)?;
         Ok(render::render_block(
             &tokens,
@@ -65,6 +68,9 @@ impl Kazari {
 
     pub fn render(&self, code: &str, options: &Options) -> Result<String, Error> {
         let mut resolved = self.resolve_options(options);
+        if self.is_mermaid(&resolved) {
+            return Ok(render_mermaid_block(code));
+        }
         let tokens = self.prepare_and_tokenize(code, &mut resolved, false)?;
         Ok(render::render_block(
             &tokens,
@@ -87,6 +93,10 @@ impl Kazari {
         let mut resolved = self.resolve_options(options);
         let tokens = self.prepare_and_tokenize(code, &mut resolved, true)?;
         Ok(render_typst::render_block(&tokens, &resolved))
+    }
+
+    fn is_mermaid(&self, resolved: &ResolvedBlock) -> bool {
+        self.config.mermaid_pass_through && resolved.lang == "mermaid"
     }
 
     fn resolve_meta(&self, meta_str: &str) -> ResolvedBlock {
@@ -283,6 +293,13 @@ impl Kazari {
     }
 }
 
+fn render_mermaid_block(code: &str) -> String {
+    format!(
+        "<pre class=\"mermaid\">{}</pre>\n",
+        crate::escape::escape_text(code)
+    )
+}
+
 pub struct KazariBuilder {
     highlighter: iro::Highlighter,
     config: Config,
@@ -337,6 +354,18 @@ impl KazariBuilder {
 
     pub fn inline_links(mut self, enabled: bool) -> Self {
         self.config.inline_links = enabled;
+        self
+    }
+
+    /// Ships the tab bar assets for `:::code-group` containers and lets the markdown
+    /// adapter parse them.
+    pub fn code_groups(mut self, enabled: bool) -> Self {
+        self.config.code_groups = enabled;
+        self
+    }
+
+    pub fn mermaid_pass_through(mut self, enabled: bool) -> Self {
+        self.config.mermaid_pass_through = enabled;
         self
     }
 

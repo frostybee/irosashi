@@ -1,0 +1,56 @@
+/* Code group container */
+.kazari-block.kz-group {
+  border: var(--kz-group-border-width) solid var(--kz-group-border);
+  border-radius: var(--kz-group-radius);
+  overflow: hidden;
+}
+
+/* Tab bar */
+.kazari-block .kz-group-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--kz-group-border);
+  background: var(--kz-editor-bg);
+  overflow-x: auto;
+}
+
+.kazari-block .kz-group-tabs button[role="tab"] {
+  padding: var(--kz-group-tab-padding);
+  background: var(--kz-group-tab-bg);
+  color: var(--kz-group-tab-fg);
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: var(--kz-ui-font-family);
+  font-size: var(--kz-ui-font-size);
+  font-weight: var(--kz-ui-font-weight);
+  line-height: var(--kz-ui-line-height);
+  white-space: nowrap;
+  transition: color var(--kz-transition), background var(--kz-transition), border-color var(--kz-transition);
+}
+
+.kazari-block .kz-group-tabs button[role="tab"]:hover {
+  background: var(--kz-group-tab-active-bg);
+}
+
+.kazari-block .kz-group-tabs button[role="tab"][aria-selected="true"] {
+  background: var(--kz-group-tab-active-bg);
+  color: var(--kz-group-tab-active-fg);
+  border-bottom-color: var(--kz-group-tab-active-border);
+}
+
+/* Panels */
+.kazari-block .kz-group-panels [role="tabpanel"][hidden] {
+  display: none;
+}
+
+/* Neutralize inner kazari-block wrapper inside group panels */
+.kazari-block .kz-group-panels .kazari-block {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Remove figure border-radius and shadow inside group */
+.kazari-block .kz-group-panels .frame {
+  border-radius: 0;
+  box-shadow: none;
+}

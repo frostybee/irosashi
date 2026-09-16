@@ -7,8 +7,12 @@ publish = false
 license.workspace = true
 repository.workspace = true
 
+[features]
+markdown = ["dep:pulldown-cmark"]
+
 [dependencies]
 iro = { path = "../iro" }
+pulldown-cmark = { version = "0.13", optional = true, default-features = false, features = ["html"] }
 regex = "1"
 serde.workspace = true
 serde_yaml_ng = "0.10"
@@ -17,3 +21,7 @@ thiserror.workspace = true
 [dev-dependencies]
 insta = "1"
 iro = { path = "../iro" }
+
+[[example]]
+name = "demo_markdown"
+required-features = ["markdown"]

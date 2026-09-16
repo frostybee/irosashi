@@ -10,6 +10,8 @@ pub(crate) mod frame;
 pub(crate) mod js;
 pub(crate) mod link;
 pub(crate) mod locale;
+#[cfg(feature = "markdown")]
+pub mod markdown;
 pub(crate) mod marker;
 pub(crate) mod meta;
 pub(crate) mod notation;

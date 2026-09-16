@@ -272,6 +272,13 @@ fn block_overridable_vars(tc: &ThemeInfo, cfg: &Config) -> Vec<Var> {
                 nv("--kz-scrollbar-thumb-hover", "rgba(0, 0, 0, 0.35)"),
             ]);
         }
+        if cfg.code_groups {
+            vars.extend([
+                nv("--kz-group-tab-active-bg", "rgba(255,255,255,0.8)"),
+                nv("--kz-group-tab-active-fg", "#24292f"),
+                nv("--kz-group-border", "rgba(0,0,0,0.1)"),
+            ]);
+        }
     } else {
         if tc.line_number_fg.is_empty() {
             vars.push(nv("--kz-ln-fg", "#6e7681"));
@@ -302,6 +309,13 @@ fn block_overridable_vars(tc: &ThemeInfo, cfg: &Config) -> Vec<Var> {
             vars.extend([
                 nv("--kz-scrollbar-thumb", "rgba(255, 255, 255, 0.15)"),
                 nv("--kz-scrollbar-thumb-hover", "rgba(255, 255, 255, 0.3)"),
+            ]);
+        }
+        if cfg.code_groups {
+            vars.extend([
+                nv("--kz-group-tab-active-bg", "rgba(255,255,255,0.1)"),
+                nv("--kz-group-tab-active-fg", "#e6edf3"),
+                nv("--kz-group-border", "rgba(255,255,255,0.1)"),
             ]);
         }
     }
@@ -441,6 +455,17 @@ fn build_static_vars(cfg: &Config) -> Vec<Var> {
 
     if cfg.fullscreen_button {
         vars.push(nv("--kz-fs-font-scale", "1"));
+    }
+
+    if cfg.code_groups {
+        vars.extend([
+            nv("--kz-group-tab-bg", "transparent"),
+            nv("--kz-group-tab-fg", "inherit"),
+            nv("--kz-group-tab-active-border", "#007acc"),
+            nv("--kz-group-tab-padding", "0.5rem 1rem"),
+            nv("--kz-group-border-width", "1px"),
+            nv("--kz-group-radius", "var(--kz-radius)"),
+        ]);
     }
 
     vars

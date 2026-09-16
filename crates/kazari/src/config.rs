@@ -47,6 +47,12 @@ pub struct Config {
     pub output_separator: String,
     /// Turn `@[text](url)` in the source into links.
     pub inline_links: bool,
+    /// Ship the tab bar CSS and JS for `:::code-group` containers and let the
+    /// markdown adapter parse them.
+    pub code_groups: bool,
+    /// Render `mermaid` fences as a bare `<pre class="mermaid">` for a client-side
+    /// Mermaid script instead of highlighting them.
+    pub mermaid_pass_through: bool,
     /// Threshold collapsing of long blocks. Range collapse (`collapse={3-5}`) works
     /// without it.
     pub collapsible: Option<CollapsibleConfig>,
@@ -248,6 +254,8 @@ impl Default for Config {
             output_default_collapsed: false,
             output_separator: String::new(),
             inline_links: false,
+            code_groups: false,
+            mermaid_pass_through: true,
             collapsible: None,
             file_icons: true,
             file_icon_resolver: None,
@@ -484,6 +492,8 @@ pub struct FileConfig {
     pub output_default_collapsed: Option<bool>,
     pub output_separator: Option<String>,
     pub inline_links: Option<bool>,
+    pub code_groups: Option<bool>,
+    pub mermaid_pass_through: Option<bool>,
     pub file_icons: Option<bool>,
     pub lang_icon_mode: Option<LangIconMode>,
     pub line_numbers: Option<bool>,
@@ -545,6 +555,12 @@ impl FileConfig {
         }
         if let Some(v) = self.inline_links {
             cfg.inline_links = v;
+        }
+        if let Some(v) = self.code_groups {
+            cfg.code_groups = v;
+        }
+        if let Some(v) = self.mermaid_pass_through {
+            cfg.mermaid_pass_through = v;
         }
         if let Some(v) = self.file_icons {
             cfg.file_icons = v;

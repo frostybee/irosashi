@@ -24,6 +24,7 @@ static LINKS: &str = include_str!("../assets/css/links.css");
 static COLLAPSIBLE: &str = include_str!("../assets/css/collapsible.css");
 static FILE_ICONS: &str = include_str!("../assets/css/file-icons.css");
 static LANG_ICONS: &str = include_str!("../assets/css/lang-icons.css");
+static CODEGROUP: &str = include_str!("../assets/css/codegroup.css");
 
 pub fn generate(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) -> String {
     let mut sb = String::with_capacity(16384);
@@ -80,6 +81,9 @@ pub fn generate(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) -> St
     }
     if cfg.inline_links {
         sb.push_str(LINKS);
+    }
+    if cfg.code_groups {
+        sb.push_str(CODEGROUP);
     }
 
     if cfg.cascade_layer.is_empty() {
@@ -181,5 +185,29 @@ mod tests {
         assert!(!COLLAPSIBLE.is_empty());
         assert!(!FILE_ICONS.is_empty());
         assert!(!LANG_ICONS.is_empty());
+        assert!(!CODEGROUP.is_empty());
+    }
+
+    #[test]
+    fn code_group_css_gated() {
+        let light = ThemeInfo {
+            fg: "#333".into(),
+            bg: "#fff".into(),
+            ..Default::default()
+        };
+        let off = generate(&Config::default(), &light, None);
+        assert!(!off.contains(".kz-group"));
+        assert!(!off.contains("--kz-group-tab-bg"));
+        let on = generate(
+            &Config {
+                code_groups: true,
+                ..Default::default()
+            },
+            &light,
+            None,
+        );
+        assert!(on.contains(".kz-group"));
+        assert!(on.contains("--kz-group-tab-bg: transparent;"));
+        assert!(on.contains("--kz-group-tab-active-fg: #24292f;"));
     }
 }

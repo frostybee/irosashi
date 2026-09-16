@@ -483,14 +483,18 @@ Cold start, first call on a fresh highlighter:
 | first tokens, Markdown | 24.4 | 145 | 21 |
 | first tokens, TypeScript | 67.3 | 677 | 88 |
 
-Warm speed is on par with Shiki because both run Oniguruma over the same grammars; the warm
-cost is the regset search itself (about 14 us per scan step on the two large grammars). Cold
-time is Oniguruma compiling one pattern set per rule context on first use; parsing a grammar
-costs 1.2 to 2.5 ms. Shiki's cold numbers exclude Node startup and WASM instantiation. On
-50 KiB inputs Irosashi tokenizes Go at 74 ms and JavaScript at 188 ms, against Nuri's 2.4 s
-and 3.4 s. Against Shiki at snippet, fixture and 50 KiB sizes Irosashi is faster on six of ten
-languages, even on Rust, and about 2x slower on JavaScript, TypeScript and Markdown at every
-size (`docs/perf/2026-09-16-shiki-sizes.md`).
+Warm speed matches or beats Shiki because both run Oniguruma over the same grammars with the
+same per-pattern last-match cache. Cold time is Oniguruma compiling each distinct pattern once
+on first use; parsing a grammar costs 1.2 to 2.5 ms. Shiki's cold numbers exclude Node startup
+and WASM instantiation. On 50 KiB inputs Irosashi tokenizes Go at 39 ms and JavaScript at
+98 ms, against Nuri's 2.4 s and 3.4 s and Shiki's 89 ms and 106 ms. Against Shiki at snippet,
+fixture and 50 KiB sizes Irosashi is faster on seven of ten languages, at parity on PHP and
+CSS, and 1.6x slower on Markdown (`docs/perf/2026-09-16-per-pattern.md`). Those three, and
+34 smaller grammars by a few tenths of a millisecond, share one shape: many patterns per
+context and one or two scan steps per line, where a full-line search per pattern does more
+work than the regset's stop-at-leftmost scan; the perf file has the per-grammar table and
+the cause. The five-snippet table above predates the per-pattern scanner; see the perf
+file for current numbers.
 
 ### Comparison
 

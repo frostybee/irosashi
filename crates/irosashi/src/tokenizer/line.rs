@@ -17,6 +17,9 @@ use crate::tokenizer::state::{RuleRef, StackFrame, WorkFrame, WorkStack};
 /// functions can recurse (capture retokenization) without `RefCell`.
 pub(crate) struct LineCtx<'s> {
     pub memo: &'s mut Memo,
+    /// Identifies the text the scanners currently see; bumped whenever it changes.
+    pub generation: u64,
+    pub next_generation: &'s mut u64,
     pub interner: &'s mut ScopeInterner,
     pub injections: &'s mut Vec<InjectionEntry>,
     pub injection_hits: &'s mut InjectionHits,
@@ -25,6 +28,14 @@ pub(crate) struct LineCtx<'s> {
     pub stats: &'s mut SessionStats,
     pub resolver: &'s dyn GrammarResolver,
     pub base: &'s Arc<Grammar>,
+}
+
+impl LineCtx<'_> {
+    /// Marks the scan text as new for the pattern caches.
+    pub fn bump_generation(&mut self) {
+        *self.next_generation += 1;
+        self.generation = *self.next_generation;
+    }
 }
 
 /// Emits tokens back to back: each `produce` closes the token that started where the
@@ -112,6 +123,7 @@ pub(crate) fn run_line(
     let mut is_first_line = is_first_line;
     let mut anchor_position: Option<usize> = None;
     let mut pos = start;
+    cx.bump_generation();
 
     if top_level {
         let (line_pos, anchor) =
@@ -137,20 +149,23 @@ pub(crate) fn run_line(
                 let key = MemoKey::new(&rule.grammar, rule.rule, cx.base, end_override.clone());
                 let base = cx.base;
                 let resolver = cx.resolver;
-                let id = cx.memo.resolve(key, || {
+                let id = cx.memo.resolve(key, |table| {
                     CompiledSet::compile(
                         &rule.grammar,
                         rule.rule,
                         base,
                         resolver,
                         end_override.as_deref(),
+                        table,
                     )
                 });
                 stack.top_mut().set = Some(id);
                 id
             }
         };
-        let grammar_match = cx.memo.search(set_id, scan, pos, options, cx.capture_buf)?;
+        let grammar_match =
+            cx.memo
+                .search(set_id, scan, cx.generation, pos, options, cx.capture_buf)?;
 
         let injection = if top_level {
             match_injections(cx, stack.scopes(), scan, pos, options)
@@ -269,7 +284,10 @@ fn check_while_conditions(
         let scopes = frame.scopes_after_content;
         let options =
             AnchorActive::new(*is_first_line, anchor_position, line_pos).to_search_options();
-        let m = match cx.memo.search_while(&pattern, scan, line_pos, options) {
+        let m = match cx
+            .memo
+            .search_while(&pattern, scan, cx.generation, line_pos, options)
+        {
             Ok(Some(m)) => m,
             Ok(None) | Err(_) => {
                 stack.truncate(idx);

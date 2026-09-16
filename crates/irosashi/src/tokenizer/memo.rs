@@ -4,7 +4,9 @@ use std::sync::Arc;
 
 use crate::Error;
 use crate::grammar::{CompiledRule, Grammar, GrammarResolver, Rule, RuleId, compile_patterns};
-use crate::regex::{Match, PatternSet, SearchOptions};
+use crate::regex::{Match, PatternId, PatternTable, ScanStats, Scanner, SearchOptions};
+
+pub(crate) use crate::regex::CaptureBuf;
 
 /// Identity of a scanner context: the open rule, the base grammar that `$base`
 /// resolves to, and the begin-capture-resolved end pattern when the rule has one.
@@ -41,7 +43,7 @@ pub(crate) enum EntryRule {
 #[derive(Debug)]
 pub(crate) struct CompiledSet {
     pub rules: Vec<EntryRule>,
-    pub set: PatternSet,
+    pub scanner: Scanner,
 }
 
 impl CompiledSet {
@@ -53,6 +55,7 @@ impl CompiledSet {
         base: &Arc<Grammar>,
         resolver: &dyn GrammarResolver,
         end_override: Option<&str>,
+        table: &mut PatternTable,
     ) -> Result<Self, Error> {
         let compiled = compile_patterns(grammar, rule, base, resolver)?;
         let end = match grammar.rule(rule) {
@@ -66,14 +69,21 @@ impl CompiledSet {
             )),
             _ => None,
         };
-        Self::build(compiled, end)
+        Self::build(compiled, end, table)
     }
 
-    pub fn from_rules(compiled: Vec<CompiledRule>) -> Result<Self, Error> {
-        Self::build(compiled, None)
+    pub fn from_rules(
+        compiled: Vec<CompiledRule>,
+        table: &mut PatternTable,
+    ) -> Result<Self, Error> {
+        Self::build(compiled, None, table)
     }
 
-    fn build(compiled: Vec<CompiledRule>, end: Option<(&str, bool)>) -> Result<Self, Error> {
+    fn build(
+        compiled: Vec<CompiledRule>,
+        end: Option<(&str, bool)>,
+        table: &mut PatternTable,
+    ) -> Result<Self, Error> {
         let mut rules = Vec::with_capacity(compiled.len() + 1);
         let mut patterns: Vec<&str> = Vec::with_capacity(compiled.len() + 1);
         if let Some((end_pattern, false)) = end {
@@ -88,15 +98,13 @@ impl CompiledSet {
             rules.push(EntryRule::End);
             patterns.push(end_pattern);
         }
-        let set = PatternSet::new(&patterns)?;
-        Ok(Self { rules, set })
+        let scanner = table.scanner(&patterns)?;
+        Ok(Self { rules, scanner })
     }
 }
 
 /// Index of a compiled context within one `Memo`; valid only for that memo.
 pub(crate) type SetId = usize;
-
-pub(crate) type CaptureBuf = Vec<Option<(usize, usize)>>;
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub(crate) struct MemoStats {
@@ -107,12 +115,14 @@ pub(crate) struct MemoStats {
     pub while_misses: u64,
 }
 
-/// Per-session cache of compiled scanner contexts and while patterns.
+/// Per-session cache of compiled scanner contexts and while patterns, over the
+/// session's pattern table.
 #[derive(Debug, Default)]
 pub(crate) struct Memo {
     sets: Vec<Result<CompiledSet, Arc<Error>>>,
     index: HashMap<MemoKey, SetId>,
-    whiles: HashMap<Arc<str>, Result<PatternSet, Arc<Error>>>,
+    whiles: HashMap<Arc<str>, Result<PatternId, Arc<Error>>>,
+    table: PatternTable,
     stats: MemoStats,
 }
 
@@ -121,14 +131,14 @@ impl Memo {
     pub fn resolve(
         &mut self,
         key: MemoKey,
-        compile: impl FnOnce() -> Result<CompiledSet, Error>,
+        compile: impl FnOnce(&mut PatternTable) -> Result<CompiledSet, Error>,
     ) -> SetId {
         if let Some(&id) = self.index.get(&key) {
             self.stats.hits += 1;
             return id;
         }
         self.stats.misses += 1;
-        let compiled = compile().map_err(Arc::new);
+        let compiled = compile(&mut self.table).map_err(Arc::new);
         if compiled.is_err() {
             self.stats.errors += 1;
         }
@@ -145,15 +155,16 @@ impl Memo {
         &mut self,
         id: SetId,
         text: &str,
+        generation: u64,
         pos: usize,
         options: SearchOptions,
         captures: &mut CaptureBuf,
     ) -> Result<Option<(Match, EntryRule)>, Arc<Error>> {
-        match &mut self.sets[id] {
+        match &self.sets[id] {
             Err(err) => Err(Arc::clone(err)),
-            Ok(compiled) => Ok(compiled
-                .set
-                .find_next_match_into(text, pos, options, captures)
+            Ok(compiled) => Ok(self
+                .table
+                .find_next_match_into(&compiled.scanner, text, generation, pos, options, captures)
                 .map(|index| {
                     let rule = compiled.rules[index].clone();
                     let m = Match {
@@ -169,26 +180,57 @@ impl Memo {
         &mut self,
         pattern: &Arc<str>,
         text: &str,
+        generation: u64,
         pos: usize,
         options: SearchOptions,
     ) -> Result<Option<Match>, Arc<Error>> {
-        if self.whiles.contains_key(pattern) {
-            self.stats.while_hits += 1;
-        } else {
-            self.stats.while_misses += 1;
-        }
-        let entry = self
-            .whiles
-            .entry(Arc::clone(pattern))
-            .or_insert_with(|| PatternSet::new(&[pattern]).map_err(Arc::new));
-        match entry {
-            Err(err) => Err(Arc::clone(err)),
-            Ok(set) => Ok(set.find_next_match(text, pos, options)),
-        }
+        let id = match self.whiles.get(pattern) {
+            Some(known) => {
+                self.stats.while_hits += 1;
+                known.clone()
+            }
+            None => {
+                self.stats.while_misses += 1;
+                let compiled = self.table.intern(pattern).map_err(|message| {
+                    Arc::new(Error::RegexCompilation {
+                        index: 0,
+                        message: message.to_string(),
+                    })
+                });
+                self.whiles.insert(Arc::clone(pattern), compiled.clone());
+                compiled
+            }
+        }?;
+        Ok(self
+            .table
+            .find_next_match_single(id, text, generation, pos, options))
     }
 
-    pub fn len(&self) -> usize {
-        self.sets.len() + self.whiles.len()
+    /// Searches an injection scanner against the same table and caches.
+    pub fn search_scanner(
+        &mut self,
+        scanner: &Scanner,
+        text: &str,
+        generation: u64,
+        pos: usize,
+        options: SearchOptions,
+        captures: &mut CaptureBuf,
+    ) -> Option<usize> {
+        self.table
+            .find_next_match_into(scanner, text, generation, pos, options, captures)
+    }
+
+    pub fn table_mut(&mut self) -> &mut PatternTable {
+        &mut self.table
+    }
+
+    /// Compiled contexts (including while patterns) and compiled patterns.
+    pub fn len(&self) -> (usize, usize) {
+        (self.sets.len() + self.whiles.len(), self.table.len())
+    }
+
+    pub fn scan_stats(&self) -> ScanStats {
+        self.table.stats()
     }
 
     pub fn stats(&self) -> MemoStats {
@@ -197,6 +239,7 @@ impl Memo {
 
     pub fn reset_stats(&mut self) {
         self.stats = MemoStats::default();
+        self.table.reset_stats();
     }
 
     #[cfg(test)]
@@ -232,11 +275,11 @@ mod tests {
     ) -> Result<Option<usize>, Arc<Error>> {
         let override_end = key.end.clone();
         let rule = key.rule;
-        let id = memo.resolve(key.clone(), || {
-            CompiledSet::compile(g, rule, g, &(), override_end.as_deref())
+        let id = memo.resolve(key.clone(), |table| {
+            CompiledSet::compile(g, rule, g, &(), override_end.as_deref(), table)
         });
         let mut buf = CaptureBuf::new();
-        memo.search(id, "(x)\n", 0, SearchOptions::NONE, &mut buf)
+        memo.search(id, "(x)\n", 1, 0, SearchOptions::NONE, &mut buf)
             .map(|m| m.map(|(m, _)| m.start()))
     }
 
@@ -246,10 +289,11 @@ mod tests {
         let [paren, angle] = g.root_patterns() else {
             panic!("two root rules");
         };
-        let first = CompiledSet::compile(&g, *paren, &g, &(), None).unwrap();
+        let mut table = PatternTable::default();
+        let first = CompiledSet::compile(&g, *paren, &g, &(), None, &mut table).unwrap();
         assert!(matches!(first.rules[0], EntryRule::End));
         assert_eq!(first.rules.len(), 2);
-        let last = CompiledSet::compile(&g, *angle, &g, &(), None).unwrap();
+        let last = CompiledSet::compile(&g, *angle, &g, &(), None, &mut table).unwrap();
         assert!(matches!(last.rules[1], EntryRule::End));
         assert_eq!(last.rules.len(), 2);
     }
@@ -282,15 +326,15 @@ mod tests {
         let mut memo = Memo::default();
         let key = MemoKey::new(&g, paren, &g, Some(Arc::from("(")));
         assert!(search_key(&mut memo, &g, &key).is_err());
-        let id = memo.resolve(key, || unreachable!());
+        let id = memo.resolve(key, |_| unreachable!());
         let mut buf = CaptureBuf::new();
         assert!(
-            memo.search(id, "x\n", 0, SearchOptions::NONE, &mut buf)
+            memo.search(id, "x\n", 1, 0, SearchOptions::NONE, &mut buf)
                 .is_err()
         );
         assert_eq!(memo.stats().errors, 1);
         assert!(
-            memo.search_while(&Arc::from("["), "x\n", 0, SearchOptions::NONE)
+            memo.search_while(&Arc::from("["), "x\n", 1, 0, SearchOptions::NONE)
                 .is_err()
         );
     }

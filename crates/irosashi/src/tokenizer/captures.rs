@@ -147,9 +147,11 @@ fn retokenize_capture(
         begin_captured_eol: false,
     });
     let mut sub = TokenBuilder::new(start);
+    let outer_generation = cx.generation;
     let result = run_line(
         cx, &buf, end, &mut stack, &mut sub, start, false, next, false,
     );
+    cx.generation = outer_generation;
     cx.scan_bufs[next] = buf;
 
     let tokens = sub.finish_clamped(end);

@@ -29,43 +29,43 @@ Irosashi runs the real Oniguruma regex engine natively through `onig-regset`, in
 
 ## Performance
 
-Measured on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs. The three-size comparison is in [`docs/perf/2026-09-16-shiki-sizes.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-shiki-sizes.md); the allocation audit and the cold-start breakdown are in [`docs/perf/2026-09-14-bench.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
+Measured on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs. Full data, including the medium fixtures, the cache counters and the before and after of the per-pattern scanner, are in [`docs/perf/2026-09-16-per-pattern.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-per-pattern.md); the allocation audit and the older cold-start breakdown are in [`docs/perf/2026-09-14-bench.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
 
-### Warm speed is comparable to Shiki
+### Warm speed matches or beats Shiki
 
-Both Irosashi and Shiki run Oniguruma over identical TextMate grammars, so the warm cost is the regex engine itself. On short snippets Irosashi is faster on 7 of 10 tested languages; JavaScript and TypeScript (the two largest grammar rule sets) are the exceptions, and Markdown is close to even.
-
-| Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
-|---|---:|---:|---:|---:|
-| Go | 117 | 11 | 0.26 | 0.39 |
-| JavaScript | 309 | 13 | 2.47 | 1.18 |
-| HTML | 304 | 16 | 0.30 | 0.58 |
-| TypeScript | 203 | 11 | 0.82 | 0.56 |
-| Markdown | 135 | 12 | 0.26 | 0.21 |
-| Python | 415 | 16 | 0.68 | 0.81 |
-| Bash | 339 | 16 | 0.48 | 0.55 |
-| PHP | 385 | 20 | 0.91 | 1.04 |
-| CSS | 424 | 25 | 0.62 | 0.73 |
-| Rust | 607 | 25 | 1.13 | 1.22 |
-
-Real files tell the same story, and the gap does not shrink with size. On 50 KiB inputs (the fixture sources repeated) Irosashi is 10 to 30 percent faster on six languages, even on Rust, and slower on JavaScript, TypeScript and Markdown:
+Both Irosashi and Shiki run Oniguruma over identical TextMate grammars, and both use the same scan strategy: one compiled pattern per rule, and a per-pattern cache of where it last matched on the current line, so a scan step re-searches only the patterns whose remembered match is behind the cursor. On short snippets Irosashi is faster on 8 of 10 tested languages, even on Markdown, and within 7 percent on CSS.
 
 | Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
 |---|---:|---:|---:|---:|
-| Go | 51324 | 2653 | 79.4 | 88.8 |
-| JavaScript | 51298 | 1963 | 198.0 | 105.9 |
-| HTML | 52668 | 1716 | 24.6 | 35.6 |
-| TypeScript | 52920 | 1848 | 190.2 | 96.3 |
-| Markdown | 52150 | 2380 | 34.7 | 20.0 |
-| Python | 51345 | 1794 | 46.3 | 54.1 |
-| Bash | 51558 | 2184 | 46.6 | 52.3 |
-| PHP | 51350 | 2291 | 61.4 | 69.4 |
-| CSS | 51442 | 4094 | 64.8 | 71.0 |
-| Rust | 51561 | 1989 | 47.4 | 46.8 |
+| Go | 117 | 11 | 0.14 | 0.38 |
+| JavaScript | 309 | 13 | 0.92 | 1.09 |
+| HTML | 304 | 16 | 0.34 | 0.51 |
+| TypeScript | 203 | 11 | 0.37 | 0.55 |
+| Markdown | 135 | 12 | 0.22 | 0.21 |
+| Python | 415 | 16 | 0.36 | 0.83 |
+| Bash | 339 | 16 | 0.29 | 0.56 |
+| PHP | 385 | 20 | 0.78 | 1.12 |
+| CSS | 424 | 25 | 0.79 | 0.74 |
+| Rust | 607 | 25 | 0.40 | 1.19 |
 
-The three slower languages are the ones with the most patterns to try per scan step: JavaScript and TypeScript have the largest rule contexts, Markdown injects the most grammars per line. Shiki's `vscode-oniguruma` caches each pattern's last match per line and re-searches only the patterns whose cached match is behind the cursor; Irosashi searches the whole pattern set once per step through Oniguruma's regset API. That cache is the one known optimisation Irosashi does not have. It is about 2x on JavaScript and TypeScript and 1.7x on Markdown, at every input size, and it is unchanged from snippet to 50 KiB.
+On 50 KiB inputs (the fixture sources repeated) Irosashi is faster on seven languages, at parity on PHP and CSS, and slower only on Markdown:
 
-Choosing Irosashi does not cost tokenization speed on most languages. The win is removing the runtime, not being faster at regex.
+| Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
+|---|---:|---:|---:|---:|
+| Go | 51324 | 2653 | 39.0 | 88.8 |
+| JavaScript | 51298 | 1963 | 98.4 | 105.9 |
+| HTML | 52668 | 1716 | 20.2 | 35.6 |
+| TypeScript | 52920 | 1848 | 89.1 | 96.3 |
+| Markdown | 52150 | 2380 | 32.9 | 20.0 |
+| Python | 51345 | 1794 | 28.1 | 54.1 |
+| Bash | 51558 | 2184 | 24.6 | 52.3 |
+| PHP | 51350 | 2291 | 68.2 | 69.4 |
+| CSS | 51442 | 4094 | 72.8 | 71.0 |
+| Rust | 51561 | 1989 | 22.2 | 46.8 |
+
+Markdown, PHP and CSS share the one shape the per-pattern design handles worse than a regset: contexts with many patterns and only one or two scan steps per line, so there is little for the cache to reuse, and a stale pattern's search runs to the end of the line, rejecting candidate positions the regset never looked at past the leftmost match. Oniguruma's public search call cannot bound where a match may start without also bounding where it may end, which would change tokens, so Irosashi does not bound it. The same shape costs a few tenths of a millisecond on some smaller grammars (LLVM, CMake, Kusto, Fish); the full per-grammar table over all 234 fixtures is in the perf record linked above. The fix is a one-function export from a vendored Oniguruma build and is on the roadmap.
+
+Choosing Irosashi does not cost tokenization speed. The win is removing the runtime, and on most languages it is also faster.
 
 ### Cold start is the real difference
 
@@ -73,18 +73,18 @@ Shiki's published cold numbers (20 to 90 ms per language) exclude Node.js startu
 
 | Language | Irosashi cold (ms) | Shiki cold (ms) |
 |---|---:|---:|
-| Go | 8.8 | 99.8 |
-| JavaScript | 57.9 | 80.4 |
-| HTML | 29.5 | 48.4 |
-| TypeScript | 67.3 | 81.2 |
-| Markdown | 24.4 | 9.5 |
-| Python | | 17.7 |
-| Bash | | 8.5 |
-| PHP | | 111.2 |
-| CSS | | 59.8 |
-| Rust | | 6.1 |
+| Go | 3.2 | 99.8 |
+| JavaScript | 20.6 | 80.4 |
+| HTML | 26.6 | 48.4 |
+| TypeScript | 22.5 | 81.2 |
+| Markdown | 44.6 | 9.5 |
+| Python | 3.8 | 17.7 |
+| Bash | 2.3 | 8.5 |
+| PHP | 30.3 | 111.2 |
+| CSS | 24.2 | 59.8 |
+| Rust | 1.5 | 6.1 |
 
-Irosashi cold time is Oniguruma compiling one pattern set per rule context on first use (40 sets for JavaScript and TypeScript). Shiki cold time includes WASM compilation of the grammar but not the Node process that runs it.
+Irosashi cold time is Oniguruma compiling each distinct pattern of the grammar once on first use, plus parsing any grammar the language embeds (Markdown pulls in HTML, and through it CSS and JavaScript, which is most of its 45 ms). Shiki cold time includes WASM compilation of the grammar but not the Node process that runs it.
 
 ### No runtime overhead
 

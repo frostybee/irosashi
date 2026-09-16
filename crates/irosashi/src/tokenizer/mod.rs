@@ -65,11 +65,13 @@ pub struct TokenizeResult {
 pub struct SessionFootprint {
     pub scope_lists: usize,
     pub compiled_sets: usize,
+    pub compiled_patterns: usize,
 }
 
 /// Counters accumulated over a session's life, for cache tuning and benchmarks.
-/// A memo lookup happens once per open frame per line; a scan step is one regset
-/// search of the grammar's context.
+/// A memo lookup happens once per open frame per line; a scan step is one search of
+/// the grammar's context, which runs every pattern whose cached result is stale
+/// (`pattern_searches`) and reuses the rest (`pattern_cache_hits`).
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct SessionStats {
@@ -85,6 +87,10 @@ pub struct SessionStats {
     pub injection_searches: u64,
     pub injection_set_compiles: u64,
     pub capture_retokenizations: u64,
+    pub pattern_compiles: u64,
+    pub pattern_searches: u64,
+    pub pattern_cache_hits: u64,
+    pub regex_engine_errors: u64,
     pub style_hits: u64,
     pub style_misses: u64,
 }
@@ -106,6 +112,7 @@ pub struct Session {
     injection_hits: InjectionHits,
     scan_bufs: Vec<String>,
     capture_buf: CaptureBuf,
+    generation: u64,
     stats: SessionStats,
     styles: HashMap<ThemeId, Styler>,
     initial: StateStack,
@@ -133,6 +140,7 @@ impl Session {
             injection_hits: Vec::new(),
             scan_bufs: vec![String::new()],
             capture_buf: Vec::new(),
+            generation: 0,
             stats: SessionStats::default(),
             styles: HashMap::new(),
             initial: root.snapshot(),
@@ -142,12 +150,17 @@ impl Session {
     /// Counters since the session was created or `reset_stats` was called.
     pub fn stats(&self) -> SessionStats {
         let memo = self.memo.stats();
+        let scan = self.memo.scan_stats();
         SessionStats {
             memo_hits: memo.hits,
             memo_misses: memo.misses,
             memo_errors: memo.errors,
             while_hits: memo.while_hits,
             while_misses: memo.while_misses,
+            pattern_compiles: scan.compiles,
+            pattern_searches: scan.searches,
+            pattern_cache_hits: scan.cache_hits,
+            regex_engine_errors: scan.engine_errors,
             ..self.stats
         }
     }
@@ -175,9 +188,11 @@ impl Session {
     }
 
     pub fn footprint(&self) -> SessionFootprint {
+        let (compiled_sets, compiled_patterns) = self.memo.len();
         SessionFootprint {
             scope_lists: self.interner.list_count(),
-            compiled_sets: self.memo.len(),
+            compiled_sets,
+            compiled_patterns,
         }
     }
 
@@ -215,12 +230,15 @@ impl Session {
             injection_hits,
             scan_bufs,
             capture_buf,
+            generation,
             stats,
             ..
         } = self;
         stats.lines += 1;
         let mut cx = LineCtx {
             memo,
+            generation: *generation,
+            next_generation: generation,
             interner,
             injections,
             injection_hits,

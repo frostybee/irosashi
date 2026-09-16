@@ -367,6 +367,7 @@ dependencies = [
  "include_dir",
  "insta",
  "onig-regset",
+ "onig_sys",
  "serde",
  "serde_json",
  "thiserror",

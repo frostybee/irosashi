@@ -120,6 +120,8 @@ pub(crate) fn match_injections(
         return None;
     }
     let LineCtx {
+        memo,
+        generation,
         injections,
         injection_hits,
         interner,
@@ -129,6 +131,7 @@ pub(crate) fn match_injections(
         capture_buf,
         ..
     } = cx;
+    let generation = *generation;
     ensure_hits(injection_hits, injections, interner, scopes, stats);
     let hits: &[(usize, Priority)] = injection_hits[scopes.index()].as_deref().unwrap_or(&[]);
     let mut best: Option<InjectionMatch> = None;
@@ -138,7 +141,7 @@ pub(crate) fn match_injections(
             stats.injection_set_compiles += 1;
             entry.set = Some(
                 compile_rule_list(&entry.grammar, &entry.rules, base, *resolver)
-                    .and_then(CompiledSet::from_rules)
+                    .and_then(|rules| CompiledSet::from_rules(rules, memo.table_mut()))
                     .map_err(Arc::new),
             );
         }
@@ -149,10 +152,14 @@ pub(crate) fn match_injections(
             continue;
         }
         stats.injection_searches += 1;
-        let Some(match_index) = compiled
-            .set
-            .find_next_match_into(text, pos, options, capture_buf)
-        else {
+        let Some(match_index) = memo.search_scanner(
+            &compiled.scanner,
+            text,
+            generation,
+            pos,
+            options,
+            capture_buf,
+        ) else {
             continue;
         };
         let start = capture_buf[0].map_or(pos, |(s, _)| s);

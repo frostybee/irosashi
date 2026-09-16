@@ -1,8 +1,52 @@
-use super::{AnchorActive, Match, PatternSet, SearchOptions, rewrite_z_anchor};
+use super::{
+    AnchorActive, Match, PatternTable, ScanStats, Scanner, SearchOptions, rewrite_z_anchor,
+};
 use crate::Error;
 
-fn set(patterns: &[&str]) -> PatternSet {
-    PatternSet::new(patterns).expect("patterns compile")
+/// A scanner with its table; every search is a fresh line unless `same_line` is used.
+struct Set {
+    table: PatternTable,
+    scanner: Scanner,
+    generation: u64,
+}
+
+impl Set {
+    fn find_next_match(
+        &mut self,
+        text: &str,
+        start: usize,
+        options: SearchOptions,
+    ) -> Option<Match> {
+        self.generation += 1;
+        self.same_line(text, start, options)
+    }
+
+    fn same_line(&mut self, text: &str, start: usize, options: SearchOptions) -> Option<Match> {
+        self.table
+            .find_next_match(&self.scanner, text, self.generation, start, options)
+    }
+
+    fn len(&self) -> usize {
+        self.scanner.len()
+    }
+
+    fn is_empty(&self) -> bool {
+        self.scanner.is_empty()
+    }
+
+    fn stats(&self) -> ScanStats {
+        self.table.stats()
+    }
+}
+
+fn set(patterns: &[&str]) -> Set {
+    let mut table = PatternTable::default();
+    let scanner = table.scanner(patterns).expect("patterns compile");
+    Set {
+        table,
+        scanner,
+        generation: 0,
+    }
 }
 
 fn find(patterns: &[&str], text: &str, start: usize) -> Option<Match> {
@@ -124,7 +168,9 @@ fn test_empty_pattern_zero_width() {
 
 #[test]
 fn test_invalid_pattern() {
-    let err = PatternSet::new(&[r"\w+", "(?P<"]).expect_err("expected a compilation error");
+    let err = PatternTable::default()
+        .scanner(&[r"\w+", "(?P<"])
+        .expect_err("expected a compilation error");
     match err {
         Error::RegexCompilation { index, .. } => assert_eq!(index, 1),
         other => panic!("unexpected error: {other}"),
@@ -330,8 +376,12 @@ fn test_go_grammar_compiles_as_one_set() {
         "collected only {} patterns",
         patterns.len()
     );
-    let ps = PatternSet::new(&patterns).expect("every match and begin pattern of go.json compiles");
+    let ps = set(&patterns);
     assert_eq!(ps.len(), patterns.len());
+    assert!(
+        ps.stats().compiles < patterns.len() as u64,
+        "go.json repeats patterns across contexts, so the table dedups them"
+    );
 }
 
 #[test]
@@ -385,4 +435,175 @@ fn test_not_begin_options_behavior() {
         Some((1, 3)),
         "options only disable anchors, unanchored patterns still match"
     );
+}
+
+#[test]
+fn cache_reuses_a_match_at_or_after_the_new_start() {
+    let mut ps = set(&[r"\d+", "world"]);
+    let first = ps
+        .find_next_match("hello world 42", 0, SearchOptions::NONE)
+        .unwrap();
+    assert_eq!((first.index, first.range()), (1, (6, 11)));
+    assert_eq!((ps.stats().searches, ps.stats().cache_hits), (2, 0));
+
+    let again = ps
+        .same_line("hello world 42", 3, SearchOptions::NONE)
+        .unwrap();
+    assert_eq!(again, first);
+    assert_eq!((ps.stats().searches, ps.stats().cache_hits), (2, 2));
+
+    let past = ps
+        .same_line("hello world 42", 7, SearchOptions::NONE)
+        .unwrap();
+    assert_eq!((past.index, past.range()), (0, (12, 14)));
+    assert_eq!(
+        (ps.stats().searches, ps.stats().cache_hits),
+        (3, 3),
+        "\\d+ is reused, world is re-searched"
+    );
+}
+
+#[test]
+fn cache_keeps_a_no_match_for_later_positions() {
+    let mut ps = set(&["zzz"]);
+    assert!(
+        ps.find_next_match("hello", 0, SearchOptions::NONE)
+            .is_none()
+    );
+    assert!(ps.same_line("hello", 2, SearchOptions::NONE).is_none());
+    assert!(ps.same_line("hello", 5, SearchOptions::NONE).is_none());
+    assert_eq!((ps.stats().searches, ps.stats().cache_hits), (1, 2));
+}
+
+#[test]
+fn cache_is_not_used_for_an_earlier_start() {
+    let mut ps = set(&["l"]);
+    let m = ps.find_next_match("hello", 3, SearchOptions::NONE).unwrap();
+    assert_eq!(m.range(), (3, 4));
+    let earlier = ps.same_line("hello", 0, SearchOptions::NONE).unwrap();
+    assert_eq!(earlier.range(), (2, 3));
+    assert_eq!(ps.stats().searches, 2);
+}
+
+#[test]
+fn cache_ignores_g_anchor_patterns() {
+    let mut ps = set(&[r"\G\w"]);
+    ps.find_next_match("abc", 0, SearchOptions::NONE).unwrap();
+    let m = ps.same_line("abc", 1, SearchOptions::NONE).unwrap();
+    assert_eq!(m.range(), (1, 2));
+    assert_eq!((ps.stats().searches, ps.stats().cache_hits), (2, 0));
+
+    let dead = SearchOptions::NOT_BEGIN_POSITION;
+    assert!(ps.same_line("abc", 1, dead).is_none());
+    assert!(ps.same_line("abc", 2, dead).is_none());
+    assert_eq!(
+        (ps.stats().searches, ps.stats().cache_hits),
+        (3, 1),
+        "with \\G disabled the pattern caches like vscode-textmate's G0 variant"
+    );
+
+    let mut escaped = set(&[r"\\G"]);
+    let text = "a\\Gb";
+    assert_eq!(
+        escaped
+            .find_next_match(text, 0, SearchOptions::NONE)
+            .unwrap()
+            .range(),
+        (1, 3)
+    );
+    escaped.same_line(text, 1, SearchOptions::NONE).unwrap();
+    assert_eq!(
+        (escaped.stats().searches, escaped.stats().cache_hits),
+        (2, 0),
+        "an escaped backslash before G still disables the cache, as upstream"
+    );
+
+    let mut plain = set(&[r"G\w"]);
+    plain
+        .find_next_match("aGb", 0, SearchOptions::NONE)
+        .unwrap();
+    plain.same_line("aGb", 1, SearchOptions::NONE).unwrap();
+    assert_eq!((plain.stats().searches, plain.stats().cache_hits), (1, 1));
+}
+
+#[test]
+fn cache_is_keyed_on_options_and_generation() {
+    let mut ps = set(&[r"\A\w+"]);
+    let none = SearchOptions::NONE;
+    let not_begin = SearchOptions::NOT_BEGIN_STRING;
+    assert!(ps.find_next_match("hello", 0, none).is_some());
+    assert!(ps.same_line("hello", 0, not_begin).is_none());
+    assert!(ps.same_line("hello", 0, none).is_some());
+    assert_eq!(ps.stats().searches, 3);
+
+    let mut words = set(&[r"\w+"]);
+    words.find_next_match("ab cd", 0, none).unwrap();
+    words.same_line("ab cd", 0, none).unwrap();
+    assert_eq!((words.stats().searches, words.stats().cache_hits), (1, 1));
+    words
+        .same_line("ab cd", 0, AnchorActive::None.to_search_options())
+        .unwrap();
+    assert_eq!(
+        (words.stats().searches, words.stats().cache_hits),
+        (1, 2),
+        "a pattern without anchors ignores the anchor options in its key"
+    );
+    words.find_next_match("ab cd", 0, none).unwrap();
+    assert_eq!((words.stats().searches, words.stats().cache_hits), (2, 2));
+}
+
+#[test]
+fn cached_captures_keep_unmatched_groups_and_byte_offsets() {
+    let mut ps = set(&[r"(\d+)(?:\s+(x))?", r"(?<=変)数"]);
+    let text = "変数 = 42";
+    let first = ps.find_next_match(text, 0, SearchOptions::NONE).unwrap();
+    assert_eq!((first.index, first.range()), (1, (3, 6)));
+    let second = ps.same_line(text, 6, SearchOptions::NONE).unwrap();
+    assert_eq!(second.index, 0);
+    assert_eq!(second.captures, vec![Some((9, 11)), Some((9, 11)), None]);
+    assert!(text.is_char_boundary(second.start()));
+    let third = ps.same_line(text, 9, SearchOptions::NONE).unwrap();
+    assert_eq!(third, second);
+    assert_eq!(ps.stats().cache_hits, 2, "\\d+ once at 6 and once at 9");
+}
+
+#[test]
+fn same_source_is_compiled_once() {
+    let mut table = PatternTable::default();
+    let a = table.scanner(&[r"\w+", "x"]).unwrap();
+    let b = table.scanner(&["x", r"\w+", "y"]).unwrap();
+    assert_eq!((a.len(), b.len()), (2, 3));
+    assert_eq!(table.len(), 3);
+    assert_eq!(table.stats().compiles, 3);
+    assert!(table.scanner(&["("]).is_err());
+    assert!(
+        table.scanner(&["("]).is_err(),
+        "failures are remembered too"
+    );
+    assert_eq!(table.len(), 3);
+}
+
+#[test]
+fn every_scan_step_agrees_with_a_fresh_search() {
+    let grammar = go_grammar();
+    let mut patterns = Vec::new();
+    collect_patterns(&grammar, &mut patterns);
+    let mut cached = set(&patterns);
+    let mut fresh = set(&patterns);
+    let text =
+        "func (s *Server) handle(w http.ResponseWriter, r *http.Request) { return nil } // done\n";
+    let options = AnchorActive::None.to_search_options();
+    let mut pos = 0;
+    cached.generation = 1;
+    let mut steps = 0;
+    while pos < text.len() {
+        let a = cached.same_line(text, pos, options);
+        let b = fresh.find_next_match(text, pos, options);
+        assert_eq!(a, b, "step at {pos}");
+        let Some(m) = a else { break };
+        pos = m.end().max(pos + 1);
+        steps += 1;
+    }
+    assert!(steps > 5);
+    assert!(cached.stats().searches < fresh.stats().searches / 2);
 }

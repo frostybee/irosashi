@@ -92,11 +92,12 @@ dependencies = [
 
 [[package]]
 name = "irosashi"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "bitflags",
  "include_dir",
  "onig-regset",
+ "onig_sys",
  "serde",
  "serde_json",
  "thiserror",

@@ -19,13 +19,16 @@ impl SearchOptions {
         Self(self.0 | other.0)
     }
 
-    #[allow(dead_code)]
+    pub fn intersection(self, other: Self) -> Self {
+        Self(self.0 & other.0)
+    }
+
     pub fn contains(self, other: Self) -> bool {
         self.0.contains(other.0)
     }
 
-    pub(crate) fn into_onig(self) -> onig::SearchOptions {
-        self.0
+    pub(crate) fn bits(self) -> u32 {
+        self.0.bits()
     }
 }
 

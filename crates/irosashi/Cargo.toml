@@ -16,6 +16,7 @@ embedded-assets = ["dep:include_dir"]
 
 [dependencies]
 onig = { package = "onig-regset", version = "6", default-features = false }
+onig_sys = { version = "69.9", default-features = false }
 thiserror.workspace = true
 serde.workspace = true
 serde_json.workspace = true

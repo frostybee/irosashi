@@ -15,9 +15,9 @@ fn ms(start: Instant) -> f64 {
 #[ignore]
 fn cold_start_breakdown() {
     println!(
-        "| lang | build ms | grammar parse ms | session ms | first line ms | rest of medium ms | compiled sets | scope lists | scan steps | warm rerun ms | us per step |"
+        "| lang | build ms | grammar parse ms | session ms | first line ms | rest of medium ms | compiled sets | compiled patterns | scope lists | scan steps | warm rerun ms | us per step | pattern searches | cache hits | searches per step |"
     );
-    println!("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
+    println!("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
     for (lang, grammar, _) in SMALL {
         let med = medium(grammar);
         let lines: Vec<&str> = irosashi::split_lines(&med)
@@ -61,12 +61,17 @@ fn cold_start_breakdown() {
             state = result.state;
         }
         let warm = ms(t);
-        let steps = session.stats().scan_steps;
+        let rerun = session.stats();
+        let steps = rerun.scan_steps;
         println!(
-            "| {lang} | {build:.2} | {parse:.2} | {session_ms:.2} | {first_line:.2} | {rest:.2} | {} | {} | {steps} | {warm:.2} | {:.2} |",
+            "| {lang} | {build:.2} | {parse:.2} | {session_ms:.2} | {first_line:.2} | {rest:.2} | {} | {} | {} | {steps} | {warm:.2} | {:.2} | {} | {} | {:.1} |",
             stats.memo_misses,
+            footprint.compiled_patterns,
             footprint.scope_lists,
-            warm * 1e3 / steps as f64
+            warm * 1e3 / steps as f64,
+            rerun.pattern_searches,
+            rerun.pattern_cache_hits,
+            rerun.pattern_searches as f64 / steps as f64
         );
     }
 }

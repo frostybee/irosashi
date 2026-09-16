@@ -46,8 +46,8 @@ fn allocations_per_call() {
     let h = highlighter();
     println!("| call | bytes in | allocs | KB |");
     println!("|---|---:|---:|---:|");
-    for (lang, small) in SMALL {
-        let med = medium(lang);
+    for (lang, grammar, small) in SMALL {
+        let med = medium(grammar);
         for (size, code) in [("small", small), ("medium", med.as_str())] {
             warm(&h, lang, code);
             row(&format!("tokens/{lang}/{size}"), code.len(), || {

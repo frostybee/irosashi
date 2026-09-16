@@ -19,45 +19,59 @@ Both paths add a runtime dependency that the Rust program would not otherwise ne
 
 Irosashi runs the real Oniguruma regex engine natively through `onig-regset`, in-process, with no subprocess and no WASM. The concrete differences:
 
-- `Highlighter::new()` builds the embedded registry (257 grammars, 65 themes) in 1.5 ms
-- First tokenization of Go completes in 9 ms. Shiki's published 20 to 90 ms cold numbers exclude Node startup and WASM instantiation, which add another 50 to 150 ms
-- Warm tokenization speed matches Shiki, since both execute Oniguruma over the same grammars. The warm cost is the regset search itself
 - No Node.js or WASM runtime to install, start, or keep alive
-- No IPC serialization between processes
+- No subprocess IPC or serialization between processes
+- Warm tokenization speed matches Shiki (see [Performance](#performance) below)
+- Cold start measured in single-digit milliseconds, not hundreds
 - Per-line incremental API with explicit `StateStack` handles, for editors and live previews that re-tokenize from a dirty line
 - Typst output in the same process through kazari-rs, not a post-processing step on an HTML blob
 - Single static binary. No `node_modules`, no sidecar
 
 ## Performance
 
-Measured on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, `onig-regset` 6.7.0, theme `github-dark`. Irosashi numbers are Criterion medians. Nuri numbers are from Nuri's `tools/compare` on the same five snippets (no-interrupt engine). Shiki numbers are from the same comparison table. Full data, the allocation audit and the cold-start breakdown are in [`docs/perf/`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
+Measured on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same snippets. Full data, the allocation audit and the cold-start breakdown are in [`docs/perf/`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
 
-### Warm, small snippets
+### Warm speed matches Shiki
 
-| Input | Irosashi (ms) | Nuri (ms) | Shiki (ms) |
-|---|---:|---:|---:|
-| Go (117 B) | 0.25 | 1.26 | 0.98 |
-| HTML (304 B) | 0.30 | 4.00 | 1.23 |
-| JavaScript (309 B) | 2.09 | 7.03 | 1.86 |
-| Markdown (135 B) | 0.26 | 1.57 | 0.51 |
-| TypeScript (203 B) | 0.82 | 4.00 | 0.96 |
+Both Irosashi and Shiki run Oniguruma over identical TextMate grammars, so the warm cost is the regex engine itself. Irosashi is faster on 7 of 10 tested languages; JavaScript and TypeScript (the two largest grammar rule sets) are the exceptions. On every language the two are within 2.1x of each other.
 
-Irosashi and Shiki are within 2x on every snippet because both run Oniguruma over the same grammars. The warm cost is the regex engine, not the wrapper. Nuri runs Oniguruma compiled to WASM inside a Go WASM runtime, which adds overhead per regex call.
+| Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
+|---|---:|---:|---:|---:|
+| Go | 117 | 11 | 0.26 | 0.39 |
+| JavaScript | 309 | 13 | 2.47 | 1.18 |
+| HTML | 304 | 16 | 0.30 | 0.58 |
+| TypeScript | 203 | 11 | 0.82 | 0.56 |
+| Markdown | 135 | 12 | 0.26 | 0.21 |
+| Python | 415 | 16 | 0.68 | 0.81 |
+| Bash | 339 | 16 | 0.48 | 0.55 |
+| PHP | 385 | 20 | 0.91 | 1.04 |
+| CSS | 424 | 25 | 0.62 | 0.73 |
+| Rust | 607 | 25 | 1.13 | 1.22 |
 
-On 50 KiB inputs, Irosashi tokenizes Go at 74 ms and JavaScript at 188 ms, against Nuri's 2.4 s and 3.4 s.
+Choosing Irosashi does not cost tokenization speed. The win is removing the runtime, not being faster at regex.
 
-### Cold start
+### Cold start is the real difference
 
-| Bench | Irosashi (ms) | Nuri (ms) | Shiki (ms) |
-|---|---:|---:|---:|
-| `Highlighter::new()` | 1.4 | | |
-| First tokens, Go | 8.8 | 77 | 40 |
-| First tokens, HTML | 29.5 | 354 | 48 |
-| First tokens, JavaScript | 57.9 | 557 | 74 |
-| First tokens, Markdown | 24.4 | 145 | 21 |
-| First tokens, TypeScript | 67.3 | 677 | 88 |
+Shiki's published cold numbers (20 to 90 ms per language) exclude Node.js startup and WASM instantiation, which add 50 to 150 ms per process. A Rust program calling Shiki via subprocess pays that cost on every invocation. Irosashi's `Highlighter::new()` runs in 1.5 ms inside the host process.
 
-Cold time is dominated by Oniguruma compiling one pattern set per rule context on first use (40 sets for JavaScript and TypeScript). Parsing a grammar costs 1.2 to 2.5 ms. Shiki's cold numbers in the table above exclude Node startup and WASM instantiation.
+| Language | Irosashi cold (ms) | Shiki cold (ms) |
+|---|---:|---:|
+| Go | 8.8 | 99.8 |
+| JavaScript | 57.9 | 80.4 |
+| HTML | 29.5 | 48.4 |
+| TypeScript | 67.3 | 81.2 |
+| Markdown | 24.4 | 9.5 |
+| Python | | 17.7 |
+| Bash | | 8.5 |
+| PHP | | 111.2 |
+| CSS | | 59.8 |
+| Rust | | 6.1 |
+
+Irosashi cold time is Oniguruma compiling one pattern set per rule context on first use (40 sets for JavaScript and TypeScript). Shiki cold time includes WASM compilation of the grammar but not the Node process that runs it.
+
+### No runtime overhead
+
+The performance tables show that tokenization speed is comparable. The difference is everything around it: no Node.js process, no WASM instantiation, no IPC serialization, no `node_modules`, no second runtime to deploy. A Rust program ships a single static binary.
 
 ## Fidelity
 

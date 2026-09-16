@@ -33,7 +33,7 @@ fn print_allocations() {
     let h = highlighter();
     println!("| allocs (warm, small) | bytes in | allocs | KB |");
     println!("|---|---:|---:|---:|");
-    for (lang, code) in SMALL {
+    for (lang, _, code) in SMALL {
         tokens(&h, lang, code);
         let (_, a) = measure(|| tokens(&h, lang, code));
         println!(
@@ -57,7 +57,7 @@ fn cold(c: &mut Criterion) {
             BatchSize::PerIteration,
         )
     });
-    for (lang, code) in SMALL {
+    for (lang, _, code) in SMALL {
         group.throughput(Throughput::Bytes(code.len() as u64));
         group.bench_with_input(BenchmarkId::new("first_tokens", lang), &code, |b, code| {
             b.iter_custom(|iters| {
@@ -79,9 +79,9 @@ fn cold(c: &mut Criterion) {
 fn warm_tokens(c: &mut Criterion) {
     let h = highlighter();
     let mut group = c.benchmark_group("warm/tokens");
-    for (lang, small) in SMALL {
-        let med = medium(lang);
-        let big = large(lang);
+    for (lang, grammar, small) in SMALL {
+        let med = medium(grammar);
+        let big = large(grammar);
         for (size, code) in [
             ("small", small),
             ("medium", med.as_str()),
@@ -101,7 +101,7 @@ fn warm_multi(c: &mut Criterion) {
     let h = highlighter();
     let themes = dual();
     let mut group = c.benchmark_group("warm/tokens_multi");
-    for (lang, code) in SMALL {
+    for (lang, _, code) in SMALL {
         let options = CodeToTokensOptions::new(lang, "");
         black_box(h.code_to_tokens_multi(code, &themes, &options).unwrap());
         group.throughput(Throughput::Bytes(code.len() as u64));
@@ -115,7 +115,7 @@ fn warm_multi(c: &mut Criterion) {
 fn warm_html(c: &mut Criterion) {
     let h = highlighter();
     let mut group = c.benchmark_group("warm/html");
-    for (lang, code) in SMALL {
+    for (lang, _, code) in SMALL {
         let irosashi = CodeToHtmlOptions::new(lang, THEME);
         let shiki = CodeToHtmlOptions::new(lang, THEME).shiki();
         black_box(h.code_to_html(code, &irosashi).unwrap());
@@ -128,7 +128,7 @@ fn warm_html(c: &mut Criterion) {
             b.iter(|| black_box(h.code_to_html(code, &shiki).unwrap()))
         });
     }
-    let (lang, code) = SMALL[3];
+    let (lang, _, code) = SMALL[3];
     let shiki_dual = CodeToHtmlOptions::multi(lang, dual()).shiki();
     black_box(h.code_to_html(code, &shiki_dual).unwrap());
     group.throughput(Throughput::Bytes(code.len() as u64));
@@ -141,8 +141,8 @@ fn warm_html(c: &mut Criterion) {
 fn warm_tokenize_line(c: &mut Criterion) {
     let h = highlighter();
     let mut group = c.benchmark_group("warm/tokenize_line");
-    for (lang, _) in SMALL {
-        let med = medium(lang);
+    for (lang, grammar, _) in SMALL {
+        let med = medium(grammar);
         let lines: Vec<&str> = irosashi::split_lines(&med)
             .into_iter()
             .map(|r| &med[r])

@@ -18,8 +18,8 @@ fn cold_start_breakdown() {
         "| lang | build ms | grammar parse ms | session ms | first line ms | rest of medium ms | compiled sets | scope lists | scan steps | warm rerun ms | us per step |"
     );
     println!("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|");
-    for (lang, _) in SMALL {
-        let med = medium(lang);
+    for (lang, grammar, _) in SMALL {
+        let med = medium(grammar);
         let lines: Vec<&str> = irosashi::split_lines(&med)
             .into_iter()
             .map(|r| &med[r])

@@ -488,7 +488,9 @@ cost is the regset search itself (about 14 us per scan step on the two large gra
 time is Oniguruma compiling one pattern set per rule context on first use; parsing a grammar
 costs 1.2 to 2.5 ms. Shiki's cold numbers exclude Node startup and WASM instantiation. On
 50 KiB inputs Irosashi tokenizes Go at 74 ms and JavaScript at 188 ms, against Nuri's 2.4 s
-and 3.4 s.
+and 3.4 s. Against Shiki at snippet, fixture and 50 KiB sizes Irosashi is faster on six of ten
+languages, even on Rust, and about 2x slower on JavaScript, TypeScript and Markdown at every
+size (`docs/perf/2026-09-16-shiki-sizes.md`).
 
 ### Comparison
 
@@ -601,6 +603,9 @@ cargo bench -p irosashi-fidelity --bench highlight -- --save-baseline before   #
 cargo bench -p irosashi-fidelity --bench highlight -- --baseline before        # compare against it
 cargo run -p bench-report                                                      # markdown table from target/criterion
 ```
+
+`tools/shiki-bench` runs Shiki 4.4.3 on the same three sizes (it reads the fixture files and
+repeats them with the same byte rule): `cd tools/shiki-bench && npm install && node bench.mjs`.
 
 ### Allocation audit and cold-start breakdown
 

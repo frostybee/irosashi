@@ -1,14 +1,32 @@
-// Shiki benchmark for the same 10 snippets used in crates/irosashi-fidelity/benches.
+// Shiki benchmark on the same inputs as crates/irosashi-fidelity/benches.
 // Run: cd tools/shiki-bench && npm install && node bench.mjs
 //
-// Prints a markdown table of warm median times (50 iterations) and cold-start
-// times (highlighter creation through first codeToTokens per language).
+// Inputs mirror crates/irosashi-fidelity/src/bench_inputs.rs: the small snippets
+// are inline below, medium is the fidelity fixture source read from
+// crates/irosashi-fidelity/testdata/golden, and large is medium repeated until it
+// is at least 50 KiB. Prints cold-start times (highlighter creation through first
+// codeToTokens, small snippets) and warm median times per language and size.
 
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { createHighlighter } from "shiki";
+
+const GOLDEN_DIR = join(
+  dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "..",
+  "crates",
+  "irosashi-fidelity",
+  "testdata",
+  "golden"
+);
+const LARGE_BYTES = 50 * 1024;
 
 const SNIPPETS = [
   {
     lang: "go",
+    grammar: "go",
     code: `package main
 
 import "fmt"
@@ -24,6 +42,7 @@ func main() {
   },
   {
     lang: "javascript",
+    grammar: "javascript",
     code: `const express = require('express');
 const app = express();
 
@@ -41,6 +60,7 @@ app.listen(3000);
   },
   {
     lang: "html",
+    grammar: "html",
     code: `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,6 +81,7 @@ app.listen(3000);
   },
   {
     lang: "typescript",
+    grammar: "typescript",
     code: `interface User {
   id: number;
   name: string;
@@ -76,6 +97,7 @@ const users: User[] = [{ id: 1, name: "Alice" }];
   },
   {
     lang: "markdown",
+    grammar: "markdown",
     code: `# Heading
 
 A paragraph with **bold**, *italic*, and \`code\`.
@@ -92,6 +114,7 @@ func main() {
   },
   {
     lang: "python",
+    grammar: "python",
     code: `from dataclasses import dataclass
 from typing import Optional
 
@@ -112,6 +135,7 @@ print(find_user(users, "Alice"))
   },
   {
     lang: "bash",
+    grammar: "shellscript",
     code: `#!/usr/bin/env bash
 set -euo pipefail
 
@@ -132,6 +156,7 @@ cleanup
   },
   {
     lang: "php",
+    grammar: "php",
     code: `<?php
 
 declare(strict_types=1);
@@ -156,6 +181,7 @@ class UserRepository
   },
   {
     lang: "css",
+    grammar: "css",
     code: `:root {
     --primary: #4f46e5;
     --radius: 0.5rem;
@@ -185,6 +211,7 @@ class UserRepository
   },
   {
     lang: "rust",
+    grammar: "rust",
     code: `use std::collections::HashMap;
 
 #[derive(Debug)]
@@ -216,6 +243,7 @@ impl WordCounter {
 
 const THEME = "github-dark";
 const WARM_ITERS = 50;
+const LARGE_ITERS = 15;
 
 function median(arr) {
   const sorted = [...arr].sort((a, b) => a - b);
@@ -227,6 +255,22 @@ function formatTime(ms) {
   if (ms < 0.001) return `${(ms * 1_000_000).toFixed(0)} ns`;
   if (ms < 1) return `${(ms * 1000).toFixed(0)} us`;
   return `${ms.toFixed(2)} ms`;
+}
+
+function medium(grammar) {
+  const path = join(GOLDEN_DIR, `${grammar}__${grammar}.json`);
+  return JSON.parse(readFileSync(path, "utf8")).source;
+}
+
+function large(grammar) {
+  const unit = medium(grammar);
+  let out = "";
+  while (Buffer.byteLength(out) < LARGE_BYTES) out += unit;
+  return out;
+}
+
+function lineCount(code) {
+  return code.split("\n").length - (code.endsWith("\n") ? 1 : 0);
 }
 
 async function main() {
@@ -246,30 +290,32 @@ async function main() {
     hl.dispose();
   }
 
-  // Warm: one shared highlighter, 50 iterations per snippet.
+  // Warm: one shared highlighter; small and medium run WARM_ITERS times, large
+  // LARGE_ITERS times.
   const hl = await createHighlighter({ themes: [THEME], langs });
 
-  // Warmup: run each snippet once.
-  for (const { lang, code } of SNIPPETS) {
-    hl.codeToTokens(code, { lang, theme: THEME });
-  }
+  console.log("\n## Warm median\n");
+  console.log("| Language | Size | Bytes | Lines | Iters | Median (ms) |");
+  console.log("|---|---|---:|---:|---:|---:|");
 
-  console.log("\n## Warm median (" + WARM_ITERS + " iterations)\n");
-  console.log("| Language | Bytes | Lines | Median (ms) |");
-  console.log("|---|---:|---:|---:|");
-
-  for (const { lang, code } of SNIPPETS) {
-    const times = [];
-    for (let i = 0; i < WARM_ITERS; i++) {
-      const start = performance.now();
-      hl.codeToTokens(code, { lang, theme: THEME });
-      times.push(performance.now() - start);
+  for (const { lang, grammar, code } of SNIPPETS) {
+    const inputs = [
+      ["small", code, WARM_ITERS],
+      ["medium", medium(grammar), WARM_ITERS],
+      ["large", large(grammar), LARGE_ITERS],
+    ];
+    for (const [size, input, iters] of inputs) {
+      hl.codeToTokens(input, { lang, theme: THEME });
+      const times = [];
+      for (let i = 0; i < iters; i++) {
+        const start = performance.now();
+        hl.codeToTokens(input, { lang, theme: THEME });
+        times.push(performance.now() - start);
+      }
+      console.log(
+        `| ${lang} | ${size} | ${Buffer.byteLength(input)} | ${lineCount(input)} | ${iters} | ${formatTime(median(times))} |`
+      );
     }
-    const med = median(times);
-    const lines = code.split("\n").length - (code.endsWith("\n") ? 1 : 0);
-    console.log(
-      `| ${lang} | ${Buffer.byteLength(code)} | ${lines} | ${formatTime(med)} |`
-    );
   }
 
   hl.dispose();

@@ -1,0 +1,14 @@
+/* assets/css/custom.css */
+.sarde-hero-image img,
+.sarde-hero-image svg {
+  max-width: 320px;
+}
+.sarde-card-grid .sarde-card {
+  min-width: 0;
+  overflow: hidden;
+}
+.sarde-card-grid pre {
+  min-width: 0;
+  overflow-x: auto;
+}
+/*# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiLi4vYXNzZXRzL2Nzcy9jdXN0b20uY3NzIl0sCiAgInNvdXJjZXNDb250ZW50IjogWyIvKiBJcm9zYXNoaSBkb2NzIHNpdGUgb3ZlcnJpZGVzLiBMb2FkZWQgdmlhIGhlYWQuY3VzdG9tX2NzcyBpbiBzYXJkZS55YW1sLiAqL1xuXG4uc2FyZGUtaGVyby1pbWFnZSBpbWcsXG4uc2FyZGUtaGVyby1pbWFnZSBzdmcge1xuICBtYXgtd2lkdGg6IDMyMHB4O1xufVxuXG4uc2FyZGUtY2FyZC1ncmlkIC5zYXJkZS1jYXJkIHtcbiAgbWluLXdpZHRoOiAwO1xuICBvdmVyZmxvdzogaGlkZGVuO1xufVxuLnNhcmRlLWNhcmQtZ3JpZCBwcmUge1xuICBtaW4td2lkdGg6IDA7XG4gIG92ZXJmbG93LXg6IGF1dG87XG59XG4iXSwKICAibWFwcGluZ3MiOiAiO0FBRUEsQ0FBQyxpQkFBaUI7QUFDbEIsQ0FEQyxpQkFDaUI7QUFDaEIsYUFBVztBQUNiO0FBRUEsQ0FBQyxnQkFBZ0IsQ0FBQztBQUNoQixhQUFXO0FBQ1gsWUFBVTtBQUNaO0FBQ0EsQ0FKQyxnQkFJZ0I7QUFDZixhQUFXO0FBQ1gsY0FBWTtBQUNkOyIsCiAgIm5hbWVzIjogW10KfQo= */

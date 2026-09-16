@@ -1,0 +1,98 @@
+:root {
+  --sd-accent: oklch(0.53 0.24 270);
+  --sd-accent-high: oklch(0.650 0.240 270.0);
+  --sd-accent-hover: oklch(0.450 0.240 270.0);
+  --sd-accent-low: oklch(0.530 0.240 270.0 / 0.1);
+  --sd-accent-text: oklch(0.480 0.240 270.0);
+  --sd-bg: oklch(1 0 0);
+  --sd-bg-code: oklch(0.228 0.023 255);
+  --sd-bg-surface: oklch(0.976 0.004 248);
+  --sd-border: oklch(0.880 0.007 256);
+  --sd-font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  --sd-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --sd-radius: 0.375rem;
+  --sd-text: oklch(0.259 0.015 256);
+  --sd-text-high: var(--sd-black);
+  --sd-text-muted: oklch(0.504 0.012 256);
+}
+:root[data-theme="dark"] {
+  --sd-accent: oklch(0.58 0.23 265);
+  --sd-amber-text: var(--sd-amber-high);
+  --sd-aside-caution-bg: oklch(0.75 0.16 75 / 0.1);
+  --sd-aside-caution-text: var(--sd-amber-high);
+  --sd-aside-code-bg-mix: 16%;
+  --sd-aside-code-border-mix: 35%;
+  --sd-aside-danger-bg: oklch(0.55 0.20 25 / 0.1);
+  --sd-aside-danger-text: var(--sd-red-high);
+  --sd-aside-important-bg: oklch(0.59 0.23 293 / 0.1);
+  --sd-aside-important-text: var(--sd-purple-high);
+  --sd-aside-info-bg: oklch(0.52 0.14 196 / 0.1);
+  --sd-aside-info-text: var(--sd-cyan-high);
+  --sd-aside-note-bg: oklch(0.62 0.20 231 / 0.1);
+  --sd-aside-note-text: var(--sd-blue-high);
+  --sd-aside-success-bg: oklch(0.62 0.17 155 / 0.1);
+  --sd-aside-success-text: var(--sd-green-high);
+  --sd-aside-tip-bg: oklch(0.62 0.17 155 / 0.1);
+  --sd-aside-tip-text: var(--sd-green-high);
+  --sd-bg: #1a1a1c;
+  --sd-bg-accent-subtle: var(--sd-accent-low, oklch(0.60 0.22 264 / 0.15));
+  --sd-bg-code: oklch(0.12 0.008 252);
+  --sd-bg-nav: #19191b;
+  --sd-bg-sidebar: #18181b;
+  --sd-bg-surface: oklch(0.19 0.008 256);
+  --sd-blue-text: var(--sd-blue-high);
+  --sd-border: oklch(0.318 0.012 256);
+  --sd-border-accent: var(--sd-accent-high, var(--sd-accent, oklch(0.71 0.19 264)));
+  --sd-border-muted: var(--sd-gray-7);
+  --sd-code-bg: var(--sd-gray-9);
+  --sd-code-border: var(--sd-gray-7);
+  --sd-cyan-text: var(--sd-cyan-high);
+  --sd-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --sd-glass-bg: oklch(0 0 0 / 0.6);
+  --sd-glass-border: oklch(1 0 0 / 0.08);
+  --sd-green-text: var(--sd-green-high);
+  --sd-hairline: var(--sd-gray-8);
+  --sd-hover: var(--sd-gray-8);
+  --sd-indigo-text: var(--sd-indigo-high);
+  --sd-purple-text: var(--sd-purple-high);
+  --sd-red-text: var(--sd-red-high);
+  --sd-shadow-accent: 0 4px 14px -2px oklch(0.71 0.19 264 / 0.2);
+  --sd-shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.35);
+  --sd-shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.3);
+  --sd-shadow-sm: 0 1px 3px oklch(0 0 0 / 0.25);
+  --sd-text: oklch(0.937 0.008 253);
+  --sd-text-accent: var(--sd-accent-high, var(--sd-accent, oklch(0.71 0.19 264)));
+  --sd-text-danger: var(--sd-red-high);
+  --sd-text-high: var(--sd-white);
+  --sd-text-invert: var(--sd-black);
+  --sd-text-muted: oklch(0.640 0.012 253);
+  --sd-text-subtle: color-mix(in oklch, var(--sd-gray-5) 30%, var(--sd-gray-4));
+  --sd-text-success: var(--sd-green-high);
+  --sd-text-warning: var(--sd-amber-high);
+}
+@supports (color: light-dark(red, blue)) {
+:root {
+  color-scheme: light dark;
+  --sd-accent: light-dark(oklch(0.53 0.24 270), oklch(0.58 0.23 265));
+  --sd-accent-high: oklch(0.650 0.240 270.0);
+  --sd-accent-hover: oklch(0.450 0.240 270.0);
+  --sd-accent-low: oklch(0.530 0.240 270.0 / 0.1);
+  --sd-accent-text: oklch(0.480 0.240 270.0);
+  --sd-bg: light-dark(oklch(1 0 0), #1a1a1c);
+  --sd-bg-code: light-dark(oklch(0.228 0.023 255), oklch(0.12 0.008 252));
+  --sd-bg-surface: light-dark(oklch(0.976 0.004 248), oklch(0.19 0.008 256));
+  --sd-border: light-dark(oklch(0.880 0.007 256), oklch(0.318 0.012 256));
+  --sd-font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  --sd-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --sd-radius: 0.375rem;
+  --sd-text: light-dark(oklch(0.259 0.015 256), oklch(0.937 0.008 253));
+  --sd-text-high: light-dark(var(--sd-black), var(--sd-white));
+  --sd-text-muted: light-dark(oklch(0.504 0.012 256), oklch(0.640 0.012 253));
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+}

@@ -1,0 +1,63 @@
+name: Deploy Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "crates/kazari-rs/examples/showcase/**"
+      - ".github/workflows/deploy-docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Pages rejects overlapping deployments, so queue runs instead of racing them.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 is required. Sarde's build.last_updated defaults to the
+      # "git" strategy, which reads each page's last commit time. A shallow
+      # clone makes every page report the same timestamp.
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master
+        with:
+          toolchain: 1.93.0
+
+      - uses: Swatinem/rust-cache@49a0bdc70d2e1b713ca9e2869b211fcce03d3c1c # v2
+        with:
+          cache-on-failure: true
+
+      - name: Generate showcase
+        run: cargo run -p kazari-rs --features markdown --example showcase -- --out docs/public/demo
+
+      - uses: actions/configure-pages@v5
+
+      # No build-args: docs/sarde.yaml already sets site.url and
+      # base_path: /irosashi/. --baseURL overrides site.url rather than the path
+      # prefix, so passing it here would corrupt canonical links, OG tags, the
+      # sitemap, and the feeds.
+      - uses: getsarde/action@292b7f77834babd8f7d020c588254dea2ac32574 # v1
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <script>(function(){var t=localStorage.getItem('sd-theme')||'system';var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(localStorage.getItem('sd-sidebar')==='collapsed'&&matchMedia('(min-width:1024px)').matches){document.documentElement.classList.add('sd-sidebar-collapsed')}if(localStorage.getItem('sd-docs-centered')==='1'&&matchMedia('(min-width:1280px)').matches){document.documentElement.classList.add('sd-docs-centered')}})()</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Sarde vdev">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1a1c">
+<link rel="sitemap" type="application/xml" href="/irosashi/sitemap.xml">
+<link rel="icon" href="/irosashi/favicon.svg" type="image/svg&#43;xml">
+<link rel="preload" href="/irosashi/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+<script>window.__SARDE__={basePath:"\/irosashi\/",lang:"en",defaultLang:"",siteId:"c0dd9605",i18n:{revealSpoiler:"Reveal spoiler",hideSpoiler:"Hide spoiler",expandSidebar:"Expand sidebar",collapseSidebar:"Collapse sidebar"}};</script>
+<title>Decorated code blocks with Kazari | Irosashi</title>
+<meta name="description" content="Render framed, themed code blocks with line numbers, markers, and a toolbar.">
+
+<meta property="og:title" content="Decorated code blocks with Kazari">
+<meta property="og:description" content="Render framed, themed code blocks with line numbers, markers, and a toolbar.">
+<meta property="og:url" content="https://frostybee.github.io/irosashi/docs/getting-started/kazari/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://frostybee.github.io/irosashi/og/docs/getting-started/kazari.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Decorated code blocks with Kazari">
+<meta property="og:image:type" content="image/png">
+<meta property="og:site_name" content="Irosashi">
+<meta property="og:locale" content="en_US">
+
+<meta property="article:published_time" content="2026-09-16T11:23:04-04:00">
+<meta property="article:modified_time" content="2026-09-16T11:23:04-04:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Decorated code blocks with Kazari">
+<meta name="twitter:description" content="Render framed, themed code blocks with line numbers, markers, and a toolbar.">
+<meta name="twitter:image" content="https://frostybee.github.io/irosashi/og/docs/getting-started/kazari.png">
+<meta name="twitter:image:alt" content="Decorated code blocks with Kazari">
+
+<link rel="canonical" href="https://frostybee.github.io/irosashi/docs/getting-started/kazari/">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","dateModified":"2026-09-16","datePublished":"2026-09-16","description":"Render framed, themed code blocks with line numbers, markers, and a toolbar.","headline":"Decorated code blocks with Kazari","mainEntityOfPage":"https://frostybee.github.io/irosashi/docs/getting-started/kazari/","url":"https://frostybee.github.io/irosashi/docs/getting-started/kazari/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://frostybee.github.io/docs/","name":"Documentation","position":1},{"@type":"ListItem","item":"https://frostybee.github.io/docs/getting-started/","name":"Getting started","position":2},{"@type":"ListItem","item":"https://frostybee.github.io/docs/getting-started/kazari/","name":"Decorated code blocks with Kazari","position":3}]}]}</script>
+
+
+
+<link rel="stylesheet" href="/irosashi/assets/css/tokens-theme.css">
+<link rel="stylesheet" href="/irosashi/assets/css/sarde.410d2866.css">
+<link rel="stylesheet" href="/irosashi/assets/css/custom.css">
+<link rel="stylesheet" href="/irosashi/assets/plugins/plugins.d6ae2c0b.css">
+<link rel="stylesheet" href="/irosashi/assets/plugins/telescope/telescope.624a4fe2.css">
+
+
+
+</head>
+<body class="sarde-layout-docs">
+  <a href="#main-content" class="sarde-skip-link">Skip to main content</a>
+  <header class="sarde-header">
+  <a href="/irosashi/" class="sarde-site-title">
+  <img class="sarde-site-logo" src="/irosashi/favicon.svg" alt="">
+  <span>Irosashi</span>
+</a>
+
+  
+<button class="sarde-nav-toggle" id="sarde-nav-toggle" type="button"
+        aria-expanded="false" aria-controls="sarde-global-nav"
+        aria-label="Menu" data-sarde-nav-toggle>
+  <svg aria-hidden="true" class="sarde-nav-icon-open" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 12h16M4 19h16"/></svg>
+  <svg aria-hidden="true" class="sarde-nav-icon-close" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+</button>
+<nav class="sarde-header-nav" id="sarde-global-nav" aria-label="Main navigation">
+  
+  <a href="/irosashi/docs/" class="is-active" aria-current="page">Documentation</a>
+  
+  <a href="/irosashi/docs/changelog">Changelog</a>
+  
+  <a href="/irosashi/demo/showcase.html">Showcase</a>
+  
+</nav>
+
+
+  <div class="sarde-header-actions">
+    
+    
+<button type="button" class="sarde-search-trigger" data-search-trigger aria-label="Search" title="Search">
+  <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m21 21l-4.34-4.34"/><circle cx="11" cy="11" r="8"/></g></svg>
+  <span class="sarde-search-trigger-text">Search</span>
+  <span class="sarde-search-kbd" aria-hidden="true"><kbd class="sarde-kbd-ctrl">Ctrl</kbd><kbd class="sarde-kbd-meta">⌘</kbd><kbd>K</kbd></span>
+</button>
+<dialog id="sarde-search-modal" class="sarde-search-modal" aria-label="Search" data-search-version="" data-search-lang="en">
+  <div class="sarde-search-modal-panel">
+    <div class="sarde-search-input-row">
+      <span class="sarde-search-input-icon"><svg aria-hidden="true" focusable="false" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m21 21l-4.34-4.34"/><circle cx="11" cy="11" r="8"/></g></svg></span>
+      <input id="sarde-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search" aria-label="Search">
+      <button type="button" class="sarde-search-close" data-search-close aria-label="Close"><svg aria-hidden="true" focusable="false" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div id="sarde-search-filters" class="sarde-search-filters" hidden></div>
+    <div class="sarde-search-content-area">
+      <div id="sarde-search-body" class="sarde-search-body">
+        <div id="sarde-search-initial" class="sarde-search-initial"></div>
+        <ul id="sarde-search-results" aria-label="Search results" aria-live="polite" hidden></ul>
+        <div id="sarde-search-empty" class="sarde-search-empty" hidden>
+          <svg aria-hidden="true" class="sarde-search-empty-icon" focusable="false" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m13.5 8.5l-5 5m0-5l5 5"/><circle cx="11" cy="11" r="8"/><path d="m21 21l-4.3-4.3"/></g></svg>
+          <p class="sarde-search-empty-title">No results found.</p>
+          <ul class="sarde-search-empty-tips" id="sarde-search-empty-tips">
+            <li>Check for typos in your search term</li>
+            <li>Try using different or more general keywords</li>
+          </ul>
+        </div>
+      </div>
+      <div id="sarde-search-preview" class="sarde-search-preview" aria-live="polite" hidden></div>
+    </div>
+    <div class="sarde-search-footer" aria-hidden="true">
+      <span><kbd><svg aria-hidden="true" focusable="false" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l7-7l7 7m-7 7V5"/></svg></kbd><kbd><svg aria-hidden="true" focusable="false" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m7-7l-7 7l-7-7"/></svg></kbd> to navigate</span>
+      <span><kbd>Enter</kbd> to select</span>
+      <span><kbd>Esc</kbd> to close</span>
+      <button type="button" id="sarde-search-mode-toggle" class="sarde-search-mode-toggle" aria-label="Switch to Full Search">
+        <svg aria-hidden="true" focusable="false" height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></g></svg>
+        <span class="sarde-search-mode-label">Full Search</span>
+        <kbd class="sarde-search-mode-kbd sarde-kbd-ctrl">Ctrl</kbd><kbd class="sarde-search-mode-kbd sarde-kbd-meta">⌘</kbd><kbd class="sarde-search-mode-kbd">Space</kbd>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+
+    
+    
+
+    
+
+    
+    
+<div class="sarde-social">
+  
+  <a class="sarde-social-link" href="https://github.com/frostybee/irosashi" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" class="sarde-social-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5c.08-1.25-.27-2.48-1-3.5c.28-1.15.28-2.35 0-3.5c0 0-1 0-3 1.5c-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5c-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g></svg></a>
+  
+</div>
+
+
+    
+    <button class="sarde-center-toggle" id="sarde-center-toggle"
+        aria-label="Center content" type="button">
+  <svg aria-hidden="true" class="sarde-center-icon-center" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 12H7m12 6H5M21 6H3"/></svg>
+  <svg aria-hidden="true" class="sarde-center-icon-wide" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 18h18M3 6h18"/></svg>
+</button>
+
+    <div class="sarde-theme-toggle" role="group" aria-label="Theme selection" data-sarde-theme-toggle>
+  <div class="sarde-theme-toggle-indicator" data-sarde-theme-indicator></div>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="light" aria-pressed="false" aria-label="Light mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="system" aria-pressed="true" aria-label="System theme">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="dark" aria-pressed="false" aria-label="Dark mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+  </button>
+</div>
+
+  </div>
+</header>
+
+  
+<details class="sarde-mobile-toc" id="sarde-mobile-toc">
+  <summary class="sarde-mobile-toc-bar" aria-label="On this page">
+    <span class="sarde-mobile-toc-toggle">
+      <svg aria-hidden="true" class="sarde-mobile-toc-caret" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg>
+      <span class="sarde-mobile-toc-toggle-label">On this page</span>
+    </span>
+    <svg class="sarde-mobile-toc-progress" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+      <circle class="sarde-mobile-toc-progress-track" cx="11" cy="11" r="8" />
+      <circle class="sarde-mobile-toc-progress-fill" cx="11" cy="11" r="8" />
+    </svg>
+    <span class="sarde-mobile-toc-current" aria-hidden="true"></span>
+  </summary>
+  <div class="sarde-mobile-toc-panel">
+    <ul>
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#_top" class="sarde-mobile-toc-link">Overview</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#prerequisites" class="sarde-mobile-toc-link">Prerequisites</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#build-a-kazari-engine" class="sarde-mobile-toc-link">Build a Kazari engine</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#render-a-code-block" class="sarde-mobile-toc-link">Render a code block</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#inject-css-and-js" class="sarde-mobile-toc-link">Inject CSS and JS</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#typst-output" class="sarde-mobile-toc-link">Typst output</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#markdown-integration" class="sarde-mobile-toc-link">Markdown integration</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#next-steps" class="sarde-mobile-toc-link">Next steps</a>
+      </li>
+    
+    </ul>
+  </div>
+</details>
+
+
+  
+  <nav class="sarde-mobile-nav" aria-label="Documentation navigation">
+    <button class="sarde-menu-toggle" id="sarde-menu-toggle"
+            aria-expanded="false" aria-label="Menu"
+            aria-controls="sarde-sidebar" type="button">
+      <svg aria-hidden="true" class="sarde-menu-icon-open" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <svg aria-hidden="true" class="sarde-menu-icon-close" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <aside class="sarde-sidebar" id="sarde-sidebar" aria-label="Sidebar">
+      <button class="sarde-sidebar-toggle" id="sarde-sidebar-toggle"
+              aria-expanded="true" aria-label="Collapse sidebar" type="button">
+        <svg aria-hidden="true" class="sarde-sidebar-toggle-collapse" focusable="false" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18m7-6l-3-3l3-3"/></g></svg>
+        <svg aria-hidden="true" class="sarde-sidebar-toggle-expand" focusable="false" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18m5-12l3 3l-3 3"/></g></svg>
+      </button>
+      <div class="sarde-sidebar-content">
+        
+
+
+<script>(function(){try{var s=sessionStorage.getItem('sd-sb');if(s){window.__sdsbr=JSON.parse(s)}}catch(e){}})()</script>
+<nav class="sarde-sidebar-nav" aria-label="Section navigation" data-sd-hash="a477e59b">
+  <ul class="sarde-sidebar-tree">
+  
+    
+    <li><a href="/irosashi/docs/introduction/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></g></svg>Introduction</a></li>
+    
+  
+    
+    <li><a href="/irosashi/docs/why-irosashi/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594zM20 2v4m2-2h-4"/><circle cx="4" cy="20" r="2"/></g></svg>Why Irosashi</a></li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group has-active" data-sd-idx="0">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/getting-started/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></g></svg>Getting started</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="true" aria-controls="sd-grp-0" aria-label="Toggle Getting started section"></button>
+        </div>
+        
+        <ul id="sd-grp-0">
+        
+          
+          <li><a href="/irosashi/docs/getting-started/installation/">Installation</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/getting-started/quick-start/">Quick start</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/getting-started/kazari/" aria-current="page" class="active">Decorated code blocks with Kazari</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="1">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/features/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3zM7 16.5l-4.74-2.85M7 16.5l5-3m-5 3v5.17m5-8.17V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5zm5 3l-5-3m5 3l4.74-2.85M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3l5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0zM12 8L7.26 5.15M12 8l4.74-2.85M12 13.5V8"/></g></svg>Features</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-1" aria-label="Toggle Features section"></button>
+        </div>
+        
+        <ul id="sd-grp-1" hidden>
+        
+          
+          <li><a href="/irosashi/docs/features/output-formats/">Output formats</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/features/per-line-sessions/">Per-line tokenization</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="2">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/reference/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v14m-9-3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4a4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3a3 3 0 0 0-3-3z"/></svg>Reference</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-2" aria-label="Toggle Reference section"></button>
+        </div>
+        
+        <ul id="sd-grp-2" hidden>
+        
+          
+          <li><a href="/irosashi/docs/reference/meta-string-syntax/">Meta string syntax</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/reference/configuration/">Configuration</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/reference/css-variables/">CSS variables</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="3">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/styling/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 22a1 1 0 0 1 0-20a10 9 0 0 1 10 9a5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></g></svg>Styling</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-3" aria-label="Toggle Styling section"></button>
+        </div>
+        
+        <ul id="sd-grp-3" hidden>
+        
+          
+          <li><a href="/irosashi/docs/styling/themes-and-dark-mode/">Themes and dark mode</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    <li><a href="/irosashi/docs/changelog/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9a9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5m4-1v5l4 2"/></g></svg>Changelog</a></li>
+    
+  
+  </ul>
+</nav>
+<script>(function(){var nav=document.querySelector('.sarde-sidebar-nav');if(!nav)return;var st=window.__sdsbr;var h=nav.getAttribute('data-sd-hash');if(st&&h&&st.hash===h&&Array.isArray(st.open)){var gs=nav.querySelectorAll('[data-sd-idx]');for(var i=0;i<gs.length;i++){if(gs[i].classList.contains('has-active'))continue;var idx=parseInt(gs[i].getAttribute('data-sd-idx'),10);if(idx>=0&&idx<st.open.length&&typeof st.open[idx]==='boolean'){var btn=gs[i].querySelector('button[aria-expanded]');var list=btn&&document.getElementById(btn.getAttribute('aria-controls'));if(btn&&list){btn.setAttribute('aria-expanded',st.open[idx]?'true':'false');if(st.open[idx]){list.removeAttribute('hidden')}else{list.setAttribute('hidden','')}}}}if(typeof st.scroll==='number'){nav.scrollTop=st.scroll}}delete window.__sdsbr})()</script>
+
+
+      </div>
+      <div class="sarde-sidebar-footer">
+        <div class="sarde-theme-toggle" role="group" aria-label="Theme selection" data-sarde-theme-toggle>
+  <div class="sarde-theme-toggle-indicator" data-sarde-theme-indicator></div>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="light" aria-pressed="false" aria-label="Light mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="system" aria-pressed="true" aria-label="System theme">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="dark" aria-pressed="false" aria-label="Dark mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+  </button>
+</div>
+
+        
+
+        
+
+      </div>
+    </aside>
+  </nav>
+  <div class="sarde-sidebar-backdrop" id="sarde-sidebar-backdrop"></div>
+  
+  <div class="sarde-main-frame">
+    <div class="sarde-content-columns">
+      
+      <aside class="sarde-toc" aria-label="Table of contents">
+        <div class="sarde-toc-inner">
+          
+<nav class="sarde-toc-nav" aria-label="Table of contents">
+  <h2>On this page</h2>
+  <ul>
+    <li class="sarde-toc-level-2"><a href="#_top">Overview</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#prerequisites">Prerequisites</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#build-a-kazari-engine">Build a Kazari engine</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#render-a-code-block">Render a code block</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#inject-css-and-js">Inject CSS and JS</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#typst-output">Typst output</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#markdown-integration">Markdown integration</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#next-steps">Next steps</a></li>
+  
+  </ul>
+</nav>
+
+
+        </div>
+      </aside>
+      
+      <div class="sarde-main-pane">
+        <main class="sarde-doc-body" id="main-content">
+          
+          <div class="sarde-content-panel sarde-content-panel--header">
+            
+<nav class="sarde-breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+  
+  
+    <li><a href="/irosashi/docs/"><svg class="sarde-breadcrumb-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg><span class="sr-only">Documentation</span></a><svg aria-hidden="true" class="sarde-breadcrumb-sep" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg></li>
+  
+    <li><a href="/irosashi/docs/getting-started/">Getting started</a><svg aria-hidden="true" class="sarde-breadcrumb-sep" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg></li>
+  
+    <li><span aria-current="page">Decorated code blocks with Kazari</span></li>
+  
+  </ol>
+</nav>
+
+
+            
+
+            
+
+            
+
+            
+
+            <h1 class="sarde-page-title">Decorated code blocks with Kazari</h1>
+<p class="sarde-page-description">Render framed, themed code blocks with line numbers, markers, and a toolbar.</p>
+
+            
+          </div>
+          <div class="sarde-content-panel">
+            <article class="sarde-markdown-content">
+              
+<p>Irosashi tokenizes code. Kazari turns those tokens into the finished code blocks a documentation
+site or PDF needs: editor and terminal frames, line numbers, highlight and diff markers, copy
+buttons, collapsible sections, and dual-theme support. This page walks through rendering a
+single block, injecting the page-wide assets, and the two alternative output paths (Typst and
+Markdown).</p>
+<h2 id="prerequisites">Prerequisites<a class="sarde-heading-anchor" href="#prerequisites" aria-label="Link to section: Prerequisites"></a></h2>
+<ul>
+<li>A working <code>Highlighter</code> from the <a href="/irosashi/docs/getting-started/quick-start/">quick start</a>.</li>
+<li><code>kazari-rs</code> added to your dependencies:</li>
+</ul>
+<div class="kazari-block not-content" data-lines="3">
+<figure class="frame has-title" data-lang="toml"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Toml</span><span class="kz-file-icon" data-ext="toml"></span><span class="kz-title">Cargo.toml</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="[dependencies]irosashi = &#34;0.1&#34;kazari-rs = &#34;0.1&#34;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="toml"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">[</span><span style="--sl:#6f42c1;--sd:#ffa657">dependencies</span><span style="--sl:#24292e;--sd:#e6edf3">]</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">irosashi</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">0.1</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">kazari-rs</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">0.1</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span></div></div></code></pre></figure>
+</div><h2 id="build-a-kazari-engine">Build a Kazari engine<a class="sarde-heading-anchor" href="#build-a-kazari-engine" aria-label="Link to section: Build a Kazari engine"></a></h2>
+<p><code>Kazari::builder</code> takes the highlighter and returns a builder with sensible defaults. Set a
+light and dark theme so the block supports both modes:</p>
+<div class="kazari-block not-content" data-lines="7">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="use kazari_rs::Kazari;let hl = irosashi::Highlighter::new()?;let kz = Kazari::builder(hl)    .themes(&#34;github-light&#34;, Some(&#34;github-dark&#34;))    .notation_comments(true)    .build()?;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">use</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">kazari_rs</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">Kazari</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">hl</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">irosashi</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">Highlighter</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">new</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Kazari</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">builder</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">hl</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">themes</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">github-light</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Some</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">github-dark</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">6</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">notation_comments</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#005cc5;--sd:#79c0ff">true</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">7</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">build</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><p><code>themes</code> sets the light theme (required) and an optional dark theme. When a dark theme is
+present, the rendered HTML contains CSS custom properties for both themes, and theme switching
+is pure CSS with no page reload.</p>
+<p><code>.notation_comments(true)</code> enables Shiki-style notation comments (<code>// [!code highlight]</code>,
+<code>// [!code ++]</code>, <code>// [!code focus]</code>). These are opt-in because they modify the source before
+rendering.</p>
+<h2 id="render-a-code-block">Render a code block<a class="sarde-heading-anchor" href="#render-a-code-block" aria-label="Link to section: Render a code block"></a></h2>
+<p>Pass the source code and a meta string. The meta string uses the same syntax as a Markdown
+fence info line:</p>
+<div class="kazari-block not-content" data-lines="5">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="let code = r#&#34;fn main() {    println!(&#34;Hello, world!&#34;);}&#34;#;let html = kz.render_with_meta(code, r#&#34;rust title=&#34;main.rs&#34; showLineNumbers {2}&#34;#)?;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">code</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">r</span><span style="--sl:#032f62;--sd:#a5d6ff">#</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">fn main() {</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#032f62;--sd:#a5d6ff">println!(&#34;Hello, world!&#34;);</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"><span style="--sl:#032f62;--sd:#a5d6ff">}</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">#</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code"></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">html</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">render_with_meta</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">code</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">r</span><span style="--sl:#032f62;--sd:#a5d6ff">#</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">rust title=&#34;main.rs&#34; showLineNumbers {2}</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">#</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><p>This produces a framed code block titled &#34;main.rs&#34; with line numbers enabled and line 2
+highlighted. The full <a href="/irosashi/docs/reference/meta-string-syntax/">meta string syntax</a> is documented in
+the reference section.</p>
+<p>For programmatic control without parsing a meta string, use <code>render</code> with an <code>Options</code> struct:</p>
+<div class="kazari-block not-content" data-lines="8">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="use kazari_rs::Options;let html = kz.render(code, &amp;Options {    lang: &#34;rust&#34;.into(),    title: &#34;main.rs&#34;.into(),    line_numbers: Some(true),    ..Default::default()})?;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">use</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">kazari_rs</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">Options</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">html</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">render</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">code</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">&amp;</span><span style="--sl:#6f42c1;--sd:#ffa657">Options</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">{</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#24292e;--sd:#e6edf3">lang</span><span style="--sl:#c03441;--sd:#ff7b72">:</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">rust</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">into</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#24292e;--sd:#e6edf3">title</span><span style="--sl:#c03441;--sd:#ff7b72">:</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">main.rs</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">into</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">6</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#24292e;--sd:#e6edf3">line_numbers</span><span style="--sl:#c03441;--sd:#ff7b72">:</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Some</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#005cc5;--sd:#79c0ff">true</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">7</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">..</span><span style="--sl:#6f42c1;--sd:#ffa657">Default</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">default</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">8</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">}</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><h2 id="inject-css-and-js">Inject CSS and JS<a class="sarde-heading-anchor" href="#inject-css-and-js" aria-label="Link to section: Inject CSS and JS"></a></h2>
+<p>Each rendered block is self-contained HTML, but the page needs one shared stylesheet and one
+shared script. Inject them once:</p>
+<div class="kazari-block not-content" data-lines="13">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="let page = format!(    r#&#34;&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;style&gt;{}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;{}&lt;script&gt;{}&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;&#34;#,    kz.css(),    html,    kz.js(),);"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">page</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#d2a8ff">format!</span><span style="--sl:#24292e;--sd:#e6edf3">(</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#032f62;--sd:#a5d6ff">r</span><span style="--sl:#032f62;--sd:#a5d6ff">#</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">&lt;!doctype html&gt;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"><span style="--sl:#032f62;--sd:#a5d6ff">&lt;html&gt;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code"><span style="--sl:#032f62;--sd:#a5d6ff">&lt;head&gt;&lt;style&gt;{}&lt;/style&gt;&lt;/head&gt;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code"><span style="--sl:#032f62;--sd:#a5d6ff">&lt;body&gt;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">6</div></div><div class="kz-code"><span style="--sl:#032f62;--sd:#a5d6ff">{}</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">7</div></div><div class="kz-code"><span style="--sl:#032f62;--sd:#a5d6ff">&lt;script&gt;{}&lt;/script&gt;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">8</div></div><div class="kz-code"><span style="--sl:#032f62;--sd:#a5d6ff">&lt;/body&gt;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">9</div></div><div class="kz-code"><span style="--sl:#032f62;--sd:#a5d6ff">&lt;/html&gt;</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">#</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">10</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">css</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">11</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#24292e;--sd:#e6edf3">html</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">12</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">js</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">13</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><p><code>css()</code> returns the full Kazari stylesheet, including theme variables, marker colours, toolbar
+styles, and the cascade layer. <code>js()</code> returns the scripts for the copy button, word wrap
+toggle, fullscreen, and the theme toggle. Both are minified by default.</p>
+<p>For long-lived caching with content-hashed filenames, use <code>assets()</code> instead:</p>
+<div class="kazari-block not-content" data-lines="5">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="let assets = kz.assets();// assets.css.filename: &#34;kazari-a1b2c3.css&#34;// assets.css.content:  the stylesheet// assets.js.filename:  &#34;kazari-d4e5f6.js&#34;// assets.js.content:   the script"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">assets</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">assets</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"><span style="--sl:#616a73;--sd:#8b949e">//</span><span style="--sl:#616a73;--sd:#8b949e"> assets.css.filename: &#34;kazari-a1b2c3.css&#34;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"><span style="--sl:#616a73;--sd:#8b949e">//</span><span style="--sl:#616a73;--sd:#8b949e"> assets.css.content:  the stylesheet</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code"><span style="--sl:#616a73;--sd:#8b949e">//</span><span style="--sl:#616a73;--sd:#8b949e"> assets.js.filename:  &#34;kazari-d4e5f6.js&#34;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code"><span style="--sl:#616a73;--sd:#8b949e">//</span><span style="--sl:#616a73;--sd:#8b949e"> assets.js.content:   the script</span></div></div></code></pre></figure>
+</div><h2 id="typst-output">Typst output<a class="sarde-heading-anchor" href="#typst-output" aria-label="Link to section: Typst output"></a></h2>
+<p>Kazari can render the same block as a Typst <code>#code-block(...)</code> call for PDF export. The light
+theme colours are used:</p>
+<div class="kazari-block not-content" data-lines="6">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="let typst_block = kz.render_with_meta_typst(code, r#&#34;rust title=&#34;main.rs&#34; showLineNumbers&#34;#)?;let preamble = kazari_rs::typst_preamble();let document = format!(&#34;{preamble}\n{typst_block}&#34;);std::fs::write(&#34;output.typ&#34;, &amp;document)?;// then: typst compile output.typ"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">typst_block</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">render_with_meta_typst</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">code</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">r</span><span style="--sl:#032f62;--sd:#a5d6ff">#</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">rust title=&#34;main.rs&#34; showLineNumbers</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">#</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">preamble</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">kazari_rs</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">typst_preamble</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">document</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#d2a8ff">format!</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">{</span><span style="--sl:#032f62;--sd:#a5d6ff">preamble</span><span style="--sl:#032f62;--sd:#a5d6ff">}</span><span style="--sl:#005cc5;--sd:#ff7b72">\</span><span style="--sl:#005cc5;--sd:#ff7b72">n</span><span style="--sl:#032f62;--sd:#a5d6ff">{</span><span style="--sl:#032f62;--sd:#a5d6ff">typst_block</span><span style="--sl:#032f62;--sd:#a5d6ff">}</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code"><span style="--sl:#6f42c1;--sd:#ffa657">std</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">fs</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">write</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">output.typ</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">&amp;</span><span style="--sl:#24292e;--sd:#e6edf3">document</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">6</div></div><div class="kz-code"><span style="--sl:#616a73;--sd:#8b949e">//</span><span style="--sl:#616a73;--sd:#8b949e"> then: typst compile output.typ</span></div></div></code></pre></figure>
+</div><p><code>typst_preamble()</code> returns the <code>#code-block</code> template definition. Include it once at the top of
+the document. Each <code>render_with_meta_typst</code> call emits one <code>#code-block(...)</code> invocation that
+the template draws.</p>
+<h2 id="markdown-integration">Markdown integration<a class="sarde-heading-anchor" href="#markdown-integration" aria-label="Link to section: Markdown integration"></a></h2>
+<p>Enable the <code>markdown</code> feature to render entire Markdown documents through Kazari. Every fenced
+code block is highlighted and decorated; the prose is rendered by pulldown-cmark:</p>
+<div class="kazari-block not-content" data-lines="3">
+<figure class="frame has-title" data-lang="toml"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Toml</span><span class="kz-file-icon" data-ext="toml"></span><span class="kz-title">Cargo.toml</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="[dependencies]kazari-rs = { version = &#34;0.1&#34;, features = [&#34;markdown&#34;] }pulldown-cmark = &#34;0.13&#34;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="toml"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">[</span><span style="--sl:#6f42c1;--sd:#ffa657">dependencies</span><span style="--sl:#24292e;--sd:#e6edf3">]</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">kazari-rs</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">{</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">version</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">0.1</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">features</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">[</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">markdown</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#24292e;--sd:#e6edf3">]</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">}</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">pulldown-cmark</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">0.13</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span></div></div></code></pre></figure>
+</div><div class="kazari-block not-content" data-lines="4">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="use kazari_rs::markdown::render_markdown;use pulldown_cmark::Options;let html = render_markdown(&amp;kz, markdown_source, Options::empty())?;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">use</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">kazari_rs</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">markdown</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#24292e;--sd:#e6edf3">render_markdown</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">use</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">pulldown_cmark</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">Options</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">html</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#d2a8ff">render_markdown</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#c03441;--sd:#ff7b72">&amp;</span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">markdown_source</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Options</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">empty</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><p>For <code>:::code-group</code> tabbed containers, enable code groups on the builder:</p>
+<div class="kazari-block not-content" data-lines="4">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="let kz = Kazari::builder(hl)    .themes(&#34;github-light&#34;, Some(&#34;github-dark&#34;))    .code_groups(true)    .build()?;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Kazari</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">builder</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">hl</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">themes</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">github-light</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Some</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">github-dark</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">code_groups</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#005cc5;--sd:#79c0ff">true</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">build</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><p>If you already process pulldown-cmark events in a pipeline, use <code>highlight_events</code> to transform
+the event stream without taking over the final HTML rendering:</p>
+<div class="kazari-block not-content" data-lines="4">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="use kazari_rs::markdown::highlight_events;use pulldown_cmark::Parser;let events = highlight_events(&amp;kz, Parser::new(markdown_source))?;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">use</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">kazari_rs</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">markdown</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#24292e;--sd:#e6edf3">highlight_events</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">use</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">pulldown_cmark</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">Parser</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">events</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#d2a8ff">highlight_events</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#c03441;--sd:#ff7b72">&amp;</span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Parser</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">new</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">markdown_source</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><h2 id="next-steps">Next steps<a class="sarde-heading-anchor" href="#next-steps" aria-label="Link to section: Next steps"></a></h2>
+<ul>
+<li><a href="/irosashi/docs/reference/meta-string-syntax/">Meta string syntax</a> for the full set of per-block
+options.</li>
+<li><a href="/irosashi/docs/reference/configuration/">Configuration file</a> for engine-wide defaults via
+<code>kazari.config.yaml</code>.</li>
+<li><a href="/irosashi/docs/reference/css-variables/">CSS variables</a> for visual customization.</li>
+<li><a href="/irosashi/docs/styling/themes-and-dark-mode/">Themes and dark mode</a> for dual-theme setup and
+switching strategies.</li>
+</ul>
+
+
+            </article>
+            <div class="sarde-page-meta">
+              <a class="sarde-edit-link edit-link" href="https://github.com/frostybee/irosashi/edit/main/docs/content/docs/getting-started/kazari.md" rel="noopener"><svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>Edit this page</a>
+
+              
+<p class="sarde-last-updated">Last updated: <time datetime="2026-09-16">Sep 16, 2026</time></p>
+
+
+            </div>
+            
+<nav class="sarde-pagination" aria-label="Page navigation">
+  
+  <a href="/irosashi/docs/getting-started/quick-start/" class="sarde-pagination-prev" rel="prev">
+    <span class="sarde-pagination-dir">
+      <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18l-6-6l6-6"/></svg>
+      Previous
+    </span>
+    <span class="sarde-pagination-title">Quick start</span>
+  </a>
+  
+  
+  <a href="/irosashi/docs/features/" class="sarde-pagination-next" rel="next">
+    <span class="sarde-pagination-dir">
+      Next
+      <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg>
+    </span>
+    <span class="sarde-pagination-title">Features</span>
+  </a>
+  
+</nav>
+
+
+            <footer class="sarde-footer">
+  <div class="sarde-footer-inner">
+    
+    <div class="sarde-footer-top">
+      
+      
+<div class="sarde-social">
+  
+  <a class="sarde-social-link" href="https://github.com/frostybee/irosashi" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" class="sarde-social-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5c.08-1.25-.27-2.48-1-3.5c.28-1.15.28-2.35 0-3.5c0 0-1 0-3 1.5c-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5c-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g></svg></a>
+  
+</div>
+
+
+    </div>
+    
+    <div class="sarde-footer-bottom">
+      
+      <span>&copy; 2026 Irosashi</span>
+      
+      <span class="sarde-footer-sep" aria-hidden="true"></span>
+      <span class="sarde-credits">Made with <a href="https://getsarde.github.io/sarde/" rel="noopener">Sarde</a></span>
+      
+    </div>
+  </div>
+</footer>
+
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <script defer src="/irosashi/assets/js/sarde.js"></script>
+<script defer src="/irosashi/assets/js/static-search.js"></script>
+<script defer src="/irosashi/assets/plugins/telescope/telescope.1e91057c.js"></script>
+
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=window.__SARDE__.pluginConfig||{};window.__SARDE__.pluginConfig.search={"strings":{"clear":"Clear","filter_all":"All","full_search":"Full Search","fuzzy_match":"Fuzzy match","group_other":"Other","loading":"Loading results","matches_in_page_one":"{count} match in this page","matches_in_page_other":"{count} matches in this page","matching_sections":"Matching sections","min_length":"Type at least {min} characters","no_preview":"No preview available","open_page":"Open page","preview":"Preview","recent":"Recent","results_count_one":"{count} result for '{term}'","results_count_other":"{count} results for '{term}'","simple_search":"Simple Search","switch_full_search":"Switch to Full Search","switch_simple_search":"Switch to Simple Search","try_all_sections":"Try searching in all sections","type_to_search":"Type to start searching"}};</script>
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=Object.assign(window.__SARDE__.pluginConfig||{},{"keyboard_nav":{"auto_hide":"compact","hide_delay":2000,"scroll_threshold":100,"show_compact_nav":true,"show_hint":false,"show_side_nav":true,"show_tooltip":true,"side_nav_size":"medium"},"reading_progress":{"bar_color":"#d9642a","bar_height":3.5,"lesson_pages_only":true,"show_reading_time":true,"use_gradient":true,"words_per_minute":200},"scroll_to_top":{"border_radius":15,"position":"center","progress_ring_color":"","show_progress_ring":true,"show_tooltip":true,"smooth_scroll":true,"threshold":300}});</script>
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=window.__SARDE__.pluginConfig||{};window.__SARDE__.pluginConfig.telescope={"debounce_ms":120,"default_tab":"search","max_pinned":50,"max_recent":10,"max_results":20,"shortcut_key":"/","strings":{"clear":"telescope.clear","clear_pinned":"telescope.clear_pinned","clear_recent":"telescope.clear_recent","close":"telescope.close","dialog_opened":"telescope.dialog_opened","filter_recent":"telescope.filter_recent","hint_close":"telescope.hint_close","hint_navigate":"telescope.hint_navigate","hint_pin":"telescope.hint_pin","hint_select":"telescope.hint_select","loading":"telescope.loading","no_recent":"telescope.no_recent","no_results":"telescope.no_results","pin":"telescope.pin","pinned_cleared":"telescope.pinned_cleared","pinned_section":"telescope.pinned_section","placeholder":"telescope.placeholder","recent_cleared":"telescope.recent_cleared","recent_section":"telescope.recent_section","results_count":"telescope.results_count","results_section":"telescope.results_section","showing_of":"telescope.showing_of","tab_recent":"telescope.tab_recent","tab_search":"telescope.tab_search","trigger":"telescope.trigger","unpin":"telescope.unpin"}};</script>
+
+<script type="module" src="/irosashi/assets/plugins/plugins.25f40be8.js"></script>
+
+
+<script defer src="/irosashi/assets/js/kazari.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+themes:
+  light: github-light
+  dark: github-dark-default
+darkMode:
+  kind: selector
+  selector: '[data-theme="dark"]'
+copyButton: true
+fullscreenButton: true
+wrapButton: true
+lineNumbers: true
+frameDetection: true
+fileNameExtraction: true
+mermaidPassThrough: true
+themedScrollbars: true
+themedSelection: true
+terminalDotStyle: colored
+tabWidth: 2
+minContrast: 5.5
+minify: true
+styleReset: true
+cascadeLayer: kazari
+locale: en-US
+defaults:
+  wrap: true
+  preserveIndent: true
+  lineNumbers: true
+  frame: auto
+languageDefaults:
+  "bash,sh,zsh,shell":
+    frame: terminal
+    lineNumbers: false
+  "console,powershell":
+    frame: terminal
+    lineNumbers: false
+languageAliases:
+  ts: typescript
+  js: javascript
+  py: python
+  rs: rust
+  yml: yaml
+  sh: bash
+collapsible:
+  lineThreshold: 15
+  previewLines: 5
+  defaultCollapsed: true
+  style: github

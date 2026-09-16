@@ -1,0 +1,13 @@
+/* assets/css/custom.css */
+.sarde-hero-image img,
+.sarde-hero-image svg {
+  max-width: 320px;
+}
+.sarde-card-grid .sarde-card {
+  min-width: 0;
+  overflow: hidden;
+}
+.sarde-card-grid pre {
+  min-width: 0;
+  overflow-x: auto;
+}

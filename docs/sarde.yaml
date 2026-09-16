@@ -1,0 +1,106 @@
+site:
+  title: "Irosashi"
+  description: "Shiki's output without Shiki's runtime. TextMate grammars, VS Code themes, and byte-identical HTML in Rust."
+  url: "https://frostybee.github.io"
+  edit_url: "https://github.com/frostybee/irosashi/edit/main/docs/content"
+  logo: "/favicon.svg"
+  favicon: "/favicon.svg"
+build:
+  base_path: /irosashi/
+theme:
+  preset: "docs"
+  dark: true
+  font_family: "'Inter', system-ui, -apple-system, sans-serif"
+
+social:
+- icon: github
+  label: GitHub
+  url: https://github.com/frostybee/irosashi
+
+collections:
+  docs:
+    sort: "order"
+    tabs: false
+    sidebar:
+      collapsed_by_default: true
+toc:
+  enabled: true
+  max_level: 4
+  min_level: 2
+header:
+  links:
+  - label: Changelog
+    url: /docs/changelog
+  - label: Showcase
+    url: /demo/showcase.html
+  search: true
+  social: true
+  theme_toggle: true
+markdown:
+  github_alerts: true
+  mermaid: true
+  triple_colon_callouts: true
+  typographer: true
+  unsafe: false
+  codeblocks:
+    engine: nuri
+    light_theme: "github-light"
+    dark_theme: "github-dark-default"
+
+head:
+  custom_css:
+    - css/custom.css
+
+plugins:
+  enabled:
+    - search
+    - seo
+    - sitemap
+    - robots
+    - rss
+    - atom
+    - content_lint
+    - link_validator
+    - redirects
+    - llms_txt
+    - mermaid
+    - social_cards
+    - scroll_to_top
+    - keyboard_nav
+    - reading_progress
+    - telescope
+  config:
+    social_cards:
+      # Irosashi brand: warm dark brown tile, rust orange accent, GitHub Dark
+      # syntax gradient for the secondary accent.
+      bg_color: "#2b1d14"
+      accent_color: "#d9642a"
+      accent_color_2: "#d2a8ff"
+      logo: "/images/irosashi.svg"
+    scroll_to_top:
+      show_progress_ring: true
+      show_tooltip: true
+    keyboard_nav:
+      show_hint: false
+      show_side_nav: true
+    reading_progress:
+      bar_height: 3.5
+      bar_color: "#d9642a"
+
+homepage:
+  hero:
+    title: "Irosashi"
+    subtitle: "Shiki's output without Shiki's runtime. TextMate grammars, VS Code themes, and byte-identical HTML in Rust."
+    background: gradient
+    cta:
+      label: "Get Started"
+      url: "/docs/introduction"
+      icon: rocket
+    secondary_cta:
+      label: "View Showcase"
+      url: "/demo/showcase.html"
+      icon: "briefcase"
+    image:
+      light: /images/irosashi.svg
+      dark: /images/irosashi.svg
+      alt: "Irosashi"

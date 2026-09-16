@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <script>(function(){var t=localStorage.getItem('sd-theme')||'system';var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(localStorage.getItem('sd-sidebar')==='collapsed'&&matchMedia('(min-width:1024px)').matches){document.documentElement.classList.add('sd-sidebar-collapsed')}if(localStorage.getItem('sd-docs-centered')==='1'&&matchMedia('(min-width:1280px)').matches){document.documentElement.classList.add('sd-docs-centered')}})()</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Sarde vdev">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1a1c">
+<link rel="sitemap" type="application/xml" href="/irosashi/sitemap.xml">
+<link rel="icon" href="/irosashi/favicon.svg" type="image/svg&#43;xml">
+<link rel="preload" href="/irosashi/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+<script>window.__SARDE__={basePath:"\/irosashi\/",lang:"en",defaultLang:"",siteId:"c0dd9605",i18n:{revealSpoiler:"Reveal spoiler",hideSpoiler:"Hide spoiler",expandSidebar:"Expand sidebar",collapseSidebar:"Collapse sidebar"}};</script>
+<title>CSS variables | Irosashi</title>
+<meta name="description" content="Complete reference for all --kz-* CSS custom properties.">
+
+<meta property="og:title" content="CSS variables">
+<meta property="og:description" content="Complete reference for all --kz-* CSS custom properties.">
+<meta property="og:url" content="https://frostybee.github.io/irosashi/docs/reference/css-variables/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://frostybee.github.io/irosashi/og/docs/reference/css-variables.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CSS variables">
+<meta property="og:image:type" content="image/png">
+<meta property="og:site_name" content="Irosashi">
+<meta property="og:locale" content="en_US">
+
+<meta property="article:published_time" content="2026-09-16T11:25:04-04:00">
+<meta property="article:modified_time" content="2026-09-16T11:25:04-04:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSS variables">
+<meta name="twitter:description" content="Complete reference for all --kz-* CSS custom properties.">
+<meta name="twitter:image" content="https://frostybee.github.io/irosashi/og/docs/reference/css-variables.png">
+<meta name="twitter:image:alt" content="CSS variables">
+
+<link rel="canonical" href="https://frostybee.github.io/irosashi/docs/reference/css-variables/">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","dateModified":"2026-09-16","datePublished":"2026-09-16","description":"Complete reference for all --kz-* CSS custom properties.","headline":"CSS variables","mainEntityOfPage":"https://frostybee.github.io/irosashi/docs/reference/css-variables/","url":"https://frostybee.github.io/irosashi/docs/reference/css-variables/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://frostybee.github.io/docs/","name":"Documentation","position":1},{"@type":"ListItem","item":"https://frostybee.github.io/docs/reference/","name":"Reference","position":2},{"@type":"ListItem","item":"https://frostybee.github.io/docs/reference/css-variables/","name":"CSS variables","position":3}]}]}</script>
+
+
+
+<link rel="stylesheet" href="/irosashi/assets/css/tokens-theme.css">
+<link rel="stylesheet" href="/irosashi/assets/css/sarde.410d2866.css">
+<link rel="stylesheet" href="/irosashi/assets/css/custom.css">
+<link rel="stylesheet" href="/irosashi/assets/plugins/plugins.d6ae2c0b.css">
+<link rel="stylesheet" href="/irosashi/assets/plugins/telescope/telescope.624a4fe2.css">
+
+
+
+</head>
+<body class="sarde-layout-docs">
+  <a href="#main-content" class="sarde-skip-link">Skip to main content</a>
+  <header class="sarde-header">
+  <a href="/irosashi/" class="sarde-site-title">
+  <img class="sarde-site-logo" src="/irosashi/favicon.svg" alt="">
+  <span>Irosashi</span>
+</a>
+
+  
+<button class="sarde-nav-toggle" id="sarde-nav-toggle" type="button"
+        aria-expanded="false" aria-controls="sarde-global-nav"
+        aria-label="Menu" data-sarde-nav-toggle>
+  <svg aria-hidden="true" class="sarde-nav-icon-open" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 12h16M4 19h16"/></svg>
+  <svg aria-hidden="true" class="sarde-nav-icon-close" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+</button>
+<nav class="sarde-header-nav" id="sarde-global-nav" aria-label="Main navigation">
+  
+  <a href="/irosashi/docs/" class="is-active" aria-current="page">Documentation</a>
+  
+  <a href="/irosashi/docs/changelog">Changelog</a>
+  
+  <a href="/irosashi/demo/showcase.html">Showcase</a>
+  
+</nav>
+
+
+  <div class="sarde-header-actions">
+    
+    
+<button type="button" class="sarde-search-trigger" data-search-trigger aria-label="Search" title="Search">
+  <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m21 21l-4.34-4.34"/><circle cx="11" cy="11" r="8"/></g></svg>
+  <span class="sarde-search-trigger-text">Search</span>
+  <span class="sarde-search-kbd" aria-hidden="true"><kbd class="sarde-kbd-ctrl">Ctrl</kbd><kbd class="sarde-kbd-meta">⌘</kbd><kbd>K</kbd></span>
+</button>
+<dialog id="sarde-search-modal" class="sarde-search-modal" aria-label="Search" data-search-version="" data-search-lang="en">
+  <div class="sarde-search-modal-panel">
+    <div class="sarde-search-input-row">
+      <span class="sarde-search-input-icon"><svg aria-hidden="true" focusable="false" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m21 21l-4.34-4.34"/><circle cx="11" cy="11" r="8"/></g></svg></span>
+      <input id="sarde-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search" aria-label="Search">
+      <button type="button" class="sarde-search-close" data-search-close aria-label="Close"><svg aria-hidden="true" focusable="false" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div id="sarde-search-filters" class="sarde-search-filters" hidden></div>
+    <div class="sarde-search-content-area">
+      <div id="sarde-search-body" class="sarde-search-body">
+        <div id="sarde-search-initial" class="sarde-search-initial"></div>
+        <ul id="sarde-search-results" aria-label="Search results" aria-live="polite" hidden></ul>
+        <div id="sarde-search-empty" class="sarde-search-empty" hidden>
+          <svg aria-hidden="true" class="sarde-search-empty-icon" focusable="false" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m13.5 8.5l-5 5m0-5l5 5"/><circle cx="11" cy="11" r="8"/><path d="m21 21l-4.3-4.3"/></g></svg>
+          <p class="sarde-search-empty-title">No results found.</p>
+          <ul class="sarde-search-empty-tips" id="sarde-search-empty-tips">
+            <li>Check for typos in your search term</li>
+            <li>Try using different or more general keywords</li>
+          </ul>
+        </div>
+      </div>
+      <div id="sarde-search-preview" class="sarde-search-preview" aria-live="polite" hidden></div>
+    </div>
+    <div class="sarde-search-footer" aria-hidden="true">
+      <span><kbd><svg aria-hidden="true" focusable="false" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l7-7l7 7m-7 7V5"/></svg></kbd><kbd><svg aria-hidden="true" focusable="false" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m7-7l-7 7l-7-7"/></svg></kbd> to navigate</span>
+      <span><kbd>Enter</kbd> to select</span>
+      <span><kbd>Esc</kbd> to close</span>
+      <button type="button" id="sarde-search-mode-toggle" class="sarde-search-mode-toggle" aria-label="Switch to Full Search">
+        <svg aria-hidden="true" focusable="false" height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></g></svg>
+        <span class="sarde-search-mode-label">Full Search</span>
+        <kbd class="sarde-search-mode-kbd sarde-kbd-ctrl">Ctrl</kbd><kbd class="sarde-search-mode-kbd sarde-kbd-meta">⌘</kbd><kbd class="sarde-search-mode-kbd">Space</kbd>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+
+    
+    
+
+    
+
+    
+    
+<div class="sarde-social">
+  
+  <a class="sarde-social-link" href="https://github.com/frostybee/irosashi" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" class="sarde-social-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5c.08-1.25-.27-2.48-1-3.5c.28-1.15.28-2.35 0-3.5c0 0-1 0-3 1.5c-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5c-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g></svg></a>
+  
+</div>
+
+
+    
+    <button class="sarde-center-toggle" id="sarde-center-toggle"
+        aria-label="Center content" type="button">
+  <svg aria-hidden="true" class="sarde-center-icon-center" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 12H7m12 6H5M21 6H3"/></svg>
+  <svg aria-hidden="true" class="sarde-center-icon-wide" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 18h18M3 6h18"/></svg>
+</button>
+
+    <div class="sarde-theme-toggle" role="group" aria-label="Theme selection" data-sarde-theme-toggle>
+  <div class="sarde-theme-toggle-indicator" data-sarde-theme-indicator></div>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="light" aria-pressed="false" aria-label="Light mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="system" aria-pressed="true" aria-label="System theme">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="dark" aria-pressed="false" aria-label="Dark mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+  </button>
+</div>
+
+  </div>
+</header>
+
+  
+<details class="sarde-mobile-toc" id="sarde-mobile-toc">
+  <summary class="sarde-mobile-toc-bar" aria-label="On this page">
+    <span class="sarde-mobile-toc-toggle">
+      <svg aria-hidden="true" class="sarde-mobile-toc-caret" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg>
+      <span class="sarde-mobile-toc-toggle-label">On this page</span>
+    </span>
+    <svg class="sarde-mobile-toc-progress" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+      <circle class="sarde-mobile-toc-progress-track" cx="11" cy="11" r="8" />
+      <circle class="sarde-mobile-toc-progress-fill" cx="11" cy="11" r="8" />
+    </svg>
+    <span class="sarde-mobile-toc-current" aria-hidden="true"></span>
+  </summary>
+  <div class="sarde-mobile-toc-panel">
+    <ul>
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#_top" class="sarde-mobile-toc-link">Overview</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#overriding-variables" class="sarde-mobile-toc-link">Overriding variables</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#frame-and-container" class="sarde-mobile-toc-link">Frame and container</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#typography" class="sarde-mobile-toc-link">Typography</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-3">
+        <a href="#code" class="sarde-mobile-toc-link">Code</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-3">
+        <a href="#ui-elements" class="sarde-mobile-toc-link">UI elements</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#code-area" class="sarde-mobile-toc-link">Code area</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#title-bar" class="sarde-mobile-toc-link">Title bar</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#line-numbers" class="sarde-mobile-toc-link">Line numbers</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#markers" class="sarde-mobile-toc-link">Markers</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-3">
+        <a href="#line-markers" class="sarde-mobile-toc-link">Line markers</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-3">
+        <a href="#labels" class="sarde-mobile-toc-link">Labels</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-3">
+        <a href="#inline-markers" class="sarde-mobile-toc-link">Inline markers</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#focus" class="sarde-mobile-toc-link">Focus</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#toolbar" class="sarde-mobile-toc-link">Toolbar</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#tooltip" class="sarde-mobile-toc-link">Tooltip</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#collapsible" class="sarde-mobile-toc-link">Collapsible</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#terminal" class="sarde-mobile-toc-link">Terminal</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#scrollbar" class="sarde-mobile-toc-link">Scrollbar</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#icons" class="sarde-mobile-toc-link">Icons</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#fullscreen" class="sarde-mobile-toc-link">Fullscreen</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#code-groups" class="sarde-mobile-toc-link">Code groups</a>
+      </li>
+    
+      <li class="sarde-mobile-toc-item sarde-mobile-toc-level-2">
+        <a href="#theme-derived-variables" class="sarde-mobile-toc-link">Theme-derived variables</a>
+      </li>
+    
+    </ul>
+  </div>
+</details>
+
+
+  
+  <nav class="sarde-mobile-nav" aria-label="Documentation navigation">
+    <button class="sarde-menu-toggle" id="sarde-menu-toggle"
+            aria-expanded="false" aria-label="Menu"
+            aria-controls="sarde-sidebar" type="button">
+      <svg aria-hidden="true" class="sarde-menu-icon-open" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <svg aria-hidden="true" class="sarde-menu-icon-close" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <aside class="sarde-sidebar" id="sarde-sidebar" aria-label="Sidebar">
+      <button class="sarde-sidebar-toggle" id="sarde-sidebar-toggle"
+              aria-expanded="true" aria-label="Collapse sidebar" type="button">
+        <svg aria-hidden="true" class="sarde-sidebar-toggle-collapse" focusable="false" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18m7-6l-3-3l3-3"/></g></svg>
+        <svg aria-hidden="true" class="sarde-sidebar-toggle-expand" focusable="false" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18m5-12l3 3l-3 3"/></g></svg>
+      </button>
+      <div class="sarde-sidebar-content">
+        
+
+
+<script>(function(){try{var s=sessionStorage.getItem('sd-sb');if(s){window.__sdsbr=JSON.parse(s)}}catch(e){}})()</script>
+<nav class="sarde-sidebar-nav" aria-label="Section navigation" data-sd-hash="a477e59b">
+  <ul class="sarde-sidebar-tree">
+  
+    
+    <li><a href="/irosashi/docs/introduction/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></g></svg>Introduction</a></li>
+    
+  
+    
+    <li><a href="/irosashi/docs/why-irosashi/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594zM20 2v4m2-2h-4"/><circle cx="4" cy="20" r="2"/></g></svg>Why Irosashi</a></li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="0">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/getting-started/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></g></svg>Getting started</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-0" aria-label="Toggle Getting started section"></button>
+        </div>
+        
+        <ul id="sd-grp-0" hidden>
+        
+          
+          <li><a href="/irosashi/docs/getting-started/installation/">Installation</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/getting-started/quick-start/">Quick start</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/getting-started/kazari/">Decorated code blocks with Kazari</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="1">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/features/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3zM7 16.5l-4.74-2.85M7 16.5l5-3m-5 3v5.17m5-8.17V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5zm5 3l-5-3m5 3l4.74-2.85M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3l5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0zM12 8L7.26 5.15M12 8l4.74-2.85M12 13.5V8"/></g></svg>Features</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-1" aria-label="Toggle Features section"></button>
+        </div>
+        
+        <ul id="sd-grp-1" hidden>
+        
+          
+          <li><a href="/irosashi/docs/features/output-formats/">Output formats</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/features/per-line-sessions/">Per-line tokenization</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group has-active" data-sd-idx="2">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/reference/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v14m-9-3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4a4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3a3 3 0 0 0-3-3z"/></svg>Reference</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="true" aria-controls="sd-grp-2" aria-label="Toggle Reference section"></button>
+        </div>
+        
+        <ul id="sd-grp-2">
+        
+          
+          <li><a href="/irosashi/docs/reference/meta-string-syntax/">Meta string syntax</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/reference/configuration/">Configuration</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/reference/css-variables/" aria-current="page" class="active">CSS variables</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="3">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/styling/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 22a1 1 0 0 1 0-20a10 9 0 0 1 10 9a5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></g></svg>Styling</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-3" aria-label="Toggle Styling section"></button>
+        </div>
+        
+        <ul id="sd-grp-3" hidden>
+        
+          
+          <li><a href="/irosashi/docs/styling/themes-and-dark-mode/">Themes and dark mode</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    <li><a href="/irosashi/docs/changelog/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9a9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5m4-1v5l4 2"/></g></svg>Changelog</a></li>
+    
+  
+  </ul>
+</nav>
+<script>(function(){var nav=document.querySelector('.sarde-sidebar-nav');if(!nav)return;var st=window.__sdsbr;var h=nav.getAttribute('data-sd-hash');if(st&&h&&st.hash===h&&Array.isArray(st.open)){var gs=nav.querySelectorAll('[data-sd-idx]');for(var i=0;i<gs.length;i++){if(gs[i].classList.contains('has-active'))continue;var idx=parseInt(gs[i].getAttribute('data-sd-idx'),10);if(idx>=0&&idx<st.open.length&&typeof st.open[idx]==='boolean'){var btn=gs[i].querySelector('button[aria-expanded]');var list=btn&&document.getElementById(btn.getAttribute('aria-controls'));if(btn&&list){btn.setAttribute('aria-expanded',st.open[idx]?'true':'false');if(st.open[idx]){list.removeAttribute('hidden')}else{list.setAttribute('hidden','')}}}}if(typeof st.scroll==='number'){nav.scrollTop=st.scroll}}delete window.__sdsbr})()</script>
+
+
+      </div>
+      <div class="sarde-sidebar-footer">
+        <div class="sarde-theme-toggle" role="group" aria-label="Theme selection" data-sarde-theme-toggle>
+  <div class="sarde-theme-toggle-indicator" data-sarde-theme-indicator></div>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="light" aria-pressed="false" aria-label="Light mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="system" aria-pressed="true" aria-label="System theme">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="dark" aria-pressed="false" aria-label="Dark mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+  </button>
+</div>
+
+        
+
+        
+
+      </div>
+    </aside>
+  </nav>
+  <div class="sarde-sidebar-backdrop" id="sarde-sidebar-backdrop"></div>
+  
+  <div class="sarde-main-frame">
+    <div class="sarde-content-columns">
+      
+      <aside class="sarde-toc" aria-label="Table of contents">
+        <div class="sarde-toc-inner">
+          
+<nav class="sarde-toc-nav" aria-label="Table of contents">
+  <h2>On this page</h2>
+  <ul>
+    <li class="sarde-toc-level-2"><a href="#_top">Overview</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#overriding-variables">Overriding variables</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#frame-and-container">Frame and container</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#typography">Typography</a></li>
+  
+    <li class="sarde-toc-level-3"><a href="#code">Code</a></li>
+  
+    <li class="sarde-toc-level-3"><a href="#ui-elements">UI elements</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#code-area">Code area</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#title-bar">Title bar</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#line-numbers">Line numbers</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#markers">Markers</a></li>
+  
+    <li class="sarde-toc-level-3"><a href="#line-markers">Line markers</a></li>
+  
+    <li class="sarde-toc-level-3"><a href="#labels">Labels</a></li>
+  
+    <li class="sarde-toc-level-3"><a href="#inline-markers">Inline markers</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#focus">Focus</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#toolbar">Toolbar</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#tooltip">Tooltip</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#collapsible">Collapsible</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#terminal">Terminal</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#scrollbar">Scrollbar</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#icons">Icons</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#fullscreen">Fullscreen</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#code-groups">Code groups</a></li>
+  
+    <li class="sarde-toc-level-2"><a href="#theme-derived-variables">Theme-derived variables</a></li>
+  
+  </ul>
+</nav>
+
+
+        </div>
+      </aside>
+      
+      <div class="sarde-main-pane">
+        <main class="sarde-doc-body" id="main-content">
+          
+          <div class="sarde-content-panel sarde-content-panel--header">
+            
+<nav class="sarde-breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+  
+  
+    <li><a href="/irosashi/docs/"><svg class="sarde-breadcrumb-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg><span class="sr-only">Documentation</span></a><svg aria-hidden="true" class="sarde-breadcrumb-sep" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg></li>
+  
+    <li><a href="/irosashi/docs/reference/">Reference</a><svg aria-hidden="true" class="sarde-breadcrumb-sep" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg></li>
+  
+    <li><span aria-current="page">CSS variables</span></li>
+  
+  </ol>
+</nav>
+
+
+            
+
+            
+
+            
+
+            
+
+            <h1 class="sarde-page-title">CSS variables</h1>
+<p class="sarde-page-description">Complete reference for all --kz-* CSS custom properties.</p>
+
+            
+          </div>
+          <div class="sarde-content-panel">
+            <article class="sarde-markdown-content">
+              
+<p>Kazari uses <code>--kz-*</code> CSS custom properties for all visual appearance. Override them in the consumer&#39;s stylesheet to customize appearance without rebuilding the engine.</p>
+<p>All variables are emitted inside a <code>@layer kazari { ... }</code> cascade layer by default, so page styles always win without <code>!important</code>. Rename or disable the layer with <code>.cascade_layer(&#34;...&#34;)</code> or the <code>cascadeLayer</code> config key.</p>
+<h2 id="overriding-variables">Overriding variables<a class="sarde-heading-anchor" href="#overriding-variables" aria-label="Link to section: Overriding variables"></a></h2>
+<p>In CSS:</p>
+<div class="kazari-block not-content" data-lines="5">
+<figure class="frame" data-lang="css"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">CSS</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code=":root {  --kz-radius: 0.75rem;  --kz-font-size: 0.85rem;  --kz-font-family: &#39;Fira Code&#39;, monospace;}"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="css"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#6f42c1;--sd:#79c0ff">:</span><span style="--sl:#6f42c1;--sd:#79c0ff">root</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">{</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code" style="--kz-indent:2ch"><span class="indent">  </span><span style="--sl:#ae4b07;--sd:#ffa657">--kz-radius</span><span style="--sl:#24292e;--sd:#e6edf3">:</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#005cc5;--sd:#79c0ff">0.75</span><span style="--sl:#c03441;--sd:#ff7b72">rem</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code" style="--kz-indent:2ch"><span class="indent">  </span><span style="--sl:#ae4b07;--sd:#ffa657">--kz-font-size</span><span style="--sl:#24292e;--sd:#e6edf3">:</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#005cc5;--sd:#79c0ff">0.85</span><span style="--sl:#c03441;--sd:#ff7b72">rem</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code" style="--kz-indent:2ch"><span class="indent">  </span><span style="--sl:#ae4b07;--sd:#ffa657">--kz-font-family</span><span style="--sl:#24292e;--sd:#e6edf3">:</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#39;</span><span style="--sl:#032f62;--sd:#a5d6ff">Fira Code</span><span style="--sl:#032f62;--sd:#a5d6ff">&#39;</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#005cc5;--sd:#79c0ff">monospace</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code"><span style="--sl:#24292e;--sd:#e6edf3">}</span></div></div></code></pre></figure>
+</div><p>Via the builder, for a single value applied to both themes:</p>
+<div class="kazari-block not-content" data-lines="7">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="use std::collections::BTreeMap;let kz = Kazari::builder(hl)    .style_overrides(BTreeMap::from([        (&#34;--kz-radius&#34;.to_owned(), &#34;0.75rem&#34;.to_owned()),    ]))    .build()?;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">use</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">std</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">collections</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#ffa657">BTreeMap</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code"></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Kazari</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">builder</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">hl</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">style_overrides</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#6f42c1;--sd:#ffa657">BTreeMap</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">from</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">[</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code" style="--kz-indent:8ch"><span class="indent">        </span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">--kz-radius</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">to_owned</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">0.75rem</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">to_owned</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">6</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#24292e;--sd:#e6edf3">]</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">7</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">build</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><p>Via the builder, with separate light and dark values:</p>
+<div class="kazari-block not-content" data-lines="5">
+<figure class="frame" data-lang="rust"><div class="kz-toolbar"><div class="kz-toolbar-left"><span class="kz-lang">Rust</span></div><div class="kz-toolbar-right"><button class="kz-copy-btn" aria-label="Copy" data-tooltip="Copy" data-copied="Copied!" data-code="let kz = Kazari::builder(hl)    .themed_style_overrides(BTreeMap::from([        (&#34;--kz-radius&#34;.to_owned(), (&#34;0.75rem&#34;.to_owned(), &#34;0.5rem&#34;.to_owned())),    ]))    .build()?;"><svg class="kz-copy-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button><span class="kz-sr-announce" aria-live="polite"></span><button class="kz-wrap-btn" aria-pressed="true" aria-label="Disable word wrap" data-tooltip="Disable word wrap" data-enable="Enable word wrap" data-disable="Disable word wrap"><svg class="kz-wrap-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h15a3 3 0 110 6h-4m0 0l2-2m-2 2l2 2"></path></svg><svg class="kz-wrap-off-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6h18M3 12h18M3 18h18"></path></svg></button><div class="kz-font-controls"><button class="kz-font-dec" aria-label="Decrease font size" data-tooltip="Decrease font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 12h12"></path></svg></button><button class="kz-font-inc" aria-label="Increase font size" data-tooltip="Increase font size"><svg class="kz-font-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v12m-6-6h12"></path></svg></button></div><button class="kz-fs-btn" aria-label="Fullscreen" data-tooltip="Fullscreen" aria-expanded="false"><svg class="kz-fs-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"></path></svg><svg class="kz-fs-exit-icon" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 4v5H4m5 0L4 4M15 4v5h5m-5 0l5-5M9 20v-5H4m5 0l-5 5M15 20v-5h5m-5 0l5 5"></path></svg></button></div></div><pre class="wrap" data-language="rust"><code><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">1</div></div><div class="kz-code"><span style="--sl:#c03441;--sd:#ff7b72">let</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">kz</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#c03441;--sd:#ff7b72">=</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#6f42c1;--sd:#ffa657">Kazari</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">builder</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">hl</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">2</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">themed_style_overrides</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#6f42c1;--sd:#ffa657">BTreeMap</span><span style="--sl:#c03441;--sd:#ff7b72">::</span><span style="--sl:#6f42c1;--sd:#d2a8ff">from</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">[</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">3</div></div><div class="kz-code" style="--kz-indent:8ch"><span class="indent">        </span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">--kz-radius</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">to_owned</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">0.75rem</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">to_owned</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span><span style="--sl:#24292e;--sd:#e6edf3"> </span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#032f62;--sd:#a5d6ff">0.5rem</span><span style="--sl:#032f62;--sd:#a5d6ff">&#34;</span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">to_owned</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">,</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">4</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#24292e;--sd:#e6edf3">]</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#24292e;--sd:#e6edf3">)</span></div></div><div class="kz-line"><div class="kz-gutter"><div class="kz-ln" aria-hidden="true">5</div></div><div class="kz-code" style="--kz-indent:4ch"><span class="indent">    </span><span style="--sl:#c03441;--sd:#ff7b72">.</span><span style="--sl:#6f42c1;--sd:#d2a8ff">build</span><span style="--sl:#24292e;--sd:#e6edf3">(</span><span style="--sl:#24292e;--sd:#e6edf3">)</span><span style="--sl:#c03441;--sd:#ff7b72">?</span><span style="--sl:#24292e;--sd:#e6edf3">;</span></div></div></code></pre></figure>
+</div><h2 id="frame-and-container">Frame and container<a class="sarde-heading-anchor" href="#frame-and-container" aria-label="Link to section: Frame and container"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-radius</code></td>
+<td><code>0.5rem</code></td>
+<td>Border radius on frames and code group containers</td>
+</tr>
+<tr>
+<td><code>--kz-shadow</code></td>
+<td><code>0 2px 8px rgba(0,0,0,0.15)</code></td>
+<td>Box shadow on frames</td>
+</tr>
+<tr>
+<td><code>--kz-border</code></td>
+<td><code>1px solid transparent</code></td>
+<td>Border on frames</td>
+</tr>
+<tr>
+<td><code>--kz-transition</code></td>
+<td><code>150ms ease</code></td>
+<td>Transition timing for code group tabs and animations</td>
+</tr>
+</tbody>
+</table>
+<h2 id="typography">Typography<a class="sarde-heading-anchor" href="#typography" aria-label="Link to section: Typography"></a></h2>
+<h3 id="code">Code<a class="sarde-heading-anchor" href="#code" aria-label="Link to section: Code"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-font-family</code></td>
+<td><code>&#39;JetBrains Mono Variable&#39;, monospace</code></td>
+<td>Code font family</td>
+</tr>
+<tr>
+<td><code>--kz-font-size</code></td>
+<td><code>0.875rem</code></td>
+<td>Code font size</td>
+</tr>
+<tr>
+<td><code>--kz-font-weight</code></td>
+<td><code>500</code></td>
+<td>Code font weight</td>
+</tr>
+<tr>
+<td><code>--kz-line-height</code></td>
+<td><code>1.6</code></td>
+<td>Code line height</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ui-elements">UI elements<a class="sarde-heading-anchor" href="#ui-elements" aria-label="Link to section: UI elements"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-ui-font-family</code></td>
+<td><code>system-ui, sans-serif</code></td>
+<td>Font family for toolbar, tabs, labels, and tooltips</td>
+</tr>
+<tr>
+<td><code>--kz-ui-font-size</code></td>
+<td><code>0.9rem</code></td>
+<td>UI element font size</td>
+</tr>
+<tr>
+<td><code>--kz-ui-font-weight</code></td>
+<td><code>400</code></td>
+<td>UI element font weight</td>
+</tr>
+<tr>
+<td><code>--kz-ui-line-height</code></td>
+<td><code>1.65</code></td>
+<td>UI element line height</td>
+</tr>
+</tbody>
+</table>
+<h2 id="code-area">Code area<a class="sarde-heading-anchor" href="#code-area" aria-label="Link to section: Code area"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-editor-bg</code></td>
+<td>from theme</td>
+<td>Editor background colour</td>
+</tr>
+<tr>
+<td><code>--kz-editor-fg</code></td>
+<td>from theme</td>
+<td>Editor foreground colour</td>
+</tr>
+<tr>
+<td><code>--kz-code-padding-block</code></td>
+<td><code>1rem</code></td>
+<td>Vertical padding inside the code area</td>
+</tr>
+<tr>
+<td><code>--kz-code-padding-inline</code></td>
+<td><code>1.35rem</code></td>
+<td>Horizontal padding inside the code area</td>
+</tr>
+<tr>
+<td><code>--kz-selection-bg</code></td>
+<td>from theme</td>
+<td>Text selection background</td>
+</tr>
+</tbody>
+</table>
+<h2 id="title-bar">Title bar<a class="sarde-heading-anchor" href="#title-bar" aria-label="Link to section: Title bar"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-title-font-size</code></td>
+<td><code>0.8rem</code></td>
+<td>Title text font size</td>
+</tr>
+<tr>
+<td><code>--kz-title-padding</code></td>
+<td><code>0.5rem 1rem</code></td>
+<td>Title bar padding</td>
+</tr>
+</tbody>
+</table>
+<h2 id="line-numbers">Line numbers<a class="sarde-heading-anchor" href="#line-numbers" aria-label="Link to section: Line numbers"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-ln-fg</code></td>
+<td>from theme</td>
+<td>Line number colour</td>
+</tr>
+<tr>
+<td><code>--kz-ln-highlight-fg</code></td>
+<td>from theme</td>
+<td>Highlighted line number colour</td>
+</tr>
+<tr>
+<td><code>--kz-ln-width</code></td>
+<td><code>2ch</code></td>
+<td>Minimum gutter width</td>
+</tr>
+<tr>
+<td><code>--kz-ln-padding-inline</code></td>
+<td><code>2ch</code></td>
+<td>Horizontal padding around line numbers</td>
+</tr>
+<tr>
+<td><code>--kz-ln-opacity</code></td>
+<td><code>1</code></td>
+<td>Line number opacity</td>
+</tr>
+<tr>
+<td><code>--kz-ln-highlight-opacity</code></td>
+<td><code>0.8</code></td>
+<td>Highlighted line number opacity</td>
+</tr>
+<tr>
+<td><code>--kz-gutter-border-color</code></td>
+<td>from theme</td>
+<td>Gutter border colour</td>
+</tr>
+<tr>
+<td><code>--kz-gutter-border-width</code></td>
+<td><code>1px</code></td>
+<td>Gutter border width</td>
+</tr>
+</tbody>
+</table>
+<h2 id="markers">Markers<a class="sarde-heading-anchor" href="#markers" aria-label="Link to section: Markers"></a></h2>
+<h3 id="line-markers">Line markers<a class="sarde-heading-anchor" href="#line-markers" aria-label="Link to section: Line markers"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-mark-bg</code></td>
+<td><code>rgba(255,200,0,0.12)</code></td>
+<td>Highlight background</td>
+</tr>
+<tr>
+<td><code>--kz-mark-border</code></td>
+<td><code>rgba(255,200,0,0.5)</code></td>
+<td>Highlight left border</td>
+</tr>
+<tr>
+<td><code>--kz-mark-border-width</code></td>
+<td><code>3px</code></td>
+<td>Left border width</td>
+</tr>
+<tr>
+<td><code>--kz-mark-accent-margin</code></td>
+<td><code>0rem</code></td>
+<td>Left margin for the accent border</td>
+</tr>
+<tr>
+<td><code>--kz-ins-bg</code></td>
+<td><code>rgba(46,160,67,0.12)</code></td>
+<td>Insertion background</td>
+</tr>
+<tr>
+<td><code>--kz-ins-border</code></td>
+<td><code>rgba(46,160,67,0.5)</code></td>
+<td>Insertion left border</td>
+</tr>
+<tr>
+<td><code>--kz-ins-indicator</code></td>
+<td><code>&#39;+&#39;</code></td>
+<td>Diff indicator character for insertions</td>
+</tr>
+<tr>
+<td><code>--kz-del-bg</code></td>
+<td><code>rgba(248,81,73,0.12)</code></td>
+<td>Deletion background</td>
+</tr>
+<tr>
+<td><code>--kz-del-border</code></td>
+<td><code>rgba(248,81,73,0.5)</code></td>
+<td>Deletion left border</td>
+</tr>
+<tr>
+<td><code>--kz-del-indicator</code></td>
+<td><code>&#39;-&#39;</code></td>
+<td>Diff indicator character for deletions</td>
+</tr>
+<tr>
+<td><code>--kz-error-bg</code></td>
+<td><code>rgba(220,38,38,0.12)</code></td>
+<td>Error background</td>
+</tr>
+<tr>
+<td><code>--kz-error-border</code></td>
+<td><code>rgba(220,38,38,0.5)</code></td>
+<td>Error left border</td>
+</tr>
+<tr>
+<td><code>--kz-warning-bg</code></td>
+<td><code>rgba(245,158,11,0.12)</code></td>
+<td>Warning background</td>
+</tr>
+<tr>
+<td><code>--kz-warning-border</code></td>
+<td><code>rgba(245,158,11,0.5)</code></td>
+<td>Warning left border</td>
+</tr>
+<tr>
+<td><code>--kz-diff-indicator-margin</code></td>
+<td><code>0.3rem</code></td>
+<td>Margin around diff indicators</td>
+</tr>
+<tr>
+<td><code>--kz-ins-indicator-color</code></td>
+<td><code>rgba(46,160,67,0.8)</code></td>
+<td>Insertion indicator colour</td>
+</tr>
+<tr>
+<td><code>--kz-del-indicator-color</code></td>
+<td><code>rgba(248,81,73,0.8)</code></td>
+<td>Deletion indicator colour</td>
+</tr>
+</tbody>
+</table>
+<h3 id="labels">Labels<a class="sarde-heading-anchor" href="#labels" aria-label="Link to section: Labels"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-label-mark-bg</code></td>
+<td><code>rgba(255,200,0,0.35)</code></td>
+<td>Label background for highlights</td>
+</tr>
+<tr>
+<td><code>--kz-label-ins-bg</code></td>
+<td><code>rgba(46,160,67,0.35)</code></td>
+<td>Label background for insertions</td>
+</tr>
+<tr>
+<td><code>--kz-label-del-bg</code></td>
+<td><code>rgba(248,81,73,0.35)</code></td>
+<td>Label background for deletions</td>
+</tr>
+<tr>
+<td><code>--kz-label-error-bg</code></td>
+<td><code>rgba(220,38,38,0.35)</code></td>
+<td>Label background for errors</td>
+</tr>
+<tr>
+<td><code>--kz-label-warning-bg</code></td>
+<td><code>rgba(245,158,11,0.35)</code></td>
+<td>Label background for warnings</td>
+</tr>
+<tr>
+<td><code>--kz-label-fg</code></td>
+<td><code>#ffffff</code></td>
+<td>Label text colour</td>
+</tr>
+<tr>
+<td><code>--kz-label-padding</code></td>
+<td><code>0.1rem 0.3rem</code></td>
+<td>Label padding</td>
+</tr>
+<tr>
+<td><code>--kz-label-font-size</code></td>
+<td><code>0.75rem</code></td>
+<td>Label font size</td>
+</tr>
+<tr>
+<td><code>--kz-label-radius</code></td>
+<td><code>0.2rem</code></td>
+<td>Label border radius</td>
+</tr>
+</tbody>
+</table>
+<h3 id="inline-markers">Inline markers<a class="sarde-heading-anchor" href="#inline-markers" aria-label="Link to section: Inline markers"></a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-inline-mark-bg</code></td>
+<td><code>rgba(255,200,0,0.2)</code></td>
+<td>Inline highlight background</td>
+</tr>
+<tr>
+<td><code>--kz-inline-mark-border</code></td>
+<td><code>rgba(255,200,0,0.5)</code></td>
+<td>Inline highlight border</td>
+</tr>
+<tr>
+<td><code>--kz-inline-mark-radius</code></td>
+<td><code>0.2rem</code></td>
+<td>Inline highlight border radius</td>
+</tr>
+<tr>
+<td><code>--kz-inline-mark-padding</code></td>
+<td><code>0.15rem</code></td>
+<td>Inline highlight padding</td>
+</tr>
+<tr>
+<td><code>--kz-inline-mark-border-width</code></td>
+<td><code>1.5px</code></td>
+<td>Inline highlight border width</td>
+</tr>
+<tr>
+<td><code>--kz-inline-ins-bg</code></td>
+<td><code>rgba(46,160,67,0.2)</code></td>
+<td>Inline insertion background</td>
+</tr>
+<tr>
+<td><code>--kz-inline-ins-border</code></td>
+<td><code>rgba(46,160,67,0.5)</code></td>
+<td>Inline insertion border</td>
+</tr>
+<tr>
+<td><code>--kz-inline-del-bg</code></td>
+<td><code>rgba(248,81,73,0.2)</code></td>
+<td>Inline deletion background</td>
+</tr>
+<tr>
+<td><code>--kz-inline-del-border</code></td>
+<td><code>rgba(248,81,73,0.5)</code></td>
+<td>Inline deletion border</td>
+</tr>
+</tbody>
+</table>
+<h2 id="focus">Focus<a class="sarde-heading-anchor" href="#focus" aria-label="Link to section: Focus"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-focus-dimmed-opacity</code></td>
+<td><code>0.35</code></td>
+<td>Opacity of unfocused lines</td>
+</tr>
+<tr>
+<td><code>--kz-focus-ring</code></td>
+<td><code>rgb(59,130,246)</code></td>
+<td>Focus ring colour for keyboard navigation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="toolbar">Toolbar<a class="sarde-heading-anchor" href="#toolbar" aria-label="Link to section: Toolbar"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-toolbar-bg</code></td>
+<td>from theme</td>
+<td>Toolbar background</td>
+</tr>
+<tr>
+<td><code>--kz-toolbar-border</code></td>
+<td>from theme</td>
+<td>Toolbar border</td>
+</tr>
+<tr>
+<td><code>--kz-toolbar-padding</code></td>
+<td><code>0.25rem 1rem</code></td>
+<td>Toolbar padding</td>
+</tr>
+<tr>
+<td><code>--kz-lang-fg</code></td>
+<td>from theme</td>
+<td>Language badge text colour</td>
+</tr>
+<tr>
+<td><code>--kz-lang-font-size</code></td>
+<td><code>0.8rem</code></td>
+<td>Language badge font size</td>
+</tr>
+<tr>
+<td><code>--kz-lang-font-weight</code></td>
+<td><code>500</code></td>
+<td>Language badge font weight</td>
+</tr>
+<tr>
+<td><code>--kz-separator-color</code></td>
+<td><code>rgba(161,161,170,0.3)</code></td>
+<td>Separator line colour</td>
+</tr>
+<tr>
+<td><code>--kz-copy-fg</code></td>
+<td>from theme</td>
+<td>Copy button colour</td>
+</tr>
+<tr>
+<td><code>--kz-copy-fg-hover</code></td>
+<td>from theme</td>
+<td>Copy button hover colour</td>
+</tr>
+<tr>
+<td><code>--kz-copy-bg-hover</code></td>
+<td>from theme</td>
+<td>Copy button hover background</td>
+</tr>
+<tr>
+<td><code>--kz-copy-radius</code></td>
+<td><code>0.375rem</code></td>
+<td>Copy button border radius</td>
+</tr>
+<tr>
+<td><code>--kz-copy-success-bg</code></td>
+<td><code>rgba(34,197,94,0.9)</code></td>
+<td>Copy success tooltip background</td>
+</tr>
+<tr>
+<td><code>--kz-copy-success-fg</code></td>
+<td><code>#ffffff</code></td>
+<td>Copy success tooltip text colour</td>
+</tr>
+<tr>
+<td><code>--kz-copy-success-border</code></td>
+<td><code>rgba(34,197,94,0.8)</code></td>
+<td>Copy success tooltip border</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tooltip">Tooltip<a class="sarde-heading-anchor" href="#tooltip" aria-label="Link to section: Tooltip"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-tooltip-bg</code></td>
+<td><code>rgba(30,30,30,0.92)</code></td>
+<td>Tooltip background</td>
+</tr>
+<tr>
+<td><code>--kz-tooltip-fg</code></td>
+<td><code>#ffffff</code></td>
+<td>Tooltip text colour</td>
+</tr>
+<tr>
+<td><code>--kz-tooltip-font-size</code></td>
+<td><code>0.75rem</code></td>
+<td>Tooltip font size</td>
+</tr>
+<tr>
+<td><code>--kz-tooltip-padding</code></td>
+<td><code>0.35rem 0.75rem</code></td>
+<td>Tooltip padding</td>
+</tr>
+<tr>
+<td><code>--kz-tooltip-radius</code></td>
+<td><code>6px</code></td>
+<td>Tooltip border radius</td>
+</tr>
+<tr>
+<td><code>--kz-tooltip-offset</code></td>
+<td><code>6px</code></td>
+<td>Tooltip offset from the trigger</td>
+</tr>
+<tr>
+<td><code>--kz-tooltip-shadow</code></td>
+<td><code>0 2px 6px rgba(0,0,0,0.25)</code></td>
+<td>Tooltip shadow</td>
+</tr>
+<tr>
+<td><code>--kz-tooltip-arrow-size</code></td>
+<td><code>5px</code></td>
+<td>Tooltip arrow size</td>
+</tr>
+</tbody>
+</table>
+<h2 id="collapsible">Collapsible<a class="sarde-heading-anchor" href="#collapsible" aria-label="Link to section: Collapsible"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-collapse-btn-bg</code></td>
+<td><code>rgba(0,0,0,0.04)</code></td>
+<td>Expand/collapse button background</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-btn-fg</code></td>
+<td><code>#4b5563</code></td>
+<td>Expand/collapse button text colour</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-btn-hover-bg</code></td>
+<td><code>rgba(0,0,0,0.08)</code></td>
+<td>Button hover background</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-btn-border</code></td>
+<td>from theme</td>
+<td>Button border</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-btn-border-hover</code></td>
+<td>from theme</td>
+<td>Button hover border</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-gradient-start</code></td>
+<td><code>transparent</code></td>
+<td>Fade gradient start</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-gradient-end</code></td>
+<td><code>var(--kz-editor-bg)</code></td>
+<td>Fade gradient end</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-transition</code></td>
+<td><code>300ms ease</code></td>
+<td>Collapse animation timing</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-closed-bg</code></td>
+<td><code>rgb(84 174 255 / 20%)</code></td>
+<td>Closed section background</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-closed-border</code></td>
+<td><code>rgb(84 174 255 / 50%)</code></td>
+<td>Closed section border</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-closed-border-width</code></td>
+<td><code>0</code></td>
+<td>Closed section border width</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-closed-padding</code></td>
+<td><code>4px</code></td>
+<td>Closed section padding</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-open-bg</code></td>
+<td><code>transparent</code></td>
+<td>Open section background</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-open-bg-collapsible</code></td>
+<td><code>rgb(84 174 255 / 10%)</code></td>
+<td>Open section background (collapsible style)</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-open-border</code></td>
+<td><code>transparent</code></td>
+<td>Open section border</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-open-border-width</code></td>
+<td><code>1px</code></td>
+<td>Open section border width</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-closed-fg</code></td>
+<td><code>currentColor</code></td>
+<td>Closed section text colour</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-closed-font-family</code></td>
+<td><code>inherit</code></td>
+<td>Closed section font family</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-closed-font-size</code></td>
+<td><code>inherit</code></td>
+<td>Closed section font size</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-closed-line-height</code></td>
+<td><code>inherit</code></td>
+<td>Closed section line height</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-expand-icon</code></td>
+<td>SVG data URI</td>
+<td>Expand icon</td>
+</tr>
+<tr>
+<td><code>--kz-collapse-collapse-icon</code></td>
+<td>SVG data URI</td>
+<td>Collapse icon</td>
+</tr>
+</tbody>
+</table>
+<h2 id="terminal">Terminal<a class="sarde-heading-anchor" href="#terminal" aria-label="Link to section: Terminal"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-terminal-bg</code></td>
+<td><code>var(--kz-editor-bg)</code></td>
+<td>Terminal frame background</td>
+</tr>
+<tr>
+<td><code>--kz-terminal-titlebar-bg</code></td>
+<td><code>var(--kz-toolbar-bg)</code></td>
+<td>Terminal title bar background</td>
+</tr>
+<tr>
+<td><code>--kz-terminal-header-padding</code></td>
+<td><code>0.5rem 1rem</code></td>
+<td>Terminal header padding</td>
+</tr>
+<tr>
+<td><code>--kz-terminal-dot-red</code></td>
+<td><code>#ff5f57</code></td>
+<td>Red traffic-light dot</td>
+</tr>
+<tr>
+<td><code>--kz-terminal-dot-yellow</code></td>
+<td><code>#febc2e</code></td>
+<td>Yellow traffic-light dot</td>
+</tr>
+<tr>
+<td><code>--kz-terminal-dot-green</code></td>
+<td><code>#28c840</code></td>
+<td>Green traffic-light dot</td>
+</tr>
+<tr>
+<td><code>--kz-terminal-dots-fg</code></td>
+<td>from theme</td>
+<td>Minimal dot style colour</td>
+</tr>
+</tbody>
+</table>
+<h2 id="scrollbar">Scrollbar<a class="sarde-heading-anchor" href="#scrollbar" aria-label="Link to section: Scrollbar"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-scrollbar-thumb</code></td>
+<td>from theme</td>
+<td>Scrollbar thumb colour</td>
+</tr>
+<tr>
+<td><code>--kz-scrollbar-thumb-hover</code></td>
+<td>from theme</td>
+<td>Scrollbar thumb hover colour</td>
+</tr>
+</tbody>
+</table>
+<h2 id="icons">Icons<a class="sarde-heading-anchor" href="#icons" aria-label="Link to section: Icons"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-file-icon-size</code></td>
+<td><code>1rem</code></td>
+<td>File icon size</td>
+</tr>
+<tr>
+<td><code>--kz-file-icon-margin</code></td>
+<td><code>0</code></td>
+<td>File icon margin</td>
+</tr>
+<tr>
+<td><code>--kz-file-icon-opacity</code></td>
+<td><code>0.8</code></td>
+<td>File icon opacity</td>
+</tr>
+<tr>
+<td><code>--kz-lang-icon-size</code></td>
+<td><code>1.25rem</code></td>
+<td>Language icon size</td>
+</tr>
+<tr>
+<td><code>--kz-lang-icon-margin</code></td>
+<td><code>0</code></td>
+<td>Language icon margin</td>
+</tr>
+<tr>
+<td><code>--kz-lang-icon-opacity</code></td>
+<td><code>0.8</code></td>
+<td>Language icon opacity</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fullscreen">Fullscreen<a class="sarde-heading-anchor" href="#fullscreen" aria-label="Link to section: Fullscreen"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-fs-font-scale</code></td>
+<td><code>1</code></td>
+<td>Font scale multiplier in fullscreen mode</td>
+</tr>
+</tbody>
+</table>
+<h2 id="code-groups">Code groups<a class="sarde-heading-anchor" href="#code-groups" aria-label="Link to section: Code groups"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--kz-group-tab-bg</code></td>
+<td><code>transparent</code></td>
+<td>Tab background</td>
+</tr>
+<tr>
+<td><code>--kz-group-tab-fg</code></td>
+<td><code>inherit</code></td>
+<td>Tab text colour</td>
+</tr>
+<tr>
+<td><code>--kz-group-tab-active-bg</code></td>
+<td>from theme</td>
+<td>Active tab background</td>
+</tr>
+<tr>
+<td><code>--kz-group-tab-active-fg</code></td>
+<td>from theme</td>
+<td>Active tab text colour</td>
+</tr>
+<tr>
+<td><code>--kz-group-tab-active-border</code></td>
+<td><code>#007acc</code></td>
+<td>Active tab bottom border</td>
+</tr>
+<tr>
+<td><code>--kz-group-tab-padding</code></td>
+<td><code>0.5rem 1rem</code></td>
+<td>Tab padding</td>
+</tr>
+<tr>
+<td><code>--kz-group-border</code></td>
+<td>from theme</td>
+<td>Code group border</td>
+</tr>
+<tr>
+<td><code>--kz-group-border-width</code></td>
+<td><code>1px</code></td>
+<td>Code group border width</td>
+</tr>
+<tr>
+<td><code>--kz-group-radius</code></td>
+<td><code>var(--kz-radius)</code></td>
+<td>Code group border radius</td>
+</tr>
+</tbody>
+</table>
+<h2 id="theme-derived-variables">Theme-derived variables<a class="sarde-heading-anchor" href="#theme-derived-variables" aria-label="Link to section: Theme-derived variables"></a></h2>
+<p>Variables marked &#34;from theme&#34; above are set by the engine from the loaded theme&#39;s colour palette. Their values differ between light and dark themes, and they change when a per-block <code>theme=</code> override is active. Override them in CSS to replace the theme-derived value for all blocks.</p>
+
+
+            </article>
+            <div class="sarde-page-meta">
+              <a class="sarde-edit-link edit-link" href="https://github.com/frostybee/irosashi/edit/main/docs/content/docs/reference/css-variables.md" rel="noopener"><svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>Edit this page</a>
+
+              
+<p class="sarde-last-updated">Last updated: <time datetime="2026-09-16">Sep 16, 2026</time></p>
+
+
+            </div>
+            
+<nav class="sarde-pagination" aria-label="Page navigation">
+  
+  <a href="/irosashi/docs/reference/configuration/" class="sarde-pagination-prev" rel="prev">
+    <span class="sarde-pagination-dir">
+      <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18l-6-6l6-6"/></svg>
+      Previous
+    </span>
+    <span class="sarde-pagination-title">Configuration</span>
+  </a>
+  
+  
+  <a href="/irosashi/docs/styling/" class="sarde-pagination-next" rel="next">
+    <span class="sarde-pagination-dir">
+      Next
+      <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg>
+    </span>
+    <span class="sarde-pagination-title">Styling</span>
+  </a>
+  
+</nav>
+
+
+            <footer class="sarde-footer">
+  <div class="sarde-footer-inner">
+    
+    <div class="sarde-footer-top">
+      
+      
+<div class="sarde-social">
+  
+  <a class="sarde-social-link" href="https://github.com/frostybee/irosashi" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" class="sarde-social-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5c.08-1.25-.27-2.48-1-3.5c.28-1.15.28-2.35 0-3.5c0 0-1 0-3 1.5c-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5c-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g></svg></a>
+  
+</div>
+
+
+    </div>
+    
+    <div class="sarde-footer-bottom">
+      
+      <span>&copy; 2026 Irosashi</span>
+      
+      <span class="sarde-footer-sep" aria-hidden="true"></span>
+      <span class="sarde-credits">Made with <a href="https://getsarde.github.io/sarde/" rel="noopener">Sarde</a></span>
+      
+    </div>
+  </div>
+</footer>
+
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <script defer src="/irosashi/assets/js/sarde.js"></script>
+<script defer src="/irosashi/assets/js/static-search.js"></script>
+<script defer src="/irosashi/assets/plugins/telescope/telescope.1e91057c.js"></script>
+
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=window.__SARDE__.pluginConfig||{};window.__SARDE__.pluginConfig.search={"strings":{"clear":"Clear","filter_all":"All","full_search":"Full Search","fuzzy_match":"Fuzzy match","group_other":"Other","loading":"Loading results","matches_in_page_one":"{count} match in this page","matches_in_page_other":"{count} matches in this page","matching_sections":"Matching sections","min_length":"Type at least {min} characters","no_preview":"No preview available","open_page":"Open page","preview":"Preview","recent":"Recent","results_count_one":"{count} result for '{term}'","results_count_other":"{count} results for '{term}'","simple_search":"Simple Search","switch_full_search":"Switch to Full Search","switch_simple_search":"Switch to Simple Search","try_all_sections":"Try searching in all sections","type_to_search":"Type to start searching"}};</script>
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=Object.assign(window.__SARDE__.pluginConfig||{},{"keyboard_nav":{"auto_hide":"compact","hide_delay":2000,"scroll_threshold":100,"show_compact_nav":true,"show_hint":false,"show_side_nav":true,"show_tooltip":true,"side_nav_size":"medium"},"reading_progress":{"bar_color":"#d9642a","bar_height":3.5,"lesson_pages_only":true,"show_reading_time":true,"use_gradient":true,"words_per_minute":200},"scroll_to_top":{"border_radius":15,"position":"center","progress_ring_color":"","show_progress_ring":true,"show_tooltip":true,"smooth_scroll":true,"threshold":300}});</script>
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=window.__SARDE__.pluginConfig||{};window.__SARDE__.pluginConfig.telescope={"debounce_ms":120,"default_tab":"search","max_pinned":50,"max_recent":10,"max_results":20,"shortcut_key":"/","strings":{"clear":"telescope.clear","clear_pinned":"telescope.clear_pinned","clear_recent":"telescope.clear_recent","close":"telescope.close","dialog_opened":"telescope.dialog_opened","filter_recent":"telescope.filter_recent","hint_close":"telescope.hint_close","hint_navigate":"telescope.hint_navigate","hint_pin":"telescope.hint_pin","hint_select":"telescope.hint_select","loading":"telescope.loading","no_recent":"telescope.no_recent","no_results":"telescope.no_results","pin":"telescope.pin","pinned_cleared":"telescope.pinned_cleared","pinned_section":"telescope.pinned_section","placeholder":"telescope.placeholder","recent_cleared":"telescope.recent_cleared","recent_section":"telescope.recent_section","results_count":"telescope.results_count","results_section":"telescope.results_section","showing_of":"telescope.showing_of","tab_recent":"telescope.tab_recent","tab_search":"telescope.tab_search","trigger":"telescope.trigger","unpin":"telescope.unpin"}};</script>
+
+<script type="module" src="/irosashi/assets/plugins/plugins.25f40be8.js"></script>
+
+
+<script defer src="/irosashi/assets/js/kazari.js"></script>
+
+</body>
+</html>

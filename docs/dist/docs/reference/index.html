@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <script>(function(){var t=localStorage.getItem('sd-theme')||'system';var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');if(localStorage.getItem('sd-sidebar')==='collapsed'&&matchMedia('(min-width:1024px)').matches){document.documentElement.classList.add('sd-sidebar-collapsed')}if(localStorage.getItem('sd-docs-centered')==='1'&&matchMedia('(min-width:1280px)').matches){document.documentElement.classList.add('sd-docs-centered')}})()</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Sarde vdev">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1a1c">
+<link rel="sitemap" type="application/xml" href="/irosashi/sitemap.xml">
+<link rel="icon" href="/irosashi/favicon.svg" type="image/svg&#43;xml">
+<link rel="preload" href="/irosashi/assets/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+<script>window.__SARDE__={basePath:"\/irosashi\/",lang:"en",defaultLang:"",siteId:"c0dd9605",i18n:{revealSpoiler:"Reveal spoiler",hideSpoiler:"Hide spoiler",expandSidebar:"Expand sidebar",collapseSidebar:"Collapse sidebar"}};</script>
+<title>Reference | Irosashi</title>
+
+
+<meta property="og:title" content="Reference">
+
+<meta property="og:url" content="https://frostybee.github.io/irosashi/docs/reference/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://frostybee.github.io/irosashi/og/docs/reference.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reference">
+<meta property="og:image:type" content="image/png">
+<meta property="og:site_name" content="Irosashi">
+<meta property="og:locale" content="en_US">
+
+<meta property="article:published_time" content="2026-09-16T12:01:49-04:00">
+<meta property="article:modified_time" content="2026-09-16T12:01:49-04:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reference">
+
+<meta name="twitter:image" content="https://frostybee.github.io/irosashi/og/docs/reference.png">
+<meta name="twitter:image:alt" content="Reference">
+
+<link rel="canonical" href="https://frostybee.github.io/irosashi/docs/reference/">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","isPartOf":{"@type":"WebSite","name":"Irosashi"},"name":"Reference","url":"https://frostybee.github.io/irosashi/docs/reference/"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://frostybee.github.io/docs/","name":"Documentation","position":1},{"@type":"ListItem","item":"https://frostybee.github.io/docs/reference/","name":"Reference","position":2}]}]}</script>
+
+
+
+<link rel="stylesheet" href="/irosashi/assets/css/tokens-theme.css">
+<link rel="stylesheet" href="/irosashi/assets/css/sarde.410d2866.css">
+<link rel="stylesheet" href="/irosashi/assets/css/custom.css">
+<link rel="stylesheet" href="/irosashi/assets/plugins/plugins.d6ae2c0b.css">
+<link rel="stylesheet" href="/irosashi/assets/plugins/telescope/telescope.624a4fe2.css">
+
+
+
+</head>
+<body class="sarde-layout-docs">
+  <a href="#main-content" class="sarde-skip-link">Skip to main content</a>
+  <header class="sarde-header">
+  <a href="/irosashi/" class="sarde-site-title">
+  <img class="sarde-site-logo" src="/irosashi/favicon.svg" alt="">
+  <span>Irosashi</span>
+</a>
+
+  
+<button class="sarde-nav-toggle" id="sarde-nav-toggle" type="button"
+        aria-expanded="false" aria-controls="sarde-global-nav"
+        aria-label="Menu" data-sarde-nav-toggle>
+  <svg aria-hidden="true" class="sarde-nav-icon-open" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 12h16M4 19h16"/></svg>
+  <svg aria-hidden="true" class="sarde-nav-icon-close" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+</button>
+<nav class="sarde-header-nav" id="sarde-global-nav" aria-label="Main navigation">
+  
+  <a href="/irosashi/docs/" class="is-active" aria-current="page">Documentation</a>
+  
+  <a href="/irosashi/docs/changelog">Changelog</a>
+  
+  <a href="/irosashi/demo/showcase.html">Showcase</a>
+  
+</nav>
+
+
+  <div class="sarde-header-actions">
+    
+    
+<button type="button" class="sarde-search-trigger" data-search-trigger aria-label="Search" title="Search">
+  <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m21 21l-4.34-4.34"/><circle cx="11" cy="11" r="8"/></g></svg>
+  <span class="sarde-search-trigger-text">Search</span>
+  <span class="sarde-search-kbd" aria-hidden="true"><kbd class="sarde-kbd-ctrl">Ctrl</kbd><kbd class="sarde-kbd-meta">⌘</kbd><kbd>K</kbd></span>
+</button>
+<dialog id="sarde-search-modal" class="sarde-search-modal" aria-label="Search" data-search-version="" data-search-lang="en">
+  <div class="sarde-search-modal-panel">
+    <div class="sarde-search-input-row">
+      <span class="sarde-search-input-icon"><svg aria-hidden="true" focusable="false" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m21 21l-4.34-4.34"/><circle cx="11" cy="11" r="8"/></g></svg></span>
+      <input id="sarde-search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search" aria-label="Search">
+      <button type="button" class="sarde-search-close" data-search-close aria-label="Close"><svg aria-hidden="true" focusable="false" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div id="sarde-search-filters" class="sarde-search-filters" hidden></div>
+    <div class="sarde-search-content-area">
+      <div id="sarde-search-body" class="sarde-search-body">
+        <div id="sarde-search-initial" class="sarde-search-initial"></div>
+        <ul id="sarde-search-results" aria-label="Search results" aria-live="polite" hidden></ul>
+        <div id="sarde-search-empty" class="sarde-search-empty" hidden>
+          <svg aria-hidden="true" class="sarde-search-empty-icon" focusable="false" height="32" viewBox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m13.5 8.5l-5 5m0-5l5 5"/><circle cx="11" cy="11" r="8"/><path d="m21 21l-4.3-4.3"/></g></svg>
+          <p class="sarde-search-empty-title">No results found.</p>
+          <ul class="sarde-search-empty-tips" id="sarde-search-empty-tips">
+            <li>Check for typos in your search term</li>
+            <li>Try using different or more general keywords</li>
+          </ul>
+        </div>
+      </div>
+      <div id="sarde-search-preview" class="sarde-search-preview" aria-live="polite" hidden></div>
+    </div>
+    <div class="sarde-search-footer" aria-hidden="true">
+      <span><kbd><svg aria-hidden="true" focusable="false" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12l7-7l7 7m-7 7V5"/></svg></kbd><kbd><svg aria-hidden="true" focusable="false" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m7-7l-7 7l-7-7"/></svg></kbd> to navigate</span>
+      <span><kbd>Enter</kbd> to select</span>
+      <span><kbd>Esc</kbd> to close</span>
+      <button type="button" id="sarde-search-mode-toggle" class="sarde-search-mode-toggle" aria-label="Switch to Full Search">
+        <svg aria-hidden="true" focusable="false" height="14" viewBox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></g></svg>
+        <span class="sarde-search-mode-label">Full Search</span>
+        <kbd class="sarde-search-mode-kbd sarde-kbd-ctrl">Ctrl</kbd><kbd class="sarde-search-mode-kbd sarde-kbd-meta">⌘</kbd><kbd class="sarde-search-mode-kbd">Space</kbd>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+
+    
+    
+
+    
+
+    
+    
+<div class="sarde-social">
+  
+  <a class="sarde-social-link" href="https://github.com/frostybee/irosashi" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" class="sarde-social-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5c.08-1.25-.27-2.48-1-3.5c.28-1.15.28-2.35 0-3.5c0 0-1 0-3 1.5c-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5c-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g></svg></a>
+  
+</div>
+
+
+    
+    <button class="sarde-center-toggle" id="sarde-center-toggle"
+        aria-label="Center content" type="button">
+  <svg aria-hidden="true" class="sarde-center-icon-center" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 12H7m12 6H5M21 6H3"/></svg>
+  <svg aria-hidden="true" class="sarde-center-icon-wide" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M3 18h18M3 6h18"/></svg>
+</button>
+
+    <div class="sarde-theme-toggle" role="group" aria-label="Theme selection" data-sarde-theme-toggle>
+  <div class="sarde-theme-toggle-indicator" data-sarde-theme-indicator></div>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="light" aria-pressed="false" aria-label="Light mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="system" aria-pressed="true" aria-label="System theme">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="dark" aria-pressed="false" aria-label="Dark mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+  </button>
+</div>
+
+  </div>
+</header>
+
+  
+  
+  <nav class="sarde-mobile-nav" aria-label="Documentation navigation">
+    <button class="sarde-menu-toggle" id="sarde-menu-toggle"
+            aria-expanded="false" aria-label="Menu"
+            aria-controls="sarde-sidebar" type="button">
+      <svg aria-hidden="true" class="sarde-menu-icon-open" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <svg aria-hidden="true" class="sarde-menu-icon-close" focusable="false" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <aside class="sarde-sidebar" id="sarde-sidebar" aria-label="Sidebar">
+      <button class="sarde-sidebar-toggle" id="sarde-sidebar-toggle"
+              aria-expanded="true" aria-label="Collapse sidebar" type="button">
+        <svg aria-hidden="true" class="sarde-sidebar-toggle-collapse" focusable="false" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18m7-6l-3-3l3-3"/></g></svg>
+        <svg aria-hidden="true" class="sarde-sidebar-toggle-expand" focusable="false" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18m5-12l3 3l-3 3"/></g></svg>
+      </button>
+      <div class="sarde-sidebar-content">
+        
+
+
+<script>(function(){try{var s=sessionStorage.getItem('sd-sb');if(s){window.__sdsbr=JSON.parse(s)}}catch(e){}})()</script>
+<nav class="sarde-sidebar-nav" aria-label="Section navigation" data-sd-hash="a477e59b">
+  <ul class="sarde-sidebar-tree">
+  
+    
+    <li><a href="/irosashi/docs/introduction/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4m0-4h.01"/></g></svg>Introduction</a></li>
+    
+  
+    
+    <li><a href="/irosashi/docs/why-irosashi/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594zM20 2v4m2-2h-4"/><circle cx="4" cy="20" r="2"/></g></svg>Why Irosashi</a></li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="0">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/getting-started/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></g></svg>Getting started</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-0" aria-label="Toggle Getting started section"></button>
+        </div>
+        
+        <ul id="sd-grp-0" hidden>
+        
+          
+          <li><a href="/irosashi/docs/getting-started/installation/">Installation</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/getting-started/quick-start/">Quick start</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/getting-started/kazari/">Decorated code blocks with Kazari</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="1">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/features/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3zM7 16.5l-4.74-2.85M7 16.5l5-3m-5 3v5.17m5-8.17V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5zm5 3l-5-3m5 3l4.74-2.85M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3l5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0zM12 8L7.26 5.15M12 8l4.74-2.85M12 13.5V8"/></g></svg>Features</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-1" aria-label="Toggle Features section"></button>
+        </div>
+        
+        <ul id="sd-grp-1" hidden>
+        
+          
+          <li><a href="/irosashi/docs/features/output-formats/">Output formats</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/features/per-line-sessions/">Per-line tokenization</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="2">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/reference/" aria-current="page" class="active"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v14m-9-3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4a4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3a3 3 0 0 0-3-3z"/></svg>Reference</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="true" aria-controls="sd-grp-2" aria-label="Toggle Reference section"></button>
+        </div>
+        
+        <ul id="sd-grp-2">
+        
+          
+          <li><a href="/irosashi/docs/reference/meta-string-syntax/">Meta string syntax</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/reference/configuration/">Configuration</a></li>
+          
+        
+          
+          <li><a href="/irosashi/docs/reference/css-variables/">CSS variables</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    
+    <li>
+      <div class="sarde-sidebar-group" data-sd-idx="3">
+        
+        <div class="sarde-sidebar-group-row">
+          <a href="/irosashi/docs/styling/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 22a1 1 0 0 1 0-20a10 9 0 0 1 10 9a5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></g></svg>Styling</a><button class="sarde-sidebar-chevron" type="button" aria-expanded="false" aria-controls="sd-grp-3" aria-label="Toggle Styling section"></button>
+        </div>
+        
+        <ul id="sd-grp-3" hidden>
+        
+          
+          <li><a href="/irosashi/docs/styling/themes-and-dark-mode/">Themes and dark mode</a></li>
+          
+        
+        </ul>
+      </div>
+    </li>
+    
+  
+    
+    <li><a href="/irosashi/docs/changelog/"><svg aria-hidden="true" class="sarde-sidebar-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9a9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5m4-1v5l4 2"/></g></svg>Changelog</a></li>
+    
+  
+  </ul>
+</nav>
+<script>(function(){var nav=document.querySelector('.sarde-sidebar-nav');if(!nav)return;var st=window.__sdsbr;var h=nav.getAttribute('data-sd-hash');if(st&&h&&st.hash===h&&Array.isArray(st.open)){var gs=nav.querySelectorAll('[data-sd-idx]');for(var i=0;i<gs.length;i++){if(gs[i].classList.contains('has-active'))continue;var idx=parseInt(gs[i].getAttribute('data-sd-idx'),10);if(idx>=0&&idx<st.open.length&&typeof st.open[idx]==='boolean'){var btn=gs[i].querySelector('button[aria-expanded]');var list=btn&&document.getElementById(btn.getAttribute('aria-controls'));if(btn&&list){btn.setAttribute('aria-expanded',st.open[idx]?'true':'false');if(st.open[idx]){list.removeAttribute('hidden')}else{list.setAttribute('hidden','')}}}}if(typeof st.scroll==='number'){nav.scrollTop=st.scroll}}delete window.__sdsbr})()</script>
+
+
+      </div>
+      <div class="sarde-sidebar-footer">
+        <div class="sarde-theme-toggle" role="group" aria-label="Theme selection" data-sarde-theme-toggle>
+  <div class="sarde-theme-toggle-indicator" data-sarde-theme-indicator></div>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="light" aria-pressed="false" aria-label="Light mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="system" aria-pressed="true" aria-label="System theme">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+  </button>
+  <button class="sarde-theme-toggle-btn" type="button" data-theme="dark" aria-pressed="false" aria-label="Dark mode">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+  </button>
+</div>
+
+        
+
+        
+
+      </div>
+    </aside>
+  </nav>
+  <div class="sarde-sidebar-backdrop" id="sarde-sidebar-backdrop"></div>
+  
+  <div class="sarde-main-frame">
+    <div class="sarde-content-columns">
+      
+      <div class="sarde-main-pane">
+        <main class="sarde-doc-body" id="main-content">
+          
+          <div class="sarde-content-panel sarde-content-panel--header">
+            
+<nav class="sarde-breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+  
+  
+    <li><a href="/irosashi/docs/"><svg class="sarde-breadcrumb-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg><span class="sr-only">Documentation</span></a><svg aria-hidden="true" class="sarde-breadcrumb-sep" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg></li>
+  
+    <li><span aria-current="page">Reference</span></li>
+  
+  </ol>
+</nav>
+
+
+            
+
+            
+
+            
+
+            
+
+            <h1 class="sarde-page-title"><span class="sarde-section-icon"><svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 7v14m-9-3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4a4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3a3 3 0 0 0-3-3z"/></svg></span>Reference</h1>
+
+
+            
+          </div>
+          <div class="sarde-content-panel">
+            <article class="sarde-markdown-content">
+              
+
+
+<div class="sarde-card-grid">
+  
+  
+  <a href="/irosashi/docs/reference/meta-string-syntax/" class="sarde-doc-card">
+    <h2 class="sarde-doc-card__title">Meta string syntax</h2>
+    
+    <p class="sarde-doc-card__desc">Complete reference for every token in the markdown fence info string.</p>
+    
+  </a>
+  
+  <a href="/irosashi/docs/reference/configuration/" class="sarde-doc-card">
+    <h2 class="sarde-doc-card__title">Configuration</h2>
+    
+    <p class="sarde-doc-card__desc">Builder methods, YAML config file, and per-block meta string overrides.</p>
+    
+  </a>
+  
+  <a href="/irosashi/docs/reference/css-variables/" class="sarde-doc-card">
+    <h2 class="sarde-doc-card__title">CSS variables</h2>
+    
+    <p class="sarde-doc-card__desc">Complete reference for all --kz-* CSS custom properties.</p>
+    
+  </a>
+  
+</div>
+
+
+            </article>
+            <div class="sarde-page-meta">
+              <a class="sarde-edit-link edit-link" href="https://github.com/frostybee/irosashi/edit/main/docs/content/docs/reference/_index.md" rel="noopener"><svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4"/></svg>Edit this page</a>
+
+              
+<p class="sarde-last-updated">Last updated: <time datetime="2026-09-16">Sep 16, 2026</time></p>
+
+
+            </div>
+            
+<nav class="sarde-pagination" aria-label="Page navigation">
+  
+  <a href="/irosashi/docs/features/per-line-sessions/" class="sarde-pagination-prev" rel="prev">
+    <span class="sarde-pagination-dir">
+      <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 18l-6-6l6-6"/></svg>
+      Previous
+    </span>
+    <span class="sarde-pagination-title">Per-line tokenization</span>
+  </a>
+  
+  
+  <a href="/irosashi/docs/reference/meta-string-syntax/" class="sarde-pagination-next" rel="next">
+    <span class="sarde-pagination-dir">
+      Next
+      <svg aria-hidden="true" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 18l6-6l-6-6"/></svg>
+    </span>
+    <span class="sarde-pagination-title">Meta string syntax</span>
+  </a>
+  
+</nav>
+
+
+            <footer class="sarde-footer">
+  <div class="sarde-footer-inner">
+    
+    <div class="sarde-footer-top">
+      
+      
+<div class="sarde-social">
+  
+  <a class="sarde-social-link" href="https://github.com/frostybee/irosashi" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" class="sarde-social-icon" focusable="false" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5c.08-1.25-.27-2.48-1-3.5c.28-1.15.28-2.35 0-3.5c0 0-1 0-3 1.5c-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5c-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></g></svg></a>
+  
+</div>
+
+
+    </div>
+    
+    <div class="sarde-footer-bottom">
+      
+      <span>&copy; 2026 Irosashi</span>
+      
+      <span class="sarde-footer-sep" aria-hidden="true"></span>
+      <span class="sarde-credits">Made with <a href="https://getsarde.github.io/sarde/" rel="noopener">Sarde</a></span>
+      
+    </div>
+  </div>
+</footer>
+
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+  <script defer src="/irosashi/assets/js/sarde.js"></script>
+<script defer src="/irosashi/assets/js/static-search.js"></script>
+<script defer src="/irosashi/assets/plugins/telescope/telescope.1e91057c.js"></script>
+
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=window.__SARDE__.pluginConfig||{};window.__SARDE__.pluginConfig.search={"strings":{"clear":"Clear","filter_all":"All","full_search":"Full Search","fuzzy_match":"Fuzzy match","group_other":"Other","loading":"Loading results","matches_in_page_one":"{count} match in this page","matches_in_page_other":"{count} matches in this page","matching_sections":"Matching sections","min_length":"Type at least {min} characters","no_preview":"No preview available","open_page":"Open page","preview":"Preview","recent":"Recent","results_count_one":"{count} result for '{term}'","results_count_other":"{count} results for '{term}'","simple_search":"Simple Search","switch_full_search":"Switch to Full Search","switch_simple_search":"Switch to Simple Search","try_all_sections":"Try searching in all sections","type_to_search":"Type to start searching"}};</script>
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=Object.assign(window.__SARDE__.pluginConfig||{},{"keyboard_nav":{"auto_hide":"compact","hide_delay":2000,"scroll_threshold":100,"show_compact_nav":true,"show_hint":false,"show_side_nav":true,"show_tooltip":true,"side_nav_size":"medium"},"scroll_to_top":{"border_radius":15,"position":"center","progress_ring_color":"","show_progress_ring":true,"show_tooltip":true,"smooth_scroll":true,"threshold":300}});</script>
+<script>window.__SARDE__=window.__SARDE__||{};window.__SARDE__.pluginConfig=window.__SARDE__.pluginConfig||{};window.__SARDE__.pluginConfig.telescope={"debounce_ms":120,"default_tab":"search","max_pinned":50,"max_recent":10,"max_results":20,"shortcut_key":"/","strings":{"clear":"telescope.clear","clear_pinned":"telescope.clear_pinned","clear_recent":"telescope.clear_recent","close":"telescope.close","dialog_opened":"telescope.dialog_opened","filter_recent":"telescope.filter_recent","hint_close":"telescope.hint_close","hint_navigate":"telescope.hint_navigate","hint_pin":"telescope.hint_pin","hint_select":"telescope.hint_select","loading":"telescope.loading","no_recent":"telescope.no_recent","no_results":"telescope.no_results","pin":"telescope.pin","pinned_cleared":"telescope.pinned_cleared","pinned_section":"telescope.pinned_section","placeholder":"telescope.placeholder","recent_cleared":"telescope.recent_cleared","recent_section":"telescope.recent_section","results_count":"telescope.results_count","results_section":"telescope.results_section","showing_of":"telescope.showing_of","tab_recent":"telescope.tab_recent","tab_search":"telescope.tab_search","trigger":"telescope.trigger","unpin":"telescope.unpin"}};</script>
+
+<script type="module" src="/irosashi/assets/plugins/plugins.25f40be8.js"></script>
+
+
+<script defer src="/irosashi/assets/js/kazari.js"></script>
+
+</body>
+</html>

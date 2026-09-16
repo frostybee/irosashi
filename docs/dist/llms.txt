@@ -1,0 +1,18 @@
+# Irosashi
+
+> Shiki's output without Shiki's runtime. TextMate grammars, VS Code themes, and byte-identical HTML in Rust.
+
+## Pages
+
+- [Irosashi](https://frostybee.github.io/irosashi/docs/introduction/)
+- [Installation](https://frostybee.github.io/irosashi/docs/getting-started/installation/)
+- [Output formats](https://frostybee.github.io/irosashi/docs/features/output-formats/)
+- [Themes and dark mode](https://frostybee.github.io/irosashi/docs/styling/themes-and-dark-mode/)
+- [Why Irosashi](https://frostybee.github.io/irosashi/docs/why-irosashi/)
+- [Per-line tokenization](https://frostybee.github.io/irosashi/docs/features/per-line-sessions/)
+- [Quick start](https://frostybee.github.io/irosashi/docs/getting-started/quick-start/)
+- [Decorated code blocks with Kazari](https://frostybee.github.io/irosashi/docs/getting-started/kazari/)
+- [Meta string syntax](https://frostybee.github.io/irosashi/docs/reference/meta-string-syntax/)
+- [Configuration](https://frostybee.github.io/irosashi/docs/reference/configuration/)
+- [CSS variables](https://frostybee.github.io/irosashi/docs/reference/css-variables/)
+- [Changelog](https://frostybee.github.io/irosashi/docs/changelog/)

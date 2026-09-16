@@ -2,25 +2,24 @@
 
 use std::sync::{Arc, OnceLock};
 
-use iro::grammar::Grammar;
-use iro::tokenizer::split_lines;
-use iro::{Session, TokenizeOptions};
+use irosashi::grammar::Grammar;
+use irosashi::{Session, TokenizeOptions, split_lines};
 use libfuzzer_sys::fuzz_target;
 
 const GRAMMARS: &[&[u8]] = &[
-    include_bytes!("../../crates/iro/testdata/mini/begin_end.json"),
-    include_bytes!("../../crates/iro/testdata/mini/begin_end_backref.json"),
-    include_bytes!("../../crates/iro/testdata/mini/begin_while_eol.json"),
-    include_bytes!("../../crates/iro/testdata/mini/begin_while_no_eol.json"),
-    include_bytes!("../../crates/iro/testdata/mini/g_anchor.json"),
-    include_bytes!("../../crates/iro/testdata/mini/injection_begin_end.json"),
-    include_bytes!("../../crates/iro/testdata/mini/injection_negation.json"),
-    include_bytes!("../../crates/iro/testdata/mini/injection_priority_left.json"),
-    include_bytes!("../../crates/iro/testdata/mini/injection_priority_right.json"),
-    include_bytes!("../../crates/iro/testdata/mini/injection_self.json"),
-    include_bytes!("../../crates/iro/testdata/mini/match_only.json"),
-    include_bytes!("../../crates/iro/testdata/mini/overlapping_captures.json"),
-    include_bytes!("../../crates/iro/assets/grammars/json.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/begin_end.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/begin_end_backref.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/begin_while_eol.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/begin_while_no_eol.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/g_anchor.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/injection_begin_end.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/injection_negation.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/injection_priority_left.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/injection_priority_right.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/injection_self.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/match_only.json"),
+    include_bytes!("../../crates/irosashi/testdata/mini/overlapping_captures.json"),
+    include_bytes!("../../crates/irosashi/assets/grammars/json.json"),
 ];
 
 fn grammars() -> &'static [Arc<Grammar>] {

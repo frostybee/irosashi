@@ -2,7 +2,7 @@
 
 use std::sync::Arc;
 
-use iro::grammar::{Grammar, ROOT_RULE_ID, compile_patterns};
+use irosashi::grammar::{Grammar, ROOT_RULE_ID, compile_patterns};
 use libfuzzer_sys::fuzz_target;
 
 fuzz_target!(|data: &[u8]| {

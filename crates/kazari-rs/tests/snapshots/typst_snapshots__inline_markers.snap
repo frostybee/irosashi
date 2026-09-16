@@ -1,0 +1,7 @@
+---
+source: crates/kazari-rs/tests/typst_snapshots.rs
+expression: out
+---
+#code-block(lang: "text", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 1)[
+#code-line[#highlight(fill: kz-marker-colors.del)[#text("old_fn")]#text(" calls ")#highlight(fill: kz-marker-colors.ins)[#text("new_fn")]#text(" twice: ")#highlight(fill: kz-marker-colors.ins)[#text("new_fn")]#text("()")]
+]

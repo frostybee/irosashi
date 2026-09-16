@@ -1,13 +1,13 @@
 # gen-html-goldens
 
-Generates the HTML goldens in `crates/iro/testdata/html/` from Shiki's `codeToHtml`. The
-goldens are what `crates/iro/tests/html_goldens.rs` holds the Shiki preset of
+Generates the HTML goldens in `crates/irosashi/testdata/html/` from Shiki's `codeToHtml`. The
+goldens are what `crates/irosashi/tests/html_goldens.rs` holds the Shiki preset of
 `HtmlRenderer` byte-identical to.
 
-Grammars and themes are read from `crates/iro/assets/`, so Shiki highlights the same
-bytes iro loads. Sources come from the fidelity fixtures in
-`crates/iro-fidelity/testdata/golden/` with the trailing newline removed, because Shiki
-emits a final empty line for it and iro, like Nuri, does not.
+Grammars and themes are read from `crates/irosashi/assets/`, so Shiki highlights the same
+bytes irosashi loads. Sources come from the fidelity fixtures in
+`crates/irosashi-fidelity/testdata/golden/` with the trailing newline removed, because Shiki
+emits a final empty line for it and irosashi, like Nuri, does not.
 
 Regenerating is a deliberate, reviewed step, like regenerating the fixtures:
 

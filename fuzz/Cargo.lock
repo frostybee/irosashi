@@ -91,7 +91,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "iro"
+name = "irosashi"
 version = "0.1.0"
 dependencies = [
  "bitflags",
@@ -103,10 +103,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "iro-fuzz"
+name = "irosashi-fuzz"
 version = "0.0.0"
 dependencies = [
- "iro",
+ "irosashi",
  "libfuzzer-sys",
 ]
 

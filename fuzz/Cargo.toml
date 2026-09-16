@@ -1,5 +1,5 @@
 [package]
-name = "iro-fuzz"
+name = "irosashi-fuzz"
 version = "0.0.0"
 publish = false
 edition = "2024"
@@ -9,7 +9,7 @@ cargo-fuzz = true
 
 [dependencies]
 libfuzzer-sys = "0.4"
-iro = { path = "../crates/iro" }
+irosashi = { path = "../crates/irosashi" }
 
 [[bin]]
 name = "parse_grammar"

@@ -1,9 +1,0 @@
----
-source: crates/kazari/tests/typst_snapshots.rs
-expression: "render(\"s = \\\"a\\\\b\\\" # comment\\n$x = 1 -- @me ~ 'q'\\nu = \\\"http://x.y/z\\\"\",\n\"text\")"
----
-#code-block(lang: "text", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 3)[
-#code-line[#text("s = \"a\\b\" # comment")]
-#code-line[#text("$x = 1 -- @me ~ 'q'")]
-#code-line[#text("u = \"http://x.y/z\"")]
-]

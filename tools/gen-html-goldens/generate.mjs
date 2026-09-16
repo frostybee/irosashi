@@ -1,4 +1,4 @@
-// Renders the golden cases with Shiki's codeToHtml, using iro's own grammar and theme
+// Renders the golden cases with Shiki's codeToHtml, using irosashi's own grammar and theme
 // JSON so the inputs are byte-for-byte the ones the Rust side loads.
 import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -8,10 +8,10 @@ import { createOnigurumaEngine } from '@shikijs/engine-oniguruma';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..', '..');
-const grammarsDir = join(root, 'crates', 'iro', 'assets', 'grammars');
-const themesDir = join(root, 'crates', 'iro', 'assets', 'themes');
-const fixturesDir = join(root, 'crates', 'iro-fidelity', 'testdata', 'golden');
-const outDir = join(root, 'crates', 'iro', 'testdata', 'html');
+const grammarsDir = join(root, 'crates', 'irosashi', 'assets', 'grammars');
+const themesDir = join(root, 'crates', 'irosashi', 'assets', 'themes');
+const fixturesDir = join(root, 'crates', 'irosashi-fidelity', 'testdata', 'golden');
+const outDir = join(root, 'crates', 'irosashi', 'testdata', 'html');
 const scratchDir = join(here, 'scratch');
 
 const SHIKI_VERSION = JSON.parse(
@@ -53,7 +53,7 @@ function cases() {
 }
 
 // Every bundled grammar is registered so embedded languages and injections resolve
-// exactly as they do in iro's registry.
+// exactly as they do in irosashi's registry.
 function allGrammars() {
   return readdirSync(grammarsDir)
     .filter((f) => f.endsWith('.json') && f !== 'index.json')

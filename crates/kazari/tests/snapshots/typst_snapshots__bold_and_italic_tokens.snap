@@ -1,9 +1,0 @@
----
-source: crates/kazari/tests/typst_snapshots.rs
-expression: "render(\"# Title\\n\\n**bold** and *italic*\", \"markdown\")"
----
-#code-block(lang: "markdown", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 3)[
-#code-line[#text(fill: rgb("#005cc5"), weight: "bold", "#")#text(fill: rgb("#005cc5"), weight: "bold", " ")#text(fill: rgb("#005cc5"), weight: "bold", "Title")]
-#code-line[#text(" ")]
-#code-line[#text(weight: "bold", "**")#text(weight: "bold", "bold")#text(weight: "bold", "**")#text(" and ")#text(style: "italic", "*")#text(style: "italic", "italic")#text(style: "italic", "*")]
-]

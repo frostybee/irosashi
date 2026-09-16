@@ -41,7 +41,7 @@
 
 **Overall**: 468 / 468 pass (100.0%), 234 / 234 grammars
 
-Held (allowed to differ, see `crates/iro-fidelity/held-all.toml`): none
+Held (allowed to differ, see `crates/irosashi-fidelity/held-all.toml`): none
 
 | Grammar | github-dark | github-light | Status |
 |---------|:---:|:---:|----------|

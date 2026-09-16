@@ -1,2 +1,2 @@
-crates/iro/testdata/html/** -text
+crates/irosashi/testdata/html/** -text
 FIDELITY.md text eol=lf

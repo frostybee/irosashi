@@ -1,8 +1,8 @@
 {
-  "name": "iro-gen-html-goldens",
+  "name": "irosashi-gen-html-goldens",
   "private": true,
   "type": "module",
-  "description": "Generate HTML goldens for iro from Shiki's codeToHtml",
+  "description": "Generate HTML goldens for irosashi from Shiki's codeToHtml",
   "scripts": {
     "generate": "node generate.mjs"
   },

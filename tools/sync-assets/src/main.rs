@@ -57,26 +57,26 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let grammars = sync_gunzip(
         &nuri_root.join("bundle/full/grammars"),
-        &iro_root.join("crates/iro/assets/grammars"),
+        &iro_root.join("crates/irosashi/assets/grammars"),
     )?;
     let themes = sync_gunzip(
         &nuri_root.join("bundle/full/themes"),
-        &iro_root.join("crates/iro/assets/themes"),
+        &iro_root.join("crates/irosashi/assets/themes"),
     )?;
     let mini = sync_copy(
         &nuri_root.join("internal/tokenizer/testdata/mini"),
-        &iro_root.join("crates/iro/testdata/mini"),
+        &iro_root.join("crates/irosashi/testdata/mini"),
     )?;
     let golden = sync_copy(
         &nuri_root.join("internal/fidelity/testdata/golden"),
-        &iro_root.join("crates/iro-fidelity/testdata/golden"),
+        &iro_root.join("crates/irosashi-fidelity/testdata/golden"),
     )?;
 
     let golden_all_src = nuri_root.join("internal/fidelity/testdata/golden-all");
     if golden_all_src.is_dir() {
         sync_copy(
             &golden_all_src,
-            &iro_root.join("crates/iro-fidelity/testdata/golden-all"),
+            &iro_root.join("crates/irosashi-fidelity/testdata/golden-all"),
         )?;
     } else {
         println!("golden-all: not present in the Nuri checkout, skipped");
@@ -96,7 +96,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     };
     let mut json = serde_json::to_string_pretty(&lock)?;
     json.push('\n');
-    let lock_path = iro_root.join("crates/iro/assets/provenance.lock.json");
+    let lock_path = iro_root.join("crates/irosashi/assets/provenance.lock.json");
     fs::write(&lock_path, json)?;
     println!("wrote {}", lock_path.display());
     Ok(())

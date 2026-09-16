@@ -1,0 +1,23 @@
+[package]
+name = "irosashi-fidelity"
+version = "0.1.0"
+description = "Fixture loader, comparator and scoring for irosashi against vscode-textmate goldens"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[lib]
+bench = false
+
+[dependencies]
+irosashi = { path = "../irosashi" }
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+criterion.workspace = true
+
+[[bench]]
+name = "highlight"
+harness = false

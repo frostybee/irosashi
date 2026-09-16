@@ -1,7 +1,7 @@
 my-docs/
 
 # Full fidelity matrix (30 MB), synced locally from the Nuri checkout only
-crates/iro-fidelity/testdata/golden-all/
+crates/irosashi-fidelity/testdata/golden-all/
 
 # HTML golden generator
 tools/gen-html-goldens/node_modules/

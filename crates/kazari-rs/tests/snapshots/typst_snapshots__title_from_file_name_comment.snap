@@ -1,0 +1,7 @@
+---
+source: crates/kazari-rs/tests/typst_snapshots.rs
+expression: "render(\"// main.go\\npackage main\", \"go\")"
+---
+#code-block(lang: "go", title: "main.go", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 1)[
+#code-line[#text(fill: rgb("#d73a49"), "package")#text(" ")#text(fill: rgb("#6f42c1"), "main")]
+]

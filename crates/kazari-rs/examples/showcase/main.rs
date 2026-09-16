@@ -22,8 +22,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let catalog = catalog::build()?;
     let page = page::Page {
-        title: "Kazari Showcase with Iro",
-        subtitle: "Code blocks highlighted by Iro, a Rust port of Shiki.",
+        title: "Kazari Showcase with Irosashi",
+        subtitle: "Code blocks highlighted by Irosashi, a Rust port of Shiki.",
         categories: &catalog.categories,
     };
     let html = page::render(&page);

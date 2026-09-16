@@ -1,2 +1,12 @@
+# Assets are embedded with include_str! and compared byte for byte in tests, so every
+# text file must check out with LF on every platform (the Windows runner defaults to
+# core.autocrlf=true).
+* text=auto eol=lf
+
+*.png binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
 crates/irosashi/testdata/html/** -text
 FIDELITY.md text eol=lf

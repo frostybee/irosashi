@@ -169,11 +169,11 @@ fn category(
 pub fn build() -> Result<Catalog, Error> {
     let kz = engine(|b| b)?;
 
-    let go_code = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tname := \"Kazari\"\n\tfmt.Printf(\"Hello, %s!\\n\", name)\n}";
+    let rust_code = "fn main() {\n    let name = \"Kazari\";\n    println!(\"Hello, {name}!\");\n}";
     let js_code = "// src/greet.js\nconst greet = (name) => {\n  console.log(\"Hello, \" + name + \"!\");\n  return { greeting: name, time: Date.now() };\n};";
     let bash_code = "npm install kazari\ncargo build --workspace\necho \"Done!\"";
     let ps_code = "Get-ChildItem -Path ./dist -Recurse | Measure-Object -Property Length -Sum";
-    let no_frame_code = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tname := \"world\"\n\tfmt.Printf(\"Hello, %s!\\n\", name)\n\tfor i := 0; i < 3; i++ {\n\t\tfmt.Println(i)\n\t}\n}";
+    let no_frame_code = "fn main() {\n    let name = \"world\";\n    println!(\"Hello, {name}!\");\n    for i in 0..3 {\n        println!(\"{i}\");\n    }\n}";
 
     let dots = engine(|b| b.terminal_dot_style(TerminalDotStyle::Minimal))?;
 
@@ -187,17 +187,17 @@ pub fn build() -> Result<Catalog, Error> {
                 "Editor Frame (explicit title)",
                 "Editor title",
                 kz.render(
-                    go_code,
+                    rust_code,
                     &Options {
                         line_numbers: Some(true),
-                        ..titled("go", "main.go")
+                        ..titled("rust", "main.rs")
                     },
                 )?,
             )
-            .recipe("Meta", "go title=\"main.go\" showLineNumbers")
+            .recipe("Meta", "rust title=\"main.rs\" showLineNumbers")
             .recipe(
                 "Rust",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(),\n    title: \"main.go\".into(),\n    line_numbers: Some(true),\n    ..Default::default()\n})?;",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(),\n    title: \"main.rs\".into(),\n    line_numbers: Some(true),\n    ..Default::default()\n})?;",
             ),
             Ex::new(
                 "editor-comment-title",
@@ -245,22 +245,22 @@ pub fn build() -> Result<Catalog, Error> {
                     no_frame_code,
                     &Options {
                         frame: Some(Frame::None),
-                        ..opts("go")
+                        ..opts("rust")
                     },
                 )?,
             )
-            .recipe("Meta", "go frame=\"none\"")
+            .recipe("Meta", "rust frame=\"none\"")
             .recipe(
                 "Rust",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(),\n    frame: Some(Frame::None),\n    ..Default::default()\n})?;",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(),\n    frame: Some(Frame::None),\n    ..Default::default()\n})?;",
             ),
         ],
     );
 
-    let line_code = "package main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n)\n\nfunc main() {\n\targs := os.Args[1:]\n\tif len(args) == 0 {\n\t\tfmt.Println(\"Usage: greet <name>\")\n\t\tos.Exit(1)\n\t}\n\tname := strings.Join(args, \" \")\n\tfmt.Printf(\"Hello, %s!\\n\", name)\n}";
+    let line_code = "use std::env;\nuse std::process;\n\nfn main() {\n    let args: Vec<String> = env::args().skip(1).collect();\n    if args.is_empty() {\n        eprintln!(\"Usage: greet <name>\");\n        process::exit(1);\n    }\n    let name = args.join(\" \");\n    println!(\"Hello, {name}!\");\n}";
     let line_start_code =
-        "\tresult := evaluate(strings.Join(args, \" \"))\n\tfmt.Printf(\"= %v\\n\", result)\n}";
-    let wrap_code = "func configure(opts *Options) {\n\topts.Logger = log.New(os.Stdout, \"[kazari] a deliberately long prefix string that forces this line to wrap inside the demo container\", log.LstdFlags|log.Lshortfile|log.Lmicroseconds)\n\topts.Description = \"Word wrap keeps long lines visible without horizontal scrolling, and preserved indentation keeps wrapped continuations aligned with the code structure.\"\n}";
+        "    let value = f64::from_str(expr.trim());\n    value.unwrap_or(0.0)\n}";
+    let wrap_code = "fn configure(opts: &mut Options) {\n    opts.logger = Logger::new(io::stdout(), \"[kazari] a deliberately long prefix string that forces this line to wrap inside the demo container\", LogFlags::TIMESTAMP | LogFlags::SHORT_FILE | LogFlags::MICROSECONDS);\n    opts.description = \"Word wrap keeps long lines visible without horizontal scrolling, and preserved indentation keeps wrapped continuations aligned with the code structure.\".to_owned();\n}";
 
     let layout = category(
         "layout",
@@ -275,14 +275,14 @@ pub fn build() -> Result<Catalog, Error> {
                     line_code,
                     &Options {
                         line_numbers: Some(true),
-                        ..titled("go", "main.go")
+                        ..titled("rust", "main.rs")
                     },
                 )?,
             )
-            .recipe("Meta", "go title=\"main.go\" showLineNumbers")
+            .recipe("Meta", "rust title=\"main.rs\" showLineNumbers")
             .recipe(
                 "Rust",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"main.go\".into(), line_numbers: Some(true),\n    ..Default::default()\n})?;",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"main.rs\".into(), line_numbers: Some(true),\n    ..Default::default()\n})?;",
             ),
             Ex::new(
                 "line-numbers-start",
@@ -293,17 +293,17 @@ pub fn build() -> Result<Catalog, Error> {
                     &Options {
                         line_numbers: Some(true),
                         start_line_number: Some(22),
-                        ..titled("go", "calc.go (lines 22-24)")
+                        ..titled("rust", "calc.rs (lines 22-24)")
                     },
                 )?,
             )
             .recipe(
                 "Meta",
-                "go title=\"calc.go (lines 22-24)\" showLineNumbers startLineNumber=22",
+                "rust title=\"calc.rs (lines 22-24)\" showLineNumbers startLineNumber=22",
             )
             .recipe(
                 "Rust",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"calc.go (lines 22-24)\".into(),\n    line_numbers: Some(true), start_line_number: Some(22),\n    ..Default::default()\n})?;",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"calc.rs (lines 22-24)\".into(),\n    line_numbers: Some(true), start_line_number: Some(22),\n    ..Default::default()\n})?;",
             ),
             meta_example(
                 &kz,
@@ -311,8 +311,8 @@ pub fn build() -> Result<Catalog, Error> {
                 "Word Wrap (long lines wrap, indent preserved)",
                 "Word wrap",
                 wrap_code,
-                "go title=\"wrap.go\" showLineNumbers wrap",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"wrap.go\".into(),\n    line_numbers: Some(true), wrap: Some(true),\n    ..Default::default()\n})?;",
+                "rust title=\"wrap.rs\" showLineNumbers wrap",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"wrap.rs\".into(),\n    line_numbers: Some(true), wrap: Some(true),\n    ..Default::default()\n})?;",
             )?,
             meta_example(
                 &kz,
@@ -320,8 +320,8 @@ pub fn build() -> Result<Catalog, Error> {
                 "Word Wrap (preserveIndent=false)",
                 "No preserve indent",
                 wrap_code,
-                "go title=\"no-preserve.go\" showLineNumbers wrap preserveIndent=false",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"no-preserve.go\".into(),\n    line_numbers: Some(true), wrap: Some(true), preserve_indent: Some(false),\n    ..Default::default()\n})?;",
+                "rust title=\"no-preserve.rs\" showLineNumbers wrap preserveIndent=false",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"no-preserve.rs\".into(),\n    line_numbers: Some(true), wrap: Some(true), preserve_indent: Some(false),\n    ..Default::default()\n})?;",
             )?,
             meta_example(
                 &kz,
@@ -329,18 +329,18 @@ pub fn build() -> Result<Catalog, Error> {
                 "Word Wrap (hangingIndent=4)",
                 "Hanging indent",
                 wrap_code,
-                "go title=\"hanging.go\" showLineNumbers wrap preserveIndent=false hangingIndent=4",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"hanging.go\".into(),\n    line_numbers: Some(true), wrap: Some(true),\n    preserve_indent: Some(false), hanging_indent: Some(4),\n    ..Default::default()\n})?;",
+                "rust title=\"hanging.rs\" showLineNumbers wrap preserveIndent=false hangingIndent=4",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"hanging.rs\".into(),\n    line_numbers: Some(true), wrap: Some(true),\n    preserve_indent: Some(false), hanging_indent: Some(4),\n    ..Default::default()\n})?;",
             )?,
         ],
     );
 
-    let marker_code = "package main\n\nimport \"fmt\"\n\nfunc oldGreet(name string) {\n\tfmt.Println(\"Hi,\", name)\n}\n\nfunc newGreet(name string) {\n\tfmt.Printf(\"Hello, %s! Welcome!\\n\", name)\n}\n\nfunc main() {\n\tnewGreet(\"Kazari\")\n}";
+    let marker_code = "use std::fmt::Display;\n\nconst GREETING: &str = \"Hello\";\n\nfn old_greet(name: &str) {\n    println!(\"Hi, {name}\");\n}\n\nfn new_greet(name: impl Display) {\n    println!(\"{GREETING}, {name}! Welcome!\");\n}\n\nfn main() {\n    new_greet(\"Kazari\");\n}";
     let label_code = "class UserController extends Controller\n{\n    private UserRepository $users;\n    private LoggerInterface $logger;\n\n    public function __construct(\n        UserRepository $users,\n        LoggerInterface $logger\n    ) {\n        $this->users = $users;\n        $this->logger = $logger;\n    }\n\n    public function show(int $id): Response\n    {\n\n        $user = $this->users->find($id);\n        if ($user === null) {\n            throw new NotFoundHttpException();\n        }\n\n        return $this->json($user);\n    }\n}";
-    let focus_code = "func process(items []string) error {\n\tfor _, item := range items {\n\t\tif err := validate(item); err != nil {\n\t\t\treturn fmt.Errorf(\"invalid: %w\", err)\n\t\t}\n\t\tstore(item)\n\t}\n\treturn nil\n}";
+    let focus_code = "fn process(items: &[String]) -> Result<(), Error> {\n    for item in items {\n        if let Err(err) = validate(item) {\n            return Err(Error::Invalid(err));\n        }\n        store(item);\n    }\n    Ok(())\n}";
     let inline_code = "interface CacheEntry<T> {\n  key: string;\n  value: T;\n  expiresAt: number;\n}\n\nfunction getOrSet<T>(cache: Map<string, CacheEntry<T>>, key: string, factory: () => T): T {\n  const entry = cache.get(key);\n  if (entry && entry.expiresAt > Date.now()) {\n    return entry.value;\n  }\n  const value = factory();\n  cache.set(key, { key, value, expiresAt: Date.now() + 3600_000 });\n  return value;\n}";
     let single_quote_code = "var query = context.Users\n    .Where(u => u.IsActive)\n    .OrderBy(u => u.CreatedAt)\n    .Select(u => new UserDto(u.Name, u.Email));";
-    let combined_code = "func main() {\n\tdb := connect()\n\tdefer db.Close()\n\n\tusers, err := db.Query(\"SELECT * FROM users\")\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tfor _, u := range users {\n\t\tfmt.Println(u.Name)\n\t}\n}";
+    let combined_code = "fn main() -> Result<(), Error> {\n    let db = connect()?;\n\n    let users = db.query(\"SELECT * FROM users\");\n    let users = match users {\n        Ok(rows) => rows,\n        Err(err) => return Err(err.into()),\n    };\n\n    for user in users {\n        println!(\"{}\", user.name);\n    }\n    Ok(())\n}";
     let via_meta = "let html = kz.render_with_meta(code, meta)?;";
 
     let markers = category(
@@ -354,7 +354,7 @@ pub fn build() -> Result<Catalog, Error> {
                 "Line Markers (mark, ins, del)",
                 "Line markers",
                 marker_code,
-                "go title=\"diff.go\" showLineNumbers {3} del={5-7} ins={9-11}",
+                "rust title=\"diff.rs\" showLineNumbers {3} del={5-7} ins={9-11}",
                 via_meta,
             )?,
             meta_example(
@@ -390,7 +390,7 @@ pub fn build() -> Result<Catalog, Error> {
                 "Focus Lines",
                 "Focus lines",
                 focus_code,
-                "go title=\"process.go\" showLineNumbers focus={3-5}",
+                "rust title=\"process.rs\" showLineNumbers focus={3-5}",
                 via_meta,
             )?,
             meta_example(
@@ -417,7 +417,7 @@ pub fn build() -> Result<Catalog, Error> {
                 "Combined (markers + inline + focus)",
                 "Combined markers",
                 combined_code,
-                "go title=\"combined.go\" showLineNumbers {4-5} ins={10-12} del={6-8} \"db\" focus={4-5,10-12}",
+                "rust title=\"combined.rs\" showLineNumbers {4-5} ins={10-12} del={6-8} \"db\" focus={4-5,10-12}",
                 via_meta,
             )?,
         ],
@@ -425,7 +425,7 @@ pub fn build() -> Result<Catalog, Error> {
 
     let links_engine = engine(|b| b.inline_links(true))?;
     let links_ln_engine = engine(|b| b.inline_links(true).line_numbers(true))?;
-    let link_code = "import (\n\t@[fmt](https://pkg.go.dev/fmt)\n\t@[net/http](https://pkg.go.dev/net/http)\n)\n\nfunc main() {\n\t@[http.HandleFunc](https://pkg.go.dev/net/http#HandleFunc)(\"/\", handler)\n\t@[http.ListenAndServe](https://pkg.go.dev/net/http#ListenAndServe)(\":8080\", nil)\n}";
+    let link_code = "use std::io::@[Write](https://doc.rust-lang.org/std/io/trait.Write.html);\nuse std::net::@[TcpListener](https://doc.rust-lang.org/std/net/struct.TcpListener.html);\n\nfn main() -> std::io::Result<()> {\n    let listener = TcpListener::@[bind](https://doc.rust-lang.org/std/net/struct.TcpListener.html#method.bind)(\"127.0.0.1:8080\")?;\n    for stream in listener.@[incoming](https://doc.rust-lang.org/std/net/struct.TcpListener.html#method.incoming)() {\n        stream?.write_all(b\"HTTP/1.1 200 OK\\r\\n\\r\\n\")?;\n    }\n    Ok(())\n}";
     let link_inline_code = "const root = @[createRoot](https://react.dev/reference/react-dom/client/createRoot)(\n\tdocument.getElementById(\"root\")\n)\nroot.render(<@[StrictMode](https://react.dev/reference/react/StrictMode)><App /></@[StrictMode](https://react.dev/reference/react/StrictMode)>)";
 
     let links = category(
@@ -437,12 +437,12 @@ pub fn build() -> Result<Catalog, Error> {
                 "links-basic",
                 "Inline Links",
                 "Basic links",
-                links_ln_engine.render(link_code, &titled("go", "main.go"))?,
+                links_ln_engine.render(link_code, &titled("rust", "main.rs"))?,
             )
             .recipe("Source", link_code)
             .recipe(
                 "Rust",
-                "let kz = Kazari::builder(hl).inline_links(true).build()?;\nlet html = kz.render_with_meta(code, \"go title=\\\"main.go\\\"\")?;",
+                "let kz = Kazari::builder(hl).inline_links(true).build()?;\nlet html = kz.render_with_meta(code, \"rust title=\\\"main.rs\\\"\")?;",
             ),
             Ex::new(
                 "links-with-markers",
@@ -470,10 +470,10 @@ pub fn build() -> Result<Catalog, Error> {
         .output_panel(true)
         .code_groups(true)
     })?;
-    let threshold_code = "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"log\"\n\t\"encoding/json\"\n\t\"os\"\n)\n\ntype Server struct {\n\taddr    string\n\thandler http.Handler\n\tlogger  *log.Logger\n}\n\nfunc NewServer(addr string) *Server {\n\treturn &Server{\n\t\taddr:    addr,\n\t\thandler: http.DefaultServeMux,\n\t\tlogger:  log.New(os.Stdout, \"[server] \", log.LstdFlags),\n\t}\n}\n\nfunc (s *Server) Start() error {\n\ts.logger.Printf(\"Starting server on %s\", s.addr)\n\treturn http.ListenAndServe(s.addr, s.handler)\n}";
-    let range_code = "package main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n\t\"strings\"\n\t\"strconv\"\n)\n\nfunc main() {\n\targs := os.Args[1:]\n\tif len(args) == 0 {\n\t\tfmt.Println(\"Usage: calc <expr>\")\n\t\tos.Exit(1)\n\t}\n\n\tresult := evaluate(strings.Join(args, \" \"))\n\tfmt.Printf(\"= %v\\n\", result)\n}\n\nfunc evaluate(expr string) float64 {\n\tval, _ := strconv.ParseFloat(expr, 64)\n\treturn val\n}";
-    let multi_range_code = "package api\n\nimport (\n\t\"encoding/json\"\n\t\"net/http\"\n\t\"log\"\n)\n\ntype Response struct {\n\tStatus  int\n\tMessage string\n\tData    interface{}\n}\n\nfunc handleGet(w http.ResponseWriter, r *http.Request) {\n\tdata := fetchData(r.URL.Query())\n\tjson.NewEncoder(w).Encode(Response{Status: 200, Message: \"OK\", Data: data})\n}\n\nfunc handlePost(w http.ResponseWriter, r *http.Request) {\n\tvar body map[string]interface{}\n\tjson.NewDecoder(r.Body).Decode(&body)\n\tresult := processData(body)\n\tjson.NewEncoder(w).Encode(Response{Status: 201, Message: \"Created\", Data: result})\n}";
-    let gap_code = "package main\n\nimport (\n\t\"fmt\"\n\t\"net/http\"\n\t\"log\"\n\t\"encoding/json\"\n\t\"os\"\n\t\"strings\"\n\t\"strconv\"\n)\n\nfunc init() {\n\tlog.SetFlags(log.LstdFlags | log.Lshortfile)\n}\n\nfunc main() {\n\tmux := http.NewServeMux()\n\tmux.HandleFunc(\"/health\", healthHandler)\n\tmux.HandleFunc(\"/api/data\", dataHandler)\n\tlog.Fatal(http.ListenAndServe(\":8080\", mux))\n}\n\nfunc healthHandler(w http.ResponseWriter, r *http.Request) {\n\tw.WriteHeader(http.StatusOK)\n\tfmt.Fprint(w, \"ok\")\n}\n\nfunc dataHandler(w http.ResponseWriter, r *http.Request) {\n\tdata := map[string]interface{}{\"status\": \"success\", \"count\": 42}\n\tjson.NewEncoder(w).Encode(data)\n}";
+    let threshold_code = "use std::io::{self, Write};\nuse std::net::{TcpListener, TcpStream};\nuse std::time::Instant;\n\npub struct Server {\n    addr: String,\n    started: Option<Instant>,\n}\n\nimpl Server {\n    pub fn new(addr: &str) -> Self {\n        Self { addr: addr.to_owned(), started: None }\n    }\n\n    pub fn start(&mut self) -> io::Result<()> {\n        self.started = Some(Instant::now());\n        println!(\"Starting server on {}\", self.addr);\n        let listener = TcpListener::bind(&self.addr)?;\n        for stream in listener.incoming() {\n            self.handle(stream?)?;\n        }\n        Ok(())\n    }\n\n    fn handle(&self, mut stream: TcpStream) -> io::Result<()> {\n        stream.write_all(b\"HTTP/1.1 200 OK\\r\\n\\r\\nok\")\n    }\n}";
+    let range_code = "//! Tiny calculator.\n\nuse std::env;\nuse std::fmt::Display;\nuse std::io::Write;\nuse std::num::ParseFloatError;\nuse std::process;\nuse std::str::FromStr;\n\nfn main() {\n    let args: Vec<String> = env::args().skip(1).collect();\n    if args.is_empty() {\n        eprintln!(\"Usage: calc <expr>\");\n        process::exit(1);\n    }\n\n    let result = evaluate(&args.join(\" \"));\n    println!(\"= {result}\");\n}\n\nfn evaluate(expr: &str) -> f64 {\n    let value = f64::from_str(expr.trim());\n    value.unwrap_or(0.0)\n}";
+    let multi_range_code = "//! JSON API handlers.\n\nuse std::collections::HashMap;\nuse std::io;\nuse serde::Serialize;\nuse serde_json::Value;\nuse crate::store::{fetch_data, process_data};\n\npub struct Response {\n    status: u16,\n    message: &'static str,\n    data: Value,\n}\n\npub fn handle_get(query: &HashMap<String, String>) -> io::Result<String> {\n    let data = fetch_data(query);\n    let body = Response { status: 200, message: \"OK\", data };\n    Ok(serde_json::to_string(&body)?)\n}\n\npub fn handle_post(body: &str) -> io::Result<String> {\n    let input: Value = serde_json::from_str(body)?;\n    let data = process_data(input);\n    let body = Response { status: 201, message: \"Created\", data };\n    Ok(serde_json::to_string(&body)?)\n}";
+    let gap_code = "use std::collections::HashMap;\nuse std::io::{self, Read, Write};\nuse std::net::{TcpListener, TcpStream};\nuse std::sync::Arc;\n\ntype Handler = fn(&mut TcpStream) -> io::Result<()>;\n\nfn routes() -> HashMap<&'static str, Handler> {\n    let mut mux: HashMap<&'static str, Handler> = HashMap::new();\n    mux.insert(\"/health\", health_handler);\n    mux.insert(\"/api/data\", data_handler);\n    mux\n}\n\nfn main() -> io::Result<()> {\n    let mux = Arc::new(routes());\n    let listener = TcpListener::bind(\"127.0.0.1:8080\")?;\n    for stream in listener.incoming() {\n        let mut stream = stream?;\n        let mut buf = [0u8; 512];\n        let n = stream.read(&mut buf)?;\n        let request = String::from_utf8_lossy(&buf[..n]);\n        let path = request.split(' ').nth(1).unwrap_or(\"/\");\n        match mux.get(path) {\n            Some(handler) => handler(&mut stream)?,\n            None => stream.write_all(b\"HTTP/1.1 404 Not Found\\r\\n\\r\\n\")?,\n        }\n    }\n    Ok(())\n}\n\nfn health_handler(stream: &mut TcpStream) -> io::Result<()> {\n    stream.write_all(b\"HTTP/1.1 200 OK\\r\\n\\r\\nok\")\n}\n\nfn data_handler(stream: &mut TcpStream) -> io::Result<()> {\n    stream.write_all(b\"HTTP/1.1 200 OK\\r\\n\\r\\n{\\\"status\\\":\\\"success\\\",\\\"count\\\":42}\")\n}";
     let gap_html = collapse_engine.render(
         gap_code,
         &Options {
@@ -483,7 +483,7 @@ pub fn build() -> Result<Catalog, Error> {
                 lines: vec![LineRange::new(10, 11)],
                 label: String::new(),
             }],
-            ..titled("go", "server.go")
+            ..titled("rust", "server.rs")
         },
     )?;
     let collapse_range = |style: CollapseStyle, ranges: Vec<LineRange>| Options {
@@ -493,7 +493,7 @@ pub fn build() -> Result<Catalog, Error> {
             style: Some(style),
             ..Default::default()
         }),
-        ..titled("go", "calc.go")
+        ..titled("rust", "calc.rs")
     };
 
     let collapsible = category(
@@ -505,20 +505,20 @@ pub fn build() -> Result<Catalog, Error> {
                 "collapse-threshold",
                 "Threshold-based (auto-collapses long blocks)",
                 "Threshold",
-                collapse_engine.render(threshold_code, &titled("go", "server.go"))?,
+                collapse_engine.render(threshold_code, &titled("rust", "server.rs"))?,
             )
             .describe("Threshold behavior is configured at engine level.")
             .recipe(
                 "Rust",
-                "let kz = Kazari::builder(hl)\n    .collapsible(CollapsibleConfig { line_threshold: 12, preview_lines: 6, ..Default::default() })\n    .build()?;\nlet html = kz.render_with_meta(code, \"go title=\\\"server.go\\\"\")?;",
+                "let kz = Kazari::builder(hl)\n    .collapsible(CollapsibleConfig { line_threshold: 12, preview_lines: 6, ..Default::default() })\n    .build()?;\nlet html = kz.render_with_meta(code, \"rust title=\\\"server.rs\\\"\")?;",
             ),
             meta_example(&collapse_engine, "collapse-per-block", "Per-block threshold override", "Per-block threshold", threshold_code,
-                "go title=\"server.go\" collapseThreshold=20",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"server.go\".into(),\n    collapse: Some(CollapseSpec { threshold: Some(20), ..Default::default() }),\n    ..Default::default()\n})?;")?,
+                "rust title=\"server.rs\" collapseThreshold=20",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"server.rs\".into(),\n    collapse: Some(CollapseSpec { threshold: Some(20), ..Default::default() }),\n    ..Default::default()\n})?;")?,
             meta_example(&collapse_engine, "collapse-range", "Range-based (imports collapsed)", "Range", range_code,
-                "go title=\"calc.go\" showLineNumbers collapse={3-8}", via_meta)?,
+                "rust title=\"calc.rs\" showLineNumbers collapse={3-8}", via_meta)?,
             meta_example(&collapse_engine, "collapse-multiple", "Multiple ranges", "Multiple ranges", multi_range_code,
-                "go title=\"api.go\" showLineNumbers collapse={3-7,9-13}", via_meta)?,
+                "rust title=\"api.rs\" showLineNumbers collapse={3-7,9-13}", via_meta)?,
             Ex::new(
                 "collapse-gaps",
                 "Threshold + markers (gap indicators)",
@@ -528,7 +528,7 @@ pub fn build() -> Result<Catalog, Error> {
             .describe("Structured options combine threshold collapsing with highlighted lines.")
             .recipe(
                 "Rust",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"server.go\".into(), line_numbers: Some(true),\n    line_markers: vec![LineMarker {\n        marker_type: MarkerType::Ins,\n        lines: vec![LineRange::new(10, 11)],\n        label: String::new(),\n    }],\n    ..Default::default()\n})?;",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"server.rs\".into(), line_numbers: Some(true),\n    line_markers: vec![LineMarker {\n        marker_type: MarkerType::Ins,\n        lines: vec![LineRange::new(10, 11)],\n        label: String::new(),\n    }],\n    ..Default::default()\n})?;",
             ),
             Ex::new(
                 "collapse-start",
@@ -536,33 +536,33 @@ pub fn build() -> Result<Catalog, Error> {
                 "Collapsible start",
                 collapse_engine.render(range_code, &collapse_range(CollapseStyle::CollapsibleStart, vec![LineRange::new(3, 8)]))?,
             )
-            .recipe("Meta", "go title=\"calc.go\" showLineNumbers collapse={3-8} collapseStyle=\"collapsible-start\"")
-            .recipe("Rust", "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"calc.go\".into(), line_numbers: Some(true),\n    collapse: Some(CollapseSpec {\n        ranges: vec![LineRange::new(3, 8)],\n        style: Some(CollapseStyle::CollapsibleStart),\n        ..Default::default()\n    }),\n    ..Default::default()\n})?;"),
+            .recipe("Meta", "rust title=\"calc.rs\" showLineNumbers collapse={3-8} collapseStyle=\"collapsible-start\"")
+            .recipe("Rust", "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"calc.rs\".into(), line_numbers: Some(true),\n    collapse: Some(CollapseSpec {\n        ranges: vec![LineRange::new(3, 8)],\n        style: Some(CollapseStyle::CollapsibleStart),\n        ..Default::default()\n    }),\n    ..Default::default()\n})?;"),
             Ex::new(
                 "collapse-end",
                 "collapsible-end (re-collapsible, summary below)",
                 "Collapsible end",
                 collapse_engine.render(range_code, &collapse_range(CollapseStyle::CollapsibleEnd, vec![LineRange::new(3, 8)]))?,
             )
-            .recipe("Meta", "go title=\"calc.go\" showLineNumbers collapse={3-8} collapseStyle=\"collapsible-end\"")
-            .recipe("Rust", "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"calc.go\".into(), line_numbers: Some(true),\n    collapse: Some(CollapseSpec {\n        ranges: vec![LineRange::new(3, 8)],\n        style: Some(CollapseStyle::CollapsibleEnd),\n        ..Default::default()\n    }),\n    ..Default::default()\n})?;"),
+            .recipe("Meta", "rust title=\"calc.rs\" showLineNumbers collapse={3-8} collapseStyle=\"collapsible-end\"")
+            .recipe("Rust", "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"calc.rs\".into(), line_numbers: Some(true),\n    collapse: Some(CollapseSpec {\n        ranges: vec![LineRange::new(3, 8)],\n        style: Some(CollapseStyle::CollapsibleEnd),\n        ..Default::default()\n    }),\n    ..Default::default()\n})?;"),
             Ex::new(
                 "collapse-auto",
                 "collapsible-auto (auto start/end based on position)",
                 "Collapsible auto",
                 collapse_engine.render(range_code, &collapse_range(CollapseStyle::CollapsibleAuto, vec![LineRange::new(3, 8), LineRange::new(20, 24)]))?,
             )
-            .recipe("Meta", "go title=\"calc.go\" showLineNumbers collapse={3-8,20-24} collapseStyle=\"collapsible-auto\"")
-            .recipe("Rust", "let html = kz.render(code, &Options {\n    lang: \"go\".into(), title: \"calc.go\".into(), line_numbers: Some(true),\n    collapse: Some(CollapseSpec {\n        ranges: vec![LineRange::new(3, 8), LineRange::new(20, 24)],\n        style: Some(CollapseStyle::CollapsibleAuto),\n        ..Default::default()\n    }),\n    ..Default::default()\n})?;"),
+            .recipe("Meta", "rust title=\"calc.rs\" showLineNumbers collapse={3-8,20-24} collapseStyle=\"collapsible-auto\"")
+            .recipe("Rust", "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), title: \"calc.rs\".into(), line_numbers: Some(true),\n    collapse: Some(CollapseSpec {\n        ranges: vec![LineRange::new(3, 8), LineRange::new(20, 24)],\n        style: Some(CollapseStyle::CollapsibleAuto),\n        ..Default::default()\n    }),\n    ..Default::default()\n})?;"),
         ],
     );
 
     let mermaid_code = "graph TD\n    A[Start] --> B{Decision}\n    B -->|Yes| C[Do something]\n    B -->|No| D[Do something else]\n    C --> E[End]\n    D --> E";
-    let regex_code = "func fetchUsers() ([]User, error) {\n\tresp, err := http.Get(\"/api/users\")\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"fetchUsers failed: %w\", err)\n\t}\n\tdefer resp.Body.Close()\n\tvar users []User\n\tjson.NewDecoder(resp.Body).Decode(&users)\n\treturn users, nil\n}";
+    let regex_code = "fn fetch_users() -> Result<Vec<User>, Error> {\n    let resp = match http::get(\"/api/users\") {\n        Ok(resp) => resp,\n        Err(err) => return Err(Error::Fetch(err)),\n    };\n    if !resp.status().is_success() {\n        panic!(\"fetch_users failed: {}\", resp.status());\n    }\n    let users: Vec<User> = resp.json()?;\n    Ok(users)\n}";
     let capture_code = "haystack = \"yes\"\nconfirm = \"yep\"\nreject = \"nope\"";
-    let diff_code = " import (\n-\t\"fmt\"\n+\t\"log\"\n \t\"os\"\n )\n \n func main() {\n-\tfmt.Println(\"hello\")\n+\tlog.Println(\"hello\")\n }";
-    let code_group_markdown = ":::code-group\n\n```go title=\"main.go\"\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Hello from Go!\")\n}\n```\n\n```python title=\"main.py\"\ndef main():\n    print(\"Hello from Python!\")\n\nif __name__ == \"__main__\":\n    main()\n```\n\n```javascript title=\"index.js\"\nfunction main() {\n  console.log(\"Hello from JavaScript!\");\n}\n\nmain();\n```\n\n:::\n";
-    let sync_markdown = ":::code-group sync=\"language\"\n\n```go\ngo get github.com/example/pkg\n```\n\n```python\npip install example-pkg\n```\n\n```javascript\nnpm install example-pkg\n```\n\n:::\n\n<p>Select a language above and the group below syncs automatically.</p>\n\n:::code-group sync=\"language\"\n\n```go\nimport \"github.com/example/pkg\"\n```\n\n```python\nimport example_pkg\n```\n\n```javascript\nconst pkg = require('example-pkg');\n```\n\n:::\n\n<p>This group uses a different sync key (<code>sync=\"platform\"</code>) and syncs independently.</p>\n\n:::code-group sync=\"platform\"\n\n```bash title=\"Linux\"\nsudo apt install build-essential\n```\n\n```powershell title=\"Windows\"\nwinget install Microsoft.VisualStudio.BuildTools\n```\n\n```bash title=\"macOS\"\nbrew install gcc\n```\n\n:::\n";
+    let diff_code = " use std::collections::HashMap;\n-use std::fmt;\n+use std::fmt::Display;\n \n fn main() {\n-    println!(\"hello\");\n+    log::info!(\"hello\");\n }";
+    let code_group_markdown = ":::code-group\n\n```rust title=\"main.rs\"\nfn main() {\n    println!(\"Hello from Rust!\");\n}\n```\n\n```python title=\"main.py\"\ndef main():\n    print(\"Hello from Python!\")\n\nif __name__ == \"__main__\":\n    main()\n```\n\n```javascript title=\"index.js\"\nfunction main() {\n  console.log(\"Hello from JavaScript!\");\n}\n\nmain();\n```\n\n:::\n";
+    let sync_markdown = ":::code-group sync=\"language\"\n\n```rust\ncargo add example-pkg\n```\n\n```python\npip install example-pkg\n```\n\n```javascript\nnpm install example-pkg\n```\n\n:::\n\n<p>Select a language above and the group below syncs automatically.</p>\n\n:::code-group sync=\"language\"\n\n```rust\nuse example_pkg;\n```\n\n```python\nimport example_pkg\n```\n\n```javascript\nconst pkg = require('example-pkg');\n```\n\n:::\n\n<p>This group uses a different sync key (<code>sync=\"platform\"</code>) and syncs independently.</p>\n\n:::code-group sync=\"platform\"\n\n```bash title=\"Linux\"\nsudo apt install build-essential\n```\n\n```powershell title=\"Windows\"\nwinget install Microsoft.VisualStudio.BuildTools\n```\n\n```bash title=\"macOS\"\nbrew install gcc\n```\n\n:::\n";
     let code_group_html =
         render_markdown(&collapse_engine, code_group_markdown, MdOptions::empty())?;
     let sync_html = render_markdown(&collapse_engine, sync_markdown, MdOptions::empty())?;
@@ -575,11 +575,11 @@ pub fn build() -> Result<Catalog, Error> {
             meta_example(&kz, "mermaid", "Mermaid Pass-Through (raw code for Mermaid.js)", "Mermaid", mermaid_code,
                 "mermaid", "let html = kz.render_with_meta(code, \"mermaid\")?;")?,
             meta_example(&kz, "regex-markers", "Regex Markers", "Regex markers", regex_code,
-                "go title=\"regex-markers.go\" showLineNumbers /err\\b/ ins=/func\\s+\\w+/ del=/fmt\\.Errorf/", via_meta)?,
+                "rust title=\"regex-markers.rs\" showLineNumbers /err\\b/ ins=/fn\\s+\\w+/ del=/panic!/", via_meta)?,
             meta_example(&kz, "regex-capture", "Regex Capture Group (/ye(s|p)/ marks only \"s\" or \"p\")", "Regex capture", capture_code,
                 "python title=\"capture_group.py\" /ye(s|p)/", via_meta)?,
-            meta_example(&kz, "hybrid-diff", "Hybrid Diff + Syntax Highlighting (diff lang=\"go\")", "Hybrid diff", diff_code,
-                "diff lang=\"go\" title=\"hybrid-diff.go\" showLineNumbers", via_meta)?,
+            meta_example(&kz, "hybrid-diff", "Hybrid Diff + Syntax Highlighting (diff lang=\"rust\")", "Hybrid diff", diff_code,
+                "diff lang=\"rust\" title=\"hybrid-diff.rs\" showLineNumbers", via_meta)?,
             Ex::new("code-group", "Code Group (tabbed code blocks via markdown)", "Code group", code_group_html)
                 .recipe("Markdown", code_group_markdown)
                 .recipe("Rust", "let kz = Kazari::builder(hl).code_groups(true).build()?;\nlet html = kazari_rs::markdown::render_markdown(&kz, markdown, pulldown_cmark::Options::empty())?;"),
@@ -589,7 +589,7 @@ pub fn build() -> Result<Catalog, Error> {
     );
 
     let ansi_code = "\x1b[1;34mINFO\x1b[0m  Server started on \x1b[32m:8080\x1b[0m\n\x1b[1;33mWARN\x1b[0m  Cache miss for key \x1b[36m\"user:42\"\x1b[0m\n\x1b[1;31mERROR\x1b[0m Connection refused: \x1b[4mdb.example.com:5432\x1b[0m\n\x1b[90m2024-01-15 10:30:45\x1b[0m \x1b[38;5;208mDEBUG\x1b[0m Retrying in \x1b[1m3s\x1b[0m...";
-    let ansi_git_diff = "\x1b[1mdiff --git a/api/handler.go b/api/handler.go\x1b[0m\n\x1b[1mindex 4e9d2a1..7c3f8b2 100644\x1b[0m\n\x1b[1m--- a/api/handler.go\x1b[0m\n\x1b[1m+++ b/api/handler.go\x1b[0m\n\x1b[36m@@ -12,7 +12,9 @@\x1b[0m func ServeHTTP(w http.ResponseWriter, r *http.Request) {\n    ctx := r.Context()\n\x1b[31m-   log.Printf(\"request: %s %s\", r.Method, r.URL.Path)\x1b[0m\n\x1b[32m+   spanCtx, span := tracer.Start(ctx, \"ServeHTTP\")\x1b[0m\n\x1b[32m+   defer span.End()\x1b[0m\n\x1b[32m+   log.Printf(\"trace: %s %s\", r.Method, r.URL.Path)\x1b[0m\n    handler(w, r.WithContext(ctx))";
+    let ansi_git_diff = "\x1b[1mdiff --git a/src/handler.rs b/src/handler.rs\x1b[0m\n\x1b[1mindex 4e9d2a1..7c3f8b2 100644\x1b[0m\n\x1b[1m--- a/src/handler.rs\x1b[0m\n\x1b[1m+++ b/src/handler.rs\x1b[0m\n\x1b[36m@@ -12,7 +12,9 @@\x1b[0m fn serve(req: Request) -> Response {\n    let ctx = req.context();\n\x1b[31m-   log::info!(\"request: {} {}\", req.method(), req.path());\x1b[0m\n\x1b[32m+   let span = tracer.start(&ctx, \"serve\");\x1b[0m\n\x1b[32m+   let _guard = span.enter();\x1b[0m\n\x1b[32m+   log::info!(\"trace: {} {}\", req.method(), req.path());\x1b[0m\n    handler(req.with_context(ctx))";
     let ansi_truecolor = "\x1b[38;2;255;100;0mWARNING\x1b[0m \x1b[38;2;200;200;200mcargo build\x1b[0m\n\x1b[38;2;255;200;0m  Compiling\x1b[0m tokio v1.36.0\n\x1b[3m\x1b[38;2;150;150;150m  deprecated: use tokio::task::spawn_local instead\x1b[0m\n\x1b[1;38;2;255;80;80mERROR\x1b[22m\x1b[38;2;230;230;230m[E0308]\x1b[0m mismatched types\n  \x1b[38;2;100;200;255mexpected\x1b[0m \x1b[1m&str\x1b[22m\n  \x1b[9m\x1b[38;2;180;180;180m   found\x1b[29m\x1b[0m String\n\x1b[4m\x1b[38;2;100;180;255mFor more information: rustc --explain E0308\x1b[0m";
     let ansi_256 = "\x1b[1m/home/user/project\x1b[0m\n\x1b[38;5;33mdrwxr-xr-x\x1b[0m  2 user user  4096 \x1b[38;5;33msrc/\x1b[0m\n\x1b[38;5;33mdrwxr-xr-x\x1b[0m  2 user user  4096 \x1b[38;5;33mtests/\x1b[0m\n\x1b[38;5;46m-rwxr-xr-x\x1b[0m  1 user user  8192 \x1b[38;5;46mbuild.sh\x1b[0m\n\x1b[38;5;196m-rw-r--r--\x1b[0m  1 user user   512 \x1b[38;5;196mERROR.log\x1b[0m\n\x1b[38;5;220m-rw-r--r--\x1b[0m  1 user user  2048 \x1b[38;5;220mconfig.yaml\x1b[0m\n\x1b[38;5;244m-rw-r--r--\x1b[0m  1 user user    64 \x1b[38;5;244m.gitignore\x1b[0m\n\x1b[38;5;252m-rw-r--r--\x1b[0m  1 user user  1024 \x1b[38;5;252mREADME.md\x1b[0m\n\x1b[48;5;234m\x1b[38;5;252m Total: 7 items \x1b[0m";
 
@@ -637,16 +637,16 @@ pub fn build() -> Result<Catalog, Error> {
         ],
     );
 
-    let theme_code = "func main() {\n\tfmt.Println(\"Same code, different theme\")\n}";
+    let theme_code = "fn main() {\n    println!(\"Same code, different theme\");\n}";
     let theme_default_html =
-        kz.render_with_meta(theme_code, "go title=\"default theme\" showLineNumbers")?;
+        kz.render_with_meta(theme_code, "rust title=\"default theme\" showLineNumbers")?;
     let theme_dracula_html = kz.render_with_meta(
         theme_code,
-        "go title=\"theme=dracula\" showLineNumbers theme=\"dracula\"",
+        "rust title=\"theme=dracula\" showLineNumbers theme=\"dracula\"",
     )?;
     let theme_dual_html = kz.render_with_meta(
         theme_code,
-        "go title=\"theme=dracula,github-light\" showLineNumbers theme=\"dracula,github-light\"",
+        "rust title=\"theme=dracula,github-light\" showLineNumbers theme=\"dracula,github-light\"",
     )?;
     let customizer_engine = engine(|b| {
         b.theme_css_root(".kazari-customizer")
@@ -658,8 +658,8 @@ pub fn build() -> Result<Catalog, Error> {
             })
     })?;
     let customizer_html = customizer_engine.render(
-        "fmt.Println(\"Custom dark BG: #1a1b26\")",
-        &titled("go", "customized-theme.go"),
+        "println!(\"Custom dark BG: #1a1b26\");",
+        &titled("rust", "customized-theme.rs"),
     )?;
     let tinted_engine = engine(|b| {
         b.theme_css_root(".kazari-tinted")
@@ -670,20 +670,20 @@ pub fn build() -> Result<Catalog, Error> {
             })
     })?;
     let tinted_html = tinted_engine.render(
-        "fmt.Println(\"Backgrounds tinted toward teal in OKLCH space\")",
-        &titled("go", "tinted-theme.go"),
+        "println!(\"Backgrounds tinted toward teal in OKLCH space\");",
+        &titled("rust", "tinted-theme.rs"),
     )?;
     let scoped_engine = engine(|b| b.theme_css_root(".kazari-scoped"))?;
     let scoped_html = scoped_engine.render(
-        "fmt.Println(\"CSS vars scoped to .kazari-scoped\")",
-        &titled("go", "scoped.go"),
+        "println!(\"CSS vars scoped to .kazari-scoped\");",
+        &titled("rust", "scoped.rs"),
     )?;
     let toggle_engine = engine(|b| b.theme_toggle(true))?;
     let toggle_html = format!(
         "{}{}",
         toggle_engine.render_with_meta(
-            "func main() {\n    fmt.Println(\"Toggle this block's theme!\")\n}",
-            "go title=\"theme-toggle.go\" theme=\"dracula,github-light\""
+            "fn main() {\n    println!(\"Toggle this block's theme!\");\n}",
+            "rust title=\"theme-toggle.rs\" theme=\"dracula,github-light\""
         )?,
         toggle_engine.render_with_meta(
             "const greeting = \"Each block toggles independently\";\nconsole.log(greeting);",
@@ -697,11 +697,11 @@ pub fn build() -> Result<Catalog, Error> {
         "Per-block themes, generated adjustments, and scoped CSS output.",
         vec![
             Ex::new("theme-override", "Per-Block Theme Override (default vs dracula)", "Per-block override", format!("{theme_default_html}{theme_dracula_html}"))
-                .recipe("Meta", "go title=\"default theme\" showLineNumbers\ngo title=\"theme=dracula\" showLineNumbers theme=\"dracula\"")
-                .recipe("Rust", "let default_html = kz.render_with_meta(code, \"go title=\\\"default theme\\\" showLineNumbers\")?;\nlet dracula_html = kz.render_with_meta(code, \"go title=\\\"theme=dracula\\\" showLineNumbers theme=\\\"dracula\\\"\")?;"),
+                .recipe("Meta", "rust title=\"default theme\" showLineNumbers\nrust title=\"theme=dracula\" showLineNumbers theme=\"dracula\"")
+                .recipe("Rust", "let default_html = kz.render_with_meta(code, \"rust title=\\\"default theme\\\" showLineNumbers\")?;\nlet dracula_html = kz.render_with_meta(code, \"rust title=\\\"theme=dracula\\\" showLineNumbers theme=\\\"dracula\\\"\")?;"),
             Ex::new("theme-override-dual", "Per-Block Theme Override (dual: dracula + github-light)", "Dual override", theme_dual_html)
-                .recipe("Meta", "go title=\"theme=dracula,github-light\" showLineNumbers theme=\"dracula,github-light\"")
-                .recipe("Rust", "let html = kz.render_with_meta(code, \"go showLineNumbers theme=\\\"dracula,github-light\\\"\")?;"),
+                .recipe("Meta", "rust title=\"theme=dracula,github-light\" showLineNumbers theme=\"dracula,github-light\"")
+                .recipe("Rust", "let html = kz.render_with_meta(code, \"rust showLineNumbers theme=\\\"dracula,github-light\\\"\")?;"),
             Ex::new("theme-customizer", "Theme Customizer (dark BG changed to #1a1b26)", "Theme customizer", customizer_html)
                 .wrapper("kazari-customizer")
                 .recipe("Rust", "let kz = Kazari::builder(hl)\n    .theme_css_root(\".kazari-customizer\")\n    .theme_customizer(|name, mut colors| {\n        if name == \"github-dark\" { colors.bg = \"#1a1b26\".into(); }\n        colors\n    })\n    .build()?;"),
@@ -713,26 +713,26 @@ pub fn build() -> Result<Catalog, Error> {
                 .wrapper("kazari-scoped")
                 .recipe("Rust", "let kz = Kazari::builder(hl).theme_css_root(\".kazari-scoped\").build()?;\nlet css = kz.css();"),
             Ex::new("per-block-theme-toggle", "Per-Block Theme Toggle", "Theme toggle", toggle_html)
-                .recipe("Rust", "let kz = Kazari::builder(hl).theme_toggle(true).build()?;\nlet html = kz.render_with_meta(code, \"go title=\\\"theme-toggle.go\\\"\")?;"),
+                .recipe("Rust", "let kz = Kazari::builder(hl).theme_toggle(true).build()?;\nlet html = kz.render_with_meta(code, \"rust title=\\\"theme-toggle.rs\\\"\")?;"),
         ],
     );
 
     let french_engine = engine(|b| b.locale("fr-FR"))?;
     let french_html = french_engine.render(
-        "fmt.Println(\"Bonjour le monde !\")",
-        &titled("go", "locale-fr.go"),
+        "println!(\"Bonjour le monde !\");",
+        &titled("rust", "locale-fr.rs"),
     )?;
     let icon_only_engine = engine(|b| b.lang_icon_mode(LangIconMode::IconOnly))?;
     let icon_only_html = format!(
         "{}{}{}",
-        icon_only_engine.render("fmt.Println(\"Go\")", &opts("go"))?,
+        icon_only_engine.render("println!(\"Rust\");", &opts("rust"))?,
         icon_only_engine.render("print(\"Python\")", &opts("python"))?,
         icon_only_engine.render("console.log(\"JS\")", &opts("javascript"))?,
     );
     let icon_text_engine = engine(|b| b.lang_icon_mode(LangIconMode::IconAndText))?;
     let icon_text_html = format!(
         "{}{}{}",
-        icon_text_engine.render("fmt.Println(\"Go\")", &opts("go"))?,
+        icon_text_engine.render("println!(\"Rust\");", &opts("rust"))?,
         icon_text_engine.render("print(\"Python\")", &opts("python"))?,
         icon_text_engine.render("console.log(\"JS\")", &opts("javascript"))?,
     );
@@ -751,10 +751,10 @@ pub fn build() -> Result<Catalog, Error> {
     })?;
     let file_icon_html = format!(
         "{}{}{}{}",
-        file_icon_engine.render("fmt.Println(\"Go\")", &titled("go", "main.go"))?,
+        file_icon_engine.render("println!(\"Rust\");", &titled("rust", "main.rs"))?,
         file_icon_engine.render("print(\"Python\")", &titled("python", "app.py"))?,
         file_icon_engine.render("console.log(\"JS\")", &titled("javascript", "index.js"))?,
-        file_icon_engine.render("fn main() {}", &titled("rust", "main.rs"))?,
+        file_icon_engine.render("body { margin: 0; }", &titled("css", "style.css"))?,
     );
 
     let localization = category(
@@ -764,7 +764,7 @@ pub fn build() -> Result<Catalog, Error> {
         vec![
             Ex::new("locale-french", "Locale: French (locale(\"fr-FR\"))", "French locale", french_html)
                 .describe("Copy and fullscreen controls use French labels.")
-                .recipe("Rust", "let kz = Kazari::builder(hl).locale(\"fr-FR\").build()?;\nlet html = kz.render_with_meta(code, \"go title=\\\"locale-fr.go\\\"\")?;"),
+                .recipe("Rust", "let kz = Kazari::builder(hl).locale(\"fr-FR\").build()?;\nlet html = kz.render_with_meta(code, \"rust title=\\\"locale-fr.rs\\\"\")?;"),
             Ex::new("file-icons", "File Icons (custom resolver)", "File icons", file_icon_html)
                 .describe("file_icon_resolver injects an icon based on the title extension.")
                 .recipe("Rust", "let kz = Kazari::builder(hl)\n    .file_icon_resolver(|ext| {\n        let icon = match ext { \"go\" => \"\u{1F535}\", \"py\" => \"\u{1F40D}\", \"js\" => \"\u{1F7E1}\", \"rs\" => \"\u{1F980}\", _ => \"\u{1F4C4}\" };\n        format!(\"<span class=\\\"kz-file-icon\\\">{icon}</span>\")\n    })\n    .build()?;"),
@@ -777,7 +777,7 @@ pub fn build() -> Result<Catalog, Error> {
 
     let output_engine = engine(|b| b.output_panel(true))?;
     let bash_output_code = "pwd\nls -la\n---output---\n/usr/home/boba-tan\ntotal 24\ndrwxr-xr-x  3 boba boba 4096 Jun 28 14:30 .";
-    let go_output_code = "// main.go\npackage main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"Hello, Kazari!\")\n\tfmt.Println(\"Output panels are here.\")\n}\n---output---\nHello, Kazari!\nOutput panels are here.";
+    let rust_output_code = "// main.rs\nfn main() {\n    println!(\"Hello, Kazari!\");\n    println!(\"Output panels are here.\");\n}\n---output---\nHello, Kazari!\nOutput panels are here.";
     let bash_collapsed_code = "echo \"Build complete\"\n---output---\nBuild complete";
     let bash_label_code = "node index.js\n---output---\nServer listening on port 3000";
 
@@ -800,9 +800,9 @@ pub fn build() -> Result<Catalog, Error> {
                 "output-editor",
                 "Editor Frame Output",
                 "Editor output",
-                go_output_code,
-                "go withOutput",
-                "let html = kz.render(code, &Options {\n    lang: \"go\".into(), with_output: Some(true), ..Default::default()\n})?;",
+                rust_output_code,
+                "rust withOutput",
+                "let html = kz.render(code, &Options {\n    lang: \"rust\".into(), with_output: Some(true), ..Default::default()\n})?;",
             )?,
             meta_example(
                 &output_engine,
@@ -848,18 +848,18 @@ pub fn build() -> Result<Catalog, Error> {
             )
         })
     })?;
-    let todo_code = "package main\n\nimport \"net/http\"\n\nfunc main() {\n\t// TODO: add TLS configuration\n\thttp.HandleFunc(\"/\", handler)\n\t// FIXME: this ignores the returned error\n\thttp.ListenAndServe(\":8080\", nil)\n}";
+    let todo_code = "use std::net::TcpListener;\n\nfn main() -> std::io::Result<()> {\n    // TODO: add TLS configuration\n    let listener = TcpListener::bind(\"127.0.0.1:8080\")?;\n    // FIXME: this ignores the returned error\n    let _ = serve(listener);\n    Ok(())\n}";
     let figcaption_code =
-        "package config\n\ntype Server struct {\n\tHost string\n\tPort int\n\tTLS  bool\n}";
+        "pub struct Server {\n    pub host: String,\n    pub port: u16,\n    pub tls: bool,\n}";
 
     let post_render = category(
         "post-render",
         "Post-Render Callbacks",
         "Extend rendered output with post_render callbacks.",
         vec![
-            Ex::new("postrender-todo", "TODO/FIXME Badges", "TODO badges", todo_engine.render(todo_code, &titled("go", "server.go"))?)
+            Ex::new("postrender-todo", "TODO/FIXME Badges", "TODO badges", todo_engine.render(todo_code, &titled("rust", "server.rs"))?)
                 .recipe("Rust", "let todo_re = Regex::new(r\"(>[^<]*?)(TODO:)\")?;\nlet fixme_re = Regex::new(r\"(>[^<]*?)(FIXME:)\")?;\nlet kz = Kazari::builder(hl)\n    .post_render(move |html, _info| {\n        let html = todo_re.replace_all(&html, \"${1}<span class=\\\"kz-todo-badge\\\">TODO</span> \").into_owned();\n        fixme_re.replace_all(&html, \"${1}<span class=\\\"kz-fixme-badge\\\">FIXME</span> \").into_owned()\n    })\n    .build()?;"),
-            Ex::new("postrender-figcaption", "Figure Caption", "Figure caption", figcaption_engine.render(figcaption_code, &titled("go", "config.go"))?)
+            Ex::new("postrender-figcaption", "Figure Caption", "Figure caption", figcaption_engine.render(figcaption_code, &titled("rust", "config.rs"))?)
                 .recipe("Rust", "let kz = Kazari::builder(hl)\n    .post_render(|html, info| {\n        if info.title.is_empty() { return html; }\n        format!(\"<figure>{html}<figcaption>{}</figcaption></figure>\", info.title)\n    })\n    .build()?;"),
         ],
     );
@@ -877,19 +877,20 @@ pub fn build() -> Result<Catalog, Error> {
             .map_err(|e| Error::Highlight(e.to_string()))?;
         Ok(format!("<div class=\"kz-svg-preview\">{svg}</div>"))
     };
-    let svg_go_code = "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tname := \"Kazari\"\n\tfmt.Printf(\"Hello, %s!\\n\", name)\n}";
+    let svg_rust_code =
+        "fn main() {\n    let name = \"Kazari\";\n    println!(\"Hello, {name}!\");\n}";
     let svg_py_code = "import json\nfrom pathlib import Path\n\ndef load_config(path: str) -> dict:\n    data = Path(path).read_text()\n    return json.loads(data)";
     let svg_ts_code = "interface User {\n  id: number;\n  name: string;\n  email: string;\n}\n\nfunction greet(user: User): string {\n  return `Hello, ${user.name}!`;\n}";
-    let light_svg = svg(svg_go_code, "go", "github-light", &|_| {})?;
-    let dark_svg = svg(svg_go_code, "go", "github-dark", &|_| {})?;
+    let light_svg = svg(svg_rust_code, "rust", "github-light", &|_| {})?;
+    let dark_svg = svg(svg_rust_code, "rust", "github-dark", &|_| {})?;
 
     let svg_category = category(
         "svg",
         "SVG Output",
-        "Self-contained SVG images from Iro's code_to_svg, useful for README files, email, or static export.",
+        "Self-contained SVG images from Irosashi's code_to_svg, useful for README files, email, or static export.",
         vec![
             Ex::new("svg-default", "SVG Default Output (github-dark)", "Default", dark_svg.clone())
-                .recipe("Rust", "let svg = hl.code_to_svg(code, &CodeToSvgOptions::new(\"go\", \"github-dark\"))?;"),
+                .recipe("Rust", "let svg = hl.code_to_svg(code, &CodeToSvgOptions::new(\"rust\", \"github-dark\"))?;"),
             Ex::new("svg-custom-font", "SVG Custom Font Size (18px, dracula)", "Custom font", svg(svg_py_code, "python", "dracula", &|o| o.font_size = 18.0)?)
                 .recipe("Rust", "let mut options = CodeToSvgOptions::new(\"python\", \"dracula\");\noptions.svg.font_size = 18.0;\nlet svg = hl.code_to_svg(code, &options)?;"),
             Ex::new("svg-no-background", "SVG No Background (transparent, no corner radius)", "No background", svg(svg_ts_code, "typescript", "github-light", &|o| {
@@ -898,7 +899,7 @@ pub fn build() -> Result<Catalog, Error> {
             })?)
                 .recipe("Rust", "let mut options = CodeToSvgOptions::new(\"typescript\", \"github-light\");\noptions.svg.show_background = Some(false);\noptions.svg.corner_radius = 0.0;\nlet svg = hl.code_to_svg(code, &options)?;"),
             Ex::new("svg-dual-theme", "SVG Light vs Dark Theme (side by side)", "Light vs dark", format!("<div class=\"kz-svg-compare\">{light_svg}{dark_svg}</div>"))
-                .recipe("Rust", "let light = hl.code_to_svg(code, &CodeToSvgOptions::new(\"go\", \"github-light\"))?;\nlet dark = hl.code_to_svg(code, &CodeToSvgOptions::new(\"go\", \"github-dark\"))?;"),
+                .recipe("Rust", "let light = hl.code_to_svg(code, &CodeToSvgOptions::new(\"rust\", \"github-light\"))?;\nlet dark = hl.code_to_svg(code, &CodeToSvgOptions::new(\"rust\", \"github-dark\"))?;"),
         ],
     );
 
@@ -1146,7 +1147,7 @@ const DESCRIPTIONS: &[(&str, &str)] = &[
     ),
     (
         "svg-default",
-        "Renders a Go snippet to a self-contained SVG image using Iro's code_to_svg with default settings.",
+        "Renders a Rust snippet to a self-contained SVG image using Irosashi's code_to_svg with default settings.",
     ),
     (
         "svg-custom-font",

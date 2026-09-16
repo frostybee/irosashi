@@ -173,7 +173,7 @@ pub fn render(page: &Page<'_>) -> String {
   <div class="site-footer-inner">
     <div class="site-footer-about">
       <p class="site-footer-brand">Kazari <span class="site-footer-kanji">飾り</span></p>
-      <p>A Rust library for rendering framed, syntax-highlighted code blocks with full CSS customization. Powered by <a href="https://github.com/frostybee/irosashi">Iro</a>, a Rust port of Shiki.</p>
+      <p>A Rust library for rendering framed, syntax-highlighted code blocks with full CSS customization. Powered by <a href="https://github.com/frostybee/irosashi">Irosashi</a>, a Rust port of Shiki.</p>
     </div>
     <div class="site-footer-links">
       <a href="https://github.com/frostybee">@frostybee</a>

@@ -500,9 +500,9 @@ fn build_static_vars(cfg: &Config) -> Vec<Var> {
         nv("--kz-ln-highlight-opacity", "0.8"),
         // Never gated on the config: a meta `collapse={ranges}` renders sections on
         // any engine and collapsible.css resolves these without fallbacks.
-        nv("--kz-collapse-btn-bg", "rgba(255,255,255,0.08)"),
-        nv("--kz-collapse-btn-fg", "rgba(255,255,255,0.7)"),
-        nv("--kz-collapse-btn-hover-bg", "rgba(255,255,255,0.15)"),
+        nv("--kz-collapse-btn-bg", "rgba(0,0,0,0.04)"),
+        nv("--kz-collapse-btn-fg", "#4b5563"),
+        nv("--kz-collapse-btn-hover-bg", "rgba(0,0,0,0.08)"),
         nv("--kz-collapse-gradient-start", "transparent"),
         nv("--kz-collapse-gradient-end", "var(--kz-editor-bg)"),
         nv("--kz-collapse-transition", "300ms ease"),

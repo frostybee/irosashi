@@ -15,6 +15,7 @@
   <a href="https://docs.rs/irosashi">API reference</a> ·
   <a href="https://github.com/frostybee/irosashi/blob/main/FIDELITY.md">Fidelity report</a> ·
   <a href="https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md">Benchmarks</a> ·
+  <a href="https://github.com/frostybee/irosashi/blob/main/CHANGELOG.md">Changelog</a> ·
   <a href="https://github.com/frostybee/irosashi/releases">Releases</a>
 </p>
 

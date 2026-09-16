@@ -5,7 +5,8 @@ use serde::Deserialize;
 use crate::error::Error;
 use crate::meta::BlockOptions;
 use crate::types::{
-    DarkMode, Frame, InlineMarker, LineMarker, LineRange, LinkAnnotation, TerminalDotStyle,
+    DarkMode, Frame, InlineMarker, LineMarker, LineRange, LinkAnnotation, MarkerType,
+    TerminalDotStyle, ThemeInfo,
 };
 
 #[derive(Debug, Clone)]
@@ -53,6 +54,11 @@ pub struct Config {
     /// Render `mermaid` fences as a bare `<pre class="mermaid">` for a client-side
     /// Mermaid script instead of highlighting them.
     pub mermaid_pass_through: bool,
+    /// Minimum WCAG contrast ratio of token colours against the editor background
+    /// (or the marker background on marked lines); 0 disables the adjustment.
+    pub min_contrast: f64,
+    /// Strip comments and whitespace from the generated CSS and JS.
+    pub minify: bool,
     /// Threshold collapsing of long blocks. Range collapse (`collapse={3-5}`) works
     /// without it.
     pub collapsible: Option<CollapsibleConfig>,
@@ -97,6 +103,53 @@ pub struct Config {
     pub language_aliases: HashMap<String, String>,
     #[allow(clippy::type_complexity)]
     pub warning_handler: Option<Box<dyn Fn(&str) + Send + Sync>>,
+}
+
+/// The translucent line marker backgrounds, the same values as the static
+/// `--kz-mark-bg`, `--kz-ins-bg` and `--kz-del-bg` variables.
+pub(crate) const MARKER_BG_COLORS: [(MarkerType, &str); 3] = [
+    (MarkerType::Mark, "rgba(255,200,0,0.12)"),
+    (MarkerType::Ins, "rgba(46,160,67,0.12)"),
+    (MarkerType::Del, "rgba(248,81,73,0.12)"),
+];
+
+/// Opaque marker backgrounds after compositing on an editor background.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub(crate) struct MarkerBgs {
+    pub mark: String,
+    pub ins: String,
+    pub del: String,
+}
+
+impl MarkerBgs {
+    /// Warning and error lines have no dedicated background.
+    pub fn bg(&self, mt: MarkerType) -> Option<&str> {
+        match mt {
+            MarkerType::Mark => Some(&self.mark),
+            MarkerType::Ins => Some(&self.ins),
+            MarkerType::Del => Some(&self.del),
+            MarkerType::Warning | MarkerType::Error => None,
+        }
+    }
+}
+
+pub(crate) fn compute_marker_bgs(editor_bg: &str) -> MarkerBgs {
+    let composite = |mt: MarkerType| {
+        let rgba = MARKER_BG_COLORS
+            .iter()
+            .find(|(m, _)| *m == mt)
+            .map(|(_, v)| *v)
+            .unwrap_or_default();
+        match crate::color::rgba_to_hex(rgba) {
+            Some(hex) => crate::color::on_background(&hex, editor_bg),
+            None => editor_bg.to_owned(),
+        }
+    };
+    MarkerBgs {
+        mark: composite(MarkerType::Mark),
+        ins: composite(MarkerType::Ins),
+        del: composite(MarkerType::Del),
+    }
 }
 
 /// How the language badge is shown: text only, an icon placeholder, or both.
@@ -256,6 +309,8 @@ impl Default for Config {
             inline_links: false,
             code_groups: false,
             mermaid_pass_through: true,
+            min_contrast: 0.0,
+            minify: true,
             collapsible: None,
             file_icons: true,
             file_icon_resolver: None,
@@ -292,6 +347,13 @@ pub struct ResolvedBlock {
     pub lang: String,
     pub title: String,
     pub theme: String,
+    /// Inline `--kz-ovl-*` / `--kz-ovd-*` declarations for a per-block theme
+    /// override; empty when the block uses the page themes.
+    pub theme_override_style: String,
+    /// The theme colours token contrast is measured against (the override theme
+    /// when one applies, else the page theme); set only when `min_contrast` is on.
+    pub contrast_light: Option<ThemeInfo>,
+    pub contrast_dark: Option<ThemeInfo>,
     pub diff_lang: String,
     pub frame: Frame,
     pub line_numbers: bool,
@@ -494,6 +556,8 @@ pub struct FileConfig {
     pub inline_links: Option<bool>,
     pub code_groups: Option<bool>,
     pub mermaid_pass_through: Option<bool>,
+    pub min_contrast: Option<f64>,
+    pub minify: Option<bool>,
     pub file_icons: Option<bool>,
     pub lang_icon_mode: Option<LangIconMode>,
     pub line_numbers: Option<bool>,
@@ -561,6 +625,12 @@ impl FileConfig {
         }
         if let Some(v) = self.mermaid_pass_through {
             cfg.mermaid_pass_through = v;
+        }
+        if let Some(v) = self.min_contrast {
+            cfg.min_contrast = v;
+        }
+        if let Some(v) = self.minify {
+            cfg.minify = v;
         }
         if let Some(v) = self.file_icons {
             cfg.file_icons = v;
@@ -697,6 +767,13 @@ impl FileConfig {
             && tw == 0
         {
             return Err(Error::Config("tabWidth must be at least 1".into()));
+        }
+        if let Some(mc) = self.min_contrast
+            && !(0.0..=21.0).contains(&mc)
+        {
+            return Err(Error::Config(format!(
+                "minContrast must be between 0 and 21, got {mc}"
+            )));
         }
         if let Some(themes) = &self.themes
             && themes.light.is_empty()
@@ -1183,6 +1260,40 @@ styleOverrides:
     fn file_config_tab_width_zero_rejected() {
         let yaml = "tabWidth: 0\n";
         assert!(FileConfig::from_yaml(yaml).is_err());
+    }
+
+    #[test]
+    fn file_config_minify_key() {
+        let mut cfg = Config::default();
+        assert!(cfg.minify);
+        FileConfig::from_yaml("minify: false\n")
+            .unwrap()
+            .apply(&mut cfg)
+            .unwrap();
+        assert!(!cfg.minify);
+    }
+
+    #[test]
+    fn file_config_min_contrast_range() {
+        assert!(FileConfig::from_yaml("minContrast: 22\n").is_err());
+        assert!(FileConfig::from_yaml("minContrast: -1\n").is_err());
+        let mut cfg = Config::default();
+        FileConfig::from_yaml("minContrast: 5.5\n")
+            .unwrap()
+            .apply(&mut cfg)
+            .unwrap();
+        assert_eq!(cfg.min_contrast, 5.5);
+    }
+
+    #[test]
+    fn marker_bgs_composite_on_editor_background() {
+        let light = compute_marker_bgs("#ffffff");
+        assert_eq!(light.mark, "#fff8e0");
+        assert_ne!(light.ins, light.del);
+        assert_eq!(light.bg(MarkerType::Ins), Some(light.ins.as_str()));
+        assert_eq!(light.bg(MarkerType::Warning), None);
+        let dark = compute_marker_bgs("#24292e");
+        assert_ne!(dark.mark, light.mark);
     }
 
     #[test]

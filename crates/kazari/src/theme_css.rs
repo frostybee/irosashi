@@ -1,11 +1,33 @@
 use std::fmt::Write;
 
+use crate::color::{is_light, set_alpha};
 use crate::config::Config;
 use crate::types::{DarkMode, ThemeInfo};
 
 const COLLAPSE_EXPAND_ICON: &str = r#"url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m8.177.677 2.896 2.896a.25.25 0 0 1-.177.427H8.75v1.25a.75.75 0 0 1-1.5 0V4H5.104a.25.25 0 0 1-.177-.427L7.823.677a.25.25 0 0 1 .354 0ZM7.25 10.75a.75.75 0 0 1 1.5 0V12h2.146a.25.25 0 0 1 .177.427l-2.896 2.896a.25.25 0 0 1-.354 0l-2.896-2.896A.25.25 0 0 1 5.104 12H7.25v-1.25Zm-5-2a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM6 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 6 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM12 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 12 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5Z'/%3E%3C/svg%3E")"#;
 
 const COLLAPSE_COLLAPSE_ICON: &str = r#"url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M10.896 2H8.75V.75a.75.75 0 0 0-1.5 0V2H5.104a.25.25 0 0 0-.177.427l2.896 2.896a.25.25 0 0 0 .354 0l2.896-2.896A.25.25 0 0 0 10.896 2ZM8.75 15.25a.75.75 0 0 1-1.5 0V14H5.104a.25.25 0 0 1-.177-.427l2.896-2.896a.25.25 0 0 1 .354 0l2.896 2.896a.25.25 0 0 1-.177.427H8.75v1.25Zm-6.5-6.5a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM6 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 6 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5ZM12 8a.75.75 0 0 1-.75.75h-.5a.75.75 0 0 1 0-1.5h.5A.75.75 0 0 1 12 8Zm2.25.75a.75.75 0 0 0 0-1.5h-.5a.75.75 0 0 0 0 1.5h.5Z'/%3E%3C/svg%3E")"#;
+
+/// The `--kz-ansi-*` variables an ANSI block's standard colours resolve through,
+/// in SGR order (30 to 37, then 90 to 97). The defaults are the Tango palette.
+pub(crate) const ANSI_PALETTE: [(&str, &str); 16] = [
+    ("black", "#000000"),
+    ("red", "#cc0000"),
+    ("green", "#4e9a06"),
+    ("yellow", "#c4a000"),
+    ("blue", "#3465a4"),
+    ("magenta", "#75507b"),
+    ("cyan", "#06989a"),
+    ("white", "#d3d7cf"),
+    ("bright-black", "#555753"),
+    ("bright-red", "#ef2929"),
+    ("bright-green", "#8ae234"),
+    ("bright-yellow", "#fce94f"),
+    ("bright-blue", "#729fcf"),
+    ("bright-magenta", "#ad7fa8"),
+    ("bright-cyan", "#34e2e2"),
+    ("bright-white", "#eeeeec"),
+];
 
 struct Var {
     name: String,
@@ -83,12 +105,20 @@ pub fn token_switching_css(cfg: &Config) -> String {
     let mut sb = String::with_capacity(512);
 
     sb.push_str(&token_switch_rule(".kazari-block", "--sl", "--slbg"));
+    sb.push_str(&themed_rule(
+        ".kazari-block.kz-themed",
+        OverrideSlot::Light,
+        true,
+        cfg,
+    ));
 
     if cfg.dark_theme.is_none() {
         return sb;
     }
 
-    let dark_rules = token_switch_rule(".kazari-block", "--sd", "--sdbg");
+    // The dark themed rule stays on one line: `write_scoped_rules` prefixes lines.
+    let dark_rules = token_switch_rule(".kazari-block", "--sd", "--sdbg")
+        + &themed_rule(".kazari-block.kz-themed", OverrideSlot::Dark, false, cfg);
 
     match &cfg.dark_mode {
         DarkMode::Selector(sel) => {
@@ -108,6 +138,86 @@ pub fn token_switching_css(cfg: &Config) -> String {
     }
 
     sb
+}
+
+#[derive(Clone, Copy)]
+enum OverrideSlot {
+    Light,
+    Dark,
+}
+
+const COLLAPSE_GRADIENT_DECL: &str = "--kz-collapse-gradient-end: var(--kz-editor-bg); ";
+
+/// Maps the `--kz-ovl-*` / `--kz-ovd-*` variables of a `kz-themed` block back onto
+/// the regular `--kz-*` names; the dark slot falls back to the light value.
+fn themed_rule(selector: &str, slot: OverrideSlot, gradient: bool, cfg: &Config) -> String {
+    let mut sb = String::with_capacity(1024);
+    sb.push_str(selector);
+    sb.push_str(" { ");
+    for name in overridable_var_names(cfg) {
+        let suffix = name.trim_start_matches("--kz-");
+        match slot {
+            OverrideSlot::Light => write!(sb, "{name}: var(--kz-ovl-{suffix}); ").unwrap(),
+            OverrideSlot::Dark => write!(
+                sb,
+                "{name}: var(--kz-ovd-{suffix}, var(--kz-ovl-{suffix})); "
+            )
+            .unwrap(),
+        }
+    }
+    if gradient && cfg.collapsible.is_some() {
+        sb.push_str(COLLAPSE_GRADIENT_DECL);
+    }
+    sb.push_str("}\n");
+    sb
+}
+
+/// The variable names a block may override; the set depends on the config only, so
+/// a placeholder theme is enough to enumerate it.
+fn overridable_var_names(cfg: &Config) -> Vec<String> {
+    let placeholder = ThemeInfo {
+        bg: "#ffffff".to_owned(),
+        fg: "#000000".to_owned(),
+        ..Default::default()
+    };
+    block_overridable_vars(&placeholder, cfg)
+        .into_iter()
+        .map(|v| v.name)
+        .collect()
+}
+
+/// Inline declarations for a per-block theme override: light values as
+/// `--kz-ovl-*`, dark values as `--kz-ovd-*`. Empty when the light colours are
+/// unusable.
+pub fn block_override_style(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) -> String {
+    if light.bg.is_empty() || light.fg.is_empty() {
+        return String::new();
+    }
+    let mut sb = String::with_capacity(1024);
+    write_override_prefixed(&mut sb, "--kz-ovl-", &block_overridable_vars(light, cfg));
+    if let Some(dark) = dark
+        && cfg.dark_theme.is_some()
+        && !dark.bg.is_empty()
+        && !dark.fg.is_empty()
+    {
+        write_override_prefixed(&mut sb, "--kz-ovd-", &block_overridable_vars(dark, cfg));
+    }
+    sb.trim_end_matches(';').to_owned()
+}
+
+fn write_override_prefixed(sb: &mut String, prefix: &str, vars: &[Var]) {
+    for v in vars {
+        if v.value.is_empty() {
+            continue;
+        }
+        write!(
+            sb,
+            "{prefix}{}:{};",
+            v.name.trim_start_matches("--kz-"),
+            v.value
+        )
+        .unwrap();
+    }
 }
 
 fn token_switch_rule(selector: &str, color_var: &str, bg_var: &str) -> String {
@@ -132,25 +242,6 @@ fn write_block(sb: &mut String, selector: &str, static_vars: &[Var], theme_vars:
         writeln!(sb, "  {}: {};", v.name, v.value).unwrap();
     }
     sb.push_str("}\n");
-}
-
-fn is_light(bg: &str) -> bool {
-    let hex = bg.trim_start_matches('#');
-    let expanded;
-    let hex = if hex.len() == 3 || hex.len() == 4 {
-        expanded = hex.chars().flat_map(|c| [c, c]).collect::<String>();
-        expanded.as_str()
-    } else {
-        hex
-    };
-    if hex.len() < 6 {
-        return true;
-    }
-    let r = u8::from_str_radix(&hex[0..2], 16).unwrap_or(128);
-    let g = u8::from_str_radix(&hex[2..4], 16).unwrap_or(128);
-    let b = u8::from_str_radix(&hex[4..6], 16).unwrap_or(128);
-    let luminance = 0.299 * r as f64 + 0.587 * g as f64 + 0.114 * b as f64;
-    luminance > 128.0
 }
 
 /// Rules that let a block override the page theme through `data-kz-theme`.
@@ -185,6 +276,18 @@ pub fn theme_toggle_css(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo
         "--sl",
         "--slbg",
     ));
+    sb.push_str(&themed_rule(
+        ".kazari-block.kz-themed[data-kz-theme=\"dark\"]",
+        OverrideSlot::Dark,
+        true,
+        cfg,
+    ));
+    sb.push_str(&themed_rule(
+        ".kazari-block.kz-themed[data-kz-theme=\"light\"]",
+        OverrideSlot::Light,
+        true,
+        cfg,
+    ));
     sb
 }
 
@@ -214,24 +317,6 @@ fn build_theme_vars(tc: &ThemeInfo, cfg: &Config) -> Vec<Var> {
         ));
     }
     vars
-}
-
-/// `#rgb`, `#rrggbb` or `#rrggbbaa` with the alpha replaced, as `#rrggbbaa`;
-/// anything else is returned unchanged.
-fn set_alpha(hex: &str, alpha: f64) -> String {
-    let raw = hex.trim_start_matches('#');
-    let expanded;
-    let raw = if raw.len() == 3 || raw.len() == 4 {
-        expanded = raw.chars().flat_map(|c| [c, c]).collect::<String>();
-        expanded.as_str()
-    } else {
-        raw
-    };
-    if (raw.len() != 6 && raw.len() != 8) || !raw.chars().all(|c| c.is_ascii_hexdigit()) {
-        return hex.to_owned();
-    }
-    let a = (alpha.clamp(0.0, 1.0) * 255.0).round() as u8;
-    format!("#{}{:02x}", &raw[..6].to_ascii_lowercase(), a)
 }
 
 /// The theme variables a single block can override; the page-only extras
@@ -457,6 +542,12 @@ fn build_static_vars(cfg: &Config) -> Vec<Var> {
         vars.push(nv("--kz-fs-font-scale", "1"));
     }
 
+    vars.extend(
+        ANSI_PALETTE
+            .iter()
+            .map(|(name, value)| nv(format!("--kz-ansi-{name}"), *value)),
+    );
+
     if cfg.code_groups {
         vars.extend([
             nv("--kz-group-tab-bg", "transparent"),
@@ -474,26 +565,6 @@ fn build_static_vars(cfg: &Config) -> Vec<Var> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn is_light_detects_correctly() {
-        assert!(is_light("#ffffff"));
-        assert!(is_light("#f0f0f0"));
-        assert!(!is_light("#1e1e1e"));
-        assert!(!is_light("#000000"));
-        assert!(is_light("#fff"));
-        assert!(!is_light("#222"));
-        assert!(!is_light("#222f"));
-        assert!(is_light("#zz"));
-    }
-
-    #[test]
-    fn set_alpha_forms() {
-        assert_eq!(set_alpha("#1B1F23", 0.2), "#1b1f2333");
-        assert_eq!(set_alpha("#abc", 0.5), "#aabbcc80");
-        assert_eq!(set_alpha("#1b1f23ff", 1.0), "#1b1f23ff");
-        assert_eq!(set_alpha("rgba(0,0,0,1)", 0.5), "rgba(0,0,0,1)");
-    }
 
     #[test]
     fn fold_background_drives_section_colours() {
@@ -639,6 +710,23 @@ mod tests {
     }
 
     #[test]
+    fn ansi_palette_is_always_emitted() {
+        let cfg = Config {
+            dark_theme: None,
+            ..Default::default()
+        };
+        let light = ThemeInfo {
+            fg: "#333".into(),
+            bg: "#fff".into(),
+            ..Default::default()
+        };
+        let css = generate_vars(&cfg, &light, None);
+        assert!(css.contains("  --kz-ansi-red: #cc0000;\n"));
+        assert!(css.contains("  --kz-ansi-bright-white: #eeeeec;\n"));
+        assert_eq!(css.matches("--kz-ansi-").count(), 16);
+    }
+
+    #[test]
     fn theme_toggle_css_scopes_and_switch_rules() {
         let cfg = Config {
             theme_toggle: true,
@@ -657,7 +745,9 @@ mod tests {
         };
         let css = theme_toggle_css(&cfg, &light, Some(&dark));
         let lines: Vec<&str> = css.lines().collect();
-        assert_eq!(lines.len(), 5, "{css}");
+        assert_eq!(lines.len(), 7, "{css}");
+        assert!(lines[5].starts_with(".kazari-block.kz-themed[data-kz-theme=\"dark\"] { --kz-editor-bg: var(--kz-ovd-editor-bg, var(--kz-ovl-editor-bg)); "));
+        assert!(lines[6].starts_with(".kazari-block.kz-themed[data-kz-theme=\"light\"] { --kz-editor-bg: var(--kz-ovl-editor-bg); "));
         assert!(lines[0].starts_with(".kazari-block[data-kz-theme=\"dark\"] { --kz-editor-bg: #222; --kz-editor-fg: #eee; --kz-ln-fg: #6e7681; "), "{}", lines[0]);
         assert!(lines[0].ends_with("; }"));
         assert!(

@@ -115,6 +115,73 @@ impl ThemeInfo {
     }
 }
 
+bitflags::bitflags! {
+    /// Which extracted theme colours a [`ThemeAdjustments`] tint applies to.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+    pub struct AdjustTargets: u8 {
+        /// Editor, selection and fold backgrounds.
+        const BACKGROUNDS = 1 << 0;
+        /// Editor foreground and line number colour.
+        const FOREGROUNDS = 1 << 1;
+    }
+}
+
+/// Tints the extracted theme colours in OKLCH space: hue and chroma are replaced
+/// when set, lightness and alpha are kept. Empty targets mean backgrounds.
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
+pub struct ThemeAdjustments {
+    pub hue: Option<f64>,
+    pub chroma: Option<f64>,
+    pub targets: AdjustTargets,
+}
+
+/// Generated asset content with a content hash and a `kazari-<hash>.<ext>` name
+/// for cache-busting deployments.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct AssetFile {
+    pub content: String,
+    /// FNV-1a 32 of the content, eight hex digits.
+    pub hash: String,
+    pub filename: String,
+}
+
+impl AssetFile {
+    pub(crate) fn new(content: String, ext: &str) -> Self {
+        let hash = crate::hash::fnv1a32(&content);
+        let filename = format!("kazari-{hash}.{ext}");
+        Self {
+            content,
+            hash,
+            filename,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Assets {
+    pub css: AssetFile,
+    pub js: AssetFile,
+}
+
+/// What a post-render callback learns about the block it is given.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct BlockInfo {
+    /// The highlighted language, after any `diff` language swap.
+    pub lang: String,
+    /// From the meta or the extracted file name comment.
+    pub title: String,
+    /// After frame detection.
+    pub frame: Frame,
+    /// The copy-button text: preprocessed source without output panel text.
+    pub raw_code: String,
+    /// Number of rendered lines.
+    pub line_count: usize,
+    /// The raw `theme=` override string, empty when absent.
+    pub theme: String,
+    /// The raw fence meta string; empty for [`crate::Kazari::render`].
+    pub meta: String,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Themes {
     pub light: String,
@@ -138,18 +205,6 @@ impl Themes {
 
     pub fn is_dual(&self) -> bool {
         self.dark.is_some()
-    }
-
-    pub fn parse_override(s: &str) -> Self {
-        if let Some((light, dark)) = s.split_once(',') {
-            let light = light.trim();
-            let dark = dark.trim();
-            if !dark.is_empty() {
-                return Self::dual(light, dark);
-            }
-            return Self::single(light);
-        }
-        Self::single(s.trim())
     }
 
     #[allow(dead_code)]
@@ -186,18 +241,10 @@ mod tests {
     }
 
     #[test]
-    fn themes_parse_override() {
-        let single = Themes::parse_override("monokai");
-        assert_eq!(single.light, "monokai");
-        assert!(single.dark.is_none());
-
-        let dual = Themes::parse_override("github-light, github-dark");
-        assert_eq!(dual.light, "github-light");
-        assert_eq!(dual.dark.as_deref(), Some("github-dark"));
-
-        let trailing = Themes::parse_override("foo,");
-        assert_eq!(trailing.light, "foo");
-        assert!(trailing.dark.is_none());
+    fn adjust_targets_default_is_empty() {
+        assert!(AdjustTargets::default().is_empty());
+        let both = AdjustTargets::BACKGROUNDS | AdjustTargets::FOREGROUNDS;
+        assert!(both.contains(AdjustTargets::FOREGROUNDS));
     }
 
     #[test]

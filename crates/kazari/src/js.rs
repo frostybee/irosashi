@@ -39,7 +39,11 @@ pub fn generate(cfg: &Config) -> String {
         sb.push_str(CODEGROUP_JS);
     }
 
-    sb
+    if cfg.minify {
+        crate::minify::js(&sb)
+    } else {
+        sb
+    }
 }
 
 #[cfg(test)]
@@ -74,6 +78,19 @@ mod tests {
         assert!(!OUTPUT_JS.is_empty());
         assert!(!COLLAPSIBLE_JS.is_empty());
         assert!(!CODEGROUP_JS.is_empty());
+    }
+
+    #[test]
+    fn minify_shrinks_and_keeps_newlines() {
+        let plain = generate(&Config {
+            minify: false,
+            ..Default::default()
+        });
+        let minified = generate(&Config::default());
+        assert!(minified.len() < plain.len());
+        assert!(!minified.contains("\n  "));
+        assert!(minified.contains("\n"));
+        assert!(minified.contains("replace(/\\x7f/g, '\\n')"));
     }
 
     #[test]

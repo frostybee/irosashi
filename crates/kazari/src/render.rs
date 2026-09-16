@@ -1,10 +1,15 @@
+use std::cell::{Cell, RefCell};
 use std::collections::{HashMap, HashSet};
 use std::fmt::Write;
 
 use iro::FontStyle;
 
 use crate::collapsible;
-use crate::config::{CollapseRange, CollapseStyle, Config, LangIconMode, ResolvedBlock};
+use crate::color;
+use crate::config::{
+    CollapseRange, CollapseStyle, Config, LangIconMode, MarkerBgs, ResolvedBlock,
+    compute_marker_bgs,
+};
 use crate::escape::{escape_attr, escape_text};
 use crate::locale::UIStrings;
 use crate::marker::{self, ResolvedLine, Segment};
@@ -85,6 +90,68 @@ struct LineCtx<'a> {
     has_focus: bool,
     collapse_range_map: HashMap<usize, usize>,
     threshold_visible: Option<HashSet<usize>>,
+    contrast: Option<ContrastCtx>,
+}
+
+/// Backgrounds the token colours are adjusted against when `min_contrast` is on;
+/// the block's override theme wins over the page theme.
+struct ContrastCtx {
+    light_bg: String,
+    dark_bg: String,
+    light_marker_bgs: Option<MarkerBgs>,
+    dark_marker_bgs: Option<MarkerBgs>,
+    current_marker: Cell<Option<MarkerType>>,
+    cache: RefCell<HashMap<String, String>>,
+}
+
+impl ContrastCtx {
+    fn new(resolved: &ResolvedBlock, cfg: &Config) -> Option<Self> {
+        if cfg.min_contrast <= 0.0 {
+            return None;
+        }
+        let pick = |info: Option<&crate::types::ThemeInfo>| match info {
+            Some(info) if !info.bg.is_empty() => {
+                (info.bg.clone(), Some(compute_marker_bgs(&info.bg)))
+            }
+            _ => (String::new(), None),
+        };
+        let (light_bg, light_marker_bgs) = pick(resolved.contrast_light.as_ref());
+        let (dark_bg, dark_marker_bgs) = pick(resolved.contrast_dark.as_ref());
+        Some(Self {
+            light_bg,
+            dark_bg,
+            light_marker_bgs,
+            dark_marker_bgs,
+            current_marker: Cell::new(None),
+            cache: RefCell::new(HashMap::new()),
+        })
+    }
+
+    /// The marker background on mark, ins and del lines, the editor background
+    /// otherwise; `None` when the theme has no usable background.
+    fn effective_bg<'b>(
+        &self,
+        editor_bg: &'b str,
+        marker_bgs: Option<&'b MarkerBgs>,
+    ) -> Option<&'b str> {
+        if editor_bg.is_empty() {
+            return None;
+        }
+        match self.current_marker.get() {
+            Some(mt) => Some(marker_bgs.and_then(|m| m.bg(mt)).unwrap_or(editor_bg)),
+            None => Some(editor_bg),
+        }
+    }
+
+    fn adjust(&self, color: &str, bg: &str, min_contrast: f64) -> String {
+        let key = format!("{color}|{bg}");
+        if let Some(hit) = self.cache.borrow().get(&key) {
+            return hit.clone();
+        }
+        let adjusted = color::ensure_contrast_on_background(color, bg, min_contrast);
+        self.cache.borrow_mut().insert(key, adjusted.clone());
+        adjusted
+    }
 }
 
 impl LineCtx<'_> {
@@ -92,6 +159,50 @@ impl LineCtx<'_> {
         self.collapse_range_map
             .get(&line_num)
             .is_some_and(|&idx| self.resolved.collapse_ranges[idx].end == line_num)
+    }
+
+    fn set_current_line(&self, line_num: usize) {
+        if let Some(ctx) = &self.contrast {
+            let mt = self
+                .resolved_markers
+                .as_ref()
+                .and_then(|m| m.get(&line_num))
+                .map(|entry| entry.marker_type);
+            ctx.current_marker.set(mt);
+        }
+    }
+
+    /// A token colour as written in the style attribute: ANSI blocks resolve the
+    /// standard palette through `var(--kz-ansi-*)`, everything else is adjusted for
+    /// contrast when that is on.
+    fn token_color(&self, color: &str, dark: bool) -> String {
+        if self.resolved.lang == "ansi"
+            && let Some(var) = ansi_var(color)
+        {
+            return var;
+        }
+        let Some(ctx) = &self.contrast else {
+            return color.to_owned();
+        };
+        let bg = if dark {
+            ctx.effective_bg(&ctx.dark_bg, ctx.dark_marker_bgs.as_ref())
+        } else {
+            ctx.effective_bg(&ctx.light_bg, ctx.light_marker_bgs.as_ref())
+        };
+        match bg {
+            Some(bg) => ctx.adjust(color, bg, self.cfg.min_contrast),
+            None => color.to_owned(),
+        }
+    }
+
+    /// Background colours are never contrast-adjusted; ANSI blocks still map them.
+    fn token_bg(&self, color: &str) -> String {
+        if self.resolved.lang == "ansi"
+            && let Some(var) = ansi_var(color)
+        {
+            return var;
+        }
+        color.to_owned()
     }
 }
 
@@ -104,6 +215,9 @@ pub fn render_block(
     let mut sb = String::with_capacity(4096);
 
     let mut wrapper_class = String::from("kazari-block");
+    if !resolved.theme_override_style.is_empty() {
+        wrapper_class.push_str(" kz-themed");
+    }
     if resolved.collapse_threshold && initially_collapsed(cfg) {
         wrapper_class.push_str(" kz-collapsed");
     }
@@ -114,6 +228,14 @@ pub fn render_block(
     }
     if theme_toggle_active(cfg) {
         write!(sb, " data-kz-id=\"{}\"", block_id(&resolved.raw_code)).unwrap();
+    }
+    if !resolved.theme_override_style.is_empty() {
+        write!(
+            sb,
+            " style=\"{}\"",
+            escape_attr(&resolved.theme_override_style)
+        )
+        .unwrap();
     }
     sb.push_str(">\n");
 
@@ -294,12 +416,20 @@ fn render_output_panel(sb: &mut String, resolved: &ResolvedBlock, strings: &UISt
 /// FNV-1a 32-bit hash of the raw code, eight hex digits; keys the persisted
 /// per-block theme choice.
 fn block_id(code: &str) -> String {
-    let mut h: u32 = 0x811c_9dc5;
-    for b in code.bytes() {
-        h ^= b as u32;
-        h = h.wrapping_mul(0x0100_0193);
-    }
-    format!("{h:08x}")
+    crate::hash::fnv1a32(code)
+}
+
+/// The `var(--kz-ansi-*)` reference for one of the 16 standard terminal colours,
+/// matched by Iro's palette value. VS Code draws white and bright white the same,
+/// so both resolve to `white`.
+fn ansi_var(hex: &str) -> Option<String> {
+    let index = iro::ANSI_STANDARD_COLORS
+        .iter()
+        .position(|c| c.eq_ignore_ascii_case(hex))?;
+    Some(format!(
+        "var(--kz-ansi-{})",
+        crate::theme_css::ANSI_PALETTE[index].0
+    ))
 }
 
 fn render_toolbar(sb: &mut String, resolved: &ResolvedBlock, cfg: &Config, strings: &UIStrings) {
@@ -557,6 +687,7 @@ fn render_pre_code(
         has_focus: !resolved.focus_lines.is_empty(),
         collapse_range_map,
         threshold_visible,
+        contrast: ContrastCtx::new(resolved, cfg),
     };
 
     if resolved.wrap {
@@ -653,6 +784,7 @@ fn render_hidden_line(
     line_num: usize,
     lctx: &LineCtx<'_>,
 ) {
+    lctx.set_current_line(line_num);
     let (extra, _label_attr) = marker_and_focus_classes(line_num, lctx);
     write!(sb, "<div class=\"kz-line kz-hidden{}\">", extra).unwrap();
     if lctx.resolved.line_numbers {
@@ -778,6 +910,7 @@ fn render_line(
     line_num: usize,
     lctx: &LineCtx<'_>,
 ) {
+    lctx.set_current_line(line_num);
     let (extra, label_attr) = marker_and_focus_classes(line_num, lctx);
     let classes = format!("kz-line{extra}");
 
@@ -1133,12 +1266,15 @@ fn build_token_style(tokens: &Tokens, token: &iro::ThemedToken, lctx: &LineCtx<'
     let mut parts = Vec::new();
 
     if let Some(color_id) = light.color {
-        parts.push(format!("--sl:{}", tokens.light_color(color_id)));
+        parts.push(format!(
+            "--sl:{}",
+            lctx.token_color(tokens.light_color(color_id), false)
+        ));
     }
     if let Some(bg_id) = light.bg {
         let bg = tokens.light_color(bg_id);
         if !bg.is_empty() {
-            parts.push(format!("--slbg:{}", bg));
+            parts.push(format!("--slbg:{}", lctx.token_bg(bg)));
         }
     }
 
@@ -1148,13 +1284,13 @@ fn build_token_style(tokens: &Tokens, token: &iro::ThemedToken, lctx: &LineCtx<'
         if let Some(color_id) = dark_style.color {
             let color = tokens.dark_color(color_id).unwrap_or("");
             if !color.is_empty() {
-                parts.push(format!("--sd:{}", color));
+                parts.push(format!("--sd:{}", lctx.token_color(color, true)));
             }
         }
         if let Some(bg_id) = dark_style.bg {
             let bg = tokens.dark_color(bg_id).unwrap_or("");
             if !bg.is_empty() {
-                parts.push(format!("--sdbg:{}", bg));
+                parts.push(format!("--sdbg:{}", lctx.token_bg(bg)));
             }
         }
     }

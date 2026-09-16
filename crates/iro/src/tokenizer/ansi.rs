@@ -3,7 +3,7 @@ use std::ops::Range;
 use crate::theme::FontStyle;
 
 /// The 16 standard colours as VS Code's terminal draws them.
-const ANSI16: [&str; 16] = [
+pub const ANSI_STANDARD_COLORS: [&str; 16] = [
     "#000000", "#cd3131", "#0dbc79", "#e5e510", "#2472c8", "#bc3fbc", "#11a8cd", "#e5e5e5",
     "#666666", "#f14c4c", "#23d18b", "#f5f543", "#3b8eea", "#d670d6", "#29b8db", "#e5e5e5",
 ];
@@ -116,7 +116,7 @@ pub(crate) fn tokenize_ansi(code: &str) -> (String, Vec<AnsiLine>) {
 fn color256(index: u32) -> Option<String> {
     let index = index as usize;
     if index < 16 {
-        Some(ANSI16[index].to_owned())
+        Some(ANSI_STANDARD_COLORS[index].to_owned())
     } else if index < 232 {
         let n = index - 16;
         Some(format!(
@@ -156,12 +156,14 @@ fn apply_sgr(params: &str, style: &mut AnsiStyle) {
             23 => style.font_style.remove(FontStyle::ITALIC),
             24 => style.font_style.remove(FontStyle::UNDERLINE),
             29 => style.font_style.remove(FontStyle::STRIKETHROUGH),
-            30..=37 => style.fg = Some(ANSI16[(code - 30) as usize].to_owned()),
+            30..=37 => style.fg = Some(ANSI_STANDARD_COLORS[(code - 30) as usize].to_owned()),
             39 => style.fg = None,
-            40..=47 => style.bg = Some(ANSI16[(code - 40) as usize].to_owned()),
+            40..=47 => style.bg = Some(ANSI_STANDARD_COLORS[(code - 40) as usize].to_owned()),
             49 => style.bg = None,
-            90..=97 => style.fg = Some(ANSI16[(code - 90 + 8) as usize].to_owned()),
-            100..=107 => style.bg = Some(ANSI16[(code - 100 + 8) as usize].to_owned()),
+            90..=97 => style.fg = Some(ANSI_STANDARD_COLORS[(code - 90 + 8) as usize].to_owned()),
+            100..=107 => {
+                style.bg = Some(ANSI_STANDARD_COLORS[(code - 100 + 8) as usize].to_owned())
+            }
             38 | 48 => {
                 let value = match number(i + 1) {
                     Some(5) => {

@@ -27,6 +27,7 @@ use crate::tokenizer::line::{LineCtx, TokenBuilder, run_line};
 use crate::tokenizer::memo::{CaptureBuf, Memo};
 use crate::tokenizer::state::{RuleRef, StackFrame, WorkStack};
 
+pub use ansi::ANSI_STANDARD_COLORS;
 pub use injections::InjectionProvider;
 pub use state::StateStack;
 

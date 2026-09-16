@@ -11,6 +11,7 @@ repository.workspace = true
 markdown = ["dep:pulldown-cmark"]
 
 [dependencies]
+bitflags.workspace = true
 iro = { path = "../iro" }
 pulldown-cmark = { version = "0.13", optional = true, default-features = false, features = ["html"] }
 regex = "1"
@@ -24,4 +25,8 @@ iro = { path = "../iro" }
 
 [[example]]
 name = "demo_markdown"
+required-features = ["markdown"]
+
+[[example]]
+name = "showcase"
 required-features = ["markdown"]

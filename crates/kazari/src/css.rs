@@ -1,4 +1,5 @@
 use crate::config::Config;
+use crate::minify;
 use crate::types::ThemeInfo;
 
 static BASE: &str = include_str!("../assets/css/base.css");
@@ -26,12 +27,16 @@ static FILE_ICONS: &str = include_str!("../assets/css/file-icons.css");
 static LANG_ICONS: &str = include_str!("../assets/css/lang-icons.css");
 static CODEGROUP: &str = include_str!("../assets/css/codegroup.css");
 
-pub fn generate(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) -> String {
-    let mut sb = String::with_capacity(16384);
-
+fn write_theme_css(sb: &mut String, cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) {
     sb.push_str(&crate::theme_css::generate_vars(cfg, light, dark));
     sb.push_str(&crate::theme_css::token_switching_css(cfg));
     sb.push_str(&crate::theme_css::theme_toggle_css(cfg, light, dark));
+}
+
+pub fn generate(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) -> String {
+    let mut sb = String::with_capacity(16384);
+
+    write_theme_css(&mut sb, cfg, light, dark);
 
     sb.push_str(BASE);
     sb.push_str(LINE_NUMBERS);
@@ -86,10 +91,30 @@ pub fn generate(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) -> St
         sb.push_str(CODEGROUP);
     }
 
-    if cfg.cascade_layer.is_empty() {
-        sb
+    finalize(sb, cfg)
+}
+
+/// Theme variables, token switching and theme toggle rules only, for a secondary
+/// engine on a page whose structural rules come from another engine's `generate`.
+pub fn generate_theme_only(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) -> String {
+    let mut sb = String::with_capacity(4096);
+    write_theme_css(&mut sb, cfg, light, dark);
+    if cfg.theme_toggle && cfg.dark_theme.is_some() {
+        sb.push_str(THEME_TOGGLE);
+    }
+    finalize(sb, cfg)
+}
+
+fn finalize(content: String, cfg: &Config) -> String {
+    let content = if cfg.cascade_layer.is_empty() {
+        content
     } else {
-        format!("@layer {} {{\n{}}}\n", cfg.cascade_layer, sb)
+        format!("@layer {} {{\n{}}}\n", cfg.cascade_layer, content)
+    };
+    if cfg.minify {
+        minify::css(&content)
+    } else {
+        content
     }
 }
 
@@ -97,15 +122,24 @@ pub fn generate(cfg: &Config, light: &ThemeInfo, dark: Option<&ThemeInfo>) -> St
 mod tests {
     use super::*;
 
-    #[test]
-    fn generate_includes_base_and_vars() {
-        let cfg = Config::default();
-        let light = ThemeInfo {
+    fn plain() -> Config {
+        Config {
+            minify: false,
+            ..Default::default()
+        }
+    }
+
+    fn light() -> ThemeInfo {
+        ThemeInfo {
             fg: "#333".into(),
             bg: "#fff".into(),
             ..Default::default()
-        };
-        let css = generate(&cfg, &light, None);
+        }
+    }
+
+    #[test]
+    fn generate_includes_base_and_vars() {
+        let css = generate(&plain(), &light(), None);
         assert!(css.contains(":root {"));
         assert!(css.contains("--kz-radius"));
         assert!(css.contains(".kazari-block"));
@@ -115,26 +149,15 @@ mod tests {
     fn generate_gates_copy_css() {
         let cfg = Config {
             copy_button: false,
-            ..Default::default()
+            ..plain()
         };
-        let light = ThemeInfo {
-            fg: "#333".into(),
-            bg: "#fff".into(),
-            ..Default::default()
-        };
-        let css = generate(&cfg, &light, None);
+        let css = generate(&cfg, &light(), None);
         assert!(!css.contains(COPY));
     }
 
     #[test]
     fn cascade_layer_wraps_everything_by_default() {
-        let cfg = Config::default();
-        let light = ThemeInfo {
-            fg: "#333".into(),
-            bg: "#fff".into(),
-            ..Default::default()
-        };
-        let css = generate(&cfg, &light, None);
+        let css = generate(&plain(), &light(), None);
         assert!(
             css.starts_with("@layer kazari {\n:root {"),
             "{}",
@@ -148,16 +171,47 @@ mod tests {
     fn empty_cascade_layer_disables_wrapper() {
         let cfg = Config {
             cascade_layer: String::new(),
-            ..Default::default()
+            ..plain()
         };
-        let light = ThemeInfo {
-            fg: "#333".into(),
-            bg: "#fff".into(),
-            ..Default::default()
-        };
-        let css = generate(&cfg, &light, None);
+        let css = generate(&cfg, &light(), None);
         assert!(css.starts_with(":root {"));
         assert!(!css.contains("@layer"));
+    }
+
+    #[test]
+    fn minify_is_on_by_default_and_shrinks_output() {
+        let minified = generate(&Config::default(), &light(), None);
+        let plain = generate(&plain(), &light(), None);
+        assert!(minified.len() < plain.len());
+        assert!(minified.starts_with("@layer kazari{:root{--kz-radius:0.5rem;"));
+        assert!(!minified.contains("/*"));
+        assert!(minified.contains(".kazari-block{"));
+    }
+
+    #[test]
+    fn theme_only_has_vars_but_no_structure() {
+        let css = generate_theme_only(&plain(), &light(), None);
+        assert!(css.starts_with("@layer kazari {\n:root {"));
+        assert!(css.contains("--kz-editor-bg: #fff;"));
+        assert!(css.contains(".kazari-block .kz-line span[style^=\"--\"]"));
+        assert!(!css.contains(".kz-toolbar"));
+        assert!(!css.contains(".kz-copy-btn"));
+        assert!(!css.contains("grid-template"));
+        assert!(!css.contains(".kz-theme-toggle-btn"));
+
+        let toggled = Config {
+            theme_toggle: true,
+            ..plain()
+        };
+        let dark = ThemeInfo {
+            fg: "#eee".into(),
+            bg: "#111".into(),
+            ..Default::default()
+        };
+        let css = generate_theme_only(&toggled, &light(), Some(&dark));
+        assert!(css.contains("[data-kz-theme=\"dark\"] {"));
+        assert!(css.contains(".kz-theme-toggle-btn"));
+        assert!(!css.contains(".kz-toolbar {"));
     }
 
     #[test]
@@ -190,20 +244,15 @@ mod tests {
 
     #[test]
     fn code_group_css_gated() {
-        let light = ThemeInfo {
-            fg: "#333".into(),
-            bg: "#fff".into(),
-            ..Default::default()
-        };
-        let off = generate(&Config::default(), &light, None);
+        let off = generate(&plain(), &light(), None);
         assert!(!off.contains(".kz-group"));
         assert!(!off.contains("--kz-group-tab-bg"));
         let on = generate(
             &Config {
                 code_groups: true,
-                ..Default::default()
+                ..plain()
             },
-            &light,
+            &light(),
             None,
         );
         assert!(on.contains(".kz-group"));

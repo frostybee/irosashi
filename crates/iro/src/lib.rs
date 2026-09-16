@@ -55,4 +55,6 @@ pub use token::{
     Diagnostic, DiagnosticKind, LineRange, ScopeTable, ThemeSlot, ThemedLine, ThemedToken, Token,
     TokenStyle, TokensResult, in_ranges,
 };
-pub use tokenizer::{Session, SessionStats, StateStack, TokenizeOptions, split_lines};
+pub use tokenizer::{
+    ANSI_STANDARD_COLORS, Session, SessionStats, StateStack, TokenizeOptions, split_lines,
+};

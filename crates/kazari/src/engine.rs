@@ -1,6 +1,8 @@
 use std::collections::{BTreeMap, HashMap};
+use std::sync::RwLock;
 
 use crate::collapsible;
+use crate::color;
 use crate::config::{
     CollapseSpec, CollapsibleConfig, Config, LangIconMode, ResolvedBlock, StyleValue,
 };
@@ -13,8 +15,26 @@ use crate::meta;
 use crate::notation;
 use crate::render;
 use crate::render_typst;
+use crate::theme_css;
 use crate::tokenize::{self, Tokens, expand_tabs};
-use crate::types::{Frame, InlineMarker, LineMarker, LineRange, ThemeInfo, Themes};
+use crate::types::{
+    AdjustTargets, AssetFile, Assets, BlockInfo, Frame, InlineMarker, LineMarker, LineRange,
+    ThemeAdjustments, ThemeInfo, Themes,
+};
+
+/// Gets the final say on the colours extracted from a theme, after any
+/// [`ThemeAdjustments`]; called with the theme name.
+pub type ThemeCustomizer = Box<dyn Fn(&str, ThemeInfo) -> ThemeInfo + Send + Sync>;
+
+/// Rewrites the rendered HTML of a block; callbacks run in registration order.
+pub type PostRender = Box<dyn Fn(String, &BlockInfo) -> String + Send + Sync>;
+
+#[derive(Clone, Default)]
+struct OverrideEntry {
+    style: String,
+    light: Option<ThemeInfo>,
+    dark: Option<ThemeInfo>,
+}
 
 #[derive(Default)]
 pub struct Options {
@@ -42,6 +62,10 @@ pub struct Kazari {
     strings: UIStrings,
     light_info: ThemeInfo,
     dark_info: Option<ThemeInfo>,
+    theme_adjustments: Option<ThemeAdjustments>,
+    theme_customizer: Option<ThemeCustomizer>,
+    post_render: Vec<PostRender>,
+    overrides: RwLock<HashMap<String, OverrideEntry>>,
 }
 
 impl Kazari {
@@ -49,6 +73,9 @@ impl Kazari {
         KazariBuilder {
             highlighter,
             config: Config::default(),
+            theme_adjustments: None,
+            theme_customizer: None,
+            post_render: Vec::new(),
         }
     }
 
@@ -58,12 +85,8 @@ impl Kazari {
             return Ok(render_mermaid_block(code));
         }
         let tokens = self.prepare_and_tokenize(code, &mut resolved, false)?;
-        Ok(render::render_block(
-            &tokens,
-            &resolved,
-            &self.config,
-            &self.strings,
-        ))
+        let html = render::render_block(&tokens, &resolved, &self.config, &self.strings);
+        Ok(self.run_post_render(html, &resolved, tokens.line_count(), meta_str))
     }
 
     pub fn render(&self, code: &str, options: &Options) -> Result<String, Error> {
@@ -72,12 +95,33 @@ impl Kazari {
             return Ok(render_mermaid_block(code));
         }
         let tokens = self.prepare_and_tokenize(code, &mut resolved, false)?;
-        Ok(render::render_block(
-            &tokens,
-            &resolved,
-            &self.config,
-            &self.strings,
-        ))
+        let html = render::render_block(&tokens, &resolved, &self.config, &self.strings);
+        Ok(self.run_post_render(html, &resolved, tokens.line_count(), ""))
+    }
+
+    fn run_post_render(
+        &self,
+        mut html: String,
+        resolved: &ResolvedBlock,
+        line_count: usize,
+        meta: &str,
+    ) -> String {
+        if self.post_render.is_empty() {
+            return html;
+        }
+        let info = BlockInfo {
+            lang: resolved.lang.clone(),
+            title: resolved.title.clone(),
+            frame: resolved.frame,
+            raw_code: resolved.raw_code.clone(),
+            line_count,
+            theme: resolved.theme.clone(),
+            meta: meta.to_owned(),
+        };
+        for callback in &self.post_render {
+            html = callback(html, &info);
+        }
+        html
     }
 
     /// Renders the block as a `#code-block(...)` call for the functions defined by
@@ -97,6 +141,103 @@ impl Kazari {
 
     fn is_mermaid(&self, resolved: &ResolvedBlock) -> bool {
         self.config.mermaid_pass_through && resolved.lang == "mermaid"
+    }
+
+    /// The page themes, or the block's `theme=` override: `a,b` sets both slots,
+    /// `a,` keeps only the light one, and a single name applies to both slots on a
+    /// dual-theme engine so single-theme pages stay single.
+    fn resolve_themes(&self, override_str: &str) -> Themes {
+        let mut themes = Themes {
+            light: self.config.light_theme.clone(),
+            dark: self.config.dark_theme.clone(),
+        };
+        if override_str.is_empty() {
+            return themes;
+        }
+        if let Some((light, dark)) = override_str.split_once(',') {
+            themes.light = light.trim().to_owned();
+            let dark = dark.trim();
+            themes.dark = (!dark.is_empty()).then(|| dark.to_owned());
+        } else {
+            themes.light = override_str.to_owned();
+            if themes.dark.is_some() {
+                themes.dark = Some(override_str.to_owned());
+            }
+        }
+        themes
+    }
+
+    fn apply_theme_override(&self, resolved: &mut ResolvedBlock) {
+        let themes = self.resolve_themes(&resolved.theme);
+        if themes.light == self.config.light_theme && themes.dark == self.config.dark_theme {
+            return;
+        }
+        let cached = self
+            .overrides
+            .read()
+            .unwrap_or_else(|e| e.into_inner())
+            .get(&resolved.theme)
+            .cloned();
+        let entry = match cached {
+            Some(entry) => entry,
+            None => {
+                let entry = self.build_override_entry(&themes);
+                self.overrides
+                    .write()
+                    .unwrap_or_else(|e| e.into_inner())
+                    .insert(resolved.theme.clone(), entry.clone());
+                entry
+            }
+        };
+        resolved.theme_override_style = entry.style;
+        if self.config.min_contrast > 0.0 {
+            if entry.light.is_some() {
+                resolved.contrast_light = entry.light;
+            }
+            if entry.dark.is_some() {
+                resolved.contrast_dark = entry.dark;
+            }
+        }
+    }
+
+    fn build_override_entry(&self, themes: &Themes) -> OverrideEntry {
+        let Ok(light) = self.extract_theme_info(&themes.light) else {
+            self.config.warn(&format!(
+                "kazari: unknown theme {:?} in per-block override, keeping page colors",
+                themes.light
+            ));
+            return OverrideEntry::default();
+        };
+        let dark = match (&self.config.dark_theme, &themes.dark) {
+            (Some(_), Some(name)) => match self.extract_theme_info(name) {
+                Ok(info) => Some(info),
+                Err(_) => {
+                    self.config.warn(&format!(
+                        "kazari: unknown theme {name:?} in per-block override, keeping page colors for dark mode"
+                    ));
+                    None
+                }
+            },
+            _ => None,
+        };
+        let style = theme_css::block_override_style(&self.config, &light, dark.as_ref());
+        if style.is_empty() {
+            return OverrideEntry::default();
+        }
+        OverrideEntry {
+            style,
+            light: Some(light),
+            dark,
+        }
+    }
+
+    fn extract_theme_info(&self, name: &str) -> Result<ThemeInfo, Error> {
+        extract_theme_info(
+            &self.highlighter,
+            name,
+            self.theme_adjustments.as_ref(),
+            self.theme_customizer.as_ref(),
+        )
     }
 
     fn resolve_meta(&self, meta_str: &str) -> ResolvedBlock {
@@ -151,8 +292,22 @@ impl Kazari {
         crate::css::generate(&self.config, &self.light_info, self.dark_info.as_ref())
     }
 
+    /// Theme variables and token switching rules only, for a secondary engine on a
+    /// page where another engine's [`Kazari::css`] provides the structural rules.
+    pub fn theme_css(&self) -> String {
+        crate::css::generate_theme_only(&self.config, &self.light_info, self.dark_info.as_ref())
+    }
+
     pub fn js(&self) -> String {
         crate::js::generate(&self.config)
+    }
+
+    /// The stylesheet and script with content hashes and `kazari-<hash>.<ext>` names.
+    pub fn assets(&self) -> Assets {
+        Assets {
+            css: AssetFile::new(self.css(), "css"),
+            js: AssetFile::new(self.js(), "js"),
+        }
     }
 
     pub fn config(&self) -> &Config {
@@ -238,16 +393,16 @@ impl Kazari {
             resolved.frame = frame::detect_frame_type(&code, &lang, resolved.frame);
         }
 
-        let mut themes = if !resolved.theme.is_empty() {
-            Themes::parse_override(&resolved.theme)
-        } else {
-            Themes {
-                light: self.config.light_theme.clone(),
-                dark: self.config.dark_theme.clone(),
-            }
-        };
+        let mut themes = self.resolve_themes(&resolved.theme);
         if single_theme {
             themes.dark = None;
+        }
+        if self.config.min_contrast > 0.0 {
+            resolved.contrast_light = Some(self.light_info.clone());
+            resolved.contrast_dark = self.dark_info.clone();
+        }
+        if !resolved.theme.is_empty() {
+            self.apply_theme_override(resolved);
         }
 
         let tokens = tokenize::tokenize(&self.highlighter, &code, &lang, &themes)?;
@@ -300,12 +455,122 @@ fn render_mermaid_block(code: &str) -> String {
     )
 }
 
+/// The colours of a theme after the adjustments and then the customizer.
+fn extract_theme_info(
+    hl: &iro::Highlighter,
+    name: &str,
+    adjustments: Option<&ThemeAdjustments>,
+    customizer: Option<&ThemeCustomizer>,
+) -> Result<ThemeInfo, Error> {
+    let colors = hl.theme_colors(name)?;
+    let mut info = apply_adjustments(ThemeInfo::from_iro(&colors), adjustments);
+    if let Some(customizer) = customizer {
+        info = customizer(name, info);
+    }
+    Ok(info)
+}
+
+/// Replaces hue and chroma of the targeted colours in OKLCH space, keeping
+/// lightness and alpha.
+fn apply_adjustments(mut info: ThemeInfo, adjustments: Option<&ThemeAdjustments>) -> ThemeInfo {
+    let Some(adj) = adjustments else {
+        return info;
+    };
+    if adj.hue.is_none() && adj.chroma.is_none() {
+        return info;
+    }
+    let tint = |hex: &str| -> String {
+        if hex.is_empty() {
+            return String::new();
+        }
+        let Some((l, mut c, mut h)) = color::to_oklch(hex) else {
+            return hex.to_owned();
+        };
+        if let Some(hue) = adj.hue {
+            h = hue;
+        }
+        if let Some(chroma) = adj.chroma {
+            c = chroma;
+        }
+        let out = color::from_oklch(l, c, h);
+        match color::parse_hex(hex) {
+            Some((_, _, _, a)) if a < 1.0 => color::set_alpha(&out, a),
+            _ => out,
+        }
+    };
+    let targets = if adj.targets.is_empty() {
+        AdjustTargets::BACKGROUNDS
+    } else {
+        adj.targets
+    };
+    if targets.contains(AdjustTargets::BACKGROUNDS) {
+        info.bg = tint(&info.bg);
+        info.selection_bg = tint(&info.selection_bg);
+        info.fold_bg = tint(&info.fold_bg);
+    }
+    if targets.contains(AdjustTargets::FOREGROUNDS) {
+        info.fg = tint(&info.fg);
+        info.line_number_fg = tint(&info.line_number_fg);
+    }
+    info
+}
+
 pub struct KazariBuilder {
     highlighter: iro::Highlighter,
     config: Config,
+    theme_adjustments: Option<ThemeAdjustments>,
+    theme_customizer: Option<ThemeCustomizer>,
+    post_render: Vec<PostRender>,
 }
 
 impl KazariBuilder {
+    /// Appends a callback run on every rendered HTML block, after the previous ones.
+    pub fn post_render(
+        mut self,
+        callback: impl Fn(String, &BlockInfo) -> String + Send + Sync + 'static,
+    ) -> Self {
+        self.post_render.push(Box::new(callback));
+        self
+    }
+
+    /// Minimum WCAG contrast ratio of token colours against their background; 0
+    /// disables the adjustment.
+    pub fn min_contrast(mut self, ratio: f64) -> Self {
+        self.config.min_contrast = ratio;
+        self
+    }
+
+    /// Strip comments and whitespace from the generated CSS and JS (on by default).
+    pub fn minify(mut self, enabled: bool) -> Self {
+        self.config.minify = enabled;
+        self
+    }
+
+    pub fn terminal_dot_style(mut self, style: crate::types::TerminalDotStyle) -> Self {
+        self.config.terminal_dot_style = style;
+        self
+    }
+
+    /// Tints the extracted theme colours (page themes and per-block overrides).
+    pub fn theme_adjustments(mut self, adjustments: ThemeAdjustments) -> Self {
+        self.theme_adjustments = Some(adjustments);
+        self
+    }
+
+    /// Runs after the adjustments on every extracted theme, with the theme name.
+    pub fn theme_customizer(
+        mut self,
+        customizer: impl Fn(&str, ThemeInfo) -> ThemeInfo + Send + Sync + 'static,
+    ) -> Self {
+        self.theme_customizer = Some(Box::new(customizer));
+        self
+    }
+
+    pub fn warning_handler(mut self, handler: impl Fn(&str) + Send + Sync + 'static) -> Self {
+        self.config.warning_handler = Some(Box::new(handler));
+        self
+    }
+
     pub fn themes(mut self, light: &str, dark: Option<&str>) -> Self {
         self.config.light_theme = light.to_owned();
         self.config.dark_theme = dark.map(|d| d.to_owned());
@@ -498,14 +763,22 @@ impl KazariBuilder {
     }
 
     pub fn build(self) -> Result<Kazari, Error> {
-        let light_colors = self.highlighter.theme_colors(&self.config.light_theme)?;
-        let light_info = ThemeInfo::from_iro(&light_colors);
-
-        let dark_info = if let Some(ref dark) = self.config.dark_theme {
-            let dark_colors = self.highlighter.theme_colors(dark)?;
-            Some(ThemeInfo::from_iro(&dark_colors))
-        } else {
-            None
+        let adjustments = self.theme_adjustments.as_ref();
+        let customizer = self.theme_customizer.as_ref();
+        let light_info = extract_theme_info(
+            &self.highlighter,
+            &self.config.light_theme,
+            adjustments,
+            customizer,
+        )?;
+        let dark_info = match &self.config.dark_theme {
+            Some(dark) => Some(extract_theme_info(
+                &self.highlighter,
+                dark,
+                adjustments,
+                customizer,
+            )?),
+            None => None,
         };
 
         let strings = locale::resolve(&self.config.locale, &self.config.ui_string_overrides);
@@ -516,6 +789,10 @@ impl KazariBuilder {
             strings,
             light_info,
             dark_info,
+            theme_adjustments: self.theme_adjustments,
+            theme_customizer: self.theme_customizer,
+            post_render: self.post_render,
+            overrides: RwLock::new(HashMap::new()),
         })
     }
 }
@@ -524,13 +801,493 @@ impl KazariBuilder {
 mod tests {
     use super::*;
     use crate::types::MarkerType;
+    use std::sync::{Arc, Mutex};
 
     fn test_engine() -> Kazari {
         let hl = iro::Highlighter::new().unwrap();
         Kazari::builder(hl)
+            .minify(false)
+            .minify(false)
             .themes("github-light", Some("github-dark"))
             .build()
             .unwrap()
+    }
+
+    fn info(bg: &str, fg: &str) -> ThemeInfo {
+        ThemeInfo {
+            bg: bg.into(),
+            fg: fg.into(),
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn adjustments_hue_applied_to_bg() {
+        let adj = ThemeAdjustments {
+            hue: Some(145.0),
+            chroma: Some(0.05),
+            targets: AdjustTargets::empty(),
+        };
+        let out = apply_adjustments(info("#3366cc", "#ffffff"), Some(&adj));
+        assert_ne!(out.bg, "#3366cc");
+        let (_, _, h) = color::to_oklch(&out.bg).unwrap();
+        assert!((143.0..=147.0).contains(&h), "hue {h}");
+        assert_eq!(out.fg, "#ffffff", "default targets leave foregrounds alone");
+    }
+
+    #[test]
+    fn adjustments_chroma_only_keeps_lightness() {
+        let adj = ThemeAdjustments {
+            chroma: Some(0.0),
+            ..Default::default()
+        };
+        let out = apply_adjustments(info("#3366cc", ""), Some(&adj));
+        let (before, _, _) = color::to_oklch("#3366cc").unwrap();
+        let (after, c, _) = color::to_oklch(&out.bg).unwrap();
+        assert!(c <= 0.005, "chroma {c}");
+        assert!((after - before).abs() <= 0.01);
+    }
+
+    #[test]
+    fn adjustments_targets_foregrounds() {
+        let adj = ThemeAdjustments {
+            hue: Some(30.0),
+            chroma: Some(0.08),
+            targets: AdjustTargets::FOREGROUNDS,
+        };
+        let mut input = info("#1e1e2e", "#3366cc");
+        input.line_number_fg = "#3366cc".into();
+        let out = apply_adjustments(input, Some(&adj));
+        assert_eq!(out.bg, "#1e1e2e");
+        assert_ne!(out.fg, "#3366cc");
+        assert_ne!(out.line_number_fg, "#3366cc");
+    }
+
+    #[test]
+    fn adjustments_none_is_noop_and_alpha_kept() {
+        let mut input = info("#1e1e2e", "#cdd6f4");
+        input.selection_bg = "#45475a80".into();
+        assert_eq!(
+            apply_adjustments(input.clone(), Some(&ThemeAdjustments::default())),
+            input
+        );
+        assert_eq!(apply_adjustments(input.clone(), None), input);
+        let adj = ThemeAdjustments {
+            hue: Some(200.0),
+            ..Default::default()
+        };
+        let out = apply_adjustments(input, Some(&adj));
+        assert_eq!(out.selection_bg.len(), 9);
+        assert!(out.selection_bg.ends_with("80"));
+    }
+
+    #[test]
+    fn adjustments_reach_css_and_customizer_runs_after() {
+        let seen = Arc::new(Mutex::new(Vec::new()));
+        let sink = Arc::clone(&seen);
+        let kz = Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", Some("github-dark"))
+            .theme_adjustments(ThemeAdjustments {
+                hue: Some(145.0),
+                chroma: Some(0.05),
+                targets: AdjustTargets::empty(),
+            })
+            .theme_customizer(move |name, mut ti| {
+                sink.lock().unwrap().push((name.to_owned(), ti.bg.clone()));
+                if name == "github-light" {
+                    ti.bg = "#123456".into();
+                }
+                ti
+            })
+            .build()
+            .unwrap();
+        let calls = seen.lock().unwrap().clone();
+        assert_eq!(calls.len(), 2);
+        assert_eq!(calls[0].0, "github-light");
+        assert_eq!(calls[1].0, "github-dark");
+        // White has lightness 1, so no chroma fits the gamut and it stays white.
+        assert_eq!(calls[0].1, "#ffffff");
+        assert_ne!(calls[1].1, "#24292e", "customizer sees the tinted dark bg");
+        let css = kz.css();
+        assert!(css.contains("--kz-editor-bg: #123456;"));
+        assert!(css.contains("--kz-editor-fg: #24292e;"), "fg untouched");
+    }
+
+    #[test]
+    fn customizer_both_themes() {
+        let kz = Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", Some("github-dark"))
+            .theme_customizer(|name, mut ti| {
+                ti.bg = if name == "github-light" {
+                    "#f0f0f0".into()
+                } else {
+                    "#111111".into()
+                };
+                ti
+            })
+            .build()
+            .unwrap();
+        let css = kz.css();
+        assert!(css.contains("--kz-editor-bg: #f0f0f0;"));
+        assert!(css.contains("--kz-editor-bg: #111111;"));
+        assert!(!css.contains("--kz-editor-bg: #ffffff;"));
+    }
+
+    #[test]
+    fn override_emits_themed_wrapper_and_both_slots() {
+        let kz = test_engine();
+        let html = kz
+            .render_with_meta("let x = 1;", "javascript theme=\"dracula\"")
+            .unwrap();
+        assert!(html.contains("class=\"kazari-block kz-themed not-content\""));
+        assert!(
+            html.contains(" style=\"--kz-ovl-editor-bg:#282A36;"),
+            "{html}"
+        );
+        assert!(html.contains("--kz-ovd-editor-bg:#282A36;"));
+        assert!(html.contains("--kz-ovl-editor-fg:"));
+        assert!(
+            html.contains("--sd:"),
+            "dark tokens come from the override too"
+        );
+        assert!(!html.contains("kz-themed[data"));
+    }
+
+    #[test]
+    fn override_absent_or_same_is_noop() {
+        let kz = test_engine();
+        let plain = kz.render_with_meta("x", "text").unwrap();
+        assert!(!plain.contains("kz-themed"));
+        let same = kz
+            .render_with_meta("x", "text theme=\"github-light,github-dark\"")
+            .unwrap();
+        assert!(!same.contains("kz-themed"));
+        assert!(!same.contains("--kz-ovl-"));
+    }
+
+    #[test]
+    fn override_partial_comma_has_no_dark_slot() {
+        let kz = test_engine();
+        let html = kz
+            .render_with_meta("let x = 1;", "javascript theme=\"dracula,\"")
+            .unwrap();
+        assert!(html.contains("--kz-ovl-editor-bg:"));
+        assert!(!html.contains("--kz-ovd-"));
+        assert!(!html.contains("--sd:"));
+    }
+
+    #[test]
+    fn override_single_theme_page_stays_single() {
+        let kz = Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", None)
+            .build()
+            .unwrap();
+        let html = kz
+            .render_with_meta("let x = 1;", "javascript theme=\"dracula\"")
+            .unwrap();
+        assert!(html.contains("kz-themed"));
+        assert!(html.contains("--kz-ovl-editor-bg:#282A36"));
+        assert!(!html.contains("--kz-ovd-"));
+        assert!(!html.contains("--sd:"));
+    }
+
+    #[test]
+    fn override_unknown_theme_warns_once_and_keeps_page_colors() {
+        let warnings = Arc::new(Mutex::new(Vec::new()));
+        let sink = Arc::clone(&warnings);
+        let kz = Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", Some("github-dark"))
+            .warning_handler(move |m| sink.lock().unwrap().push(m.to_owned()))
+            .build()
+            .unwrap();
+        let err = kz.render_with_meta("x", "text theme=\"no-such-theme\"");
+        assert!(err.is_err(), "tokenizing with an unknown theme still fails");
+        let _ = kz.render_with_meta("x", "text theme=\"no-such-theme\"");
+        let warnings = warnings.lock().unwrap();
+        assert_eq!(warnings.len(), 1, "{warnings:?}");
+        assert!(warnings[0].contains("unknown theme \"no-such-theme\""));
+
+        let kz2 = Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", Some("github-dark"))
+            .build()
+            .unwrap();
+        let html = kz2.render_with_meta("x", "text theme=\"dracula,no-such-theme\"");
+        assert!(html.is_err());
+    }
+
+    #[test]
+    fn override_is_cached_per_meta_string() {
+        let calls = Arc::new(Mutex::new(0usize));
+        let sink = Arc::clone(&calls);
+        let kz = Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", Some("github-dark"))
+            .theme_customizer(move |_, ti| {
+                *sink.lock().unwrap() += 1;
+                ti
+            })
+            .build()
+            .unwrap();
+        assert_eq!(*calls.lock().unwrap(), 2);
+        kz.render_with_meta("x", "text theme=\"dracula\"").unwrap();
+        assert_eq!(*calls.lock().unwrap(), 4);
+        kz.render_with_meta("y", "text theme=\"dracula\"").unwrap();
+        assert_eq!(*calls.lock().unwrap(), 4, "second render hits the cache");
+    }
+
+    fn first_style_var(html: &str, var: &str) -> String {
+        let start = html.find(var).map(|i| i + var.len()).expect(var);
+        let rest = &html[start..];
+        let end = rest.find([';', '"']).unwrap();
+        rest[..end].to_owned()
+    }
+
+    fn contrast_engine(dark: Option<&str>) -> Kazari {
+        Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", dark)
+            .min_contrast(5.5)
+            .build()
+            .unwrap()
+    }
+
+    #[test]
+    fn contrast_off_by_default_and_adjusts_when_on() {
+        let plain = test_engine()
+            .render_with_meta("// note", "javascript")
+            .unwrap();
+        let original = first_style_var(&plain, "--sl:");
+        assert!(
+            color::contrast_ratio(&original, "#ffffff") < 5.5,
+            "{original}"
+        );
+
+        let html = contrast_engine(None)
+            .render_with_meta("// note", "javascript")
+            .unwrap();
+        let adjusted = first_style_var(&html, "--sl:");
+        assert_eq!(
+            adjusted,
+            color::ensure_contrast_on_background(&original, "#ffffff", 5.5)
+        );
+        assert!(color::contrast_ratio(&adjusted, "#ffffff") >= 5.5);
+        assert!(!html.contains("--sd:"));
+    }
+
+    #[test]
+    fn contrast_marked_lines_use_marker_background() {
+        let original = first_style_var(
+            &test_engine()
+                .render_with_meta("// note", "javascript")
+                .unwrap(),
+            "--sl:",
+        );
+        let kz = contrast_engine(Some("github-dark"));
+        let html = kz
+            .render_with_meta("// note\n// note\n// note", "javascript {1} ins={2}")
+            .unwrap();
+        let lines: Vec<&str> = html.split("<div class=\"kz-line").skip(1).collect();
+        let mark_bg = crate::config::compute_marker_bgs("#ffffff");
+        assert_eq!(
+            first_style_var(lines[0], "--sl:"),
+            color::ensure_contrast_on_background(&original, &mark_bg.mark, 5.5)
+        );
+        assert_eq!(
+            first_style_var(lines[1], "--sl:"),
+            color::ensure_contrast_on_background(&original, &mark_bg.ins, 5.5)
+        );
+        assert_eq!(
+            first_style_var(lines[2], "--sl:"),
+            color::ensure_contrast_on_background(&original, "#ffffff", 5.5)
+        );
+        let dark_original = first_style_var(
+            &test_engine()
+                .render_with_meta("// note", "javascript")
+                .unwrap(),
+            "--sd:",
+        );
+        assert_eq!(
+            first_style_var(lines[2], "--sd:"),
+            color::ensure_contrast_on_background(&dark_original, "#24292e", 5.5)
+        );
+    }
+
+    #[test]
+    fn contrast_uses_override_theme_background() {
+        let kz = contrast_engine(Some("github-dark"));
+        let html = kz
+            .render_with_meta("// note", "javascript theme=\"dracula\"")
+            .unwrap();
+        let light = first_style_var(&html, "--sl:");
+        assert!(
+            color::contrast_ratio(&light, "#282A36") >= 5.5,
+            "{light} on dracula"
+        );
+    }
+
+    #[test]
+    fn post_render_chain_and_block_info() {
+        let seen = Arc::new(Mutex::new(Vec::new()));
+        let sink = Arc::clone(&seen);
+        let kz = Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", Some("github-dark"))
+            .post_render(|html, _| html + "<!--a-->")
+            .post_render(move |html, info| {
+                sink.lock().unwrap().push(info.clone());
+                html + "<!--b-->"
+            })
+            .build()
+            .unwrap();
+        let html = kz
+            .render_with_meta("// main.go\npackage main\n", "go showLineNumbers")
+            .unwrap();
+        assert!(html.ends_with("</div><!--a--><!--b-->"));
+        let info = seen.lock().unwrap()[0].clone();
+        assert_eq!(info.lang, "go");
+        assert_eq!(info.title, "main.go");
+        assert_eq!(info.frame, Frame::Code);
+        assert_eq!(info.raw_code, "package main\n");
+        assert_eq!(info.line_count, 1);
+        assert_eq!(info.meta, "go showLineNumbers");
+        assert!(info.theme.is_empty());
+
+        let html = kz
+            .render_with_meta("+a\n-b", "diff lang=\"go\" theme=\"dracula\"")
+            .unwrap();
+        assert!(html.contains("<!--b-->"));
+        let info = seen.lock().unwrap()[1].clone();
+        assert_eq!(info.lang, "go");
+        assert_eq!(info.theme, "dracula");
+        assert_eq!(info.line_count, 2);
+
+        kz.render(
+            "echo hi",
+            &Options {
+                lang: "bash".into(),
+                ..Default::default()
+            },
+        )
+        .unwrap();
+        let info = seen.lock().unwrap()[2].clone();
+        assert_eq!(info.frame, Frame::Terminal);
+        assert!(info.meta.is_empty());
+
+        let mermaid = kz.render_with_meta("graph TD", "mermaid").unwrap();
+        assert!(!mermaid.contains("<!--"));
+        assert_eq!(seen.lock().unwrap().len(), 3);
+    }
+
+    #[test]
+    fn ansi_standard_colors_become_vars() {
+        let kz = test_engine();
+        let html = kz
+            .render_with_meta(
+                "\x1b[31mred\x1b[0m \x1b[91mbright\x1b[0m \x1b[42mbg\x1b[0m \x1b[38;5;196mcube\x1b[0m \x1b[97mbw",
+                "ansi",
+            )
+            .unwrap();
+        assert!(html.contains("--sl:var(--kz-ansi-red);"), "{html}");
+        assert!(html.contains("--sd:var(--kz-ansi-red)"));
+        assert!(html.contains("--sl:var(--kz-ansi-bright-red)"));
+        assert!(html.contains("--slbg:var(--kz-ansi-green)"));
+        assert!(html.contains("--sdbg:var(--kz-ansi-green)"));
+        assert!(html.contains("--sl:#ff0000"), "256-colour cube stays hex");
+        assert!(
+            html.contains("--sl:var(--kz-ansi-white)"),
+            "bright white shares white"
+        );
+        assert!(!html.contains("--sl:#cd3131"));
+        assert!(kz.css().contains("--kz-ansi-red: #cc0000;"));
+        assert!(kz.theme_css().contains("--kz-ansi-bright-red: #ef2929;"));
+
+        let text = kz.render_with_meta("plain", "text").unwrap();
+        assert!(!text.contains("--kz-ansi-"));
+
+        let contrast = contrast_engine(Some("github-dark"))
+            .render_with_meta("\x1b[31mred", "ansi")
+            .unwrap();
+        assert!(contrast.contains("--sl:var(--kz-ansi-red)"));
+    }
+
+    #[test]
+    fn theme_css_has_vars_only() {
+        let kz = test_engine();
+        let css = kz.theme_css();
+        assert!(
+            css.starts_with("@layer kazari {\n:root {"),
+            "{}",
+            &css[..80]
+        );
+        assert!(css.contains("--kz-editor-bg: #fff;"));
+        assert!(css.contains(".dark .kazari-block .kz-line span[style^=\"--\"]"));
+        assert!(!css.contains(".kz-toolbar"));
+        assert!(!css.contains(".kazari-block {"));
+        assert!(css.len() < kz.css().len());
+    }
+
+    #[test]
+    fn assets_are_hashed_and_stable() {
+        let kz = Kazari::builder(iro::Highlighter::new().unwrap())
+            .themes("github-light", Some("github-dark"))
+            .build()
+            .unwrap();
+        let assets = kz.assets();
+        assert_eq!(assets.css.hash.len(), 8);
+        assert!(assets.css.hash.bytes().all(|b| b.is_ascii_hexdigit()));
+        assert_eq!(
+            assets.css.filename,
+            format!("kazari-{}.css", assets.css.hash)
+        );
+        assert_eq!(assets.js.filename, format!("kazari-{}.js", assets.js.hash));
+        assert_eq!(assets.css.content, kz.css());
+        assert!(assets.css.content.starts_with("@layer kazari{:root{"));
+        assert_eq!(kz.assets(), assets);
+
+        let other = Kazari::builder(iro::Highlighter::new().unwrap())
+            .themes("github-light", None)
+            .build()
+            .unwrap()
+            .assets();
+        assert_ne!(other.css.hash, assets.css.hash);
+        assert_eq!(other.js.hash, assets.js.hash, "same scripts, same hash");
+    }
+
+    #[test]
+    fn override_css_rules() {
+        let kz = test_engine();
+        let css = kz.css();
+        assert!(css.contains(
+            ".kazari-block.kz-themed { --kz-editor-bg: var(--kz-ovl-editor-bg); --kz-editor-fg: var(--kz-ovl-editor-fg); --kz-ln-fg: var(--kz-ovl-ln-fg); "
+        ));
+        assert!(css.contains(
+            ".dark .kazari-block.kz-themed { --kz-editor-bg: var(--kz-ovd-editor-bg, var(--kz-ovl-editor-bg)); "
+        ));
+        assert!(!css.contains("kz-themed[data-kz-theme"));
+
+        let toggled = Kazari::builder(iro::Highlighter::new().unwrap())
+            .minify(false)
+            .themes("github-light", Some("github-dark"))
+            .theme_toggle(true)
+            .collapsible(CollapsibleConfig::default())
+            .build()
+            .unwrap()
+            .css();
+        assert!(toggled.contains(
+            ".kazari-block.kz-themed[data-kz-theme=\"dark\"] { --kz-editor-bg: var(--kz-ovd-editor-bg, var(--kz-ovl-editor-bg)); "
+        ));
+        assert!(toggled.contains(
+            "--kz-collapse-btn-fg: var(--kz-ovl-collapse-btn-fg); --kz-collapse-btn-bg: var(--kz-ovl-collapse-btn-bg); "
+        ));
+        assert!(toggled.contains(
+            ".kazari-block.kz-themed[data-kz-theme=\"light\"] { --kz-editor-bg: var(--kz-ovl-editor-bg); "
+        ));
+        assert!(toggled.contains("--kz-collapse-gradient-end: var(--kz-editor-bg); }"));
     }
 
     #[test]
@@ -668,6 +1425,7 @@ mod tests {
     fn single_theme_no_dark_vars() {
         let hl = iro::Highlighter::new().unwrap();
         let kz = Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", None)
             .build()
             .unwrap();
@@ -757,6 +1515,7 @@ mod tests {
     fn notation_engine() -> Kazari {
         let hl = iro::Highlighter::new().unwrap();
         Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", Some("github-dark"))
             .notation_comments(true)
             .build()
@@ -829,7 +1588,11 @@ mod tests {
             })),
             ..Default::default()
         };
-        let kz = Kazari::builder(hl).config(config).build().unwrap();
+        let kz = Kazari::builder(hl)
+            .minify(false)
+            .config(config)
+            .build()
+            .unwrap();
         kz.render_with_meta("a // [!code nope]", "javascript")
             .unwrap();
         assert_eq!(
@@ -842,6 +1605,7 @@ mod tests {
     fn visible_whitespace_wraps_spaces_and_tabs() {
         let hl = iro::Highlighter::new().unwrap();
         let kz = Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", None)
             .visible_whitespace(true)
             .build()
@@ -851,6 +1615,7 @@ mod tests {
 
         let hl = iro::Highlighter::new().unwrap();
         let kz = Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", None)
             .visible_whitespace(true)
             .whitespace_symbols(">", "_")
@@ -887,7 +1652,7 @@ mod tests {
         let html = kz
             .render_with_meta("\x1b[31mred\x1b[0m plain", "ansi")
             .unwrap();
-        assert!(html.contains("--sl:#cd3131"));
+        assert!(html.contains("--sl:var(--kz-ansi-red)"));
         assert!(html.contains(">red</span>"));
         assert!(!html.contains('\x1b'));
     }
@@ -1009,6 +1774,7 @@ mod tests {
         let mut overrides = HashMap::new();
         overrides.insert("copy.success".to_owned(), "Fait".to_owned());
         let kz = Kazari::builder(hl)
+            .minify(false)
             .locale("fr-FR")
             .ui_strings(overrides)
             .build()
@@ -1046,6 +1812,7 @@ mod tests {
 
         let hl = iro::Highlighter::new().unwrap();
         let off = Kazari::builder(hl)
+            .minify(false)
             .fullscreen_button(false)
             .build()
             .unwrap();
@@ -1060,6 +1827,7 @@ mod tests {
     fn theme_toggle_button_and_block_id() {
         let hl = iro::Highlighter::new().unwrap();
         let kz = Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", Some("github-dark"))
             .theme_toggle(true)
             .build()
@@ -1089,6 +1857,7 @@ mod tests {
 
         let hl = iro::Highlighter::new().unwrap();
         let single = Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", None)
             .theme_toggle(true)
             .build()
@@ -1107,7 +1876,11 @@ mod tests {
     #[test]
     fn output_panel_splits_code_and_renders_in_every_frame() {
         let hl = iro::Highlighter::new().unwrap();
-        let kz = Kazari::builder(hl).output_panel(true).build().unwrap();
+        let kz = Kazari::builder(hl)
+            .minify(false)
+            .output_panel(true)
+            .build()
+            .unwrap();
         let src = "print(1)\n---output---\n1\n<done>";
         let html = kz.render_with_meta(src, "python withOutput").unwrap();
         assert!(html.contains("data-lines=\"1\""), "{html}");
@@ -1154,6 +1927,7 @@ mod tests {
     fn output_separator_is_trimmed_exact_and_configurable() {
         let hl = iro::Highlighter::new().unwrap();
         let kz = Kazari::builder(hl)
+            .minify(false)
             .output_panel(true)
             .output_separator("===")
             .build()
@@ -1177,6 +1951,7 @@ mod tests {
     fn links_engine() -> Kazari {
         let hl = iro::Highlighter::new().unwrap();
         Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", None)
             .inline_links(true)
             .notation_comments(true)
@@ -1277,6 +2052,7 @@ mod tests {
     fn collapsible_engine(cfg: CollapsibleConfig) -> Kazari {
         let hl = iro::Highlighter::new().unwrap();
         Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", None)
             .collapsible(cfg)
             .build()
@@ -1498,6 +2274,7 @@ mod tests {
 
         let hl = iro::Highlighter::new().unwrap();
         let both = Kazari::builder(hl)
+            .minify(false)
             .themes("github-light", Some("github-dark"))
             .theme_toggle(true)
             .collapsible(CollapsibleConfig::default())
@@ -1525,6 +2302,7 @@ mod tests {
 
         let hl = iro::Highlighter::new().unwrap();
         let custom = Kazari::builder(hl)
+            .minify(false)
             .file_icon_resolver(|ext| format!("<i class=\"icon-{ext}\"></i>"))
             .build()
             .unwrap();
@@ -1537,7 +2315,11 @@ mod tests {
         );
 
         let hl = iro::Highlighter::new().unwrap();
-        let off = Kazari::builder(hl).file_icons(false).build().unwrap();
+        let off = Kazari::builder(hl)
+            .minify(false)
+            .file_icons(false)
+            .build()
+            .unwrap();
         let html = off.render_with_meta("x", "rust title=\"app.rs\"").unwrap();
         assert!(!html.contains("kz-file-icon"), "{html}");
         assert!(!off.css().contains("--kz-file-icon-size"));
@@ -1553,6 +2335,7 @@ mod tests {
 
         let hl = iro::Highlighter::new().unwrap();
         let both = Kazari::builder(hl)
+            .minify(false)
             .lang_icon_mode(LangIconMode::IconAndText)
             .build()
             .unwrap();
@@ -1563,6 +2346,7 @@ mod tests {
 
         let hl = iro::Highlighter::new().unwrap();
         let icon = Kazari::builder(hl)
+            .minify(false)
             .lang_icon_mode(LangIconMode::IconOnly)
             .build()
             .unwrap();
@@ -1585,6 +2369,7 @@ mod tests {
             ("#fafafa".to_owned(), "#101010".to_owned()),
         );
         let kz = Kazari::builder(hl)
+            .minify(false)
             .cascade_layer("")
             .theme_css_root("[data-docs]")
             .style_overrides(plain)
@@ -1611,6 +2396,7 @@ tabWidth: 4
 "#;
         let hl = iro::Highlighter::new().unwrap();
         let kz = Kazari::builder(hl)
+            .minify(false)
             .config_file(yaml)
             .unwrap()
             .build()

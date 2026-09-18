@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "go",
+  "meta": "go title=\"main.go\" {2}",
+  "code": "package main\n\nfunc main() {}",
+  "skip": ""
+}

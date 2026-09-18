@@ -64,6 +64,9 @@ The workspace has three crates:
 - `kazari-rs`: presentation layer on top of `irosashi` (fence meta, transformers, line numbers,
   markers, decorated HTML, Typst output, `kazari.config.yaml`). It has its own
   [README](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/README.md).
+- `kazari-cli`: the `kazari` binary. `kazari process ./public` upgrades the code blocks of a
+  built site from any generator; `render`, `markdown` and `typst` render single files.
+  [README](https://github.com/frostybee/irosashi/blob/main/crates/kazari-cli/README.md).
 - `irosashi-fidelity`: fixture comparison and scoring against `vscode-textmate` output, plus
   the benchmarks.
 
@@ -435,6 +438,12 @@ let preamble = kazari_rs::typst_preamble(); // the template that draws it
 
 The Typst path is the whole point of the presentation layer for PDF pipelines: preview in
 HTML, export through `typst compile` in the same process, one set of colours.
+
+The same rendering is available without writing Rust. `cargo install kazari-cli` (or a
+[release binary](https://github.com/frostybee/irosashi/releases)) gives you `kazari process
+./public`, which upgrades the code blocks in the built output of Hugo, Jekyll, mdBook, Sphinx,
+Eleventy, Zola or Astro in place, plus `kazari render`, `kazari markdown` and `kazari typst`
+for single files.
 
 ## Supported Languages and Themes
 

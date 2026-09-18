@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "html",
+  "meta": "html",
+  "code": "<!DOCTYPE html>\n<html>",
+  "skip": ""
+}

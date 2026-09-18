@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "ruby",
+  "meta": "ruby",
+  "code": "puts \"Hi\"",
+  "skip": ""
+}

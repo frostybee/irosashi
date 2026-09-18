@@ -57,3 +57,13 @@ cargo build
 ```
 
 The first build compiles the vendored Oniguruma C library. Subsequent builds reuse the cached object files.
+
+## Without Rust
+
+If you want to use Irosashi and Kazari from the terminal without writing Rust, install the [`kazari` binary](/docs/getting-started/cli) instead:
+
+```bash
+cargo install kazari-cli
+```
+
+Prebuilt binaries are also available from [GitHub releases](https://github.com/frostybee/irosashi/releases).

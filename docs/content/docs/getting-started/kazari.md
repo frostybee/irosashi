@@ -167,6 +167,8 @@ let events = highlight_events(&kz, Parser::new(markdown_source))?;
 
 ## Next steps
 
+- [Command line](/docs/getting-started/cli) to use Kazari from the terminal without writing
+  Rust, or to upgrade code blocks in a built static site.
 - [Meta string syntax](/docs/reference/meta-string-syntax) for the full set of per-block
   options.
 - [Configuration file](/docs/reference/configuration) for engine-wide defaults via

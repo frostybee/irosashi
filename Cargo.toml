@@ -2,6 +2,7 @@
 members = [
     "crates/irosashi",
     "crates/kazari-rs",
+    "crates/kazari-cli",
     "crates/irosashi-fidelity",
     "tools/sync-assets",
     "tools/bench-report",

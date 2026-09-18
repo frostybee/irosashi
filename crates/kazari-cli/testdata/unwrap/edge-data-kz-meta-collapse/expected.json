@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "go",
+  "meta": "go collapse={4-9} collapseStyle=\"collapsible-start\"",
+  "code": "package main\n\nimport \"fmt\"\n\nfunc run() int {\n\tx := 1\n\ty := 2\n\treturn x + y\n}",
+  "skip": ""
+}

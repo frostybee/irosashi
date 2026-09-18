@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "ts",
+  "meta": "ts",
+  "code": "import fs from \"node:fs\";\nfs.readFileSync(\"a.txt\");",
+  "skip": ""
+}

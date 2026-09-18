@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "rust",
+  "meta": "rust",
+  "code": "fn main() {\n    println!(\"Hello\");\n}",
+  "skip": ""
+}

@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "go",
+  "meta": "go {3} ins={6-7} del={9}",
+  "code": "package main\n\nimport \"fmt\"\n\nfunc run() int {\n\tfmt.Println(\"run\")\n\treturn 42\n}\n// end",
+  "skip": ""
+}

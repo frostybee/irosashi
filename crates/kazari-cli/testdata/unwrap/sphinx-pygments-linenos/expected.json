@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "python3",
+  "meta": "python3",
+  "code": "def f():\n    pass",
+  "skip": ""
+}

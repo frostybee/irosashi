@@ -9,4 +9,5 @@
 *.woff2 binary
 
 crates/irosashi/testdata/html/** -text
+crates/kazari-cli/testdata/** -text
 FIDELITY.md text eol=lf

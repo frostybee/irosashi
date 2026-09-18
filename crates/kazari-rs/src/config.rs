@@ -535,6 +535,18 @@ pub struct CollapsibleFile {
     pub collapsed_announcement: Option<String>,
 }
 
+/// The `process` section of a config file. It configures the `kazari process` command
+/// rather than the engine, so `apply` ignores it and the CLI reads it directly.
+#[derive(Debug, Deserialize, Default, Clone, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ProcessFile {
+    pub skip_unlabeled: Option<bool>,
+    pub assets_base: Option<String>,
+    pub hashed_assets: Option<bool>,
+    pub concurrency: Option<usize>,
+    pub max_file_bytes: Option<u64>,
+}
+
 #[derive(Debug, Deserialize, Default)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct FileConfig {
@@ -578,12 +590,19 @@ pub struct FileConfig {
     pub defaults: Option<BlockDefaultsFile>,
     pub language_defaults: Option<BTreeMap<String, BlockDefaultsFile>>,
     pub language_aliases: Option<HashMap<String, String>>,
+    pub process: Option<ProcessFile>,
 }
 
 impl FileConfig {
     pub fn from_yaml(yaml_str: &str) -> Result<Self, Error> {
         let fc: Self =
             serde_yaml_ng::from_str(yaml_str).map_err(|e| Error::Config(e.to_string()))?;
+        fc.validate()?;
+        Ok(fc)
+    }
+
+    pub fn from_json(json_str: &str) -> Result<Self, Error> {
+        let fc: Self = serde_json::from_str(json_str).map_err(|e| Error::Config(e.to_string()))?;
         fc.validate()?;
         Ok(fc)
     }
@@ -748,6 +767,18 @@ impl FileConfig {
     }
 
     fn validate(&self) -> Result<(), Error> {
+        if let Some(p) = &self.process {
+            if p.concurrency == Some(0) {
+                return Err(Error::Config(
+                    "process.concurrency must be at least 1".into(),
+                ));
+            }
+            if p.max_file_bytes == Some(0) {
+                return Err(Error::Config(
+                    "process.maxFileBytes must be at least 1".into(),
+                ));
+            }
+        }
         if let Some(dm) = &self.dark_mode {
             let valid = ["selector", "mediaQuery", "both"];
             if !valid.contains(&dm.kind.as_str()) {
@@ -1069,6 +1100,61 @@ languageAliases:
         assert_eq!(cfg.light_theme, "dracula");
         assert!(cfg.dark_theme.is_none());
         assert_eq!(cfg.copy_button, orig_copy);
+    }
+
+    #[test]
+    fn file_config_process_section() {
+        let yaml = "process:
+  skipUnlabeled: true
+  assetsBase: /static
+  hashedAssets: true
+  concurrency: 4
+  maxFileBytes: 1024
+";
+        let fc = FileConfig::from_yaml(yaml).unwrap();
+        let p = fc.process.clone().unwrap();
+        assert_eq!(p.skip_unlabeled, Some(true));
+        assert_eq!(p.assets_base.as_deref(), Some("/static"));
+        assert_eq!(p.hashed_assets, Some(true));
+        assert_eq!(p.concurrency, Some(4));
+        assert_eq!(p.max_file_bytes, Some(1024));
+        let mut cfg = Config::default();
+        fc.apply(&mut cfg).unwrap();
+        assert!(
+            FileConfig::from_yaml(
+                "process:
+  concurrency: 0
+"
+            )
+            .is_err()
+        );
+        assert!(
+            FileConfig::from_yaml(
+                "process:
+  maxFileBytes: 0
+"
+            )
+            .is_err()
+        );
+        assert!(
+            FileConfig::from_yaml(
+                "process:
+  bogus: 1
+"
+            )
+            .is_err()
+        );
+    }
+
+    #[test]
+    fn file_config_from_json() {
+        let json = r#"{"themes":{"light":"dracula"},"process":{"concurrency":2}}"#;
+        let fc = FileConfig::from_json(json).unwrap();
+        assert_eq!(fc.process.as_ref().unwrap().concurrency, Some(2));
+        let mut cfg = Config::default();
+        fc.apply(&mut cfg).unwrap();
+        assert_eq!(cfg.light_theme, "dracula");
+        assert!(FileConfig::from_json("{").is_err());
     }
 
     #[test]

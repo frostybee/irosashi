@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "bash",
+  "meta": "bash",
+  "code": "npm install @11ty/eleventy",
+  "skip": ""
+}

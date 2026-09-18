@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "html",
+  "meta": "html",
+  "code": "<div class=\"a\">\n  1 && 2\n</div>",
+  "skip": ""
+}

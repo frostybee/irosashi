@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "go",
+  "meta": "go",
+  "code": "package main",
+  "skip": ""
+}

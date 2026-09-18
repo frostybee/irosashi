@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "txt",
+  "meta": "txt",
+  "code": "line one\nline two",
+  "skip": ""
+}

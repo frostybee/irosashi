@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "go",
+  "meta": "go",
+  "code": "a := 1\nb := 2",
+  "skip": ""
+}

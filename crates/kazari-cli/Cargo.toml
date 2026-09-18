@@ -1,0 +1,24 @@
+[package]
+name = "kazari-cli"
+version = "0.1.0"
+description = "Command line for Kazari: upgrade code blocks in built HTML sites, render code, Markdown and Typst with VS Code themes"
+edition.workspace = true
+license.workspace = true
+repository = "https://github.com/frostybee/irosashi/tree/main/crates/kazari-cli"
+readme = "README.md"
+keywords = ["syntax-highlighting", "static-site", "code-blocks", "cli", "html"]
+categories = ["command-line-utilities", "text-processing", "web-programming"]
+
+[[bin]]
+name = "kazari"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+html-escape = "0.2"
+irosashi = { version = "0.1", path = "../irosashi" }
+kazari-rs = { version = "0.1", path = "../kazari-rs", features = ["markdown"] }
+pulldown-cmark = { version = "0.13", default-features = false }
+serde.workspace = true
+serde_json.workspace = true
+tempfile = "3"

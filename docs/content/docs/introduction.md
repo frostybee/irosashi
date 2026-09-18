@@ -37,3 +37,7 @@ Irosashi is for Rust programs that need Shiki-quality highlighting without a Jav
 
 [`kazari-rs`](https://crates.io/crates/kazari-rs) adds the decoration a documentation site or PDF pipeline needs on top of Irosashi's token output: editor and terminal frames, line numbers, highlight/insert/delete/focus markers, titles, collapsible sections, toolbar buttons, dual-theme switching, output panels, Typst rendering, and a `pulldown-cmark` adapter with code groups and Mermaid pass-through. It reads the same fence meta and `kazari.config.yaml` as [Go Kazari](https://github.com/frostybee/kazari).
 
+## Command line
+
+The [`kazari` binary](/docs/getting-started/cli) wraps both crates into a single command for use without writing Rust. `kazari process ./public` upgrades the code blocks in a built static site (Hugo, Jekyll, mdBook, Sphinx, Eleventy, Zola, Astro). `kazari render`, `kazari markdown`, and `kazari typst` render individual files from the terminal or a script.
+

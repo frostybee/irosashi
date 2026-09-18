@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "go",
+  "meta": "go {2-3}",
+  "code": "package main\nfunc main() {\n\trun()\n}",
+  "skip": ""
+}

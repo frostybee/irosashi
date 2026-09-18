@@ -116,6 +116,11 @@ fn main() -> Result<(), kazari_rs::Error> {
 `render_with_meta()` return per-block HTML. `assets()` returns the same CSS and JS as files
 with content-hashed names for long-lived caching.
 
+Not writing Rust? `cargo install kazari-cli` gives you the same rendering as a command:
+`kazari process ./public` upgrades the code blocks of any built site (Hugo, Jekyll, mdBook,
+Sphinx, Eleventy, Zola, Astro), and `kazari render`, `markdown` and `typst` render single files.
+See the [kazari-cli README](https://github.com/frostybee/irosashi/blob/main/crates/kazari-cli/README.md).
+
 ### With pulldown-cmark
 
 Enable the `markdown` feature. Every fenced block in the document is rendered by Kazari; the
@@ -187,7 +192,8 @@ method of the same name in `snake_case`.
 ### Config file
 
 Create `kazari.config.yaml` in the project directory. Keys keep Go Kazari's camelCase spelling,
-so a config written for the Go library works unchanged:
+so a config written for the Go library works unchanged (the `process` section is read only by
+the `kazari` command line):
 
 ```yaml
 themes:
@@ -313,7 +319,9 @@ unchanged. What differs:
   Tokens are byte-identical to `vscode-textmate`.
 - **Markdown:** a `pulldown-cmark` adapter instead of a Goldmark extension.
 - **Typst output** for PDF pipelines, which the Go library does not have.
-- **No post-build CLI yet:** there is no `kazari process ./public` equivalent in this crate.
+- **CLI:** the `kazari process ./public` post-build command lives in the
+  [`kazari-cli`](https://crates.io/crates/kazari-cli) crate, with `render`, `markdown` and
+  `typst` subcommands on top.
 
 ## Development
 

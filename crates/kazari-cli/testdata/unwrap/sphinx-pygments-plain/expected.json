@@ -1,0 +1,7 @@
+{
+  "match": true,
+  "lang": "python3",
+  "meta": "python3",
+  "code": "# comment\n>>> 2 + 2\n4",
+  "skip": ""
+}

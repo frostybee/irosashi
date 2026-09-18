@@ -1,6 +1,6 @@
 [package]
 name = "kazari-rs"
-version = "0.1.1"
+version = "0.1.2"
 description = "Presentation layer for irosashi: fence meta, transformers, decorated HTML and Typst output"
 edition.workspace = true
 license.workspace = true

@@ -1,6 +1,6 @@
 [package]
 name = "irosashi"
-version = "0.1.1"
+version = "0.1.2"
 description = "TextMate grammar syntax highlighting with VS Code themes, byte-identical to vscode-textmate"
 edition.workspace = true
 license.workspace = true

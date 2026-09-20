@@ -49,6 +49,25 @@ pub fn process_diff_block(code: &str) -> (String, Vec<LineMarker>) {
     (stripped.join("\n"), markers)
 }
 
+/// The code without the lines carrying a `Del` marker: what a reader wants on the
+/// clipboard is the result of the change.
+pub fn drop_deleted_lines(code: &str, markers: &[LineMarker]) -> String {
+    let deleted: Vec<&LineRange> = markers
+        .iter()
+        .filter(|m| m.marker_type == MarkerType::Del)
+        .flat_map(|m| &m.lines)
+        .collect();
+    if deleted.is_empty() {
+        return code.to_owned();
+    }
+    code.split('\n')
+        .enumerate()
+        .filter(|(i, _)| !deleted.iter().any(|r| r.contains(i + 1)))
+        .map(|(_, line)| line)
+        .collect::<Vec<_>>()
+        .join("\n")
+}
+
 fn strip_diff_prefix(line: &str) -> String {
     if line.len() <= 1 {
         return String::new();
@@ -106,6 +125,13 @@ mod tests {
         let (stripped, markers) = process_diff_block(code);
         assert_eq!(stripped, "");
         assert_eq!(markers[0].marker_type, MarkerType::Ins);
+    }
+
+    #[test]
+    fn drop_deleted_lines_keeps_everything_else() {
+        let (stripped, markers) = process_diff_block("+ a\n- b\n c\n- d");
+        assert_eq!(drop_deleted_lines(&stripped, &markers), "a\nc");
+        assert_eq!(drop_deleted_lines("x\ny", &[]), "x\ny");
     }
 
     #[test]

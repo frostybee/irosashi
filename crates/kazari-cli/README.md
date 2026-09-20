@@ -133,7 +133,8 @@ kazari typst main.rs > main.typ && typst compile main.typ
 `--page` wraps the output in a standalone HTML page with the stylesheet and script inlined.
 Without it, inject `kazari css` once in `<head>` and `kazari js` once before `</body>`.
 `typst` prints the `#code-block` template followed by the block; `--no-preamble` prints only
-the block, for appending to a document that already has the template.
+the block, for appending to a document that already has the template. `--font` and
+`--font-size` set the block's font family and text size (a Typst length such as `10pt`).
 
 All of these accept `--config`, `--theme-light` and `--theme-dark` like `process`.
 

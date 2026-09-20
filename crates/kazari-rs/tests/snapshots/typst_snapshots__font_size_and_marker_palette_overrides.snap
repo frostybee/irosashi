@@ -1,0 +1,9 @@
+---
+source: crates/kazari-rs/tests/typst_snapshots.rs
+expression: "kz.render_with_meta_typst(\"a\\nb\\nc word\",\nr#\"text ins={1} del={2} \"word\"\"#).unwrap()"
+---
+#code-block(lang: "text", fg: rgb("#24292e"), bg: rgb("#fff"), lines: 3, font: "JetBrains Mono", size: 10pt)[
+#code-line(mark: "ins", fill: rgb("#c8f7d0"))[#text("a")]
+#code-line(mark: "del")[#text("b")]
+#code-line[#text("c ")#highlight(fill: rgb("#ffe58f"))[#text("word")]]
+]

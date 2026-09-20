@@ -101,6 +101,7 @@ pub struct Config {
     pub defaults: BlockDefaults,
     pub language_defaults: BTreeMap<String, BlockDefaults>,
     pub language_aliases: HashMap<String, String>,
+    pub typst: TypstConfig,
     #[allow(clippy::type_complexity)]
     pub warning_handler: Option<Box<dyn Fn(&str) + Send + Sync>>,
 }
@@ -209,6 +210,86 @@ impl Default for CollapsibleConfig {
             collapsed_announcement: String::new(),
         }
     }
+}
+
+/// Overrides for the Typst `code-block` template. Every value is validated when it
+/// is set, because size and colours are written into the Typst source unquoted.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct TypstConfig {
+    font: Option<String>,
+    size: Option<String>,
+    marker_colors: BTreeMap<MarkerType, String>,
+}
+
+impl TypstConfig {
+    pub fn font(&self) -> Option<&str> {
+        self.font.as_deref()
+    }
+
+    pub fn size(&self) -> Option<&str> {
+        self.size.as_deref()
+    }
+
+    pub fn marker_color(&self, marker: MarkerType) -> Option<&str> {
+        self.marker_colors.get(&marker).map(String::as_str)
+    }
+
+    pub fn set_font(&mut self, font: &str) -> Result<(), Error> {
+        if font.trim().is_empty() {
+            return Err(Error::Config("typst.font must not be empty".into()));
+        }
+        self.font = Some(font.to_owned());
+        Ok(())
+    }
+
+    /// A Typst length: a number followed by `pt`, `em`, `mm`, `cm` or `in`.
+    pub fn set_size(&mut self, size: &str) -> Result<(), Error> {
+        let size = size.trim();
+        if !is_typst_length(size) {
+            return Err(Error::Config(format!(
+                "typst.size must be a length such as 9pt or 0.8em, got {size:?}"
+            )));
+        }
+        self.size = Some(size.to_owned());
+        Ok(())
+    }
+
+    /// `marker` is one of `mark`, `ins`, `del`, `error`, `warning`; `color` is
+    /// `#rgb`, `#rrggbb` or `#rrggbbaa`.
+    pub fn set_marker_color(&mut self, marker: &str, color: &str) -> Result<(), Error> {
+        let marker_type = match marker {
+            "mark" => MarkerType::Mark,
+            "ins" => MarkerType::Ins,
+            "del" => MarkerType::Del,
+            "error" => MarkerType::Error,
+            "warning" => MarkerType::Warning,
+            _ => {
+                return Err(Error::Config(format!(
+                    "typst.markerColors key must be one of mark, ins, del, error, warning, got {marker:?}"
+                )));
+            }
+        };
+        let color = color.trim();
+        if !color.starts_with('#') || crate::color::parse_hex(color).is_none() {
+            return Err(Error::Config(format!(
+                "typst.markerColors.{marker} must be a hex colour such as #fff8c5, got {color:?}"
+            )));
+        }
+        self.marker_colors.insert(marker_type, color.to_owned());
+        Ok(())
+    }
+}
+
+fn is_typst_length(s: &str) -> bool {
+    let Some(number) = ["pt", "em", "mm", "cm", "in"]
+        .iter()
+        .find_map(|unit| s.strip_suffix(unit))
+    else {
+        return false;
+    };
+    let digits = number.bytes().filter(u8::is_ascii_digit).count();
+    let dots = number.bytes().filter(|b| *b == b'.').count();
+    digits > 0 && dots <= 1 && digits + dots == number.len() && !number.ends_with('.')
 }
 
 /// Per-block collapse directives from the fence meta or `Options`.
@@ -337,6 +418,7 @@ impl Default for Config {
             defaults: BlockDefaults::default(),
             language_defaults: BTreeMap::new(),
             language_aliases: HashMap::new(),
+            typst: TypstConfig::default(),
             warning_handler: None,
         }
     }
@@ -535,6 +617,14 @@ pub struct CollapsibleFile {
     pub collapsed_announcement: Option<String>,
 }
 
+#[derive(Debug, Deserialize, Default)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct TypstFile {
+    pub font: Option<String>,
+    pub size: Option<String>,
+    pub marker_colors: Option<BTreeMap<String, String>>,
+}
+
 /// The `process` section of a config file. It configures the `kazari process` command
 /// rather than the engine, so `apply` ignores it and the CLI reads it directly.
 #[derive(Debug, Deserialize, Default, Clone, PartialEq, Eq)]
@@ -590,6 +680,7 @@ pub struct FileConfig {
     pub defaults: Option<BlockDefaultsFile>,
     pub language_defaults: Option<BTreeMap<String, BlockDefaultsFile>>,
     pub language_aliases: Option<HashMap<String, String>>,
+    pub typst: Option<TypstFile>,
     pub process: Option<ProcessFile>,
 }
 
@@ -746,6 +837,17 @@ impl FileConfig {
         }
         if let Some(aliases) = self.language_aliases {
             cfg.language_aliases.extend(aliases);
+        }
+        if let Some(typst) = self.typst {
+            if let Some(v) = typst.font {
+                cfg.typst.set_font(&v)?;
+            }
+            if let Some(v) = typst.size {
+                cfg.typst.set_size(&v)?;
+            }
+            for (marker, color) in typst.marker_colors.unwrap_or_default() {
+                cfg.typst.set_marker_color(&marker, &color)?;
+            }
         }
         if let Some(v) = self.locale.filter(|s| !s.is_empty()) {
             cfg.locale = v;
@@ -1328,6 +1430,48 @@ styleOverrides:
         assert!(themed.is_themed());
         assert_eq!(themed.light_value(), "#fff");
         assert_eq!(themed.dark_value(), "#000");
+    }
+
+    #[test]
+    fn file_config_typst_section() {
+        let yaml = "typst:\n  font: JetBrains Mono\n  size: 10pt\n  markerColors:\n    mark: \"#abcdef\"\n    del: \"#fee\"\n";
+        let mut cfg = Config::default();
+        FileConfig::from_yaml(yaml)
+            .unwrap()
+            .apply(&mut cfg)
+            .unwrap();
+        assert_eq!(cfg.typst.font(), Some("JetBrains Mono"));
+        assert_eq!(cfg.typst.size(), Some("10pt"));
+        assert_eq!(cfg.typst.marker_color(MarkerType::Mark), Some("#abcdef"));
+        assert_eq!(cfg.typst.marker_color(MarkerType::Del), Some("#fee"));
+        assert_eq!(cfg.typst.marker_color(MarkerType::Ins), None);
+
+        for bad in [
+            "typst:\n  size: 10\n",
+            "typst:\n  size: \"10pt) #evil(\"\n",
+            "typst:\n  size: .pt\n",
+            "typst:\n  font: \"\"\n",
+            "typst:\n  markerColors:\n    mark: red\n",
+            "typst:\n  markerColors:\n    mark: abcdef\n",
+            "typst:\n  markerColors:\n    focus: \"#abcdef\"\n",
+        ] {
+            let applied =
+                FileConfig::from_yaml(bad).and_then(|fc| fc.apply(&mut Config::default()));
+            assert!(applied.is_err(), "{bad}");
+        }
+        assert!(FileConfig::from_yaml("typst:\n  colour: x\n").is_err());
+    }
+
+    #[test]
+    fn typst_lengths() {
+        for ok in ["9pt", "0.8em", "10.5pt", "3mm", "1cm", "1in"] {
+            assert!(is_typst_length(ok), "{ok}");
+        }
+        for bad in [
+            "", "pt", "9", "9 pt", "-9pt", "9.pt", "1.2.3pt", "9px", "9pt+1pt",
+        ] {
+            assert!(!is_typst_length(bad), "{bad}");
+        }
     }
 
     #[test]

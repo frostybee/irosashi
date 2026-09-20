@@ -18,6 +18,14 @@ pub struct TypstArgs {
     #[arg(long, value_name = "META")]
     pub meta: Option<String>,
 
+    /// Font family of the code block (overrides config)
+    #[arg(long, value_name = "NAME")]
+    pub font: Option<String>,
+
+    /// Text size as a Typst length, e.g. 10pt (overrides config)
+    #[arg(long, value_name = "LENGTH")]
+    pub font_size: Option<String>,
+
     /// Omit the code-block template preamble (for appending to a document that has it)
     #[arg(long)]
     pub no_preamble: bool,
@@ -31,7 +39,22 @@ pub fn run(args: TypstArgs) -> Result<u8, Fail> {
     let hl = crate::highlighter()?;
     let meta =
         super::render::resolve_meta(&hl, &args.input, args.lang.as_deref(), args.meta.as_deref());
-    let engine = args.engine.build(Path::new("."), hl)?;
+    let mut overrides = kazari_rs::TypstConfig::default();
+    if let Some(font) = &args.font {
+        overrides.set_font(font)?;
+    }
+    if let Some(size) = &args.font_size {
+        overrides.set_size(size)?;
+    }
+    let engine = args.engine.build_with(Path::new("."), hl, |config| {
+        // Both values were validated above, so the setters cannot fail here.
+        if let Some(font) = overrides.font() {
+            let _ = config.typst.set_font(font);
+        }
+        if let Some(size) = overrides.size() {
+            let _ = config.typst.set_size(size);
+        }
+    })?;
     let block = engine.kazari.render_with_meta_typst(&code, &meta)?;
     if !args.no_preamble {
         println!("{}", kazari_rs::typst_preamble());

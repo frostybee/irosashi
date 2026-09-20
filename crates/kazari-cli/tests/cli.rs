@@ -256,6 +256,28 @@ fn markdown_typst_css_js() {
         o.stdout
     );
 
+    let o = run(
+        &[
+            "typst",
+            "-",
+            "--no-preamble",
+            "--font",
+            "Fira Code",
+            "--font-size",
+            "10pt",
+        ],
+        Some("x\n"),
+    );
+    assert_eq!(o.code, 0, "{}", o.stderr);
+    assert!(
+        o.stdout.contains("font: \"Fira Code\", size: 10pt)["),
+        "{}",
+        o.stdout
+    );
+    let o = run(&["typst", "-", "--font-size", "big"], Some("x\n"));
+    assert_ne!(o.code, 0);
+    assert!(o.stderr.contains("typst.size"), "{}", o.stderr);
+
     let css = run(&["css"], None);
     assert_eq!(css.code, 0);
     assert!(css.stdout.contains("--kz-"));

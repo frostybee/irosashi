@@ -129,14 +129,22 @@ impl Kazari {
     pub fn render_with_meta_typst(&self, code: &str, meta_str: &str) -> Result<String, Error> {
         let mut resolved = self.resolve_meta(meta_str);
         let tokens = self.prepare_and_tokenize(code, &mut resolved, true)?;
-        Ok(render_typst::render_block(&tokens, &resolved))
+        Ok(render_typst::render_block(
+            &tokens,
+            &resolved,
+            &self.config.typst,
+        ))
     }
 
     /// Same as [`Kazari::render_with_meta_typst`] with programmatic options.
     pub fn render_typst(&self, code: &str, options: &Options) -> Result<String, Error> {
         let mut resolved = self.resolve_options(options);
         let tokens = self.prepare_and_tokenize(code, &mut resolved, true)?;
-        Ok(render_typst::render_block(&tokens, &resolved))
+        Ok(render_typst::render_block(
+            &tokens,
+            &resolved,
+            &self.config.typst,
+        ))
     }
 
     fn is_mermaid(&self, resolved: &ResolvedBlock) -> bool {
@@ -350,21 +358,25 @@ impl Kazari {
             code = self.split_output_section(&code, resolved);
         }
 
-        resolved.raw_code =
-            if self.config.terminal_comment_stripping && resolved.frame == Frame::Terminal {
-                frame::strip_terminal_comments(&code)
-            } else {
-                code.clone()
-            };
-
-        let (code, lang) = if resolved.lang == "diff" && !resolved.diff_lang.is_empty() {
+        // The copy text of a diff is the code after the change: no prefixes, no
+        // removed lines.
+        let (code, lang, copy_text) = if resolved.lang == "diff" && !resolved.diff_lang.is_empty() {
             let (stripped, markers) = diff::process_diff_block(&code);
+            let copy_text = diff::drop_deleted_lines(&stripped, &markers);
             resolved.line_markers.extend(markers);
             resolved.lang = self.config.resolve_language(&resolved.diff_lang);
-            (stripped, resolved.lang.clone())
+            (stripped, resolved.lang.clone(), copy_text)
         } else {
-            (code, resolved.lang.clone())
+            let copy_text = code.clone();
+            (code, resolved.lang.clone(), copy_text)
         };
+
+        resolved.raw_code =
+            if self.config.terminal_comment_stripping && resolved.frame == Frame::Terminal {
+                frame::strip_terminal_comments(&copy_text)
+            } else {
+                copy_text
+            };
 
         let code = if self.config.notation_comments {
             let n = notation::process_notation(&code);
@@ -374,7 +386,8 @@ impl Kazari {
             resolved.line_markers.extend(n.line_markers);
             resolved.focus_lines.extend(n.focus_lines);
             resolved.inline_markers.extend(n.inline_markers);
-            resolved.raw_code = notation::process_notation(&resolved.raw_code).code;
+            let copy = notation::process_notation(&resolved.raw_code);
+            resolved.raw_code = diff::drop_deleted_lines(&copy.code, &copy.line_markers);
             n.code
         } else {
             code
@@ -754,6 +767,25 @@ impl KazariBuilder {
     pub fn config(mut self, config: Config) -> Self {
         self.config = config;
         self
+    }
+
+    /// Font family of Typst code blocks (the template defaults to DejaVu Sans Mono).
+    pub fn typst_font(mut self, font: &str) -> Result<Self, Error> {
+        self.config.typst.set_font(font)?;
+        Ok(self)
+    }
+
+    /// Text size of Typst code blocks as a Typst length such as `10pt`.
+    pub fn typst_size(mut self, size: &str) -> Result<Self, Error> {
+        self.config.typst.set_size(size)?;
+        Ok(self)
+    }
+
+    /// Fill of one Typst marker kind (`mark`, `ins`, `del`, `error`, `warning`) as a
+    /// hex colour.
+    pub fn typst_marker_color(mut self, marker: &str, color: &str) -> Result<Self, Error> {
+        self.config.typst.set_marker_color(marker, color)?;
+        Ok(self)
     }
 
     pub fn config_file(mut self, yaml_str: &str) -> Result<Self, Error> {
@@ -1975,6 +2007,28 @@ mod tests {
             .unwrap();
         assert!(off.contains("@[the docs](https://x.y/d)"), "{off}");
         assert!(!test_engine().css().contains(".kz-link"));
+    }
+
+    #[test]
+    fn copy_text_of_a_diff_is_the_resulting_code() {
+        let kz = test_engine();
+        let html = kz
+            .render_with_meta("+ added\n- removed\n context", "diff lang=\"go\"")
+            .unwrap();
+        assert!(html.contains("data-code=\"added\x7fcontext\""), "{html}");
+        assert!(html.contains("removed"), "removed line still shown: {html}");
+
+        let html = kz.render_with_meta("+ added\n- removed", "diff").unwrap();
+        assert!(
+            html.contains("data-code=\"+ added\x7f- removed\""),
+            "a bare diff is a patch and copies verbatim: {html}"
+        );
+
+        let html = links_engine()
+            .render_with_meta("a // [!code ++]\nb // [!code --]\nc", "javascript")
+            .unwrap();
+        assert!(html.contains("data-code=\"a\x7fc\""), "{html}");
+        assert!(html.contains(">b<"), "removed line still shown: {html}");
     }
 
     #[test]

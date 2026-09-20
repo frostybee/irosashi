@@ -3,7 +3,7 @@ use std::fmt::Write;
 
 use irosashi::{FontStyle, TokenStyle};
 
-use crate::config::ResolvedBlock;
+use crate::config::{ResolvedBlock, TypstConfig};
 use crate::escape::escape_typst_string;
 use crate::marker::{self, ResolvedLine, Segment};
 use crate::render::digit_count;
@@ -23,13 +23,14 @@ pub fn preamble() -> &'static str {
 
 struct LineCtx<'a> {
     resolved: &'a ResolvedBlock,
+    typst: &'a TypstConfig,
     fg: &'a str,
     markers: Option<HashMap<usize, ResolvedLine>>,
     focus_set: Option<HashSet<usize>>,
     has_focus: bool,
 }
 
-pub fn render_block(tokens: &Tokens, resolved: &ResolvedBlock) -> String {
+pub fn render_block(tokens: &Tokens, resolved: &ResolvedBlock, typst: &TypstConfig) -> String {
     let mut sb = String::with_capacity(4096);
     let line_count = tokens.line_count();
 
@@ -57,10 +58,18 @@ pub fn render_block(tokens: &Tokens, resolved: &ResolvedBlock) -> String {
         )
         .unwrap();
     }
-    writeln!(sb, ", lines: {})[", line_count).unwrap();
+    write!(sb, ", lines: {line_count}").unwrap();
+    if let Some(font) = typst.font() {
+        write!(sb, ", font: \"{}\"", escape_typst_string(font)).unwrap();
+    }
+    if let Some(size) = typst.size() {
+        write!(sb, ", size: {size}").unwrap();
+    }
+    sb.push_str(")[\n");
 
     let lctx = LineCtx {
         resolved,
+        typst,
         fg: tokens.light_fg(),
         markers: marker::resolve_line_markers(&resolved.line_markers),
         focus_set: marker::resolve_focus_set(&resolved.focus_lines),
@@ -93,6 +102,9 @@ fn render_line(
         && entry.has_mark
     {
         args.push(format!("mark: \"{}\"", marker_name(entry.marker_type)));
+        if let Some(color) = lctx.typst.marker_color(entry.marker_type) {
+            args.push(format!("fill: rgb(\"{color}\")"));
+        }
         if !entry.label.is_empty() {
             args.push(format!("label: \"{}\"", escape_typst_string(&entry.label)));
         }
@@ -188,7 +200,7 @@ fn render_with_inline_markers(
         let token = renderable[at.token_idx];
         let style = tokens.light_style(token);
         for seg in &at.segments {
-            write_segment(sb, &plain_text, seg, style, tokens, lctx.fg, dimmed);
+            write_segment(sb, &plain_text, seg, style, tokens, lctx, dimmed);
         }
     }
 }
@@ -199,9 +211,10 @@ fn write_segment(
     seg: &Segment,
     style: TokenStyle,
     tokens: &Tokens,
-    fg: &str,
+    lctx: &LineCtx<'_>,
     dimmed: bool,
 ) {
+    let fg = lctx.fg;
     let text = &plain_text[seg.start..seg.end];
     if text.is_empty() {
         return;
@@ -213,12 +226,15 @@ fn write_segment(
             }
             match ann.kind {
                 Some(kind) => {
-                    write!(
-                        sb,
-                        "#highlight(fill: kz-marker-colors.{})[",
-                        marker_name(kind)
-                    )
-                    .unwrap();
+                    match lctx.typst.marker_color(kind) {
+                        Some(color) => write!(sb, "#highlight(fill: rgb(\"{color}\"))[").unwrap(),
+                        None => write!(
+                            sb,
+                            "#highlight(fill: kz-marker-colors.{})[",
+                            marker_name(kind)
+                        )
+                        .unwrap(),
+                    }
                     write_token(sb, text, style, tokens, fg, dimmed);
                     sb.push(']');
                 }
@@ -320,7 +336,66 @@ mod tests {
     fn render(code: &str, lang: &str, resolved: ResolvedBlock) -> String {
         let hl = highlighter();
         let tokens = tokenize::tokenize(&hl, code, lang, &Themes::single("github-light")).unwrap();
-        render_block(&tokens, &resolved)
+        render_block(&tokens, &resolved, &TypstConfig::default())
+    }
+
+    fn render_with(code: &str, resolved: ResolvedBlock, typst: &TypstConfig) -> String {
+        let hl = highlighter();
+        let tokens =
+            tokenize::tokenize(&hl, code, "text", &Themes::single("github-light")).unwrap();
+        render_block(&tokens, &resolved, typst)
+    }
+
+    #[test]
+    fn font_and_size_are_header_args_only_when_set() {
+        let out = render("x", "text", resolved("text"));
+        assert!(!out.contains("font:") && !out.contains("size:"), "{out}");
+
+        let mut typst = TypstConfig::default();
+        typst.set_font("Fira \"Code\"").unwrap();
+        typst.set_size("10.5pt").unwrap();
+        let out = render_with("x", resolved("text"), &typst);
+        assert!(
+            out.contains("lines: 1, font: \"Fira \\\"Code\\\"\", size: 10.5pt)[\n"),
+            "{out}"
+        );
+    }
+
+    #[test]
+    fn marker_color_overrides_replace_the_palette_lookup() {
+        let mut typst = TypstConfig::default();
+        typst.set_marker_color("mark", "#abcdef").unwrap();
+        let mut r = resolved("text");
+        r.line_markers = vec![
+            LineMarker {
+                marker_type: MarkerType::Mark,
+                lines: vec![LineRange::single(1)],
+                label: String::new(),
+            },
+            LineMarker {
+                marker_type: MarkerType::Ins,
+                lines: vec![LineRange::single(2)],
+                label: String::new(),
+            },
+        ];
+        let out = render_with("a\nb", r, &typst);
+        assert!(
+            out.contains("#code-line(mark: \"mark\", fill: rgb(\"#abcdef\"))["),
+            "{out}"
+        );
+        assert!(out.contains("#code-line(mark: \"ins\")["), "{out}");
+
+        let mut r = resolved("text");
+        r.inline_markers = vec![InlineMarker {
+            marker_type: MarkerType::Mark,
+            text: "b".into(),
+            is_regex: false,
+        }];
+        let out = render_with("a b", r, &typst);
+        assert!(
+            out.contains("#highlight(fill: rgb(\"#abcdef\"))[#text(\"b\")]"),
+            "{out}"
+        );
     }
 
     fn resolved(lang: &str) -> ResolvedBlock {

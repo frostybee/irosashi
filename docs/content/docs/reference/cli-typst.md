@@ -21,6 +21,8 @@ kazari typst <input> [flags]
 |---|---|---|
 | `--lang <NAME>` | detected from the file name | Language name. Overridden by `--meta` when both are given. |
 | `--meta <META>` | none | Full fence meta string. Overrides `--lang` and adds per-block options (title, line numbers, markers, focus). Uses the same syntax as the [meta string reference](/docs/reference/meta-string-syntax). |
+| `--font <NAME>` | `typst.font` from the config, else `DejaVu Sans Mono` | Font family of the code block. The font must be installed where the document is compiled. |
+| `--font-size <LENGTH>` | `typst.size` from the config, else `9pt` | Text size as a Typst length, for example `10pt` or `0.9em`. |
 | `--no-preamble` | off | Omit the `#code-block` template from the output. Use this when appending blocks to a document that already includes the template. |
 | `--config <PATH>` | auto-discover | Path to a config file. Without it, the tool probes `kazari.config.yaml`, `.yml`, and `.json` in the working directory. |
 | `--theme-light <NAME>` | `github-light` | Syntax theme for the output. |
@@ -30,7 +32,7 @@ Language detection follows the same rules as [`kazari render`](/docs/reference/c
 
 ## The preamble
 
-By default, the output starts with the `#code-block` Typst template (about 80 lines). This template defines the `code-block` and `code-line` functions that the generated calls depend on. It sets `DejaVu Sans Mono` as the monospace font.
+By default, the output starts with the `#code-block` Typst template (about 80 lines). This template defines the `code-block` and `code-line` functions that the generated calls depend on. The template defaults to `DejaVu Sans Mono` at `9pt`. `--font` and `--font-size` change both per block without changing the preamble. To change the marker colours, set [`typst.markerColors`](/docs/reference/configuration#typst-options) in the config file.
 
 A self-contained `.typ` file:
 

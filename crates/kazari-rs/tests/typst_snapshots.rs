@@ -113,6 +113,27 @@ fn diff_hybrid() {
 }
 
 #[test]
+fn font_size_and_marker_palette_overrides() {
+    let hl = irosashi::Highlighter::new().unwrap();
+    let kz = Kazari::builder(hl)
+        .themes("github-light", None)
+        .typst_font("JetBrains Mono")
+        .unwrap()
+        .typst_size("10pt")
+        .unwrap()
+        .typst_marker_color("ins", "#c8f7d0")
+        .unwrap()
+        .typst_marker_color("mark", "#ffe58f")
+        .unwrap()
+        .build()
+        .unwrap();
+    insta::assert_snapshot!(
+        kz.render_with_meta_typst("a\nb\nc word", r#"text ins={1} del={2} "word""#)
+            .unwrap()
+    );
+}
+
+#[test]
 fn hanging_indent_and_preserved_indent() {
     insta::assert_snapshot!(render(
         "    indented line\nflush line",

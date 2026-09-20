@@ -117,3 +117,5 @@ Use `diff` as the fence language with `lang=` to strip diff prefixes and apply i
 ````
 
 Lines starting with `+` receive insertion markers, lines starting with `-` receive deletion markers, and lines starting with a space are unmarked. The `lang=` token sets the language for syntax highlighting after the prefixes are stripped.
+
+The copy button copies the code after the change: prefixes are stripped and lines starting with `-` are left out. With `notationComments` enabled, lines annotated with `[!code --]` are left out of the copied text in the same way. A plain `diff` fence without `lang=` is copied verbatim, so it stays a valid patch.

@@ -128,6 +128,10 @@ std::fs::write("output.typ", &document)?;
 the document. Each `render_with_meta_typst` call emits one `#code-block(...)` invocation that
 the template draws.
 
+To change the font, text size, or marker colours of Typst blocks, use the builder methods
+`.typst_font("...")?`, `.typst_size("10pt")?`, and `.typst_marker_color("ins", "#c8f7d0")?`, or
+the [`typst` section of the config file](/docs/reference/configuration#typst-options).
+
 ## Markdown integration
 
 Enable the `markdown` feature to render entire Markdown documents through Kazari. Every fenced

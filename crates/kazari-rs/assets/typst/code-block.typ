@@ -15,10 +15,17 @@
   num: none,
   mark: none,
   label: none,
+  fill: none,
   indent: 0em,
   body,
 ) = {
-  let fill = if mark != none { kz-marker-colors.at(mark, default: none) } else { none }
+  let fill = if fill != none {
+    fill
+  } else if mark != none {
+    kz-marker-colors.at(mark, default: none)
+  } else {
+    none
+  }
   let code = par(hanging-indent: indent, body)
   let content = if num != none {
     context grid(

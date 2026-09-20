@@ -27,7 +27,7 @@ pub(crate) mod types;
 
 pub use config::{
     CollapseRange, CollapseSpec, CollapseStyle, CollapsibleConfig, Config, FileConfig,
-    LangIconMode, PreviewSegment, ProcessFile, StyleValue,
+    LangIconMode, PreviewSegment, ProcessFile, StyleValue, TypstConfig,
 };
 pub use engine::{Kazari, KazariBuilder, Options, PostRender, ThemeCustomizer};
 pub use error::Error;

@@ -132,6 +132,9 @@ kazari typst main.rs > main.typ && typst compile main.typ
 
 `--page` wraps the output in a standalone HTML page with the stylesheet and script inlined.
 Without it, inject `kazari css` once in `<head>` and `kazari js` once before `</body>`.
+`markdown` enables GFM tables, footnotes, strikethrough, task lists, heading attributes and
+code groups; `--disable tables,code-groups` (or `--disable gfm` for all five extensions)
+turns them off.
 `typst` prints the `#code-block` template followed by the block; `--no-preamble` prints only
 the block, for appending to a document that already has the template. `--font` and
 `--font-size` set the block's font family and text size (a Typst length such as `10pt`).

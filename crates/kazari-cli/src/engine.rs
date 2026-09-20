@@ -100,6 +100,18 @@ impl EngineArgs {
         highlighter: irosashi::Highlighter,
         configure: impl FnOnce(&mut Config),
     ) -> Result<Engine, Fail> {
+        self.build_with_defaults(dir, highlighter, |_| {}, configure)
+    }
+
+    /// Like `build_with`, with a second hook that sets command defaults before the file
+    /// config is applied, so an explicit key in the file still wins over them.
+    pub fn build_with_defaults(
+        &self,
+        dir: &Path,
+        highlighter: irosashi::Highlighter,
+        defaults: impl FnOnce(&mut Config),
+        configure: impl FnOnce(&mut Config),
+    ) -> Result<Engine, Fail> {
         let loaded = load_file_config(self.config.as_deref(), dir)?;
         let (config_path, file) = match loaded {
             Some(l) => (Some(l.path), Some(l.file)),
@@ -126,6 +138,7 @@ impl EngineArgs {
             .map_err(Fail::new)?;
 
         let mut config = Config::default();
+        defaults(&mut config);
         let process = match file {
             Some(f) => {
                 let process = f.process.clone();
@@ -193,6 +206,32 @@ mod tests {
             "{}",
             err.message
         );
+    }
+
+    #[test]
+    fn command_defaults_lose_to_the_file_and_the_file_loses_to_configure() {
+        let build = |yaml: &str, off: bool| {
+            let tmp = tempfile::tempdir().unwrap();
+            std::fs::write(tmp.path().join("kazari.config.yaml"), yaml).unwrap();
+            let hl = irosashi::Highlighter::new().unwrap();
+            let e = EngineArgs::default()
+                .build_with_defaults(
+                    tmp.path(),
+                    hl,
+                    |c| c.code_groups = true,
+                    |c| {
+                        if off {
+                            c.code_groups = false;
+                        }
+                    },
+                )
+                .ok()
+                .unwrap();
+            e.kazari.config().code_groups
+        };
+        assert!(build("copyButton: true\n", false));
+        assert!(!build("codeGroups: false\n", false));
+        assert!(!build("codeGroups: true\n", true));
     }
 
     #[test]

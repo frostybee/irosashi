@@ -236,6 +236,50 @@ fn render_from_stdin_and_file() {
 }
 
 #[test]
+fn markdown_disable_flag() {
+    let md = "~~gone~~\n\n| a | b |\n|---|---|\n| 1 | 2 |\n";
+    let o = run(&["markdown", "-"], Some(md));
+    assert!(o.stdout.contains("<del>gone</del>"), "{}", o.stdout);
+    assert!(o.stdout.contains("<table>"), "{}", o.stdout);
+
+    let o = run(&["markdown", "-", "--disable", "strikethrough"], Some(md));
+    assert_eq!(o.code, 0, "{}", o.stderr);
+    assert!(o.stdout.contains("~~gone~~"), "{}", o.stdout);
+    assert!(o.stdout.contains("<table>"), "{}", o.stdout);
+
+    let o = run(&["markdown", "-", "--disable", "gfm"], Some(md));
+    assert!(!o.stdout.contains("<del>"), "{}", o.stdout);
+    assert!(!o.stdout.contains("<table>"), "{}", o.stdout);
+
+    let group = ":::code-group\n\n```rust\nfn a() {}\n```\n\n:::\n";
+    let o = run(&["markdown", "-"], Some(group));
+    assert!(o.stdout.contains("role=\"tablist\""), "{}", o.stdout);
+    let o = run(&["markdown", "-", "--disable", "code-groups"], Some(group));
+    assert_eq!(o.code, 0, "{}", o.stderr);
+    assert!(!o.stdout.contains("role=\"tablist\""), "{}", o.stdout);
+    assert!(o.stdout.contains("kazari-block"), "{}", o.stdout);
+
+    let o = run(
+        &[
+            "markdown",
+            "-",
+            "--disable",
+            "tables,footnotes",
+            "--disable",
+            "task-lists",
+        ],
+        Some(md),
+    );
+    assert_eq!(o.code, 0, "{}", o.stderr);
+    assert!(!o.stdout.contains("<table>"), "{}", o.stdout);
+    assert!(o.stdout.contains("<del>"), "{}", o.stdout);
+
+    let o = run(&["markdown", "-", "--disable", "nope"], Some(md));
+    assert_eq!(o.code, 2, "{}", o.stderr);
+    assert!(o.stderr.contains("heading-attributes"), "{}", o.stderr);
+}
+
+#[test]
 fn markdown_typst_css_js() {
     let o = run(&["markdown", "-"], Some("# T\n\n```rust\nfn x() {}\n```\n"));
     assert_eq!(o.code, 0, "{}", o.stderr);

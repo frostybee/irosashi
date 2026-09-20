@@ -137,7 +137,7 @@ Each row maps a YAML key to its builder method and the default value from `Confi
 | `outputDefaultCollapsed` | `.output_collapsed(bool)` | `false` |
 | `outputSeparator` | `.output_separator("...")` | `""` |
 | `links` | `.inline_links(bool)` | `false` |
-| `codeGroups` | `.code_groups(bool)` | `false` (requires `markdown` feature) |
+| `codeGroups` | `.code_groups(bool)` | `false` (requires `markdown` feature). `kazari markdown` defaults to `true`. |
 | `mermaidPassThrough` | `.mermaid_pass_through(bool)` | `true` |
 | `lineNumbers` | `.line_numbers(bool)` | depends on `defaults.lineNumbers` |
 | `frameDetection` | `.frame_detection(bool)` | `true` |

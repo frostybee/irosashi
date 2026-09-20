@@ -307,6 +307,26 @@ fn injection_priority_right_loses_ties() {
 }
 
 #[test]
+fn injection_order_plain_is_tried_before_right() {
+    let mut s = session("injection_order_right_before_plain.json");
+    let lines = tokenize(&mut s, "abc");
+    assert_eq!(
+        scopes_of(&s, &lines[0], "abc"),
+        ["source.test-order", "plain.word.test"]
+    );
+}
+
+#[test]
+fn injection_star_selector_matches_every_stack() {
+    let mut s = session("injection_star_selector.json");
+    let lines = tokenize(&mut s, "abc");
+    assert_eq!(
+        scopes_of(&s, &lines[0], "abc"),
+        ["source.test-star", "injected.word.test"]
+    );
+}
+
+#[test]
 fn overlapping_captures_split_around_sub_captures() {
     let mut s = session("overlapping_captures.json");
     let lines = tokenize(&mut s, "fn main(a, b)");

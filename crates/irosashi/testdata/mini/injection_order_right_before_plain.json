@@ -1,0 +1,16 @@
+{
+  "scopeName": "source.test-order",
+  "patterns": [],
+  "injections": {
+    "R:source.test-order": {
+      "patterns": [
+        {"match": "\\b[a-z]+\\b", "name": "right.word.test"}
+      ]
+    },
+    "source.test-order": {
+      "patterns": [
+        {"match": "\\b[a-z]+\\b", "name": "plain.word.test"}
+      ]
+    }
+  }
+}

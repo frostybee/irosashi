@@ -57,7 +57,7 @@ Shiki 4.4.3 on generated goldens. See [FIDELITY.md](https://github.com/frostybee
 
 <p align="center"><em>Rust code highlighted with <code>github-dark</code>, rendered as SVG by Irosashi (<code>cargo run -p irosashi --example svg</code>).</em></p>
 
-The workspace has three crates:
+The workspace has four crates:
 
 - `irosashi`: tokenizer, grammar compiler, theme resolution, token APIs, renderers (HTML, ANSI,
   SVG, JSON, plain text).

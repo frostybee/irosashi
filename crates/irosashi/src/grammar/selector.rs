@@ -46,18 +46,31 @@ impl Selector {
         Parser { input, pos: 0 }.parse_selector()
     }
 
-    /// The priority of the first composite matching `scopes` (outermost first).
+    /// The best (lowest) priority among the composites matching `scopes` (outermost
+    /// first). vscode-textmate makes every composite its own injection and sorts them
+    /// by priority, so the best matching composite decides where the rule is tried.
     pub fn matches(&self, scopes: &[&str]) -> Option<Priority> {
         self.composites
             .iter()
-            .find(|composite| composite.matches(scopes))
+            .filter(|composite| composite.matches(scopes))
             .map(|composite| composite.priority)
+            .min()
     }
 }
 
 impl Composite {
     fn matches(&self, scopes: &[&str]) -> bool {
+        // vscode-textmate evaluates a conjunction with `every`, so one without
+        // operands (`L:*`, where `*` is not a token) matches every stack.
         if self.expressions.is_empty() {
+            return true;
+        }
+        // A `-` with nothing to negate never matches there.
+        if self
+            .expressions
+            .iter()
+            .any(Expression::is_dangling_negation)
+        {
             return false;
         }
         let (negative, positive): (Vec<_>, Vec<_>) =
@@ -107,13 +120,19 @@ impl Composite {
 }
 
 impl Expression {
+    fn is_dangling_negation(&self) -> bool {
+        self.negate && matches!(&self.term, Term::Path(path) if path.is_empty())
+    }
+
     fn matches_single(&self, scope: &str) -> bool {
         match &self.term {
             Term::Path(path) => scope_matches(path, scope),
             Term::Group(alternatives) => alternatives.iter().any(|alt| {
-                alt.expressions
-                    .iter()
-                    .any(|e| !e.negate && e.matches_single(scope))
+                alt.expressions.is_empty()
+                    || alt
+                        .expressions
+                        .iter()
+                        .any(|e| !e.negate && e.matches_single(scope))
             }),
         }
     }
@@ -126,6 +145,10 @@ impl Expression {
                 .any(|alt| alt.matches_as_subsequence(scopes)),
         }
     }
+}
+
+fn is_token_start(b: u8) -> bool {
+    is_path_start(b) || matches!(b, b',' | b'|' | b'-' | b'(' | b')')
 }
 
 fn is_path_start(b: u8) -> bool {
@@ -146,13 +169,22 @@ struct Parser<'a> {
 }
 
 impl Parser<'_> {
+    /// vscode-textmate starts a composite only while a token is left, so an input
+    /// without tokens has none and a trailing comma adds none.
     fn parse_selector(&mut self) -> Selector {
-        let mut composites = vec![self.parse_composite()];
-        while self.peek() == Some(b',') {
-            self.advance();
+        let mut composites = Vec::new();
+        while self.has_token() {
             composites.push(self.parse_composite());
+            if self.peek() != Some(b',') {
+                break;
+            }
+            self.advance();
         }
         Selector { composites }
+    }
+
+    fn has_token(&self) -> bool {
+        self.rest().bytes().any(is_token_start)
     }
 
     fn parse_composite(&mut self) -> Composite {
@@ -191,11 +223,7 @@ impl Parser<'_> {
         let term = if self.peek() == Some(b'(') {
             Term::Group(self.parse_group())
         } else {
-            let path = self.parse_scope_path();
-            if path.is_empty() {
-                self.advance();
-            }
-            Term::Path(path)
+            Term::Path(self.parse_scope_path())
         };
         Expression { negate, term }
     }
@@ -329,7 +357,7 @@ mod tests {
     fn tolerates_garbage_without_hanging() {
         let selector = Selector::parse("!!! ((( L: , | ) source.js");
         assert!(!selector.composites.is_empty());
-        assert_eq!(Selector::parse("").composites[0].expressions.len(), 0);
+        assert!(Selector::parse("").composites.is_empty());
         assert_eq!(Selector::parse("").matches(&["source.js"]), None);
         Selector::parse("é.ü -(x");
     }
@@ -405,6 +433,43 @@ mod tests {
         assert!(selector.matches(&["a", "x", "b"]).is_some());
         assert!(selector.matches(&["b", "a"]).is_none());
         assert!(selector.matches(&["a"]).is_none());
+    }
+
+    #[test]
+    fn empty_conjunctions_match_everything() {
+        let star = Selector::parse("L:*");
+        assert_eq!(star.matches(&["source.js"]), Some(Priority::Left));
+        assert_eq!(star.matches(&[]), Some(Priority::Left));
+        assert_eq!(Selector::parse("R:").matches(&["a"]), Some(Priority::Right));
+
+        assert!(Selector::parse("*").composites.is_empty());
+        assert_eq!(Selector::parse("*").matches(&["a"]), None);
+
+        assert_eq!(Selector::parse("a,").composites.len(), 1);
+        assert_eq!(Selector::parse("a, *").composites.len(), 1);
+        assert_eq!(Selector::parse("a, *").matches(&["b"]), None);
+        assert_eq!(
+            Selector::parse("a, L:*").matches(&["b"]),
+            Some(Priority::Left)
+        );
+        assert_eq!(Selector::parse(", a").matches(&["b"]), Some(Priority::None));
+
+        assert_eq!(Selector::parse("-").matches(&["a"]), None);
+        assert_eq!(Selector::parse("a -").matches(&["a"]), None);
+
+        assert!(Selector::parse("(a | )").matches(&["b"]).is_some());
+        assert!(Selector::parse("(a | c)").matches(&["b"]).is_none());
+    }
+
+    #[test]
+    fn best_matching_composite_sets_the_priority() {
+        let selector = Selector::parse("R:a, L:a b");
+        assert_eq!(selector.matches(&["a", "b"]), Some(Priority::Left));
+        assert_eq!(selector.matches(&["a"]), Some(Priority::Right));
+        assert_eq!(
+            Selector::parse("a, R:a").matches(&["a"]),
+            Some(Priority::None)
+        );
     }
 
     #[test]

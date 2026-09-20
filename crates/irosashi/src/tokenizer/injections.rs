@@ -40,7 +40,8 @@ pub(crate) struct InjectionEntry {
 /// `ScopeListId`; `None` until first seen.
 pub(crate) type InjectionHits = Vec<Option<Box<[(usize, Priority)]>>>;
 
-/// Grammar-local injections in source order, then external injectors.
+/// Grammar-local injections in source order, then external injectors. The order by
+/// priority is applied per scope list, where each selector's priority is known.
 pub(crate) fn collect_injections(
     grammar: &Arc<Grammar>,
     provider: &dyn InjectionProvider,
@@ -97,18 +98,24 @@ fn ensure_hits(
     }
     stats.injection_list_misses += 1;
     let names = interner.names(scopes);
-    hits[idx] = Some(
-        injections
-            .iter()
-            .enumerate()
-            .filter_map(|(i, inj)| inj.selector.matches(&names).map(|p| (i, p)))
-            .collect(),
-    );
+    hits[idx] = Some(sorted_hits(
+        injections.iter().map(|inj| inj.selector.matches(&names)),
+    ));
 }
 
-/// The earliest injection match at or after `pos`. On equal starts an `L:` injection
-/// displaces one without left priority; otherwise the earlier-listed injection keeps
-/// the slot.
+/// vscode-textmate stable-sorts its injections by priority: `L:` first, `R:` last,
+/// source order inside each class.
+fn sorted_hits(priorities: impl Iterator<Item = Option<Priority>>) -> Box<[(usize, Priority)]> {
+    let mut hits: Vec<(usize, Priority)> = priorities
+        .enumerate()
+        .filter_map(|(i, p)| p.map(|p| (i, p)))
+        .collect();
+    hits.sort_by_key(|&(_, priority)| priority);
+    hits.into_boxed_slice()
+}
+
+/// The earliest injection match at or after `pos`. Injections are tried in priority
+/// order, so on equal starts the first one tried keeps the slot.
 pub(crate) fn match_injections(
     cx: &mut LineCtx<'_>,
     scopes: ScopeListId,
@@ -163,16 +170,10 @@ pub(crate) fn match_injections(
             continue;
         };
         let start = capture_buf[0].map_or(pos, |(s, _)| s);
-        let replace = match &best {
-            None => true,
-            Some(current) => {
-                start < current.m.start()
-                    || (start == current.m.start()
-                        && priority == Priority::Left
-                        && current.priority != Priority::Left)
-            }
-        };
-        if replace {
+        if best
+            .as_ref()
+            .is_none_or(|current| start < current.m.start())
+        {
             let rule = compiled.rules[match_index].clone();
             let recycled = best.take().map(|b| b.m.captures).unwrap_or_default();
             let captures = mem::replace(*capture_buf, recycled);
@@ -185,6 +186,9 @@ pub(crate) fn match_injections(
                 rule,
                 priority,
             });
+            if start == pos {
+                break;
+            }
         }
     }
     best
@@ -245,6 +249,23 @@ mod tests {
 
     fn is_end(result: Option<(Match, EntryRule)>) -> bool {
         matches!(result, Some((_, EntryRule::End)))
+    }
+
+    #[test]
+    fn hits_are_stable_sorted_by_priority() {
+        let hits = sorted_hits(
+            [
+                Some(Priority::Right),
+                Some(Priority::None),
+                None,
+                Some(Priority::Left),
+                Some(Priority::None),
+                Some(Priority::Left),
+            ]
+            .into_iter(),
+        );
+        let order: Vec<usize> = hits.iter().map(|&(i, _)| i).collect();
+        assert_eq!(order, [3, 5, 1, 4, 0]);
     }
 
     #[test]

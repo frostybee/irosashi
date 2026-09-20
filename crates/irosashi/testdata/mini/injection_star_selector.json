@@ -1,0 +1,13 @@
+{
+  "scopeName": "source.test-star",
+  "patterns": [
+    {"match": "\\b[a-z]+\\b", "name": "word.test"}
+  ],
+  "injections": {
+    "L:*": {
+      "patterns": [
+        {"match": "\\b[a-z]+\\b", "name": "injected.word.test"}
+      ]
+    }
+  }
+}

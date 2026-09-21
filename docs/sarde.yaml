@@ -33,6 +33,8 @@ header:
     url: /docs/changelog
   - label: Showcase
     url: /demo/showcase.html
+  - label: Irosashi vs Shiki
+    url: /demo/irosashi-vs-shiki.html
   search: true
   social: true
   theme_toggle: true

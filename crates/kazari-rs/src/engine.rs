@@ -125,7 +125,7 @@ impl Kazari {
     }
 
     /// Renders the block as a `#code-block(...)` call for the functions defined by
-    /// [`typst_preamble`]. Only the light theme is used.
+    /// [`typst_preamble`](crate::typst_preamble). Only the light theme is used.
     pub fn render_with_meta_typst(&self, code: &str, meta_str: &str) -> Result<String, Error> {
         let mut resolved = self.resolve_meta(meta_str);
         let tokens = self.prepare_and_tokenize(code, &mut resolved, true)?;
@@ -538,6 +538,12 @@ pub struct KazariBuilder {
 
 impl KazariBuilder {
     /// Appends a callback run on every rendered HTML block, after the previous ones.
+    ///
+    /// The block's source appears twice in that HTML: as highlighted spans inside `<pre>`,
+    /// and as plain text in the copy button's `data-code` attribute in the toolbar, where
+    /// only `"` and `&` are escaped. A callback that searches the whole string can match
+    /// inside the attribute, and markup inserted there ends it early. To rewrite the
+    /// code, work on the part of the string from `<pre` on.
     pub fn post_render(
         mut self,
         callback: impl Fn(String, &BlockInfo) -> String + Send + Sync + 'static,

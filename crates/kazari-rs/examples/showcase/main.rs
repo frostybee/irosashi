@@ -1,9 +1,12 @@
-//! Generates a single-page, searchable showcase of every Kazari feature.
+//! Generates the demo site: a searchable showcase of every Kazari feature, a side by side
+//! comparison with Shiki, and a contrast correction page.
 //! `cargo run -p kazari-rs --features markdown --example showcase -- --out target/showcase`,
 //! then serve the directory and open `showcase.html`.
 
 mod catalog;
+mod compare;
 mod page;
+mod snippets;
 
 use std::path::PathBuf;
 
@@ -31,6 +34,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     std::fs::create_dir_all(&out)?;
     std::fs::write(out.join("showcase.html"), html)?;
     std::fs::write(
+        out.join("irosashi-vs-shiki.html"),
+        compare::irosashi_vs_shiki()?,
+    )?;
+    std::fs::write(out.join("color-contrast.html"), compare::color_contrast()?)?;
+    std::fs::write(
         out.join("showcase.css"),
         format!("{}\n{}", catalog.css, PAGE_CSS),
     )?;
@@ -41,7 +49,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let count: usize = catalog.categories.iter().map(|c| c.examples.len()).sum();
     println!(
-        "wrote {} examples in {} categories to {}",
+        "wrote {} examples in {} categories and 2 comparison pages to {}",
         count,
         catalog.categories.len(),
         out.display()

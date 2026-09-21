@@ -34,17 +34,7 @@ pub fn render(page: &Page<'_>) -> String {
 </head>
 <body id="top">
 <a class="skip-link" href="#showcase-content">Skip to examples</a>
-<header class="demo-header">
-  <div class="demo-header-inner">
-    <div class="demo-brand">
-      <h1>Kazari Showcase</h1>
-      <p>{subtitle}</p>
-    </div>
-    <div class="header-actions">
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">Dark mode</button>
-    </div>
-  </div>
-</header>
+{nav}
 
 <div class="demo-shell">
 <aside class="demo-sidebar">
@@ -52,7 +42,7 @@ pub fn render(page: &Page<'_>) -> String {
     <p class="demo-nav-title">Examples</p>
 "##,
         title = esc(page.title),
-        subtitle = esc(page.subtitle),
+        nav = crate::compare::site_nav("Showcase"),
     )
     .unwrap();
 
@@ -76,17 +66,24 @@ pub fn render(page: &Page<'_>) -> String {
         sb.push_str("\n    </div>\n");
     }
 
-    sb.push_str(
+    write!(
+        sb,
         r#"  </nav>
 </aside>
 
 <main class="demo-content" id="showcase-content">
+  <div class="demo-intro">
+    <h1>Kazari Showcase</h1>
+    <p>{subtitle}</p>
+  </div>
   <div class="mobile-jump">
     <label for="example-jump">Jump to an example</label>
     <select id="example-jump">
       <option value="">Choose an example...</option>
 "#,
-    );
+        subtitle = esc(page.subtitle),
+    )
+    .unwrap();
     for category in page.categories {
         writeln!(
             sb,

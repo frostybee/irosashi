@@ -1,0 +1,59 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { overflow-x: hidden; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #f6f8fa; color: #24292e; }
+.dark body { background: #1a1a1b; color: #d7dadc; }
+
+.cmp-header {
+  max-width: 1400px; margin: 0 auto; padding: 1.5rem clamp(1rem,3vw,2.5rem) 1.5rem;
+  display: flex; flex-direction: column; gap: .6rem;
+}
+.cmp-page-title { margin: 0 0 .25rem; font-size: 1.4rem; font-weight: 700; color: #1a1a2e; }
+.dark .cmp-page-title { color: #d7dadc; }
+.cmp-header p { margin: 0; color: #57606a; font-size: 1rem; line-height: 1.6; }
+.cmp-header a { color: #4a55c5; text-decoration: underline; text-underline-offset: 2px; }
+.cmp-header a:hover { color: #3640a0; }
+.dark .cmp-header p { color: #b5b8ba; }
+.dark .cmp-header a { color: #4fbcff; }
+.dark .cmp-header a:hover { color: #79cdff; }
+.cmp-status { font-size: .85rem; color: #57606a; }
+.cmp-status.ready { color: #1a7f37; }
+.cmp-status.error { color: #cf222e; }
+.dark .cmp-status { color: #818384; }
+.dark .cmp-status.ready { color: #3fb950; }
+
+.cmp-row { max-width: 1400px; margin: 0 auto 3rem; padding: 0 clamp(1rem,3vw,2.5rem); position: relative; }
+
+.cmp-lang-heading {
+  margin: 0 0 .75rem; font-size: 1rem; font-weight: 600;
+  color: #57606a; text-transform: uppercase; letter-spacing: .06em;
+}
+.dark .cmp-lang-heading { color: #818384; }
+
+.cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.cmp-grid > * { min-width: 0; }
+@media (max-width: 900px) { .cmp-grid { grid-template-columns: 1fr; } }
+.cmp-col-label { font-size: .8rem; font-weight: 600; color: #57606a; margin-bottom: .4rem; }
+.dark .cmp-col-label { color: #818384; }
+
+.shiki-target pre {
+  margin: 0; padding: 1rem 1.35rem;
+  border-radius: .5rem;
+  font-family: 'JetBrains Mono Variable', monospace;
+  font-size: .875rem; line-height: 1.6;
+  overflow-x: auto;
+  tab-size: 2;
+  -moz-tab-size: 2;
+}
+.shiki-target pre code {
+  font-family: inherit;
+}
+
+@media (max-width: 768px) {
+  .cmp-header { padding: 1rem; }
+  .cmp-header p { font-size: .9rem; line-height: 1.5; }
+  .cmp-page-title { font-size: 1.2rem; }
+  .cmp-row { margin-bottom: 2rem; padding: 0 1rem; }
+  .cmp-lang-heading { font-size: .85rem; margin-bottom: .5rem; }
+  .cmp-grid { gap: .75rem; }
+  .cmp-col-label { font-size: .75rem; }
+}

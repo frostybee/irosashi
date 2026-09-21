@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+The next `irosashi` release is 0.2.0 because of the breaking change below.
+
+### Breaking
+
+- **`AnsiOptions` is `#[non_exhaustive]`:** a struct literal such as
+  `AnsiOptions { color_depth: ColorDepth::Colors256 }` no longer compiles. Use
+  `AnsiOptions::new(ColorDepth::Colors256)`, or `AnsiOptions::default()` and assign the
+  fields. New options can now be added without another break.
+
+### Added
+
+- **ANSI token backgrounds:** `AnsiOptions::token_backgrounds` (off by default, set with
+  `.with_token_backgrounds(true)`) emits the background a theme sets on a token, at every
+  colour depth. The default output is unchanged.
+
 ### Changed
 
 - **Compiled patterns are shared across sessions:** every session of a `Highlighter`

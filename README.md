@@ -198,7 +198,8 @@ fn session(&self, lang: &str) -> Result<Session, Error>
 CodeToTokensOptions { lang, theme, include_scopes, max_line_length }
 CodeToHtmlOptions   { tokens, themes: BTreeMap<String, String>, html: HtmlOptions }
                     // constructors: ::new(lang, theme), ::multi(lang, themes), .shiki()
-CodeToAnsiOptions   { tokens, ansi: AnsiOptions { color_depth } }
+CodeToAnsiOptions   { tokens, ansi: AnsiOptions }
+                    // AnsiOptions::new(color_depth).with_token_backgrounds(bool)
 CodeToSvgOptions    { tokens, svg: SvgOptions { font_family, font_size, line_height, pad_x, pad_y, tab_width, corner_radius, show_background } }
 CodeToJsonOptions   { tokens, themes, indent }
 
@@ -342,7 +343,7 @@ use irosashi::{AnsiOptions, CodeToAnsiOptions, CodeToTokensOptions, ColorDepth};
 
 let out = highlighter.code_to_ansi(code, &CodeToAnsiOptions {
     tokens: CodeToTokensOptions::new("python", "dracula"),
-    ansi: AnsiOptions { color_depth: ColorDepth::Colors256 }, // Truecolor is the default
+    ansi: AnsiOptions::new(ColorDepth::Colors256), // Truecolor is the default
 })?;
 print!("{out}");
 ```

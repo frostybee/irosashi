@@ -93,12 +93,26 @@ use irosashi::{AnsiOptions, CodeToAnsiOptions, ColorDepth};
 
 let out = hl.code_to_ansi("fn main() {}", &CodeToAnsiOptions {
     tokens: irosashi::CodeToTokensOptions::new("rust", "github-dark"),
-    ansi: AnsiOptions { color_depth: ColorDepth::Colors256 },
+    ansi: AnsiOptions::new(ColorDepth::Colors256),
 })?;
 print!("{out}");
 ```
 
-Lines are joined by `\n`. Backgrounds are not emitted.
+Lines are joined by `\n`.
+
+Token backgrounds are off by default. To emit the background a theme sets on a token (for
+example on `invalid.deprecated`), turn on `token_backgrounds`:
+
+```rust
+let ansi = AnsiOptions::new(ColorDepth::Truecolor).with_token_backgrounds(true);
+```
+
+The background code follows the foreground in each escape sequence and is reset at the end
+of every line. The editor background of the theme is never painted, so the terminal keeps
+its own background.
+
+`AnsiOptions` is `#[non_exhaustive]`: build it with `AnsiOptions::new` or
+`AnsiOptions::default()`, not with a struct literal.
 
 ## SVG
 

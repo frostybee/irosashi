@@ -28,6 +28,10 @@ pub struct EngineArgs {
     /// Dark syntax theme name (overrides config)
     #[arg(long, value_name = "NAME")]
     pub theme_dark: Option<String>,
+
+    /// Minimum WCAG contrast ratio of token colours, 0 to 21 (overrides config; 0 turns it off)
+    #[arg(long, value_name = "RATIO")]
+    pub min_contrast: Option<f64>,
 }
 
 /// A config file resolved from the flags, the target directory or the working directory.
@@ -112,6 +116,13 @@ impl EngineArgs {
         defaults: impl FnOnce(&mut Config),
         configure: impl FnOnce(&mut Config),
     ) -> Result<Engine, Fail> {
+        if let Some(ratio) = self.min_contrast
+            && !(0.0..=21.0).contains(&ratio)
+        {
+            return Err(Fail::new(format!(
+                "min-contrast must be between 0 and 21, got {ratio}"
+            )));
+        }
         let loaded = load_file_config(self.config.as_deref(), dir)?;
         let (config_path, file) = match loaded {
             Some(l) => (Some(l.path), Some(l.file)),
@@ -147,6 +158,9 @@ impl EngineArgs {
             }
             None => None,
         };
+        if let Some(ratio) = self.min_contrast {
+            config.min_contrast = ratio;
+        }
         configure(&mut config);
         let kazari = Kazari::builder(highlighter)
             .config(config)
@@ -232,6 +246,32 @@ mod tests {
         assert!(build("copyButton: true\n", false));
         assert!(!build("codeGroups: false\n", false));
         assert!(!build("codeGroups: true\n", true));
+    }
+
+    #[test]
+    fn min_contrast_flag_overrides_the_config_file() {
+        let build = |flag: Option<f64>| {
+            let tmp = tempfile::tempdir().unwrap();
+            std::fs::write(tmp.path().join("kazari.config.yaml"), "minContrast: 3\n").unwrap();
+            let args = EngineArgs {
+                min_contrast: flag,
+                ..Default::default()
+            };
+            args.build(tmp.path(), irosashi::Highlighter::new().unwrap())
+                .map(|e| e.kazari.config().min_contrast)
+        };
+        assert_eq!(build(None).ok(), Some(3.0));
+        assert_eq!(build(Some(7.0)).ok(), Some(7.0));
+        assert_eq!(build(Some(0.0)).ok(), Some(0.0));
+        for bad in [22.0, -1.0, f64::NAN] {
+            let err = build(Some(bad)).err().unwrap();
+            assert!(
+                err.message
+                    .starts_with("min-contrast must be between 0 and 21"),
+                "{}",
+                err.message
+            );
+        }
     }
 
     #[test]

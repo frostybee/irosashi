@@ -23,6 +23,17 @@ The next `irosashi` release is 0.2.0 because of the breaking change below.
   colour depth. The default output is unchanged.
 - **ARM Linux binary:** releases include a `kazari` archive for
   `aarch64-unknown-linux-gnu`, built on a native ARM64 runner.
+- **Typst font, size and marker colours** (`kazari-rs`, `kazari-cli`): a `typst` section in
+  `kazari.config.yaml` (`font`, `size`, `markerColors`), the builder methods `typst_font`,
+  `typst_size` and `typst_marker_color`, and `--font` and `--font-size` on `kazari typst`.
+  Values are validated when set. Without them the Typst output is unchanged.
+- **`--min-contrast <RATIO>`** (`kazari-cli`): sets the minimum WCAG contrast ratio of token
+  colours (0 to 21, `0` turns it off) on every command and overrides `minContrast` from the
+  config file. It affects HTML output; `kazari typst` accepts it and ignores it.
+- **`kazari markdown --disable <FEATURE>`** (`kazari-cli`): turns off Markdown extensions or
+  code groups. Takes a comma-separated list and can be repeated. Values: `tables`,
+  `footnotes`, `strikethrough`, `task-lists`, `heading-attributes`, `code-groups`, and `gfm`
+  for all five extensions.
 
 ### Changed
 
@@ -35,6 +46,11 @@ The next `irosashi` release is 0.2.0 because of the breaking change below.
   `pattern_shared_hits`.
 - **The `onig-regset` dependency is gone:** Irosashi calls Oniguruma through `onig_sys`
   only. A C compiler is still needed for the vendored build.
+- **Copy button text of diff blocks** (`kazari-rs`): a `diff lang="..."` block copies the
+  code after the change, without the `+` and `-` prefixes and without the removed lines.
+  With `notationComments` on, lines marked `[!code --]` are left out of the copied text the
+  same way. A plain `diff` fence still copies verbatim. The `data-kz-id` of these blocks
+  changes, because it is derived from the copy text.
 
 ### Fixed
 
@@ -42,6 +58,16 @@ The next `irosashi` release is 0.2.0 because of the breaking change below.
   `firstLineMatch`, where it used to require the pattern to match the whole line. A
   shebang with arguments (`#!/usr/bin/env swift -O`) and `<!DOCTYPE html>` are now
   detected.
+- **Injection order follows vscode-textmate:** injections that match the same scope stack
+  are tried `L:` first and `R:` last, in source order inside each class, and a selector
+  takes the best priority among its matching composites. An `R:` injection listed before
+  a plain one no longer wins a tie. No bundled grammar was affected (468 of 468 fixtures
+  before and after).
+- **Empty selector conjunctions match:** an injection selector such as `L:*` now applies
+  to every scope stack, as in vscode-textmate. A selector without any token still never
+  matches.
+- **`codeGroups: false` is respected by `kazari markdown`** (`kazari-cli`): the command used
+  to turn code groups on after reading the config file.
 
 ## [0.1.1] - 2026-09-16
 

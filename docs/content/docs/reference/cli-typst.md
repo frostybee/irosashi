@@ -27,6 +27,7 @@ kazari typst <input> [flags]
 | `--config <PATH>` | auto-discover | Path to a config file. Without it, the tool probes `kazari.config.yaml`, `.yml`, and `.json` in the working directory. |
 | `--theme-light <NAME>` | `github-light` | Syntax theme for the output. |
 | `--theme-dark <NAME>` | `github-dark` | Ignored. Typst output uses only the light theme (see [single-theme output](#single-theme-output)). |
+| `--min-contrast <RATIO>` | off | Ignored. Contrast correction applies to HTML output only. The flag is accepted for consistency with the other commands. |
 
 Language detection follows the same rules as [`kazari render`](/docs/reference/cli-render#language-detection): file name first, then `--lang`, then `--meta`.
 

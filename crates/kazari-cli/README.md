@@ -69,6 +69,7 @@ kazari process [dir] [flags]
   --config <PATH>      config file (default: kazari.config.yaml|.yml|.json in dir, then the working directory)
   --theme-light <NAME> light syntax theme (default github-light; overrides config)
   --theme-dark <NAME>  dark syntax theme (default github-dark; overrides config)
+  --min-contrast <N>   minimum WCAG contrast ratio of token colours, 0 to 21 (default off; overrides config)
   --assets-base <URL>  fixed asset URL prefix instead of per-file relative paths
   --hashed-assets      content hashed asset filenames (kazari-<hash>.css) instead of kazari.css
   --skip-unlabeled     leave blocks without a detectable language untouched
@@ -140,7 +141,8 @@ turns them off.
 the block, for appending to a document that already has the template. `--font` and
 `--font-size` set the block's font family and text size (a Typst length such as `10pt`).
 
-All of these accept `--config`, `--theme-light` and `--theme-dark` like `process`.
+All of these accept `--config`, `--theme-light`, `--theme-dark` and `--min-contrast` like
+`process`. Contrast correction applies to HTML output, so `typst` accepts the flag and ignores it.
 
 ## Configuration
 

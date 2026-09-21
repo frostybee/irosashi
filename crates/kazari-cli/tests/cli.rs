@@ -236,6 +236,34 @@ fn render_from_stdin_and_file() {
 }
 
 #[test]
+fn min_contrast_flag() {
+    let code = "// a comment\nlet x = 1;\n";
+    let base = ["render", "-", "--lang", "javascript"];
+    let plain = run(&base, Some(code));
+    assert_eq!(plain.code, 0, "{}", plain.stderr);
+
+    let mut args = base.to_vec();
+    args.extend(["--min-contrast", "12"]);
+    let corrected = run(&args, Some(code));
+    assert_eq!(corrected.code, 0, "{}", corrected.stderr);
+    assert_ne!(plain.stdout, corrected.stdout, "token colours are adjusted");
+
+    let mut args = base.to_vec();
+    args.extend(["--min-contrast", "0"]);
+    assert_eq!(run(&args, Some(code)).stdout, plain.stdout);
+
+    let mut args = base.to_vec();
+    args.extend(["--min-contrast", "22"]);
+    let o = run(&args, Some(code));
+    assert_eq!(o.code, 2, "{}", o.stderr);
+    assert!(o.stderr.contains("between 0 and 21"), "{}", o.stderr);
+
+    let mut args = base.to_vec();
+    args.extend(["--min-contrast", "abc"]);
+    assert_eq!(run(&args, Some(code)).code, 2);
+}
+
+#[test]
 fn markdown_disable_flag() {
     let md = "~~gone~~\n\n| a | b |\n|---|---|\n| 1 | 2 |\n";
     let o = run(&["markdown", "-"], Some(md));

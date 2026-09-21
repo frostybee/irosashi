@@ -23,6 +23,7 @@ kazari process [dir] [flags]
 | `--config <PATH>` | auto-discover | Path to a config file. Without it, the tool probes `kazari.config.yaml`, `.yml`, and `.json` in `dir`, then in the working directory. |
 | `--theme-light <NAME>` | `github-light` | Light syntax theme. Overrides the config file. |
 | `--theme-dark <NAME>` | `github-dark` | Dark syntax theme. Overrides the config file. |
+| `--min-contrast <RATIO>` | `minContrast` from the config, else off | Minimum WCAG contrast ratio of token colours against the block background, from 0 to 21. Colours below the ratio are moved toward black or white. `0` turns the correction off. Overrides the config file. See [`minContrast`](/docs/reference/configuration#key-reference). |
 | `--assets-base <URL>` | relative | Fixed asset URL prefix instead of per-file relative paths. |
 | `--hashed-assets` | off | Content-hashed filenames (`kazari-a1b2c3d4.css`) instead of `kazari.css`. |
 | `--skip-unlabeled` | off | Leave blocks without a detectable language untouched instead of rendering them as plain text. |

@@ -16,21 +16,21 @@ Add `irosashi` to your `Cargo.toml`:
 
 ```toml title="Cargo.toml"
 [dependencies]
-irosashi = "0.1"
+irosashi = "0.2"
 ```
 
 To render decorated code blocks with frames, line numbers, markers, and Typst output, add `kazari-rs` as well:
 
 ```toml title="Cargo.toml"
 [dependencies]
-irosashi = "0.1"
-kazari-rs = "0.1"
+irosashi = "0.2"
+kazari-rs = "0.2"
 ```
 
 The `markdown` feature on `kazari-rs` pulls in `pulldown-cmark` for rendering fenced code blocks inside Markdown documents:
 
 ```toml title="Cargo.toml"
-kazari-rs = { version = "0.1", features = ["markdown"] }
+kazari-rs = { version = "0.2", features = ["markdown"] }
 ```
 
 ## Embedded assets
@@ -41,7 +41,7 @@ To load grammars and themes from a directory instead, disable the default featur
 
 ```toml title="Cargo.toml"
 [dependencies]
-irosashi = { version = "0.1", default-features = false }
+irosashi = { version = "0.2", default-features = false }
 ```
 
 ```rust

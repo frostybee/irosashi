@@ -1,6 +1,6 @@
 [package]
 name = "kazari-cli"
-version = "0.1.0"
+version = "0.2.0"
 description = "Command line for Kazari: upgrade code blocks in built HTML sites, render code, Markdown and Typst with VS Code themes"
 edition.workspace = true
 license.workspace = true
@@ -16,8 +16,8 @@ path = "src/main.rs"
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 html-escape = "0.2"
-irosashi = { version = "0.1.2", path = "../irosashi" }
-kazari-rs = { version = "0.1.2", path = "../kazari-rs", features = ["markdown"] }
+irosashi = { version = "0.2.0", path = "../irosashi" }
+kazari-rs = { version = "0.2.0", path = "../kazari-rs", features = ["markdown"] }
 pulldown-cmark = { version = "0.13", default-features = false }
 serde.workspace = true
 serde_json.workspace = true

@@ -82,8 +82,8 @@ no framework dependency, no Node, no WASM.
 
 ```toml
 [dependencies]
-irosashi = "0.1"
-kazari-rs = { version = "0.1", features = ["markdown"] }  # `markdown` is optional
+irosashi = "0.2"
+kazari-rs = { version = "0.2", features = ["markdown"] }  # `markdown` is optional
 ```
 
 Requires a C compiler for Irosashi's vendored Oniguruma build. On Windows, Visual Studio with the

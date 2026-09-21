@@ -103,7 +103,7 @@ kazari css              # the page-wide stylesheet
 kazari js               # the page-wide script
 kazari themes           # one theme name per line, sorted
 kazari languages        # one language name per line, sorted
-kazari version          # kazari 0.1.0
+kazari version          # kazari 0.2.0
 ```
 
 ## Configuration

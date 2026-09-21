@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-The next `irosashi` release is 0.2.0 because of the breaking change below.
+## [0.2.0] - 2026-09-21
+
+`irosashi` 0.2.0, `kazari-rs` 0.2.0 and `kazari-cli` 0.2.0. The minor version rises because of
+the breaking change below.
 
 ### Breaking
 
@@ -210,7 +213,8 @@ The changelog is maintained by hand. Add entries under `[Unreleased]` as work la
 `main`. The release steps, including how this file is updated for a new version, are in
 [RELEASING.md](https://github.com/frostybee/irosashi/blob/main/RELEASING.md).
 
-[Unreleased]: https://github.com/frostybee/irosashi/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/frostybee/irosashi/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/frostybee/irosashi/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/frostybee/irosashi/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/frostybee/irosashi/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/frostybee/irosashi/releases/tag/v0.1.0

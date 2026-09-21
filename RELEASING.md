@@ -65,6 +65,10 @@ cargo publish -p kazari-rs
 cargo publish -p kazari-cli
 ```
 
+A dry run of `kazari-rs` or `kazari-cli` fails with "failed to select a version" until the
+crate it depends on is live at the new version. That is expected: only `irosashi` can be
+dry-run before anything is published.
+
 Known issue: for 0.1.0, the 1.5 MiB `irosashi` upload failed three times from Windows
 cargo (HTTP 503, then `STREAM_CLOSED`). Publishing from WSL with
 `CARGO_TARGET_DIR=/tmp/iro-target` worked.

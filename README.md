@@ -125,8 +125,8 @@ is enough.
 
 ```toml
 [dependencies]
-irosashi = "0.1"
-kazari-rs = "0.1"   # optional: decorated HTML, Typst, fence meta
+irosashi = "0.2"
+kazari-rs = "0.2"   # optional: decorated HTML, Typst, fence meta
 ```
 
 ## Quick Start

@@ -829,12 +829,13 @@ pub fn build() -> Result<Catalog, Error> {
     let fixme_re = regex::Regex::new(r"(>[^<]*?)(FIXME:)").unwrap();
     let todo_engine = engine(|b| {
         b.post_render(move |html, _info: &BlockInfo| {
-            let html = todo_re
-                .replace_all(&html, "${1}<span class=\"kz-todo-badge\">TODO</span> ")
-                .into_owned();
-            fixme_re
-                .replace_all(&html, "${1}<span class=\"kz-fixme-badge\">FIXME</span> ")
-                .into_owned()
+            // Only the code is rewritten. The copy button's `data-code` attribute in the
+            // toolbar holds the same text, and markup inserted there would end it.
+            let (toolbar, code) = html.split_at(html.find("<pre").unwrap_or(0));
+            let code = todo_re.replace_all(code, "${1}<span class=\"kz-todo-badge\">TODO</span> ");
+            let code =
+                fixme_re.replace_all(&code, "${1}<span class=\"kz-fixme-badge\">FIXME</span> ");
+            format!("{toolbar}{code}")
         })
     })?;
     let figcaption_engine = engine(|b| {
@@ -858,7 +859,7 @@ pub fn build() -> Result<Catalog, Error> {
         "Extend rendered output with post_render callbacks.",
         vec![
             Ex::new("postrender-todo", "TODO/FIXME Badges", "TODO badges", todo_engine.render(todo_code, &titled("rust", "server.rs"))?)
-                .recipe("Rust", "let todo_re = Regex::new(r\"(>[^<]*?)(TODO:)\")?;\nlet fixme_re = Regex::new(r\"(>[^<]*?)(FIXME:)\")?;\nlet kz = Kazari::builder(hl)\n    .post_render(move |html, _info| {\n        let html = todo_re.replace_all(&html, \"${1}<span class=\\\"kz-todo-badge\\\">TODO</span> \").into_owned();\n        fixme_re.replace_all(&html, \"${1}<span class=\\\"kz-fixme-badge\\\">FIXME</span> \").into_owned()\n    })\n    .build()?;"),
+                .recipe("Rust", "let todo_re = Regex::new(r\"(>[^<]*?)(TODO:)\")?;\nlet fixme_re = Regex::new(r\"(>[^<]*?)(FIXME:)\")?;\nlet kz = Kazari::builder(hl)\n    .post_render(move |html, _info| {\n        // Rewrite the code only: the toolbar\'s data-code attribute holds the same text.\n        let (toolbar, code) = html.split_at(html.find(\"<pre\").unwrap_or(0));\n        let code = todo_re.replace_all(code, \"${1}<span class=\\\"kz-todo-badge\\\">TODO</span> \");\n        let code = fixme_re.replace_all(&code, \"${1}<span class=\\\"kz-fixme-badge\\\">FIXME</span> \");\n        format!(\"{toolbar}{code}\")\n    })\n    .build()?;"),
             Ex::new("postrender-figcaption", "Figure Caption", "Figure caption", figcaption_engine.render(figcaption_code, &titled("rust", "config.rs"))?)
                 .recipe("Rust", "let kz = Kazari::builder(hl)\n    .post_render(|html, info| {\n        if info.title.is_empty() { return html; }\n        format!(\"<figure>{html}<figcaption>{}</figcaption></figure>\", info.title)\n    })\n    .build()?;"),
         ],

@@ -21,6 +21,8 @@ The next `irosashi` release is 0.2.0 because of the breaking change below.
 - **ANSI token backgrounds:** `AnsiOptions::token_backgrounds` (off by default, set with
   `.with_token_backgrounds(true)`) emits the background a theme sets on a token, at every
   colour depth. The default output is unchanged.
+- **ARM Linux binary:** releases include a `kazari` archive for
+  `aarch64-unknown-linux-gnu`, built on a native ARM64 runner.
 
 ### Changed
 

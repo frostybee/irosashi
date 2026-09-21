@@ -30,7 +30,8 @@ list the bundled themes and languages. No Node, no WASM, no runtime dependencies
 
 ## Install
 
-Prebuilt binaries for Windows, Linux and macOS are attached to each
+Prebuilt binaries for Windows (x86_64), Linux (x86_64 and aarch64) and macOS (Intel and
+Apple Silicon) are attached to each
 [GitHub release](https://github.com/frostybee/irosashi/releases). Download the archive for your
 platform, unpack it, and put `kazari` on your `PATH`.
 

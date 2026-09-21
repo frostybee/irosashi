@@ -9,7 +9,7 @@ The `kazari` binary wraps Irosashi and Kazari into a single command. Use it to u
 
 ## Install
 
-Prebuilt binaries for Windows, Linux and macOS are attached to each [GitHub release](https://github.com/frostybee/irosashi/releases). Download the archive for your platform, unpack it, and put `kazari` on your `PATH`.
+Prebuilt binaries for Windows (x86_64), Linux (x86_64 and aarch64) and macOS (Intel and Apple Silicon) are attached to each [GitHub release](https://github.com/frostybee/irosashi/releases). Download the archive for your platform, unpack it, and put `kazari` on your `PATH`.
 
 With a Rust toolchain:
 

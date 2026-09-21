@@ -69,6 +69,39 @@ The next `irosashi` release is 0.2.0 because of the breaking change below.
 - **`codeGroups: false` is respected by `kazari markdown`** (`kazari-cli`): the command used
   to turn code groups on after reading the config file.
 
+## [0.1.2] - 2026-09-18
+
+`irosashi` 0.1.2, `kazari-rs` 0.1.2, and the first release of `kazari-cli` (0.1.0).
+
+### Added
+
+- **`kazari-cli`, the `kazari` binary:** `kazari process <dir>` upgrades the code blocks of a
+  built static site in place. It recognizes the HTML that Hugo, Jekyll, Eleventy, mdBook,
+  Sphinx, Zola, Astro and hand-written pages emit, recovers the source, re-renders each
+  block with Kazari, keeps every other byte, and writes `kazari.css` and `kazari.js` once.
+  `--check` reports pending changes without writing. `render`, `markdown`, `typst`, `css`,
+  `js`, `themes`, `languages` and `version` wrap the library for single files.
+- **Prebuilt binaries:** a release workflow builds `kazari` on every `v*` tag for `x86_64`
+  Windows, Linux and macOS and for `aarch64` macOS, with SHA-256 sums.
+- **`process` config section** (`kazari-rs`): `FileConfig` reads `process.skipUnlabeled`,
+  `assetsBase`, `hashedAssets`, `concurrency` and `maxFileBytes`, and
+  `FileConfig::from_json` loads a JSON config file.
+- **Session counters** (`irosashi`): `SessionStats` gains `pattern_compiles`,
+  `pattern_searches`, `pattern_cache_hits` and `regex_engine_errors`, and
+  `SessionFootprint` gains `compiled_patterns`.
+- Documentation site, with reference pages for the `kazari` commands.
+
+### Changed
+
+- **Per-pattern scanner with a last-match cache** (`irosashi`): each pattern is compiled
+  once and searched on its own, with vscode-oniguruma's cache rule. This replaces the
+  whole-set search of 0.1.0. On 50 KiB inputs JavaScript went from 198.0 ms to 98.4 ms,
+  TypeScript from 190.2 to 89.1, Go from 79.4 to 39.0 and Rust from 47.4 to 22.2. PHP and
+  CSS became 11 to 12 percent slower, and across all 234 grammars 187 got faster and 34
+  slower, none above 1.7 ms on its fixture. Cold first tokens for JavaScript went from
+  57.9 ms to 20.6 ms. Output is unchanged: 468 of 468 fixtures before and after.
+- `onig_sys` is a direct dependency of `irosashi`.
+
 ## [0.1.1] - 2026-09-16
 
 ### Fixed
@@ -173,14 +206,11 @@ Initial release of `irosashi` and `kazari-rs` on crates.io.
 
 ## Releasing
 
-The changelog is maintained by hand. To cut a release:
+The changelog is maintained by hand. Add entries under `[Unreleased]` as work lands on
+`main`. The release steps, including how this file is updated for a new version, are in
+[RELEASING.md](https://github.com/frostybee/irosashi/blob/main/RELEASING.md).
 
-1. Add entries under `[Unreleased]` as work lands on `main`.
-2. Rename `[Unreleased]` to the new version with today's date, add a fresh empty
-   `[Unreleased]` above it, and update the link references at the bottom of this file.
-3. Tag the release: `git tag -a vX.Y.Z -m "vX.Y.Z"` and push it.
-4. Publish the GitHub release: `gh release create vX.Y.Z --notes-file <section>`.
-
-[Unreleased]: https://github.com/frostybee/irosashi/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/frostybee/irosashi/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/frostybee/irosashi/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/frostybee/irosashi/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/frostybee/irosashi/releases/tag/v0.1.0

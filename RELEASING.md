@@ -49,8 +49,8 @@ IRO_WRITE_REPORT=1 cargo test -p irosashi-fidelity
 - Update the dependency versions that point at a bumped crate: `irosashi` in
   `crates/kazari-rs/Cargo.toml`, and `irosashi` and `kazari-rs` in
   `crates/kazari-cli/Cargo.toml`.
-- In `CHANGELOG.md`, move the entries under `Unreleased` to a new heading with the version
-  and the date.
+- In `CHANGELOG.md`, rename `[Unreleased]` to the new version with the date, add an empty
+  `[Unreleased]` above it, and update the link references at the bottom of the file.
 - Commit.
 
 ## 4. Publish to crates.io

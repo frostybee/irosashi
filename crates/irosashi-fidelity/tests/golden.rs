@@ -149,6 +149,12 @@ fn fidelity_report() {
 fn golden_all() {
     let dir = golden_all_dir();
     if !dir.is_dir() {
+        // A release gate must not pass without having tested anything.
+        assert!(
+            std::env::var_os("IRO_REQUIRE_GOLDEN_ALL").is_none(),
+            "golden-all not synced at {}; run `cargo run -p sync-assets`",
+            dir.display()
+        );
         println!("golden-all not synced at {}; skipping", dir.display());
         return;
     }

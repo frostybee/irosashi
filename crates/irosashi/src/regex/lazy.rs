@@ -1,9 +1,9 @@
 use std::fmt;
-use std::sync::{Arc, OnceLock};
+use std::sync::OnceLock;
 
-use onig::{RegexOptions, Syntax};
 use serde::{Deserialize, Serialize};
 
+use crate::regex::raw::Regex;
 use crate::regex::rewrite_z_anchor;
 
 /// A pattern string compiled on first use.
@@ -15,7 +15,7 @@ use crate::regex::rewrite_z_anchor;
 #[serde(from = "String", into = "String")]
 pub struct LazyRegex {
     source: String,
-    compiled: OnceLock<Option<Arc<onig::Regex>>>,
+    compiled: OnceLock<Option<Regex>>,
 }
 
 impl LazyRegex {
@@ -30,18 +30,20 @@ impl LazyRegex {
         &self.source
     }
 
-    /// The compiled regex, or `None` if Oniguruma rejects the pattern.
-    pub fn compiled(&self) -> Option<&Arc<onig::Regex>> {
+    /// `false` if Oniguruma rejects the pattern.
+    pub fn compiles(&self) -> bool {
+        self.compiled().is_some()
+    }
+
+    /// Whether the pattern matches anywhere in `text`; a pattern that does not
+    /// compile matches nothing.
+    pub fn is_match(&self, text: &str) -> bool {
+        self.compiled().is_some_and(|re| re.is_match_anywhere(text))
+    }
+
+    fn compiled(&self) -> Option<&Regex> {
         self.compiled
-            .get_or_init(|| {
-                onig::Regex::with_options(
-                    &self.source,
-                    RegexOptions::REGEX_OPTION_CAPTURE_GROUP,
-                    Syntax::default(),
-                )
-                .ok()
-                .map(Arc::new)
-            })
+            .get_or_init(|| Regex::new(&self.source).ok())
             .as_ref()
     }
 }
@@ -96,12 +98,23 @@ mod tests {
         let regex = LazyRegex::new(r"\w+");
         let first = regex.compiled().expect("valid pattern compiles");
         let second = regex.compiled().unwrap();
-        assert!(Arc::ptr_eq(first, second));
+        assert!(std::ptr::eq(first, second));
     }
 
     #[test]
-    fn invalid_pattern_yields_none() {
-        assert!(LazyRegex::new("(?P<").compiled().is_none());
+    fn invalid_pattern_never_matches() {
+        let regex = LazyRegex::new("(?P<");
+        assert!(!regex.compiles());
+        assert!(!regex.is_match("(?P<"));
+    }
+
+    #[test]
+    fn is_match_searches_the_whole_text() {
+        let regex = LazyRegex::new(r"^#!/.*\bswift");
+        assert!(regex.is_match("#!/usr/bin/env swift -O"));
+        assert!(!regex.is_match(" #!/usr/bin/env swift"));
+        assert!(LazyRegex::new("b+").is_match("abbc"));
+        assert!(!LazyRegex::new("b+").is_match(""));
     }
 
     #[test]

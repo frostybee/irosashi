@@ -3,17 +3,16 @@
 /// These are the real Oniguruma option bits (`ONIG_OPTION_NOT_BEGIN_STRING`,
 /// `ONIG_OPTION_NOT_BEGIN_POSITION`), not `NOTBOL`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct SearchOptions(onig::SearchOptions);
+pub struct SearchOptions(u32);
 
 impl SearchOptions {
-    pub const NONE: Self = Self(onig::SearchOptions::SEARCH_OPTION_NONE);
+    pub const NONE: Self = Self(onig_sys::ONIG_OPTION_NONE);
 
     /// Disables `\A`: the search start is not the beginning of the string.
-    pub const NOT_BEGIN_STRING: Self = Self(onig::SearchOptions::SEARCH_OPTION_NOT_BEGIN_STRING);
+    pub const NOT_BEGIN_STRING: Self = Self(onig_sys::ONIG_OPTION_NOT_BEGIN_STRING);
 
     /// Disables `\G`: the search start is not the anchor position.
-    pub const NOT_BEGIN_POSITION: Self =
-        Self(onig::SearchOptions::SEARCH_OPTION_NOT_BEGIN_POSITION);
+    pub const NOT_BEGIN_POSITION: Self = Self(onig_sys::ONIG_OPTION_NOT_BEGIN_POSITION);
 
     pub fn union(self, other: Self) -> Self {
         Self(self.0 | other.0)
@@ -24,11 +23,11 @@ impl SearchOptions {
     }
 
     pub fn contains(self, other: Self) -> bool {
-        self.0.contains(other.0)
+        self.0 & other.0 == other.0
     }
 
     pub(crate) fn bits(self) -> u32 {
-        self.0.bits()
+        self.0
     }
 }
 
@@ -70,5 +69,24 @@ impl AnchorActive {
             Self::G => SearchOptions::NOT_BEGIN_STRING,
             Self::None => SearchOptions::NOT_BEGIN_STRING.union(SearchOptions::NOT_BEGIN_POSITION),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn option_bits_are_the_oniguruma_ones() {
+        assert_eq!(SearchOptions::NONE.bits(), 0);
+        assert_eq!(SearchOptions::NOT_BEGIN_STRING.bits(), 1 << 22);
+        assert_eq!(SearchOptions::NOT_BEGIN_POSITION.bits(), 1 << 24);
+        let both = SearchOptions::NOT_BEGIN_STRING.union(SearchOptions::NOT_BEGIN_POSITION);
+        assert!(both.contains(SearchOptions::NOT_BEGIN_STRING));
+        assert!(!SearchOptions::NOT_BEGIN_STRING.contains(both));
+        assert_eq!(
+            both.intersection(SearchOptions::NOT_BEGIN_POSITION),
+            SearchOptions::NOT_BEGIN_POSITION
+        );
     }
 }

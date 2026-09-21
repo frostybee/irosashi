@@ -55,7 +55,7 @@ fn all_regexes_compile() {
     for (name, grammar) in load_all() {
         for (index, rule) in grammar.rules.iter().enumerate() {
             let mut check = |label: &str, regex: &LazyRegex| {
-                if regex.compiled().is_some() {
+                if regex.compiles() {
                     compiled += 1;
                 } else {
                     failures.push(format!("{name} rule {index} {label}: {:?}", regex.source()));

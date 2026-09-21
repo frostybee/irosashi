@@ -4,7 +4,7 @@ use std::sync::Arc;
 
 use crate::Error;
 use crate::grammar::{CompiledRule, Grammar, GrammarResolver, Rule, RuleId, compile_patterns};
-use crate::regex::{Match, PatternId, PatternTable, ScanStats, Scanner, SearchOptions};
+use crate::regex::{Match, PatternId, PatternTable, RegexStore, ScanStats, Scanner, SearchOptions};
 
 pub(crate) use crate::regex::CaptureBuf;
 
@@ -127,6 +127,13 @@ pub(crate) struct Memo {
 }
 
 impl Memo {
+    pub fn with_store(store: Arc<RegexStore>) -> Self {
+        Self {
+            table: PatternTable::with_store(store),
+            ..Self::default()
+        }
+    }
+
     /// The id of the context identified by `key`, compiling it on first use.
     pub fn resolve(
         &mut self,

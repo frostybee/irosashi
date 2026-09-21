@@ -43,8 +43,8 @@ Shiki's output without Shiki's runtime. Irosashi (色差し, "applying colour") 
 tokenization, and Typst output. No Node, no browser and no WASM in the process.
 
 It runs the real [Oniguruma regex engine](https://github.com/kkos/oniguruma) natively through
-the [`onig-regset`](https://crates.io/crates/onig-regset) crate, searching a whole pattern set
-per call, for bug-for-bug compatibility with Shiki's tokenizer.
+the [`onig_sys`](https://crates.io/crates/onig_sys) bindings, one compiled pattern per source
+with a per-pattern match cache, for bug-for-bug compatibility with Shiki's tokenizer.
 
 234 of 234 tested grammars (100%) produce output byte-identical to Shiki, verified against
 [vscode-textmate](https://github.com/microsoft/vscode-textmate) across both `github-dark` and
@@ -669,7 +669,7 @@ None of these are linked into the library.
 
 ## Status
 
-Engine complete. Native Oniguruma via `onig-regset`, grammar compiler, tokenizer, theme
+Engine complete. Native Oniguruma via `onig_sys`, grammar compiler, tokenizer, theme
 resolution, embedded assets (257 grammars, 65 themes), the fidelity gate, and HTML output in
 two dialects plus ANSI, SVG, JSON and plain text. All 234 grammars are byte-identical to
 `vscode-textmate` (468 of 468 grammar/theme pairs); the Shiki HTML preset is byte-identical to
@@ -687,7 +687,7 @@ Copyright (c) 2026 FrostyBee.
 Irosashi is licensed under the [MIT License](https://github.com/frostybee/irosashi/blob/main/LICENSE). You are free to use, modify and
 distribute it in both open-source and commercial projects.
 
-Irosashi embeds third-party components (Oniguruma through `onig-regset`, TextMate grammars, VS
+Irosashi embeds third-party components (Oniguruma through `onig_sys`, TextMate grammars, VS
 Code themes) under their respective licences (BSD-2-Clause, MIT and others).
 
 ---

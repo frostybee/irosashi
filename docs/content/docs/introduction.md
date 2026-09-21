@@ -7,7 +7,7 @@ sidebar:
   icon: info
 ---
 
-Irosashi is a Rust port of [Shiki](https://shiki.style), the TextMate grammar-based syntax highlighter used by VS Code. It runs the [Oniguruma](https://github.com/kkos/oniguruma) regex engine natively through the [`onig-regset`](https://crates.io/crates/onig-regset) crate and produces output byte-identical to `vscode-textmate` on 234 of 234 tested grammars across both `github-dark` and `github-light` (468 of 468 grammar/theme pairs).
+Irosashi is a Rust port of [Shiki](https://shiki.style), the TextMate grammar-based syntax highlighter used by VS Code. It runs the [Oniguruma](https://github.com/kkos/oniguruma) regex engine natively through the [`onig_sys`](https://crates.io/crates/onig_sys) bindings and produces output byte-identical to `vscode-textmate` on 234 of 234 tested grammars across both `github-dark` and `github-light` (468 of 468 grammar/theme pairs).
 
 257 languages, 65 VS Code themes, six output formats (HTML, ANSI, SVG, JSON, plain text, raw tokens), and a per-line tokenizer for editors. No Node, no browser, no WASM.
 
@@ -19,7 +19,7 @@ Irosashi is for Rust programs that need Shiki-quality highlighting without a Jav
 
 **Fidelity** 234 of 234 grammars produce output byte-identical to `vscode-textmate`. The Shiki HTML preset is byte-identical to Shiki 4.4.3 on generated goldens. A grammar ships in the fidelity gate only at 100% on the shipping theme set.
 
-**Native Oniguruma** The regex engine runs in-process through `onig-regset`, searching a whole pattern set per call. No WASM binary, no subprocess, no pool of instances.
+**Native Oniguruma** The regex engine runs in-process through `onig_sys`. Each pattern is compiled once per process and shared by every session. No WASM binary, no subprocess, no pool of instances.
 
 **Six output formats** `code_to_html` (two dialects), `code_to_ansi` (8/16/256/truecolor), `code_to_svg`, `code_to_json`, `code_to_plaintext`, and `code_to_tokens` for raw token access.
 

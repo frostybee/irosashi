@@ -443,7 +443,6 @@ dependencies = [
  "bitflags",
  "include_dir",
  "insta",
- "onig-regset",
  "onig_sys",
  "serde",
  "serde_json",
@@ -558,18 +557,6 @@ name = "once_cell_polyfill"
 version = "1.70.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "384b8ab6d37215f3c5301a95a4accb5d64aa607f1fcb26a11b5303878451b4fe"
-
-[[package]]
-name = "onig-regset"
-version = "6.7.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "080c4eeac92e475efa2893e52522ee3de48086cdad5fb5f36631a7fcb5293c81"
-dependencies = [
- "bitflags",
- "libc",
- "once_cell",
- "onig_sys",
-]
 
 [[package]]
 name = "onig_sys"

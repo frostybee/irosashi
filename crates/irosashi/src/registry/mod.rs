@@ -654,7 +654,7 @@ impl Registry {
         let probe = &line[..end];
         self.first_line
             .iter()
-            .find(|(_, regex)| regex.compiled().is_some_and(|re| re.is_match(probe)))
+            .find(|(_, regex)| regex.is_match(probe))
             .map(|(name, _)| name.as_str())
     }
 }
@@ -737,6 +737,11 @@ mod tests {
             r.detect_by_first_line("{% extends \"base.html\" %}"),
             Some("jinja-html")
         );
+        assert_eq!(
+            r.detect_by_first_line("#!/usr/bin/env swift -O"),
+            Some("swift")
+        );
+        assert_eq!(r.detect_by_first_line("<!DOCTYPE html>"), Some("twig"));
         assert_eq!(r.detect_by_first_line("plain text"), None);
         let long = format!("{}#!/usr/bin/env swift", " ".repeat(2000));
         assert_eq!(r.detect_by_first_line(&long), None);

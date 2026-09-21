@@ -92,11 +92,10 @@ dependencies = [
 
 [[package]]
 name = "irosashi"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "bitflags",
  "include_dir",
- "onig-regset",
  "onig_sys",
  "serde",
  "serde_json",
@@ -148,24 +147,6 @@ name = "memchr"
 version = "2.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cf8baf1c55e62ffcace7a9f06f4bd9cd3f0c4beb022d3b367256b91b87513d98"
-
-[[package]]
-name = "once_cell"
-version = "1.21.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9f7c3e4beb33f85d45ae3e3a1792185706c8e16d043238c593331cc7cd313b50"
-
-[[package]]
-name = "onig-regset"
-version = "6.7.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "080c4eeac92e475efa2893e52522ee3de48086cdad5fb5f36631a7fcb5293c81"
-dependencies = [
- "bitflags",
- "libc",
- "once_cell",
- "onig_sys",
-]
 
 [[package]]
 name = "onig_sys"

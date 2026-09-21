@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Compiled patterns are shared across sessions:** every session of a `Highlighter`
+  takes its compiled Oniguruma patterns from one store, so a pattern is compiled once per
+  process. A second session of a language starts 1.7 to 27 times faster, a language that
+  embeds already-used ones (`html` after `javascript` and `css`) about 6 times faster, and
+  peak memory over all 234 fixtures drops from 227 MiB to 155 MiB. The first use of a
+  language in a fresh `Highlighter` is unchanged. `SessionStats` gains
+  `pattern_shared_hits`.
+- **The `onig-regset` dependency is gone:** Irosashi calls Oniguruma through `onig_sys`
+  only. A C compiler is still needed for the vendored build.
+
+### Fixed
+
+- **Language detection by first line** now searches the line for a grammar's
+  `firstLineMatch`, where it used to require the pattern to match the whole line. A
+  shebang with arguments (`#!/usr/bin/env swift -O`) and `<!DOCTYPE html>` are now
+  detected.
+
 ## [0.1.1] - 2026-09-16
 
 ### Fixed

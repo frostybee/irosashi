@@ -3,6 +3,7 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex, PoisonError, RwLock};
 
 use crate::Error;
+use crate::regex::RegexStore;
 use crate::registry::{AssetSource, PLAINTEXT_NAMES, Registry, RegistryBuilder, ThemeColors};
 use crate::render::{
     AnsiOptions, AnsiRenderer, DefaultColor, HtmlOptions, HtmlRenderer, JsonOptions, JsonRenderer,
@@ -228,6 +229,7 @@ impl HighlighterBuilder {
             min_contrast: self.min_contrast,
             adjusted: RwLock::new(HashMap::new()),
             pool: Mutex::new(HashMap::new()),
+            regexes: Arc::new(RegexStore::default()),
         })
     }
 }
@@ -246,6 +248,9 @@ pub struct Highlighter {
     min_contrast: f64,
     adjusted: RwLock<HashMap<String, Arc<Theme>>>,
     pool: Mutex<HashMap<String, Vec<Session>>>,
+    /// Compiled patterns shared by all sessions. Keyed by pattern source, so it stays
+    /// valid when the registry is swapped.
+    regexes: Arc<RegexStore>,
 }
 
 impl std::fmt::Debug for Highlighter {
@@ -519,7 +524,11 @@ impl Highlighter {
         let lang = lang.to_ascii_lowercase();
         let registry = self.registry();
         let grammar = registry.grammar(&lang)?;
-        Ok(Session::new(grammar, resolver(&registry)))
+        Ok(Session::with_store(
+            grammar,
+            resolver(&registry),
+            Arc::clone(&self.regexes),
+        ))
     }
 
     fn tokenize_options(&self, options: &CodeToTokensOptions) -> TokenizeOptions {
@@ -557,9 +566,9 @@ impl Highlighter {
         let name = name.to_owned();
         let grammar = registry.grammar(&name)?;
 
-        let mut session = self
-            .checkout(&name)
-            .unwrap_or_else(|| Session::new(grammar, resolver(registry)));
+        let mut session = self.checkout(&name).unwrap_or_else(|| {
+            Session::with_store(grammar, resolver(registry), Arc::clone(&self.regexes))
+        });
         let result = session.themed(
             code,
             self.tokenize_options(options),
@@ -909,6 +918,54 @@ mod tests {
             .code_to_tokens(code, &CodeToTokensOptions::new("json", "github-dark"))
             .unwrap();
         assert!(without.scopes.is_none());
+    }
+
+    #[test]
+    fn sessions_share_compiled_patterns() {
+        let code = "let x = 1;";
+        let h = highlighter();
+        let mut first = h.session("javascript").unwrap();
+        first.tokenize(code, TokenizeOptions::default());
+        let first = first.stats();
+        assert!(first.pattern_compiles > 0);
+        assert_eq!(first.pattern_shared_hits, 0);
+
+        let mut second = h.session("javascript").unwrap();
+        let shared = second.tokenize(code, TokenizeOptions::default());
+        let second_stats = second.stats();
+        assert_eq!(second_stats.pattern_compiles, 0);
+        assert_eq!(second_stats.pattern_shared_hits, first.pattern_compiles);
+
+        let registry = h.registry();
+        let mut alone = Session::new(registry.grammar("javascript").unwrap(), resolver(&registry));
+        let unshared = alone.tokenize(code, TokenizeOptions::default());
+        assert_eq!(alone.stats().pattern_compiles, first.pattern_compiles);
+        assert_eq!(shared.lines, unshared.lines);
+
+        let mut html = h.session("html").unwrap();
+        html.tokenize("<script>let x = 1;</script>", TokenizeOptions::default());
+        assert!(html.stats().pattern_shared_hits > 0);
+    }
+
+    #[test]
+    fn concurrent_calls_match_a_single_threaded_run() {
+        let code = "const a = [1, 2].map((n) => n * 2); // done\n".repeat(20);
+        let options = CodeToTokensOptions::new("typescript", "github-dark");
+        let expected = format!(
+            "{:?}",
+            highlighter().code_to_tokens(&code, &options).unwrap().lines
+        );
+        let h = highlighter();
+        std::thread::scope(|scope| {
+            for _ in 0..4 {
+                scope.spawn(|| {
+                    for _ in 0..3 {
+                        let lines = h.code_to_tokens(&code, &options).unwrap().lines;
+                        assert_eq!(format!("{lines:?}"), expected);
+                    }
+                });
+            }
+        });
     }
 
     #[test]

@@ -14,6 +14,7 @@ use std::panic::{AssertUnwindSafe, catch_unwind};
 use std::sync::Arc;
 
 use crate::grammar::{Grammar, GrammarResolver, ROOT_RULE_ID};
+use crate::regex::RegexStore;
 use crate::scope::{ScopeInterner, ScopeListId};
 pub(crate) mod ansi;
 
@@ -88,6 +89,8 @@ pub struct SessionStats {
     pub injection_set_compiles: u64,
     pub capture_retokenizations: u64,
     pub pattern_compiles: u64,
+    /// Patterns another session of the same highlighter had already compiled.
+    pub pattern_shared_hits: u64,
     pub pattern_searches: u64,
     pub pattern_cache_hits: u64,
     pub regex_engine_errors: u64,
@@ -120,6 +123,19 @@ pub struct Session {
 
 impl Session {
     pub fn new(grammar: Arc<Grammar>, resolver: Arc<dyn Resolver>) -> Self {
+        Self::with_memo(grammar, resolver, Memo::default())
+    }
+
+    /// A session whose compiled patterns come from, and go into, `store`.
+    pub(crate) fn with_store(
+        grammar: Arc<Grammar>,
+        resolver: Arc<dyn Resolver>,
+        store: Arc<RegexStore>,
+    ) -> Self {
+        Self::with_memo(grammar, resolver, Memo::with_store(store))
+    }
+
+    fn with_memo(grammar: Arc<Grammar>, resolver: Arc<dyn Resolver>, memo: Memo) -> Self {
         let mut interner = ScopeInterner::new();
         let root_scopes = interner.push_names(ScopeListId::EMPTY, &grammar.scope_name);
         let root = WorkStack::root(StackFrame {
@@ -135,7 +151,7 @@ impl Session {
             grammar,
             resolver,
             interner,
-            memo: Memo::default(),
+            memo,
             injections,
             injection_hits: Vec::new(),
             scan_bufs: vec![String::new()],
@@ -158,6 +174,7 @@ impl Session {
             while_hits: memo.while_hits,
             while_misses: memo.while_misses,
             pattern_compiles: scan.compiles,
+            pattern_shared_hits: scan.shared_hits,
             pattern_searches: scan.searches,
             pattern_cache_hits: scan.cache_hits,
             regex_engine_errors: scan.engine_errors,

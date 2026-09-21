@@ -5,6 +5,7 @@ use std::sync::Arc;
 use crate::Error;
 use crate::regex::SearchOptions;
 use crate::regex::raw::{Regex, Region, Search};
+use crate::regex::store::RegexStore;
 
 /// The winning pattern of a scanner search and its capture groups.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -38,6 +39,8 @@ pub(crate) type PatternId = usize;
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub(crate) struct ScanStats {
     pub compiles: u64,
+    /// Patterns taken from the shared store already compiled.
+    pub shared_hits: u64,
     pub searches: u64,
     pub cache_hits: u64,
     pub engine_errors: u64,
@@ -55,7 +58,7 @@ struct SlotCache {
 }
 
 struct Slot {
-    regex: Regex,
+    regex: Arc<Regex>,
     /// The search option bits that can change this pattern's result: `\A` reacts to
     /// `NOT_BEGIN_STRING`, `\G` to `NOT_BEGIN_POSITION`; other patterns to neither.
     anchor_bits: SearchOptions,
@@ -85,8 +88,10 @@ impl Scanner {
 /// Every pattern a session has compiled, each once, with its last-match cache.
 ///
 /// Searching writes the scratch region and the per-pattern caches, so a table is
-/// owned by one session and never shared.
+/// owned by one session and never shared. The compiled objects themselves are
+/// immutable and may come from a store shared with other sessions.
 pub(crate) struct PatternTable {
+    store: Option<Arc<RegexStore>>,
     by_source: HashMap<Arc<str>, Result<PatternId, Arc<str>>>,
     slots: Vec<Slot>,
     region: Region,
@@ -96,6 +101,7 @@ pub(crate) struct PatternTable {
 impl Default for PatternTable {
     fn default() -> Self {
         Self {
+            store: None,
             by_source: HashMap::new(),
             slots: Vec::new(),
             region: Region::new(),
@@ -105,14 +111,29 @@ impl Default for PatternTable {
 }
 
 impl PatternTable {
+    pub fn with_store(store: Arc<RegexStore>) -> Self {
+        Self {
+            store: Some(store),
+            ..Self::default()
+        }
+    }
+
     /// Compiles `source` on first sight; later calls return the same id.
     pub fn intern(&mut self, source: &str) -> Result<PatternId, Arc<str>> {
         if let Some(known) = self.by_source.get(source) {
             return known.clone();
         }
-        let result = match Regex::new(source) {
+        let (compiled, fresh) = match &self.store {
+            Some(store) => store.get_or_compile(source),
+            None => (Regex::new(source).map(Arc::new).map_err(Arc::from), true),
+        };
+        let result = match compiled {
             Ok(regex) => {
-                self.stats.compiles += 1;
+                if fresh {
+                    self.stats.compiles += 1;
+                } else {
+                    self.stats.shared_hits += 1;
+                }
                 let has_g_anchor = has_anchor(source, b'G');
                 let mut anchor_bits = SearchOptions::NONE;
                 if has_anchor(source, b'A') {
@@ -129,7 +150,7 @@ impl PatternTable {
                 });
                 Ok(self.slots.len() - 1)
             }
-            Err(message) => Err(Arc::from(message)),
+            Err(message) => Err(message),
         };
         self.by_source.insert(Arc::from(source), result.clone());
         result
@@ -314,4 +335,30 @@ fn has_anchor(source: &str, letter: u8) -> bool {
         .as_bytes()
         .windows(2)
         .any(|pair| pair == [b'\\', letter])
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn tables_on_one_store_share_regexes_but_not_caches() {
+        let store = Arc::new(RegexStore::default());
+        let mut a = PatternTable::with_store(Arc::clone(&store));
+        let mut b = PatternTable::with_store(store);
+        let scanner_a = a.scanner(&["b+", "c"]).unwrap();
+        let scanner_b = b.scanner(&["b+", "c"]).unwrap();
+        assert_eq!((a.stats().compiles, a.stats().shared_hits), (2, 0));
+        assert_eq!((b.stats().compiles, b.stats().shared_hits), (0, 2));
+        assert!(Arc::ptr_eq(&a.slots[0].regex, &b.slots[0].regex));
+
+        let found = a.find_next_match(&scanner_a, "abbc", 1, 0, SearchOptions::NONE);
+        assert_eq!(found.unwrap().range(), (1, 3));
+        a.find_next_match(&scanner_a, "abbc", 1, 0, SearchOptions::NONE);
+        assert!(a.stats().cache_hits > 0);
+
+        let found = b.find_next_match(&scanner_b, "xxc", 1, 0, SearchOptions::NONE);
+        assert_eq!(found.unwrap().range(), (2, 3));
+        assert_eq!(b.stats().cache_hits, 0);
+    }
 }

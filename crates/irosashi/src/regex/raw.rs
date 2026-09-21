@@ -1,6 +1,6 @@
-//! Direct Oniguruma calls for the scan loop. The `onig` crate's search entry points
-//! allocate a match parameter per call and validate the encoding per call; the
-//! tokenizer issues tens of searches per scan step, so those costs dominate.
+//! Direct Oniguruma calls. A safe wrapper's search entry points allocate a match
+//! parameter per call and validate the encoding per call; the tokenizer issues tens of
+//! searches per scan step, so those costs dominate.
 
 use std::ffi::CStr;
 use std::sync::Mutex;
@@ -25,8 +25,7 @@ unsafe impl Send for Regex {}
 unsafe impl Sync for Regex {}
 
 impl Regex {
-    /// Compiles with capture groups on, UTF-8, and Oniguruma's default syntax: the
-    /// same settings the `onig` crate applies.
+    /// Compiles with capture groups on, UTF-8, and Oniguruma's default syntax.
     pub fn new(source: &str) -> Result<Self, String> {
         let bytes = source.as_bytes();
         let mut raw: OnigRegex = std::ptr::null_mut();
@@ -79,6 +78,16 @@ impl Regex {
         } else {
             Search::Failed
         }
+    }
+}
+
+impl Regex {
+    /// Whether the pattern matches anywhere in `text`.
+    pub fn is_match_anywhere(&self, text: &str) -> bool {
+        matches!(
+            self.search(text, 0, onig_sys::ONIG_OPTION_NONE, &mut Region::new()),
+            Search::Found
+        )
     }
 }
 

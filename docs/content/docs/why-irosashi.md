@@ -17,7 +17,7 @@ Both paths add a runtime dependency that the Rust program would not otherwise ne
 
 ## What Irosashi provides instead
 
-Irosashi runs the real Oniguruma regex engine natively through `onig-regset`, in-process, with no subprocess and no WASM. The concrete differences:
+Irosashi runs the real Oniguruma regex engine natively through `onig_sys`, in-process, with no subprocess and no WASM. The concrete differences:
 
 - No Node.js or WASM runtime to install, start, or keep alive
 - No subprocess IPC or serialization between processes

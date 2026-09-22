@@ -88,6 +88,10 @@ Shiki is the right choice. Where Irosashi earns its place:
 - **Fidelity is strictly better than the alternatives in Rust:** syntect uses Sublime syntaxes and
   cannot reproduce VS Code themes and grammars byte for byte. Irosashi is at 234 of 234 grammars
   against `vscode-textmate` and byte-identical to Shiki's HTML, which no other Rust crate offers.
+- **And it is faster than syntect on the same input.** Measured with the `kazari` binary, which
+  ships both backends behind one flag: a 2.5 KB Rust file renders in 10 ms on Irosashi against
+  65 ms on syntect (`fancy-regex`), a 45 KB file in 48 against 221 ms, and a 60-page site in
+  128 against 332 ms. syntect's advantage is the build (no C compiler), not the run.
 - **The per-line API** with an explicit state handle is designed for editors and previews that
   re-tokenize from a dirty line. Shiki's `codeToHtml` is whole-document.
 - **Typst output** through Kazari, for PDF export in the same process that renders the preview:
@@ -518,6 +522,12 @@ file for current numbers.
 | Typst output         | Yes         | No             | No           | No            |
 | Licence              | MIT         | MIT            | MIT          | EUPL          |
 | Runtime              | Native + C  | Pure Rust      | Node + WASM  | Native + C    |
+| `kazari render`, 45 KB Rust file | 48 ms | 221 ms | n/a | n/a |
+| `kazari process`, 60 pages | 128 ms | 332 ms | n/a | n/a |
+
+The last two rows are medians from the `kazari` binary with `--engine irosashi` and
+`--engine syntect` on the same input (syntect built on `fancy-regex`); process start and
+backend construction are under 6 ms for both. Shiki and giallo are not selectable there.
 
 ## Relationship to Upstream Shiki
 

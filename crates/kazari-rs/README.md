@@ -96,10 +96,14 @@ VC tools component works; on Linux and macOS a system `cc` is enough.
 Kazari asks a backend for styled tokens and does everything else itself. Pick one with Cargo
 features:
 
-| Feature | Backend | Grammars and themes | Build |
-|---------|---------|---------------------|-------|
-| `irosashi` (default) | [Irosashi](https://crates.io/crates/irosashi) | VS Code TextMate grammars and themes, byte-identical to `vscode-textmate` | Needs a C compiler (Oniguruma) |
-| `syntect` | [syntect](https://crates.io/crates/syntect) | Sublime Text grammars, `.tmTheme` themes | Pure Rust (`fancy-regex`) |
+| Feature | Backend | Grammars and themes | Build | 45 KB Rust file |
+|---------|---------|---------------------|-------|-----------------|
+| `irosashi` (default) | [Irosashi](https://crates.io/crates/irosashi) | VS Code TextMate grammars and themes, byte-identical to `vscode-textmate` | Needs a C compiler (Oniguruma) | 48 ms |
+| `syntect` | [syntect](https://crates.io/crates/syntect) | Sublime Text grammars, `.tmTheme` themes | Pure Rust (`fancy-regex`) | 221 ms |
+
+The last column is `kazari render` on the same file with each `--engine` (median of 7 runs);
+a 60-page `kazari process` run is 128 ms against 332 ms. Irosashi is the default because it is
+both the more faithful and the faster backend.
 
 For a pure Rust build, turn the default off and enable `syntect`:
 
@@ -121,8 +125,9 @@ let kz = Kazari::builder(SyntectHighlighter::new())
 themes (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`, and so on);
 `with_theme_map` replaces that table, `add_theme_file` registers a `.tmTheme`, and a theme name
 ending in `.tmTheme` is loaded from that path. Every feature of the presentation layer works on
-either backend; what changes is the tokenization. A site can build both and choose per
-environment, for example syntect during live reload and Irosashi for the production build. See
+either backend; what changes is the tokenization. syntect is the choice for a build that cannot
+link Oniguruma or a site whose other code blocks already come from syntect; it is not a speed
+option (on `fancy-regex` it is several times slower than Irosashi's native Oniguruma). See
 `examples/backends.rs`.
 
 Any type implementing `kazari_rs::Highlighter` (two methods: `tokenize` and `theme_info`) can be

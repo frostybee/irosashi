@@ -96,7 +96,7 @@ The performance tables show that tokenization speed is comparable. The differenc
 
 A grammar ships in the fidelity gate only at 100% on the shipping theme set. Anything below that is listed in `held.toml` and excluded from the core gate.
 
-**syntect** uses Sublime Text syntaxes and `.tmTheme` colour files. These are a different format from VS Code's TextMate JSON grammars and JSON themes, so syntect cannot reproduce VS Code scoping or theme colours byte for byte.
+**syntect** uses Sublime Text syntaxes and `.tmTheme` colour files. These are a different format from VS Code's TextMate JSON grammars and JSON themes, so syntect cannot reproduce VS Code scoping or theme colours byte for byte. It is also slower on the same input: the `kazari` binary ships both backends behind one flag, and a 2.5 KB Rust file renders in 10 ms on Irosashi against 65 ms on syntect, a 45 KB file in 48 against 221 ms, and a 60-page site in 128 against 332 ms (medians; syntect built on `fancy-regex`). See [Backends](/docs/getting-started/cli#backends).
 
 **giallo** also runs native Oniguruma and parses VS Code grammars, but does not publish fidelity scores against `vscode-textmate`.
 
@@ -117,8 +117,10 @@ It reads the same fence meta syntax and `kazari.config.yaml` as [Go Kazari](http
 | Typst output         | Yes (kazari) | No             | No           | No            |
 | Licence              | MIT          | MIT            | MIT          | EUPL          |
 | Runtime              | Native + C   | Pure Rust      | Node + WASM  | Native + C    |
+| `kazari render`, 45 KB Rust file | 48 ms | 221 ms | n/a | n/a |
+| `kazari process`, 60 pages | 128 ms | 332 ms | n/a | n/a |
 
-syntect's advantage is a pure-Rust build with no C dependency. It is the right choice when VS Code theme fidelity does not matter and the Sublime syntax set covers the needed languages.
+syntect's advantage is a pure-Rust build with no C dependency. It is the right choice when the build cannot link Oniguruma, or when a site already renders other code blocks with syntect and wants them to match. It is not faster: on `fancy-regex` it is 3 to 6 times slower than Irosashi's native Oniguruma.
 
 ## When to use Shiki instead
 

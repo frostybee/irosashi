@@ -112,15 +112,15 @@ The binary ships two highlighting backends and every command accepts `--engine` 
 
 | Engine | Grammars and themes | Use it for |
 |---|---|---|
-| `irosashi` (default) | VS Code TextMate grammars and the 65 bundled VS Code themes; output matches Shiki byte for byte | The production build |
-| `syntect` | Sublime Text grammars and syntect's seven bundled `.tmTheme` themes; faster to start | A dev server or live reload |
+| `irosashi` (default) | VS Code TextMate grammars and the 65 bundled VS Code themes; output matches Shiki byte for byte | Editor-exact output; also the faster backend in this binary |
+| `syntect` | Sublime Text grammars and syntect's seven bundled `.tmTheme` themes | Matching code blocks that syntect renders elsewhere on the site (mdBook, Zola, `bat`) |
 
 ```bash
 kazari process ./public --engine syntect
 kazari themes --engine syntect
 ```
 
-Every Kazari feature (frames, line numbers, markers, diff, dual themes) works on both; only the tokens differ. With `syntect`, theme names are mapped to the closest bundled theme (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`), a name ending in `.tmTheme` is loaded from that path, and an unknown name falls back to a light or dark bundled theme instead of failing. See [theme names per backend](/docs/styling/themes-and-dark-mode#theme-names-per-backend).
+Every Kazari feature (frames, line numbers, markers, diff, dual themes) works on both; only the tokens differ. syntect is not a speed option here: the binary builds it on `fancy-regex`, and Irosashi's native Oniguruma is several times faster on the same input (about 10 ms against 65 ms for a small file, 128 ms against 332 ms for a 60-page site). With `syntect`, theme names are mapped to the closest bundled theme (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`), a name ending in `.tmTheme` is loaded from that path, and an unknown name falls back to a light or dark bundled theme instead of failing. See [theme names per backend](/docs/styling/themes-and-dark-mode#theme-names-per-backend).
 
 ## Configuration
 

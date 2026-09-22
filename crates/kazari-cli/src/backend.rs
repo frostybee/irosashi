@@ -10,7 +10,7 @@ pub enum EngineKind {
     /// VS Code grammars and themes, byte-identical to Shiki
     #[default]
     Irosashi,
-    /// Sublime Text grammars and base16 themes; faster to start, less faithful
+    /// Sublime Text grammars and base16 themes, as syntect renders them elsewhere
     Syntect,
 }
 

@@ -592,7 +592,7 @@ cargo run -p kazari-rs --example demo > demo.html                     # decorate
 cargo run -p kazari-rs --example config_file > config.html            # engine built from kazari.config.yaml
 cargo run -p kazari-rs --example demo_typst > demo.typ && typst compile demo.typ
 cargo run -p kazari-rs --features markdown --example demo_markdown > demo_markdown.html
-cargo run -p kazari-rs --features markdown --example showcase         # the demo site
+cargo run -p kazari-rs --features markdown,syntect --example showcase # the demo site
 ```
 
 ### Fidelity

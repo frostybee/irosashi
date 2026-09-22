@@ -1,6 +1,6 @@
-//! Generates the demo site: a searchable showcase of every Kazari feature, a side by side
-//! comparison with Shiki, and a contrast correction page.
-//! `cargo run -p kazari-rs --features markdown --example showcase -- --out target/showcase`,
+//! Generates the demo site: a searchable showcase of every Kazari feature, side by side
+//! comparisons with Shiki and with the syntect backend, and a contrast correction page.
+//! `cargo run -p kazari-rs --features markdown,syntect --example showcase -- --out target/showcase`,
 //! then serve the directory and open `showcase.html`.
 
 mod catalog;
@@ -37,6 +37,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         out.join("irosashi-vs-shiki.html"),
         compare::irosashi_vs_shiki()?,
     )?;
+    std::fs::write(
+        out.join("irosashi-vs-syntect.html"),
+        compare::irosashi_vs_syntect()?,
+    )?;
     std::fs::write(out.join("color-contrast.html"), compare::color_contrast()?)?;
     std::fs::write(
         out.join("showcase.css"),
@@ -49,7 +53,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let count: usize = catalog.categories.iter().map(|c| c.examples.len()).sum();
     println!(
-        "wrote {} examples in {} categories and 2 comparison pages to {}",
+        "wrote {} examples in {} categories and 3 comparison pages to {}",
         count,
         catalog.categories.len(),
         out.display()

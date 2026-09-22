@@ -4,6 +4,9 @@ my-docs/
 docs/dist/
 docs/.cache/
 
+# Demo site, generated into the docs by the deploy workflow
+docs/public/demo/
+
 # Full fidelity matrix (30 MB), synced locally from the Nuri checkout only
 crates/irosashi-fidelity/testdata/golden-all/
 

@@ -372,7 +372,7 @@ cargo insta test -p kazari-rs                                              # sna
 cargo run -p kazari-rs --example demo > demo.html                          # feature tour
 cargo run -p kazari-rs --example demo_typst > demo.typ && typst compile demo.typ
 cargo run -p kazari-rs --features markdown --example demo_markdown > demo_markdown.html
-cargo run -p kazari-rs --features markdown --example showcase              # multi-page showcase site
+cargo run -p kazari-rs --features markdown,syntect --example showcase      # multi-page showcase site
 cargo run -p kazari-rs --features markdown,syntect --example backends -- all  # one page per backend
 cargo test -p kazari-rs --no-default-features --features syntect,markdown  # pure Rust build
 ```

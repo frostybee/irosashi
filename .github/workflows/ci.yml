@@ -28,4 +28,5 @@ jobs:
       - run: cargo check -p kazari-rs --no-default-features
       - run: cargo test -p kazari-rs --no-default-features --features syntect,markdown --all-targets
       - run: cargo clippy -p kazari-rs --no-default-features --features syntect,markdown --all-targets -- -D warnings
+      - run: cargo run -p kazari-rs --features markdown,syntect --example showcase -- --out target/showcase
       - run: cargo fmt --all --check

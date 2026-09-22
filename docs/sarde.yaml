@@ -35,6 +35,8 @@ header:
     url: /demo/showcase.html
   - label: Irosashi vs Shiki
     url: /demo/irosashi-vs-shiki.html
+  - label: Irosashi vs syntect
+    url: /demo/irosashi-vs-syntect.html
   search: true
   social: true
   theme_toggle: true

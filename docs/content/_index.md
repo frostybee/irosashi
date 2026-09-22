@@ -30,4 +30,13 @@ description: "Shiki's output without Shiki's runtime. TextMate grammars, VS Code
 
 :::link-card[Showcase](href="/demo/showcase.html" icon="eye" description="Live examples of every Kazari feature: frames, markers, diff, collapse, code groups, and the output panel.")
 :::
+
+:::link-card[Irosashi vs Shiki](href="/demo/irosashi-vs-shiki.html" icon="eye" description="The same snippets rendered by Irosashi at build time and by Shiki in the browser, side by side.")
+:::
+
+:::link-card[Irosashi vs syntect](href="/demo/irosashi-vs-syntect.html" icon="eye" description="Framed Kazari blocks on the Irosashi and syntect backends: same features, different tokenizer.")
+:::
+
+:::link-card[Color Contrast](href="/demo/color-contrast.html" icon="eye" description="Low-contrast themes before and after WCAG contrast correction.")
+:::
 :::

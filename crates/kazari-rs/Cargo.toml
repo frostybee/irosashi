@@ -53,7 +53,7 @@ required-features = ["markdown", "irosashi"]
 
 [[example]]
 name = "showcase"
-required-features = ["markdown", "irosashi"]
+required-features = ["markdown", "irosashi", "syntect"]
 
 [[example]]
 name = "backends"

@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - "docs/**"
-      - "crates/kazari-rs/examples/showcase/**"
+      - "crates/kazari-rs/**"
       - ".github/workflows/deploy-docs.yml"
   workflow_dispatch:
 
@@ -39,7 +39,7 @@ jobs:
           cache-on-failure: true
 
       - name: Generate showcase
-        run: cargo run -p kazari-rs --features markdown --example showcase -- --out docs/public/demo
+        run: cargo run -p kazari-rs --features markdown,syntect --example showcase -- --out docs/public/demo
 
       - uses: actions/configure-pages@v5
 

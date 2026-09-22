@@ -1,9 +1,10 @@
-//! The comparison pages: Irosashi next to Shiki, and contrast correction off and on.
-//! Each page is self-contained (styles and scripts inlined).
+//! The comparison pages: Irosashi next to Shiki, Irosashi next to syntect, and contrast
+//! correction off and on. Each page is self-contained (styles and scripts inlined).
 
 use std::fmt::Write;
 
-use kazari_rs::{Error, Frame, Kazari, Options};
+use kazari_rs::backends::syntect::SyntectHighlighter;
+use kazari_rs::{Error, Frame, Highlighter, Kazari, Options};
 
 use crate::page::esc;
 use crate::snippets::{self, Snippet};
@@ -13,9 +14,10 @@ static NAV_CSS: &str = include_str!("assets/nav.css");
 static DARK_TOGGLE_JS: &str = include_str!("assets/dark-toggle.js");
 static SHIKI_JS: &str = include_str!("assets/shiki.js");
 
-const NAV_LINKS: [(&str, &str); 3] = [
+const NAV_LINKS: [(&str, &str); 4] = [
     ("Showcase", "showcase.html"),
     ("Irosashi vs Shiki", "irosashi-vs-shiki.html"),
+    ("Irosashi vs syntect", "irosashi-vs-syntect.html"),
     ("Color Contrast", "color-contrast.html"),
 ];
 
@@ -175,6 +177,74 @@ pub fn irosashi_vs_shiki() -> Result<String, Error> {
         engine_js: &kz.js(),
         script: SHIKI_JS,
         module_script: true,
+    }))
+}
+
+/// The same framed blocks rendered by the two Kazari backends. Every Kazari feature is
+/// on both sides; only the tokens differ.
+pub fn irosashi_vs_syntect() -> Result<String, Error> {
+    let iro = engine("github-light", "github-dark", 0.0)?;
+
+    let syntect_hl = SyntectHighlighter::new();
+    let light = syntect_hl.theme_info("github-light")?;
+    let dark = syntect_hl.theme_info("github-dark")?;
+    let syn = Kazari::builder(syntect_hl)
+        .themes("github-light", Some("github-dark"))
+        .build()?;
+
+    let mut rows = String::new();
+    for Snippet {
+        id,
+        label,
+        lang,
+        code,
+    } in &snippets::ALL
+    {
+        let meta = format!("{lang} showLineNumbers {{2}} ins={{3}}");
+        write!(
+            rows,
+            r#"<section class="cmp-row" data-lang="{id}">
+  <h2 class="cmp-lang-heading">{label}</h2>
+  <div class="cmp-grid">
+    <div class="cmp-col cmp-col--irosashi">
+      <div class="cmp-col-label">Irosashi (VS Code grammars and themes)</div>
+      {left}
+    </div>
+    <div class="cmp-col cmp-col--syntect">
+      <div class="cmp-col-label">syntect (Sublime grammars, base16 themes)</div>
+      {right}
+    </div>
+  </div>
+</section>
+"#,
+            left = iro.render_with_meta(code, &meta)?,
+            right = syn.render_with_meta(code, &meta)?,
+        )
+        .unwrap();
+    }
+
+    // One page stylesheet comes from the Irosashi engine; the syntect column carries
+    // the editor colours of its own mapped themes.
+    let extra_css = format!(
+        ".cmp-col--syntect {{ --kz-editor-bg: {lbg}; --kz-editor-fg: {lfg}; }}\n.dark .cmp-col--syntect {{ --kz-editor-bg: {dbg}; --kz-editor-fg: {dfg}; }}",
+        lbg = esc(&light.bg),
+        lfg = esc(&light.fg),
+        dbg = esc(&dark.bg),
+        dfg = esc(&dark.fg),
+    );
+
+    Ok(page(&PageParts {
+        title: "Kazari: Irosashi vs syntect",
+        active: "Irosashi vs syntect",
+        engine_css: &iro.css(),
+        extra_css: &extra_css,
+        header: r#"  <h1 class="cmp-page-title">Irosashi vs syntect</h1>
+  <p>Kazari renders framed code blocks on top of a pluggable highlighter. <strong>Left:</strong> the <code>irosashi</code> backend (default), VS Code grammars and the <code>github-light</code> and <code>github-dark</code> themes, byte-identical to Shiki. <strong>Right:</strong> the <code>syntect</code> backend, a pure Rust build with no C compiler, Sublime Text grammars and the closest bundled <code>.tmTheme</code> (<code>InspiredGitHub</code> and <code>base16-ocean.dark</code>).</p>
+  <p>Both columns are the same Kazari engine configuration: language badge, line numbers, a highlighted line and an inserted line, copy button, dual theme. Only the tokens come from a different engine. Toggle dark mode to compare both variants.</p>"#,
+        rows: &rows,
+        engine_js: &iro.js(),
+        script: DARK_TOGGLE_JS,
+        module_script: false,
     }))
 }
 

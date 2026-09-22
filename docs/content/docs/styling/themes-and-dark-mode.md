@@ -29,6 +29,26 @@ let kz = Kazari::builder(hl)
 
 This is the default configuration: `Config::default()` uses `github-light` and `github-dark`.
 
+## Theme names per backend
+
+Theme names are resolved by the highlighter backend, so the same name can mean different colours:
+
+- **Irosashi** (default) accepts any of its 65 bundled VS Code themes by name, for example `github-dark`, `dracula`, `catppuccin-mocha` or `one-dark-pro`. An unknown name is an error at `build()`.
+- **syntect** ships seven themes: `InspiredGitHub`, `base16-ocean.dark`, `base16-ocean.light`, `base16-eighties.dark`, `base16-mocha.dark`, `Solarized (dark)` and `Solarized (light)`. `SyntectHighlighter` maps the common VS Code names to the closest of these (`github-light` to `InspiredGitHub`, `github-dark`, `dracula` and `one-dark-pro` to `base16-ocean.dark`, and so on). A name it does not know falls back to `InspiredGitHub` when it contains `light` and to `base16-ocean.dark` otherwise, without an error. A name ending in `.tmTheme` is loaded from that file path.
+
+If a project switches backends, keep the theme names and expect the syntect output to use the mapped theme. To control the mapping, build the highlighter with `SyntectHighlighter::with_theme_map` or register a `.tmTheme` under the VS Code name with `add_theme_file`:
+
+```rust
+use std::path::Path;
+use kazari_rs::backends::syntect::SyntectHighlighter;
+
+let mut hl = SyntectHighlighter::new();
+hl.add_theme_file("catppuccin-mocha", Path::new("themes/catppuccin-mocha.tmTheme"))?;
+let kz = Kazari::builder(hl)
+    .themes("github-light", Some("catppuccin-mocha"))
+    .build()?;
+```
+
 ## Dark mode strategies
 
 The `DarkMode` enum controls how the dark theme variables are activated.

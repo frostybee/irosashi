@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Runnable examples:** `ansi`, `dual_theme`, `incremental`, `custom_grammar`, `detect`,
+  `style_to_class`, `transformers` and `tokens_json` in `crates/irosashi/examples/`, and
+  `config_file` in `crates/kazari-rs/examples/`, with an examples page in the docs.
+
+### Fixed
+
+- **Configuration reference:** the example `kazari.config.yaml` used four keys the parser
+  rejects (`links`, `languageIconMode`, `themeToggleButton`, `themeCSSRoot`). The page now
+  uses `inlineLinks`, `langIconMode`, `themeToggle` and `themeCssRoot`, and the example
+  parses.
+
 ## [0.2.0] - 2026-09-21
 
 `irosashi` 0.2.0, `kazari-rs` 0.2.0 and `kazari-cli` 0.2.0. The minor version rises because of

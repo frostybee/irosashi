@@ -572,16 +572,26 @@ cargo test --workspace
 
 ### Demos
 
-Standalone examples that exercise each output path. The Kazari HTML demo is the best starting
-point for a visual overview of the presentation layer.
+Runnable examples, one feature each. HTML examples print a complete page, so redirect the
+output to a file and open it. The full list with descriptions is on the
+[examples page](https://frostybee.github.io/irosashi/docs/features/examples/).
 
 ```bash
-cargo run -p irosashi --example html > demo.html                        # three blocks: single theme, dual theme, Shiki preset
-cargo run -p irosashi --example svg > example-output.svg                # the README image
-cargo run -p kazari-rs --example demo > demo.html                       # decorated HTML: toolbar, collapse, output panel, theme toggle
+cargo run -p irosashi --example ansi -- src/main.rs --depth 256      # terminal output for a file
+cargo run -p irosashi --example dual_theme > dual.html                # light and dark from one tokenization
+cargo run -p irosashi --example incremental                           # per-line Session API, re-tokenize after an edit
+cargo run -p irosashi --example custom_grammar                        # register a grammar and a theme
+cargo run -p irosashi --example detect                                # language detection
+cargo run -p irosashi --example style_to_class > classes.html         # shared StyleClassMap and stylesheet
+cargo run -p irosashi --example transformers > transformers.html      # built-in and custom transformers
+cargo run -p irosashi --example tokens_json                           # tokens with scopes, or --json
+cargo run -p irosashi --example html > demo.html                      # both dialects and a dual-theme block
+cargo run -p irosashi --example svg > example-output.svg              # the README image
+cargo run -p kazari-rs --example demo > demo.html                     # decorated HTML: toolbar, collapse, output panel, theme toggle
+cargo run -p kazari-rs --example config_file > config.html            # engine built from kazari.config.yaml
 cargo run -p kazari-rs --example demo_typst > demo.typ && typst compile demo.typ
 cargo run -p kazari-rs --features markdown --example demo_markdown > demo_markdown.html
-cargo run -p kazari-rs --features markdown --example showcase           # multi-page showcase site
+cargo run -p kazari-rs --features markdown --example showcase         # the demo site
 ```
 
 ### Fidelity

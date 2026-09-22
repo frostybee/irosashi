@@ -60,10 +60,10 @@ lineNumbers: true
 frameDetection: true
 fileNameExtraction: true
 languageBadge: true
-languageIconMode: iconAndText
+langIconMode: iconAndText
 fileIcons: true
 mermaidPassThrough: true
-links: true
+inlineLinks: true
 themedScrollbars: true
 themedSelection: true
 terminalCommentStripping: true
@@ -74,7 +74,7 @@ minContrast: 5.5
 minify: true
 styleReset: true
 cascadeLayer: kazari
-themeCSSRoot: ":root"
+themeCssRoot: ":root"
 locale: en-US
 outputPanel: true
 outputDefaultCollapsed: false
@@ -132,11 +132,11 @@ Each row maps a YAML key to its builder method and the default value from `Confi
 | `copyButton` | `.copy_button(bool)` | `true` |
 | `wrapButton` | `.wrap_button(bool)` | `true` |
 | `fullscreenButton` | `.fullscreen_button(bool)` | `true` |
-| `themeToggleButton` | `.theme_toggle(bool)` | `false` |
+| `themeToggle` | `.theme_toggle(bool)` | `false` |
 | `outputPanel` | `.output_panel(bool)` | `false` |
 | `outputDefaultCollapsed` | `.output_collapsed(bool)` | `false` |
 | `outputSeparator` | `.output_separator("...")` | `""` |
-| `links` | `.inline_links(bool)` | `false` |
+| `inlineLinks` | `.inline_links(bool)` | `false` |
 | `codeGroups` | `.code_groups(bool)` | `false` (requires `markdown` feature). `kazari markdown` defaults to `true`. |
 | `mermaidPassThrough` | `.mermaid_pass_through(bool)` | `true` |
 | `lineNumbers` | `.line_numbers(bool)` | depends on `defaults.lineNumbers` |
@@ -144,7 +144,7 @@ Each row maps a YAML key to its builder method and the default value from `Confi
 | `fileNameExtraction` | `.file_name_extraction(bool)` | `true` |
 | `languageBadge` | `.language_badge(bool)` | `true` |
 | `fileIcons` | `.file_icons(bool)` | `true` |
-| `languageIconMode` | `.lang_icon_mode(LangIconMode::...)` | `None` |
+| `langIconMode` | `.lang_icon_mode(LangIconMode::...)` | `None` |
 | `minContrast` | `.min_contrast(f64)` | `0.0` (disabled) |
 | `minify` | `.minify(bool)` | `true` |
 | `tabWidth` | `.tab_width(usize)` | `2` |
@@ -153,7 +153,7 @@ Each row maps a YAML key to its builder method and the default value from `Confi
 | `visibleWhitespace` | `.visible_whitespace(bool)` | `false` |
 | `locale` | `.locale("...")` | `"en-US"` |
 | `cascadeLayer` | `.cascade_layer("...")` | `"kazari"` |
-| `themeCSSRoot` | `.theme_css_root("...")` | `":root"` |
+| `themeCssRoot` | `.theme_css_root("...")` | `":root"` |
 | `styleOverrides` | `.style_overrides(BTreeMap)` | empty |
 | `styleReset` | config only | `true` |
 | `themedScrollbars` | config only | `true` |

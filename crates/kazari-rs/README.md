@@ -70,6 +70,8 @@ no framework dependency, no Node, no WASM.
 - `all: revert` style reset isolates blocks from page CSS
 
 **Integration**
+- Pluggable highlighter: Irosashi (default) or syntect (feature `syntect`, pure Rust), or your own
+  `Highlighter` implementation
 - `pulldown-cmark` adapter (feature `markdown`) with `:::code-group` tabbed containers and tab sync
 - Mermaid pass-through
 - Output panels (`withOutput`, code and its result in one block)
@@ -88,6 +90,43 @@ kazari-rs = { version = "0.2", features = ["markdown"] }  # `markdown` is option
 
 Requires a C compiler for Irosashi's vendored Oniguruma build. On Windows, Visual Studio with the
 VC tools component works; on Linux and macOS a system `cc` is enough.
+
+### Highlighter backends
+
+Kazari asks a backend for styled tokens and does everything else itself. Pick one with Cargo
+features:
+
+| Feature | Backend | Grammars and themes | Build |
+|---------|---------|---------------------|-------|
+| `irosashi` (default) | [Irosashi](https://crates.io/crates/irosashi) | VS Code TextMate grammars and themes, byte-identical to `vscode-textmate` | Needs a C compiler (Oniguruma) |
+| `syntect` | [syntect](https://crates.io/crates/syntect) | Sublime Text grammars, `.tmTheme` themes | Pure Rust (`fancy-regex`) |
+
+For a pure Rust build, turn the default off and enable `syntect`:
+
+```toml
+[dependencies]
+kazari-rs = { version = "0.2", default-features = false, features = ["syntect", "markdown"] }
+```
+
+```rust
+use kazari_rs::Kazari;
+use kazari_rs::backends::syntect::SyntectHighlighter;
+
+let kz = Kazari::builder(SyntectHighlighter::new())
+    .themes("github-light", Some("github-dark"))
+    .build()?;
+```
+
+`SyntectHighlighter` maps the common VS Code theme names to the closest of syntect's bundled
+themes (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`, and so on);
+`with_theme_map` replaces that table, `add_theme_file` registers a `.tmTheme`, and a theme name
+ending in `.tmTheme` is loaded from that path. Every feature of the presentation layer works on
+either backend; what changes is the tokenization. A site can build both and choose per
+environment, for example syntect during live reload and Irosashi for the production build. See
+`examples/backends.rs`.
+
+Any type implementing `kazari_rs::Highlighter` (two methods: `tokenize` and `theme_info`) can be
+passed to `Kazari::builder`.
 
 ## Quick start
 
@@ -315,8 +354,8 @@ grammar, the `kazari.config.yaml` keys, the HTML structure, the `kz-*` class nam
 `--kz-*` variables are the same, so content and stylesheets written for Go Kazari work
 unchanged. What differs:
 
-- **Engine:** Irosashi only, in process, instead of a pluggable Nuri or Chroma highlighter.
-  Tokens are byte-identical to `vscode-textmate`.
+- **Engine:** Irosashi (the Nuri counterpart, byte-identical to `vscode-textmate`) or syntect
+  (the Chroma counterpart, pure Rust), both in process, behind the same `Highlighter` trait.
 - **Markdown:** a `pulldown-cmark` adapter instead of a Goldmark extension.
 - **Typst output** for PDF pipelines, which the Go library does not have.
 - **CLI:** the `kazari process ./public` post-build command lives in the
@@ -334,6 +373,8 @@ cargo run -p kazari-rs --example demo > demo.html                          # fea
 cargo run -p kazari-rs --example demo_typst > demo.typ && typst compile demo.typ
 cargo run -p kazari-rs --features markdown --example demo_markdown > demo_markdown.html
 cargo run -p kazari-rs --features markdown --example showcase              # multi-page showcase site
+cargo run -p kazari-rs --features markdown,syntect --example backends -- all  # one page per backend
+cargo test -p kazari-rs --no-default-features --features syntect,markdown  # pure Rust build
 ```
 
 ## Acknowledgments

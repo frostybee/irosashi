@@ -24,7 +24,7 @@ kazari-rs = "0.2"
 
 ## Build a Kazari engine
 
-`Kazari::builder` takes the highlighter and returns a builder with sensible defaults. Set a
+`Kazari::builder` takes a highlighter and returns a builder with sensible defaults. Set a
 light and dark theme so the block supports both modes:
 
 ```rust
@@ -36,6 +36,28 @@ let kz = Kazari::builder(hl)
     .notation_comments(true)
     .build()?;
 ```
+
+The highlighter is any type implementing `kazari_rs::Highlighter`. Irosashi is the default
+backend. To build without Oniguruma, or to keep an existing syntect setup, use the `syntect`
+feature and pass a `SyntectHighlighter` instead; every Kazari feature works the same on either
+backend:
+
+```toml title="Cargo.toml"
+[dependencies]
+kazari-rs = { version = "0.2", default-features = false, features = ["syntect"] }
+```
+
+```rust
+use kazari_rs::backends::syntect::SyntectHighlighter;
+
+let kz = Kazari::builder(SyntectHighlighter::new())
+    .themes("github-light", Some("github-dark"))
+    .build()?;
+```
+
+`SyntectHighlighter` maps common VS Code theme names to syntect's bundled themes and loads a
+name ending in `.tmTheme` from that path. The [`backends` example](/docs/features/examples)
+renders the same document through both backends.
 
 `themes` sets the light theme (required) and an optional dark theme. When a dark theme is
 present, the rendered HTML contains CSS custom properties for both themes, and theme switching

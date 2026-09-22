@@ -9,6 +9,7 @@ use crate::config::{
 use crate::diff;
 use crate::error::Error;
 use crate::frame;
+use crate::highlighter::Highlighter;
 use crate::link;
 use crate::locale::{self, UIStrings};
 use crate::meta;
@@ -57,7 +58,7 @@ pub struct Options {
 }
 
 pub struct Kazari {
-    highlighter: irosashi::Highlighter,
+    highlighter: Box<dyn Highlighter>,
     config: Config,
     strings: UIStrings,
     light_info: ThemeInfo,
@@ -69,9 +70,11 @@ pub struct Kazari {
 }
 
 impl Kazari {
-    pub fn builder(highlighter: irosashi::Highlighter) -> KazariBuilder {
+    /// Starts an engine on a highlighting backend, such as `irosashi::Highlighter`
+    /// or [`backends::syntect::SyntectHighlighter`](crate::backends).
+    pub fn builder(highlighter: impl Highlighter + 'static) -> KazariBuilder {
         KazariBuilder {
-            highlighter,
+            highlighter: Box::new(highlighter),
             config: Config::default(),
             theme_adjustments: None,
             theme_customizer: None,
@@ -241,7 +244,7 @@ impl Kazari {
 
     fn extract_theme_info(&self, name: &str) -> Result<ThemeInfo, Error> {
         extract_theme_info(
-            &self.highlighter,
+            self.highlighter.as_ref(),
             name,
             self.theme_adjustments.as_ref(),
             self.theme_customizer.as_ref(),
@@ -418,7 +421,7 @@ impl Kazari {
             self.apply_theme_override(resolved);
         }
 
-        let tokens = tokenize::tokenize(&self.highlighter, &code, &lang, &themes)?;
+        let tokens = tokenize::tokenize(self.highlighter.as_ref(), &code, &lang, &themes)?;
         if lang == "ansi" {
             resolved.raw_code = (0..tokens.line_count())
                 .map(|i| tokens.line_text(i))
@@ -470,13 +473,12 @@ fn render_mermaid_block(code: &str) -> String {
 
 /// The colours of a theme after the adjustments and then the customizer.
 fn extract_theme_info(
-    hl: &irosashi::Highlighter,
+    hl: &dyn Highlighter,
     name: &str,
     adjustments: Option<&ThemeAdjustments>,
     customizer: Option<&ThemeCustomizer>,
 ) -> Result<ThemeInfo, Error> {
-    let colors = hl.theme_colors(name)?;
-    let mut info = apply_adjustments(ThemeInfo::from_irosashi(&colors), adjustments);
+    let mut info = apply_adjustments(hl.theme_info(name)?, adjustments);
     if let Some(customizer) = customizer {
         info = customizer(name, info);
     }
@@ -529,7 +531,7 @@ fn apply_adjustments(mut info: ThemeInfo, adjustments: Option<&ThemeAdjustments>
 }
 
 pub struct KazariBuilder {
-    highlighter: irosashi::Highlighter,
+    highlighter: Box<dyn Highlighter>,
     config: Config,
     theme_adjustments: Option<ThemeAdjustments>,
     theme_customizer: Option<ThemeCustomizer>,
@@ -804,14 +806,14 @@ impl KazariBuilder {
         let adjustments = self.theme_adjustments.as_ref();
         let customizer = self.theme_customizer.as_ref();
         let light_info = extract_theme_info(
-            &self.highlighter,
+            self.highlighter.as_ref(),
             &self.config.light_theme,
             adjustments,
             customizer,
         )?;
         let dark_info = match &self.config.dark_theme {
             Some(dark) => Some(extract_theme_info(
-                &self.highlighter,
+                self.highlighter.as_ref(),
                 dark,
                 adjustments,
                 customizer,
@@ -836,6 +838,19 @@ impl KazariBuilder {
 }
 
 #[cfg(test)]
+mod sync_tests {
+    use super::*;
+
+    fn assert_sync<T: Send + Sync>() {}
+
+    #[test]
+    fn engine_is_shareable_across_threads() {
+        assert_sync::<Kazari>();
+        assert_sync::<KazariBuilder>();
+    }
+}
+
+#[cfg(all(test, feature = "irosashi"))]
 mod tests {
     use super::*;
     use crate::types::MarkerType;

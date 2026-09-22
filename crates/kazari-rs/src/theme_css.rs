@@ -10,6 +10,13 @@ const COLLAPSE_COLLAPSE_ICON: &str = r#"url("data:image/svg+xml,%3Csvg xmlns='ht
 
 /// The `--kz-ansi-*` variables an ANSI block's standard colours resolve through,
 /// in SGR order (30 to 37, then 90 to 97). The defaults are the Tango palette.
+/// The 16 standard colours as VS Code's terminal draws them, the values an `ansi`
+/// block's tokens carry; index-aligned with `ANSI_PALETTE`.
+pub(crate) const ANSI_STANDARD_COLORS: [&str; 16] = [
+    "#000000", "#cd3131", "#0dbc79", "#e5e510", "#2472c8", "#bc3fbc", "#11a8cd", "#e5e5e5",
+    "#666666", "#f14c4c", "#23d18b", "#f5f543", "#3b8eea", "#d670d6", "#29b8db", "#e5e5e5",
+];
+
 pub(crate) const ANSI_PALETTE: [(&str, &str); 16] = [
     ("black", "#000000"),
     ("red", "#cc0000"),
@@ -564,6 +571,12 @@ fn build_static_vars(cfg: &Config) -> Vec<Var> {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(feature = "irosashi")]
+    #[test]
+    fn ansi_standard_colors_match_irosashi() {
+        assert_eq!(super::ANSI_STANDARD_COLORS, irosashi::ANSI_STANDARD_COLORS);
+    }
+
     use super::*;
 
     #[test]

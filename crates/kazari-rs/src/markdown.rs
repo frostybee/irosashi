@@ -184,7 +184,7 @@ fn tab_label(engine: &Kazari, info: &str, code: &str) -> String {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "irosashi"))]
 mod tests {
     use super::*;
 

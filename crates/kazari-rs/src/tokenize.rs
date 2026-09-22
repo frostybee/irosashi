@@ -1,102 +1,43 @@
-use irosashi::{ColorId, FontStyle, TokenStyle, TokensResult};
-
 use crate::error::Error;
+use crate::highlighter::{FontStyle, Highlighted, Highlighter, Token};
 use crate::types::Themes;
 
-pub struct Tokens {
-    result: TokensResult,
-    light_slot: usize,
-    dark_slot: Option<usize>,
-}
+pub struct Tokens(Highlighted);
 
-#[allow(dead_code)]
 impl Tokens {
-    pub fn result(&self) -> &TokensResult {
-        &self.result
-    }
-
     pub fn is_dual(&self) -> bool {
-        self.dark_slot.is_some()
+        self.0.dark.is_some()
     }
 
     pub fn line_count(&self) -> usize {
-        self.result.lines.len()
+        self.0.lines.len()
     }
 
     pub fn line_text(&self, line_idx: usize) -> &str {
-        self.result.line_text(&self.result.lines[line_idx])
+        &self.0.lines[line_idx].text
     }
 
-    pub fn tokens(&self, line_idx: usize) -> &[irosashi::ThemedToken] {
-        &self.result.lines[line_idx].tokens
-    }
-
-    pub fn token_text(&self, line_idx: usize, token: &irosashi::ThemedToken) -> &str {
-        let line = self.line_text(line_idx);
-        token.text(line)
-    }
-
-    pub fn light_style(&self, token: &irosashi::ThemedToken) -> TokenStyle {
-        self.result.style_in(token, self.light_slot)
-    }
-
-    pub fn dark_style(&self, token: &irosashi::ThemedToken) -> Option<TokenStyle> {
-        self.dark_slot.map(|slot| self.result.style_in(token, slot))
-    }
-
-    pub fn light_color(&self, id: ColorId) -> &str {
-        self.result.color_in(self.light_slot, id)
-    }
-
-    pub fn dark_color(&self, id: ColorId) -> Option<&str> {
-        self.dark_slot.map(|slot| self.result.color_in(slot, id))
+    pub fn tokens(&self, line_idx: usize) -> &[Token] {
+        &self.0.lines[line_idx].tokens
     }
 
     pub fn light_fg(&self) -> &str {
-        self.result.fg_of(self.light_slot)
+        &self.0.light.fg
     }
 
     pub fn light_bg(&self) -> &str {
-        self.result.bg_of(self.light_slot)
-    }
-
-    pub fn dark_fg(&self) -> Option<&str> {
-        self.dark_slot.map(|slot| self.result.fg_of(slot))
-    }
-
-    pub fn dark_bg(&self) -> Option<&str> {
-        self.dark_slot.map(|slot| self.result.bg_of(slot))
+        &self.0.light.bg
     }
 }
 
 pub fn tokenize(
-    hl: &irosashi::Highlighter,
+    hl: &dyn Highlighter,
     code: &str,
     lang: &str,
     themes: &Themes,
 ) -> Result<Tokens, Error> {
-    let opts = irosashi::CodeToTokensOptions::new(lang, &themes.light);
-
-    let (result, light_slot, dark_slot) = if themes.dark.is_some() {
-        let slot_keys = themes.to_slot_keys();
-        let result = hl.code_to_tokens_multi(code, &slot_keys, &opts)?;
-        let light_idx = find_slot(&result, "light");
-        let dark_idx = find_slot(&result, "dark");
-        (result, light_idx, Some(dark_idx))
-    } else {
-        let result = hl.code_to_tokens(code, &opts)?;
-        (result, 0, None)
-    };
-
-    Ok(Tokens {
-        result,
-        light_slot,
-        dark_slot,
-    })
-}
-
-fn find_slot(result: &TokensResult, key: &str) -> usize {
-    result.themes.iter().position(|s| s.key == key).unwrap_or(0)
+    hl.tokenize(code, lang, &themes.light, themes.dark.as_deref())
+        .map(Tokens)
 }
 
 pub fn expand_tabs(code: &str, tab_width: usize) -> String {
@@ -147,23 +88,6 @@ mod tests {
         let code = "just text";
         let result = expand_tabs(code, 4);
         assert_eq!(result, code);
-    }
-
-    #[test]
-    fn themes_slot_keys_single() {
-        let t = Themes::single("github-dark");
-        let keys = t.to_slot_keys();
-        assert_eq!(keys.len(), 1);
-        assert_eq!(keys["light"], "github-dark");
-    }
-
-    #[test]
-    fn themes_slot_keys_dual() {
-        let t = Themes::dual("github-light", "github-dark");
-        let keys = t.to_slot_keys();
-        assert_eq!(keys.len(), 2);
-        assert_eq!(keys["dark"], "github-dark");
-        assert_eq!(keys["light"], "github-light");
     }
 
     #[test]

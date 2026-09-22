@@ -492,6 +492,7 @@ mod tests {
         assert_eq!(set_hue_chroma("not-a-color", 100.0, 0.1), "not-a-color");
     }
 
+    #[cfg(feature = "irosashi")]
     #[test]
     fn bundled_theme_backgrounds_split() {
         let hl = irosashi::Highlighter::new().unwrap();

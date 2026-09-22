@@ -61,8 +61,9 @@ The workspace has four crates:
 
 - `irosashi`: tokenizer, grammar compiler, theme resolution, token APIs, renderers (HTML, ANSI,
   SVG, JSON, plain text).
-- `kazari-rs`: presentation layer on top of `irosashi` (fence meta, transformers, line numbers,
-  markers, decorated HTML, Typst output, `kazari.config.yaml`). It has its own
+- `kazari-rs`: presentation layer (fence meta, transformers, line numbers, markers, decorated
+  HTML, Typst output, `kazari.config.yaml`) on a pluggable `Highlighter`: `irosashi` by
+  default, or `syntect` for a pure Rust build. It has its own
   [README](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/README.md).
 - `kazari-cli`: the `kazari` binary. `kazari process ./public` upgrades the code blocks of a
   built site from any generator; `render`, `markdown` and `typst` render single files.

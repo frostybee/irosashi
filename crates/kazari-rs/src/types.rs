@@ -1,5 +1,3 @@
-use std::collections::BTreeMap;
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default, serde::Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Frame {
@@ -95,26 +93,6 @@ pub struct ThemeInfo {
     pub fold_bg: String,
 }
 
-impl ThemeInfo {
-    pub fn from_irosashi(tc: &irosashi::ThemeColors) -> Self {
-        Self {
-            fg: tc.foreground.clone(),
-            bg: tc.background.clone(),
-            selection_bg: tc.selection_background.clone().unwrap_or_default(),
-            line_number_fg: tc
-                .colors
-                .get("editorLineNumber.foreground")
-                .cloned()
-                .unwrap_or_default(),
-            fold_bg: tc
-                .colors
-                .get("editor.foldBackground")
-                .cloned()
-                .unwrap_or_default(),
-        }
-    }
-}
-
 bitflags::bitflags! {
     /// Which extracted theme colours a [`ThemeAdjustments`] tint applies to.
     #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -206,16 +184,6 @@ impl Themes {
     pub fn is_dual(&self) -> bool {
         self.dark.is_some()
     }
-
-    #[allow(dead_code)]
-    pub(crate) fn to_slot_keys(&self) -> BTreeMap<String, String> {
-        let mut map = BTreeMap::new();
-        map.insert("light".to_owned(), self.light.clone());
-        if let Some(dark) = &self.dark {
-            map.insert("dark".to_owned(), dark.clone());
-        }
-        map
-    }
 }
 
 #[cfg(test)]
@@ -245,27 +213,5 @@ mod tests {
         assert!(AdjustTargets::default().is_empty());
         let both = AdjustTargets::BACKGROUNDS | AdjustTargets::FOREGROUNDS;
         assert!(both.contains(AdjustTargets::FOREGROUNDS));
-    }
-
-    #[test]
-    fn theme_info_from_irosashi() {
-        let tc = irosashi::ThemeColors {
-            kind: "dark".into(),
-            foreground: "#d4d4d4".into(),
-            background: "#1e1e1e".into(),
-            selection_background: Some("#264f78".into()),
-            line_highlight_background: None,
-            colors: {
-                let mut m = std::collections::BTreeMap::new();
-                m.insert("editorLineNumber.foreground".into(), "#858585".into());
-                m
-            },
-        };
-        let info = ThemeInfo::from_irosashi(&tc);
-        assert_eq!(info.fg, "#d4d4d4");
-        assert_eq!(info.bg, "#1e1e1e");
-        assert_eq!(info.selection_bg, "#264f78");
-        assert_eq!(info.line_number_fg, "#858585");
-        assert_eq!(info.fold_bg, "");
     }
 }

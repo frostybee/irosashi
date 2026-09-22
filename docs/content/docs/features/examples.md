@@ -49,4 +49,5 @@ cargo run -p irosashi --example ansi -- src/main.rs --depth 256
 | [`config_file`](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/examples/config_file.rs) | An engine built from a `kazari.config.yaml` document | HTML page |
 | [`demo_typst`](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/examples/demo_typst.rs) | Typst output, ready for `typst compile` | Typst |
 | [`demo_markdown`](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/examples/demo_markdown.rs) | A Markdown document rendered through Kazari (needs `--features markdown`) | HTML page |
+| [`backends`](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/examples/backends.rs) | The same document through the Irosashi and syntect backends, chosen by argument (needs `--features markdown,syntect`, run with `-- all`) | HTML fragments |
 | [`showcase`](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/examples/showcase) | The demo site: every feature, Irosashi next to Shiki, and contrast correction (needs `--features markdown`) | Directory of pages |

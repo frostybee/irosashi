@@ -10,11 +10,21 @@ keywords = ["syntax-highlighting", "code-blocks", "html", "typst", "markdown"]
 categories = ["text-processing", "web-programming"]
 
 [features]
+default = ["irosashi"]
+irosashi = ["dep:irosashi"]
+syntect = ["dep:syntect"]
 markdown = ["dep:pulldown-cmark"]
 
 [dependencies]
 bitflags.workspace = true
-irosashi = { version = "0.2", path = "../irosashi" }
+irosashi = { version = "0.2", path = "../irosashi", optional = true }
+syntect = { version = "5.3", optional = true, default-features = false, features = [
+    "parsing",
+    "default-syntaxes",
+    "default-themes",
+    "regex-fancy",
+    "plist-load",
+] }
 pulldown-cmark = { version = "0.13", optional = true, default-features = false, features = ["html"] }
 regex = "1"
 serde.workspace = true
@@ -24,12 +34,27 @@ thiserror.workspace = true
 
 [dev-dependencies]
 insta = "1"
-irosashi = { path = "../irosashi" }
+
+[[example]]
+name = "demo"
+required-features = ["irosashi"]
+
+[[example]]
+name = "demo_typst"
+required-features = ["irosashi"]
+
+[[example]]
+name = "config_file"
+required-features = ["irosashi"]
 
 [[example]]
 name = "demo_markdown"
-required-features = ["markdown"]
+required-features = ["markdown", "irosashi"]
 
 [[example]]
 name = "showcase"
+required-features = ["markdown", "irosashi"]
+
+[[example]]
+name = "backends"
 required-features = ["markdown"]

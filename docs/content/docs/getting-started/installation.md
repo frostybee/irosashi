@@ -33,6 +33,14 @@ The `markdown` feature on `kazari-rs` pulls in `pulldown-cmark` for rendering fe
 kazari-rs = { version = "0.2", features = ["markdown"] }
 ```
 
+`kazari-rs` depends on `irosashi` through its default `irosashi` feature. To use Kazari on top of [syntect](https://crates.io/crates/syntect) instead, with no C compiler needed, turn the default off and enable `syntect`:
+
+```toml title="Cargo.toml"
+kazari-rs = { version = "0.2", default-features = false, features = ["syntect"] }
+```
+
+Both features can be on at once; the backend is chosen when the engine is built. See [Decorated code blocks with Kazari](/docs/getting-started/kazari#build-a-kazari-engine).
+
 ## Embedded assets
 
 The `embedded-assets` feature is on by default. It compiles 257 grammars and 65 VS Code themes into the binary so `Highlighter::new()` works with no external files. The compressed size is roughly 1.5 MiB.

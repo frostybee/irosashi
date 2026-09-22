@@ -25,4 +25,7 @@ jobs:
       - run: cargo build --workspace --all-features
       - run: cargo test --workspace --all-features
       - run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+      - run: cargo check -p kazari-rs --no-default-features
+      - run: cargo test -p kazari-rs --no-default-features --features syntect,markdown --all-targets
+      - run: cargo clippy -p kazari-rs --no-default-features --features syntect,markdown --all-targets -- -D warnings
       - run: cargo fmt --all --check

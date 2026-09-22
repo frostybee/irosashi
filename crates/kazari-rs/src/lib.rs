@@ -1,3 +1,4 @@
+pub mod backends;
 pub(crate) mod collapsible;
 #[allow(dead_code)]
 pub(crate) mod color;
@@ -10,6 +11,7 @@ pub(crate) mod error;
 pub(crate) mod escape;
 pub(crate) mod frame;
 pub(crate) mod hash;
+pub(crate) mod highlighter;
 pub(crate) mod js;
 pub(crate) mod link;
 pub(crate) mod locale;
@@ -31,6 +33,7 @@ pub use config::{
 };
 pub use engine::{Kazari, KazariBuilder, Options, PostRender, ThemeCustomizer};
 pub use error::Error;
+pub use highlighter::{FontStyle, Highlighted, Highlighter, Line, Style, ThemeDefaults, Token};
 pub use locale::UIStrings;
 pub use render_typst::preamble as typst_preamble;
 pub use types::{

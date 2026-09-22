@@ -1,3 +1,5 @@
+#![cfg(feature = "irosashi")]
+
 use kazari_rs::{InlineMarker, Kazari, MarkerType, Options};
 
 fn engine() -> Kazari {

@@ -10,12 +10,3 @@ pub enum Error {
     #[error("config error: {0}")]
     Config(String),
 }
-
-impl From<irosashi::Error> for Error {
-    fn from(e: irosashi::Error) -> Self {
-        match e {
-            irosashi::Error::ThemeNotFound(name) => Error::ThemeNotFound(name),
-            other => Error::Highlight(other.to_string()),
-        }
-    }
-}

@@ -1,9 +1,44 @@
 use std::collections::BTreeMap;
 use std::ops::Range;
 
-use irosashi::transformers::notation::{is_comment_prefix, parse_annotation};
-
 use crate::types::{InlineMarker, LineMarker, LineRange, MarkerType};
+
+const OPEN: &str = "[!code";
+
+/// Finds the first `[!code X]` in `text`: the byte range of the whole annotation and
+/// `X`, which is made of ASCII word characters, `:`, `+` and `-`.
+fn parse_annotation(text: &str) -> Option<(Range<usize>, &str)> {
+    let mut from = 0;
+    while let Some(pos) = text[from..].find(OPEN) {
+        let start = from + pos;
+        let rest = &text[start + OPEN.len()..];
+        let ws = rest.len() - rest.trim_start_matches(is_space).len();
+        if ws > 0 {
+            let body = &rest[ws..];
+            let name_len = body
+                .bytes()
+                .take_while(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b':' | b'+' | b'-'))
+                .count();
+            if name_len > 0 && body.as_bytes().get(name_len) == Some(&b']') {
+                let name_start = start + OPEN.len() + ws;
+                let end = name_start + name_len + 1;
+                return Some((start..end, &text[name_start..name_start + name_len]));
+            }
+        }
+        from = start + 1;
+    }
+    None
+}
+
+fn is_space(c: char) -> bool {
+    matches!(c, ' ' | '\t' | '\n' | '\r' | '\x0c')
+}
+
+/// Whether what is left of a comment token, once its annotation is cut out, is only
+/// a comment opener or closer.
+fn is_comment_prefix(s: &str) -> bool {
+    matches!(s.trim(), "//" | "#" | "/*" | "*/" | "/* */")
+}
 
 #[derive(Debug, Default, PartialEq, Eq)]
 pub struct NotationResult {
@@ -116,6 +151,33 @@ fn strip_opener(head: &str) -> &str {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn parses_annotations() {
+        assert_eq!(parse_annotation("// [!code ++]"), Some((3..13, "++")));
+        assert_eq!(
+            parse_annotation("[!code\t word:foo]"),
+            Some((0..17, "word:foo"))
+        );
+        assert_eq!(
+            parse_annotation("x [!code] [!code --] y"),
+            Some((10..20, "--"))
+        );
+        assert_eq!(parse_annotation("[!code highlight"), None);
+        assert_eq!(parse_annotation("[!codefocus]"), None);
+        assert_eq!(parse_annotation("[!code a b]"), None);
+        assert_eq!(parse_annotation("plain"), None);
+    }
+
+    #[test]
+    fn comment_prefixes() {
+        for s in ["//", " # ", "/*", "*/", "/* */"] {
+            assert!(is_comment_prefix(s), "{s:?}");
+        }
+        for s in ["// x", "", "<!--", "--"] {
+            assert!(!is_comment_prefix(s), "{s:?}");
+        }
+    }
 
     fn ranges(r: &NotationResult, t: MarkerType) -> Vec<LineRange> {
         r.line_markers

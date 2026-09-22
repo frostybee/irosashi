@@ -1,10 +1,9 @@
 use std::collections::{HashMap, HashSet};
 use std::fmt::Write;
 
-use irosashi::{FontStyle, TokenStyle};
-
 use crate::config::{ResolvedBlock, TypstConfig};
 use crate::escape::escape_typst_string;
+use crate::highlighter::{FontStyle, Style, Token};
 use crate::marker::{self, ResolvedLine, Segment};
 use crate::render::digit_count;
 use crate::tokenize::Tokens;
@@ -144,11 +143,11 @@ fn render_line(
         for token in line_tokens {
             let text = token.text(line_text);
             if !text.is_empty() {
-                write_token(sb, text, tokens.light_style(token), tokens, lctx.fg, dimmed);
+                write_token(sb, text, &token.light, lctx.fg, dimmed);
             }
         }
     } else {
-        render_with_inline_markers(sb, tokens, line_text, line_tokens, line_links, lctx, dimmed);
+        render_with_inline_markers(sb, line_text, line_tokens, line_links, lctx, dimmed);
     }
 
     sb.push_str("]\n");
@@ -156,16 +155,15 @@ fn render_line(
 
 fn render_with_inline_markers(
     sb: &mut String,
-    tokens: &Tokens,
     line_text: &str,
-    line_tokens: &[irosashi::ThemedToken],
+    line_tokens: &[Token],
     line_links: &[LinkAnnotation],
     lctx: &LineCtx<'_>,
     dimmed: bool,
 ) {
     let mut plain_text = String::new();
     let mut token_ranges: Vec<(usize, usize)> = Vec::new();
-    let mut renderable: Vec<&irosashi::ThemedToken> = Vec::new();
+    let mut renderable: Vec<&Token> = Vec::new();
     for token in line_tokens {
         let text = token.text(line_text);
         if text.is_empty() {
@@ -184,23 +182,15 @@ fn render_with_inline_markers(
         line_links,
     ) else {
         for token in renderable {
-            write_token(
-                sb,
-                token.text(line_text),
-                tokens.light_style(token),
-                tokens,
-                lctx.fg,
-                dimmed,
-            );
+            write_token(sb, token.text(line_text), &token.light, lctx.fg, dimmed);
         }
         return;
     };
 
     for at in &annotated {
-        let token = renderable[at.token_idx];
-        let style = tokens.light_style(token);
+        let style = &renderable[at.token_idx].light;
         for seg in &at.segments {
-            write_segment(sb, &plain_text, seg, style, tokens, lctx, dimmed);
+            write_segment(sb, &plain_text, seg, style, lctx, dimmed);
         }
     }
 }
@@ -209,8 +199,7 @@ fn write_segment(
     sb: &mut String,
     plain_text: &str,
     seg: &Segment,
-    style: TokenStyle,
-    tokens: &Tokens,
+    style: &Style,
     lctx: &LineCtx<'_>,
     dimmed: bool,
 ) {
@@ -235,31 +224,24 @@ fn write_segment(
                         )
                         .unwrap(),
                     }
-                    write_token(sb, text, style, tokens, fg, dimmed);
+                    write_token(sb, text, style, fg, dimmed);
                     sb.push(']');
                 }
-                None => write_token(sb, text, style, tokens, fg, dimmed),
+                None => write_token(sb, text, style, fg, dimmed),
             }
             if ann.link.is_some() {
                 sb.push(']');
             }
         }
-        None => write_token(sb, text, style, tokens, fg, dimmed),
+        None => write_token(sb, text, style, fg, dimmed),
     }
 }
 
-fn write_token(
-    sb: &mut String,
-    text: &str,
-    style: TokenStyle,
-    tokens: &Tokens,
-    fg: &str,
-    dimmed: bool,
-) {
+fn write_token(sb: &mut String, text: &str, style: &Style, fg: &str, dimmed: bool) {
     let mut args: Vec<String> = Vec::new();
     let color = style
         .color
-        .map(|id| tokens.light_color(id))
+        .as_deref()
         .filter(|c| !c.eq_ignore_ascii_case(fg));
     match (color, dimmed) {
         (Some(c), true) => args.push(format!("fill: rgb(\"{c}\"){DIM}")),
@@ -276,12 +258,9 @@ fn write_token(
     }
 
     let mut wrappers = 0;
-    if let Some(bg) = style.bg {
-        let bg = tokens.light_color(bg);
-        if !bg.is_empty() {
-            write!(sb, "#highlight(fill: rgb(\"{bg}\"))[").unwrap();
-            wrappers += 1;
-        }
+    if let Some(bg) = style.bg.as_deref().filter(|bg| !bg.is_empty()) {
+        write!(sb, "#highlight(fill: rgb(\"{bg}\"))[").unwrap();
+        wrappers += 1;
     }
     if fs.contains(FontStyle::UNDERLINE) {
         sb.push_str("#underline[");
@@ -322,7 +301,7 @@ fn marker_name(mt: MarkerType) -> &'static str {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "irosashi"))]
 mod tests {
     use super::*;
     use crate::config::Config;

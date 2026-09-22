@@ -2,8 +2,6 @@ use std::cell::{Cell, RefCell};
 use std::collections::{HashMap, HashSet};
 use std::fmt::Write;
 
-use irosashi::FontStyle;
-
 use crate::collapsible;
 use crate::color;
 use crate::config::{
@@ -11,6 +9,7 @@ use crate::config::{
     compute_marker_bgs,
 };
 use crate::escape::{escape_attr, escape_text};
+use crate::highlighter::{FontStyle, Token};
 use crate::locale::UIStrings;
 use crate::marker::{self, ResolvedLine, Segment};
 use crate::tokenize::Tokens;
@@ -423,7 +422,7 @@ fn block_id(code: &str) -> String {
 /// matched by Iro's palette value. VS Code draws white and bright white the same,
 /// so both resolve to `white`.
 fn ansi_var(hex: &str) -> Option<String> {
-    let index = irosashi::ANSI_STANDARD_COLORS
+    let index = crate::theme_css::ANSI_STANDARD_COLORS
         .iter()
         .position(|c| c.eq_ignore_ascii_case(hex))?;
     Some(format!(
@@ -797,7 +796,7 @@ fn render_hidden_line(
     }
     sb.push_str("<div class=\"kz-code\">");
     let line_text = tokens.line_text(line_idx);
-    render_plain_tokens(sb, tokens.tokens(line_idx), line_text, 0, tokens, lctx);
+    render_plain_tokens(sb, tokens.tokens(line_idx), line_text, 0, lctx);
     sb.push_str("</div></div>");
 }
 
@@ -996,13 +995,13 @@ fn render_line(
             for at in &annotated {
                 let real_idx = renderable_indices[at.token_idx];
                 let token = &line_tokens[real_idx];
-                render_annotated_token(sb, &plain_text, token, &at.segments, tokens, lctx);
+                render_annotated_token(sb, &plain_text, token, &at.segments, lctx);
             }
         } else {
-            render_plain_tokens(sb, line_tokens, line_text, skip_ws_tokens, tokens, lctx);
+            render_plain_tokens(sb, line_tokens, line_text, skip_ws_tokens, lctx);
         }
     } else {
-        render_plain_tokens(sb, line_tokens, line_text, skip_ws_tokens, tokens, lctx);
+        render_plain_tokens(sb, line_tokens, line_text, skip_ws_tokens, lctx);
     }
 
     sb.push_str("</div></div>");
@@ -1010,10 +1009,9 @@ fn render_line(
 
 fn render_plain_tokens(
     sb: &mut String,
-    line_tokens: &[irosashi::ThemedToken],
+    line_tokens: &[Token],
     line_text: &str,
     skip_ws_tokens: usize,
-    tokens: &Tokens,
     lctx: &LineCtx<'_>,
 ) {
     for (tok_idx, token) in line_tokens.iter().enumerate() {
@@ -1033,19 +1031,14 @@ fn render_plain_tokens(
         if text.is_empty() {
             continue;
         }
-        open_styled_span(sb, tokens, token, lctx);
+        open_styled_span(sb, token, lctx);
         write_text(sb, text, lctx.cfg);
         sb.push_str("</span>");
     }
 }
 
-fn open_styled_span(
-    sb: &mut String,
-    tokens: &Tokens,
-    token: &irosashi::ThemedToken,
-    lctx: &LineCtx<'_>,
-) {
-    let style = build_token_style(tokens, token, lctx);
+fn open_styled_span(sb: &mut String, token: &Token, lctx: &LineCtx<'_>) {
+    let style = build_token_style(token, lctx);
     if style.is_empty() {
         sb.push_str("<span>");
     } else {
@@ -1146,9 +1139,8 @@ fn marker_close(mt: MarkerType) -> &'static str {
 fn render_annotated_token(
     sb: &mut String,
     plain_text: &str,
-    token: &irosashi::ThemedToken,
+    token: &Token,
     segments: &[Segment],
-    tokens: &Tokens,
     lctx: &LineCtx<'_>,
 ) {
     let has_inline_marker = segments.iter().any(|s| s.marker.is_some());
@@ -1158,7 +1150,7 @@ fn render_annotated_token(
             .iter()
             .map(|s| &plain_text[s.start..s.end])
             .collect();
-        open_styled_span(sb, tokens, token, lctx);
+        open_styled_span(sb, token, lctx);
         write_text(sb, &text, lctx.cfg);
         sb.push_str("</span>");
         return;
@@ -1195,13 +1187,13 @@ fn render_annotated_token(
                 }
                 let elem = marker_close(kind);
                 write!(sb, "<{} class=\"{}\">", elem, classes.trim_end()).unwrap();
-                open_styled_span(sb, tokens, token, lctx);
+                open_styled_span(sb, token, lctx);
                 write_text(sb, &plain_text[seg.start..seg.end], lctx.cfg);
                 sb.push_str("</span>");
                 write!(sb, "</{}>", elem).unwrap();
             }
             None => {
-                open_styled_span(sb, tokens, token, lctx);
+                open_styled_span(sb, token, lctx);
                 write_text(sb, &plain_text[seg.start..seg.end], lctx.cfg);
                 sb.push_str("</span>");
             }
@@ -1212,7 +1204,7 @@ fn render_annotated_token(
         return;
     }
 
-    open_styled_span(sb, tokens, token, lctx);
+    open_styled_span(sb, token, lctx);
     for seg in segments {
         let text = &plain_text[seg.start..seg.end];
         match &seg.marker {
@@ -1238,10 +1230,7 @@ fn render_annotated_token(
     sb.push_str("</span>");
 }
 
-fn split_leading_whitespace<'a>(
-    line_text: &'a str,
-    tokens: &[irosashi::ThemedToken],
-) -> (&'a str, usize) {
+fn split_leading_whitespace<'a>(line_text: &'a str, tokens: &[Token]) -> (&'a str, usize) {
     let mut ws_end = 0;
     let mut first_non_ws_idx = 0;
 
@@ -1259,39 +1248,26 @@ fn split_leading_whitespace<'a>(
     (&line_text[..ws_end], first_non_ws_idx)
 }
 
-fn build_token_style(tokens: &Tokens, token: &irosashi::ThemedToken, lctx: &LineCtx<'_>) -> String {
-    let light = tokens.light_style(token);
-    let dark = tokens.dark_style(token);
+fn build_token_style(token: &Token, lctx: &LineCtx<'_>) -> String {
+    let light = &token.light;
 
     let mut parts = Vec::new();
 
-    if let Some(color_id) = light.color {
-        parts.push(format!(
-            "--sl:{}",
-            lctx.token_color(tokens.light_color(color_id), false)
-        ));
+    if let Some(color) = &light.color {
+        parts.push(format!("--sl:{}", lctx.token_color(color, false)));
     }
-    if let Some(bg_id) = light.bg {
-        let bg = tokens.light_color(bg_id);
-        if !bg.is_empty() {
-            parts.push(format!("--slbg:{}", lctx.token_bg(bg)));
-        }
+    if let Some(bg) = light.bg.as_deref().filter(|bg| !bg.is_empty()) {
+        parts.push(format!("--slbg:{}", lctx.token_bg(bg)));
     }
 
     if lctx.is_dual
-        && let Some(dark_style) = dark
+        && let Some(dark) = &token.dark
     {
-        if let Some(color_id) = dark_style.color {
-            let color = tokens.dark_color(color_id).unwrap_or("");
-            if !color.is_empty() {
-                parts.push(format!("--sd:{}", lctx.token_color(color, true)));
-            }
+        if let Some(color) = dark.color.as_deref().filter(|c| !c.is_empty()) {
+            parts.push(format!("--sd:{}", lctx.token_color(color, true)));
         }
-        if let Some(bg_id) = dark_style.bg {
-            let bg = tokens.dark_color(bg_id).unwrap_or("");
-            if !bg.is_empty() {
-                parts.push(format!("--sdbg:{}", lctx.token_bg(bg)));
-            }
+        if let Some(bg) = dark.bg.as_deref().filter(|bg| !bg.is_empty()) {
+            parts.push(format!("--sdbg:{}", lctx.token_bg(bg)));
         }
     }
 

@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Pluggable highlighter backend in `kazari-rs`:** the new `kazari_rs::Highlighter` trait
+  (`tokenize` and `theme_info`) is what `Kazari::builder` accepts. `irosashi::Highlighter`
+  implements it behind the default `irosashi` feature; the new `syntect` feature adds
+  `kazari_rs::backends::syntect::SyntectHighlighter` on syntect's bundled grammars and
+  `.tmTheme` themes, so `kazari-rs` builds as pure Rust with
+  `default-features = false, features = ["syntect"]`. Every presentation feature works on
+  either backend. New example `backends` renders the same document through both.
+
+### Changed
+
+- **`kazari-rs` without `irosashi`:** `ThemeInfo::from_irosashi` and the
+  `From<irosashi::Error>` conversion exist only with the `irosashi` feature (on by default).
+  `Kazari::builder` still takes an `irosashi::Highlighter` by value; existing code compiles
+  unchanged.
+
 - **Runnable examples:** `ansi`, `dual_theme`, `incremental`, `custom_grammar`, `detect`,
   `style_to_class`, `transformers` and `tokens_json` in `crates/irosashi/examples/`, and
   `config_file` in `crates/kazari-rs/examples/`, with an examples page in the docs.

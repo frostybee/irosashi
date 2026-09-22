@@ -126,6 +126,7 @@ Each row maps a YAML key to its builder method and the default value from `Confi
 
 | YAML key | Builder method | Default |
 |----------|---------------|---------|
+| `engine` | none: read by the `kazari` binary only (`irosashi` or `syntect`); a library caller passes the highlighter to `Kazari::builder` | `irosashi` |
 | `themes.light` | `.themes("...", ...)` | `"github-light"` |
 | `themes.dark` | `.themes(..., Some("..."))` | `Some("github-dark")` |
 | `darkMode` | `.dark_mode(DarkMode::...)` | `Selector(".dark")` |

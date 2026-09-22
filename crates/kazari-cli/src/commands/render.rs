@@ -29,7 +29,7 @@ pub struct RenderArgs {
 /// The meta string is the explicit one, else the language, else what the file name
 /// says, else empty (plain text).
 pub fn resolve_meta(
-    hl: &irosashi::Highlighter,
+    hl: &crate::backend::Backend,
     input: &Path,
     lang: Option<&str>,
     meta: Option<&str>,
@@ -52,9 +52,14 @@ pub fn resolve_meta(
 
 pub fn run(args: RenderArgs) -> Result<u8, Fail> {
     let code = super::read_input(&args.input)?;
-    let hl = crate::highlighter()?;
-    let meta = resolve_meta(&hl, &args.input, args.lang.as_deref(), args.meta.as_deref());
-    let engine = args.engine.build(Path::new("."), hl)?;
+    let backend = args.engine.backend(Path::new("."))?;
+    let meta = resolve_meta(
+        &backend,
+        &args.input,
+        args.lang.as_deref(),
+        args.meta.as_deref(),
+    );
+    let engine = args.engine.build(Path::new("."), backend)?;
     let html = engine.kazari.render_with_meta(&code, &meta)?;
     if args.page {
         let title = args

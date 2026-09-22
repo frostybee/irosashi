@@ -108,6 +108,15 @@ impl SyntectHighlighter {
         names
     }
 
+    /// The language token for a file name, from its extension, when a bundled syntax
+    /// claims it.
+    pub fn detect_language(&self, file_name: &str) -> Option<String> {
+        let ext = Path::new(file_name).extension()?.to_str()?;
+        self.syntaxes
+            .find_syntax_by_extension(ext)
+            .map(|_| ext.to_ascii_lowercase())
+    }
+
     fn syntax(&self, lang: &str) -> &SyntaxReference {
         self.syntaxes
             .find_syntax_by_token(lang)
@@ -399,6 +408,15 @@ mod tests {
             hl.theme("missing.tmTheme").unwrap_err(),
             Error::ThemeNotFound("missing.tmTheme".into())
         );
+    }
+
+    #[test]
+    fn detects_language_from_the_extension() {
+        let hl = hl();
+        assert_eq!(hl.detect_language("main.rs").as_deref(), Some("rs"));
+        assert_eq!(hl.detect_language("src/app.PY").as_deref(), Some("py"));
+        assert_eq!(hl.detect_language("x.unknownext"), None);
+        assert_eq!(hl.detect_language("Makefile.d/noext"), None);
     }
 
     #[test]

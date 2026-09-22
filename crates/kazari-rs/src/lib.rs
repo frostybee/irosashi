@@ -28,7 +28,7 @@ pub(crate) mod tokenize;
 pub(crate) mod types;
 
 pub use config::{
-    CollapseRange, CollapseSpec, CollapseStyle, CollapsibleConfig, Config, FileConfig,
+    CollapseRange, CollapseSpec, CollapseStyle, CollapsibleConfig, Config, EngineName, FileConfig,
     LangIconMode, PreviewSegment, ProcessFile, StyleValue, TypstConfig,
 };
 pub use engine::{Kazari, KazariBuilder, Options, PostRender, ThemeCustomizer};

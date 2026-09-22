@@ -637,9 +637,20 @@ pub struct ProcessFile {
     pub max_file_bytes: Option<u64>,
 }
 
+/// The `engine` key of a config file: which highlighting backend to build the engine on.
+/// The library takes the highlighter from the caller, so `apply` ignores it; the `kazari`
+/// binary reads it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum EngineName {
+    Irosashi,
+    Syntect,
+}
+
 #[derive(Debug, Deserialize, Default)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct FileConfig {
+    pub engine: Option<EngineName>,
     pub themes: Option<ThemesFile>,
     pub collapsible: Option<CollapsibleFile>,
     pub locale: Option<String>,
@@ -1246,6 +1257,21 @@ languageAliases:
             )
             .is_err()
         );
+    }
+
+    #[test]
+    fn file_config_engine_key() {
+        let fc = FileConfig::from_yaml("engine: syntect\n").unwrap();
+        assert_eq!(fc.engine, Some(EngineName::Syntect));
+        let fc = FileConfig::from_yaml("engine: irosashi\nthemes:\n  light: nord\n").unwrap();
+        assert_eq!(fc.engine, Some(EngineName::Irosashi));
+        assert!(FileConfig::from_yaml("").unwrap().engine.is_none());
+        assert!(FileConfig::from_yaml("engine: chroma\n").is_err());
+        let mut cfg = Config::default();
+        FileConfig::from_yaml("engine: syntect\n")
+            .unwrap()
+            .apply(&mut cfg)
+            .unwrap();
     }
 
     #[test]

@@ -4,6 +4,7 @@ use clap::Args;
 use kazari_rs::{Config, FileConfig, Kazari, ProcessFile};
 
 use crate::Fail;
+use crate::backend::{Backend, EngineKind};
 
 pub const DEFAULT_LIGHT_THEME: &str = "github-light";
 pub const DEFAULT_DARK_THEME: &str = "github-dark";
@@ -20,6 +21,10 @@ pub struct EngineArgs {
     /// directory, then the working directory)
     #[arg(long, value_name = "PATH")]
     pub config: Option<PathBuf>,
+
+    /// Highlighting backend (overrides the config file's `engine` key; default irosashi)
+    #[arg(long, value_enum)]
+    pub engine: Option<EngineKind>,
 
     /// Light syntax theme name (overrides config)
     #[arg(long, value_name = "NAME")]
@@ -90,10 +95,27 @@ pub struct Engine {
 }
 
 impl EngineArgs {
-    /// Resolves the config file and themes, validates the theme names against the bundled
-    /// set and builds the engine. `dir` is where config discovery starts.
-    pub fn build(&self, dir: &Path, highlighter: irosashi::Highlighter) -> Result<Engine, Fail> {
-        self.build_with(dir, highlighter, |_| {})
+    /// The backend to build on: the flag, else the config file's `engine` key, else
+    /// Irosashi. `dir` is where config discovery starts.
+    pub fn resolve_engine(&self, dir: &Path) -> Result<EngineKind, Fail> {
+        if let Some(kind) = self.engine {
+            return Ok(kind);
+        }
+        Ok(load_file_config(self.config.as_deref(), dir)?
+            .and_then(|l| l.file.engine)
+            .map(EngineKind::from)
+            .unwrap_or_default())
+    }
+
+    /// `resolve_engine` followed by construction.
+    pub fn backend(&self, dir: &Path) -> Result<Backend, Fail> {
+        self.resolve_engine(dir)?.create()
+    }
+
+    /// Resolves the config file and themes, validates the theme names against the
+    /// backend's set and builds the engine. `dir` is where config discovery starts.
+    pub fn build(&self, dir: &Path, backend: Backend) -> Result<Engine, Fail> {
+        self.build_with(dir, backend, |_| {})
     }
 
     /// Like `build`, with a hook that adjusts the config after the file config is applied
@@ -101,10 +123,10 @@ impl EngineArgs {
     pub fn build_with(
         &self,
         dir: &Path,
-        highlighter: irosashi::Highlighter,
+        backend: Backend,
         configure: impl FnOnce(&mut Config),
     ) -> Result<Engine, Fail> {
-        self.build_with_defaults(dir, highlighter, |_| {}, configure)
+        self.build_with_defaults(dir, backend, |_| {}, configure)
     }
 
     /// Like `build_with`, with a second hook that sets command defaults before the file
@@ -112,7 +134,7 @@ impl EngineArgs {
     pub fn build_with_defaults(
         &self,
         dir: &Path,
-        highlighter: irosashi::Highlighter,
+        backend: Backend,
         defaults: impl FnOnce(&mut Config),
         configure: impl FnOnce(&mut Config),
     ) -> Result<Engine, Fail> {
@@ -145,8 +167,12 @@ impl EngineArgs {
         if let Some(t) = &self.theme_dark {
             dark = t.clone();
         }
-        crate::themes::validate_theme_names(&highlighter.themes(), &light, &dark)
-            .map_err(Fail::new)?;
+        // syntect maps any name to one of its bundled themes, so only Irosashi's exact
+        // name set is validated.
+        if backend.kind() == EngineKind::Irosashi {
+            crate::themes::validate_theme_names(&backend.themes(), &light, &dark)
+                .map_err(Fail::new)?;
+        }
 
         let mut config = Config::default();
         defaults(&mut config);
@@ -162,7 +188,7 @@ impl EngineArgs {
             config.min_contrast = ratio;
         }
         configure(&mut config);
-        let kazari = Kazari::builder(highlighter)
+        let kazari = Kazari::builder(backend.into_highlighter())
             .config(config)
             .themes(&light, Some(&dark))
             .warning_handler(|msg| eprintln!("{msg}"))
@@ -179,6 +205,48 @@ impl EngineArgs {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn irosashi() -> Backend {
+        Backend::Irosashi(Box::new(irosashi::Highlighter::new().unwrap()))
+    }
+
+    #[test]
+    fn engine_resolution_order() {
+        let tmp = tempfile::tempdir().unwrap();
+        let args = EngineArgs::default();
+        assert_eq!(
+            args.resolve_engine(tmp.path()).unwrap(),
+            EngineKind::Irosashi
+        );
+        std::fs::write(tmp.path().join("kazari.config.yaml"), "engine: syntect\n").unwrap();
+        assert_eq!(
+            args.resolve_engine(tmp.path()).unwrap(),
+            EngineKind::Syntect
+        );
+        let args = EngineArgs {
+            engine: Some(EngineKind::Irosashi),
+            ..Default::default()
+        };
+        assert_eq!(
+            args.resolve_engine(tmp.path()).unwrap(),
+            EngineKind::Irosashi
+        );
+    }
+
+    #[test]
+    fn syntect_backend_accepts_any_theme_name() {
+        let tmp = tempfile::tempdir().unwrap();
+        let args = EngineArgs {
+            theme_light: Some("no-such-light".into()),
+            ..Default::default()
+        };
+        let e = args
+            .build(tmp.path(), EngineKind::Syntect.create().unwrap())
+            .ok()
+            .unwrap();
+        assert_eq!(e.kazari.config().light_theme, "no-such-light");
+        assert!(args.build(tmp.path(), irosashi()).is_err());
+    }
 
     #[test]
     fn discovery_probes_dir_then_cwd_and_tolerates_absence() {
@@ -227,11 +295,10 @@ mod tests {
         let build = |yaml: &str, off: bool| {
             let tmp = tempfile::tempdir().unwrap();
             std::fs::write(tmp.path().join("kazari.config.yaml"), yaml).unwrap();
-            let hl = irosashi::Highlighter::new().unwrap();
             let e = EngineArgs::default()
                 .build_with_defaults(
                     tmp.path(),
-                    hl,
+                    irosashi(),
                     |c| c.code_groups = true,
                     |c| {
                         if off {
@@ -257,7 +324,7 @@ mod tests {
                 min_contrast: flag,
                 ..Default::default()
             };
-            args.build(tmp.path(), irosashi::Highlighter::new().unwrap())
+            args.build(tmp.path(), irosashi())
                 .map(|e| e.kazari.config().min_contrast)
         };
         assert_eq!(build(None).ok(), Some(3.0));
@@ -282,23 +349,21 @@ mod tests {
             "themes:\n  light: nord\n  dark: dracula\nprocess:\n  hashedAssets: true\n",
         )
         .unwrap();
-        let hl = irosashi::Highlighter::new().unwrap();
         let args = EngineArgs {
             theme_dark: Some("github-dark".into()),
             ..Default::default()
         };
-        let e = args.build(tmp.path(), hl).ok().unwrap();
+        let e = args.build(tmp.path(), irosashi()).ok().unwrap();
         assert_eq!(e.kazari.config().light_theme, "nord");
         assert_eq!(e.kazari.config().dark_theme.as_deref(), Some("github-dark"));
         assert_eq!(e.process.unwrap().hashed_assets, Some(true));
         assert!(e.config_path.is_some());
 
-        let hl = irosashi::Highlighter::new().unwrap();
         let args = EngineArgs {
             theme_light: Some("github-ligth".into()),
             ..Default::default()
         };
-        let err = args.build(tmp.path(), hl).err().unwrap();
+        let err = args.build(tmp.path(), irosashi()).err().unwrap();
         assert!(
             err.message.contains("did you mean \"github-light\"?"),
             "{}",

@@ -22,6 +22,7 @@ kazari markdown <input> [flags]
 | `--page` | off | Wrap the output in a standalone HTML page with the stylesheet and script inlined. The page title is the input file stem (`README.md` becomes `README`), or `kazari` for stdin. |
 | `--disable <FEATURE>` | none | Turn off Markdown extensions or code groups. Takes a comma-separated list and can be repeated. See [Markdown extensions](#markdown-extensions) and [code groups](#code-groups) for the values. |
 | `--config <PATH>` | auto-discover | Path to a config file. Without it, the tool probes `kazari.config.yaml`, `.yml`, and `.json` in the working directory. |
+| `--engine <NAME>` | `engine` from the config, else `irosashi` | Highlighting backend, `irosashi` or `syntect`. See [backends](/docs/getting-started/cli#backends). |
 | `--theme-light <NAME>` | `github-light` | Light syntax theme. Overrides the config file. |
 | `--theme-dark <NAME>` | `github-dark` | Dark syntax theme. Overrides the config file. |
 | `--min-contrast <RATIO>` | `minContrast` from the config, else off | Minimum WCAG contrast ratio of token colours against the block background, from 0 to 21. Colours below the ratio are moved toward black or white. `0` turns the correction off. Overrides the config file. See [`minContrast`](/docs/reference/configuration#key-reference). |

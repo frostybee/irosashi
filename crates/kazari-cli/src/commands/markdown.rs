@@ -58,9 +58,10 @@ pub fn markdown_options(disabled: &[Feature]) -> Options {
 pub fn run(args: MarkdownArgs) -> Result<u8, Fail> {
     let source = super::read_input(&args.input)?;
     let no_code_groups = args.disable.contains(&Feature::CodeGroups);
+    let backend = args.engine.backend(Path::new("."))?;
     let engine = args.engine.build_with_defaults(
         Path::new("."),
-        crate::highlighter()?,
+        backend,
         |cfg| cfg.code_groups = true,
         |cfg| {
             if no_code_groups {

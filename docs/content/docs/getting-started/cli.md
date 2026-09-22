@@ -106,11 +106,28 @@ kazari languages        # one language name per line, sorted
 kazari version          # kazari 0.2.0
 ```
 
+## Backends
+
+The binary ships two highlighting backends and every command accepts `--engine` to pick one:
+
+| Engine | Grammars and themes | Use it for |
+|---|---|---|
+| `irosashi` (default) | VS Code TextMate grammars and the 65 bundled VS Code themes; output matches Shiki byte for byte | The production build |
+| `syntect` | Sublime Text grammars and syntect's seven bundled `.tmTheme` themes; faster to start | A dev server or live reload |
+
+```bash
+kazari process ./public --engine syntect
+kazari themes --engine syntect
+```
+
+Every Kazari feature (frames, line numbers, markers, diff, dual themes) works on both; only the tokens differ. With `syntect`, theme names are mapped to the closest bundled theme (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`), a name ending in `.tmTheme` is loaded from that path, and an unknown name falls back to a light or dark bundled theme instead of failing. See [theme names per backend](/docs/styling/themes-and-dark-mode#theme-names-per-backend).
+
 ## Configuration
 
-Every command reads `kazari.config.yaml` (or `.yml`, `.json`) from the target directory, then from the working directory. `--config` names a file explicitly. The engine keys are the same as those documented in the [configuration reference](/docs/reference/configuration), plus a `process` section for `kazari process`:
+Every command reads `kazari.config.yaml` (or `.yml`, `.json`) from the target directory, then from the working directory. `--config` names a file explicitly. The engine keys are the same as those documented in the [configuration reference](/docs/reference/configuration), plus an `engine` key and a `process` section for `kazari process`:
 
 ```yaml title="kazari.config.yaml"
+engine: irosashi   # or syntect
 themes:
   light: github-light
   dark: github-dark
@@ -122,7 +139,7 @@ process:
   maxFileBytes: 33554432
 ```
 
-Flags override the config file. `--theme-light` and `--theme-dark` are accepted by every subcommand.
+Flags override the config file. `--engine`, `--theme-light` and `--theme-dark` are accepted by every subcommand.
 
 ## Next steps
 

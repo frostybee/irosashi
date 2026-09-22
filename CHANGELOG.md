@@ -15,7 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `kazari_rs::backends::syntect::SyntectHighlighter` on syntect's bundled grammars and
   `.tmTheme` themes, so `kazari-rs` builds as pure Rust with
   `default-features = false, features = ["syntect"]`. Every presentation feature works on
-  either backend. New example `backends` renders the same document through both.
+  either backend. New example `backends` renders the same document through both, and the
+  demo site gained an "Irosashi vs syntect" page (the `showcase` example now needs
+  `--features markdown,syntect`).
+
+- **`kazari --engine irosashi|syntect`:** every subcommand of the `kazari` binary, including
+  `themes` and `languages`, takes `--engine`, and `kazari.config.yaml` takes a top-level
+  `engine:` key (`kazari_rs::EngineName`, read by the binary; the library ignores it). The
+  flag wins over the file; the default is `irosashi`. With `syntect`, theme names are mapped
+  to its bundled themes and not validated. `SyntectHighlighter::detect_language` detects a
+  language from a file name's extension.
 
 ### Changed
 

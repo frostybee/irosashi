@@ -44,6 +44,11 @@ cargo install kazari-cli
 Building from source needs a C compiler for Irosashi's vendored Oniguruma. On Windows, Visual
 Studio with the VC tools component works; on Linux and macOS a system `cc` is enough.
 
+The binary ships two highlighting backends. `irosashi` (default) uses VS Code grammars and
+themes and matches Shiki byte for byte; `syntect` uses Sublime Text grammars and syntect's
+bundled `.tmTheme` set, starts faster and is handy for a dev server or live reload. Pick one
+with `--engine` on any command or `engine:` in the config file.
+
 ## Commands
 
 ```
@@ -53,8 +58,8 @@ kazari markdown <file|->       render a Markdown file (or stdin) to HTML
 kazari typst <file|->          render one source file (or stdin) as Typst source
 kazari css                     print the page-wide stylesheet
 kazari js                      print the page-wide script
-kazari themes                  list bundled syntax theme names
-kazari languages               list bundled language names
+kazari themes                  list the syntax theme names of a backend
+kazari languages               list the language names of a backend
 kazari version                 print the kazari version
 ```
 
@@ -67,6 +72,7 @@ kazari process [dir] [flags]
 
   --check              report would-be changes without writing; exit 1 if any
   --config <PATH>      config file (default: kazari.config.yaml|.yml|.json in dir, then the working directory)
+  --engine <NAME>      highlighting backend, irosashi or syntect (default irosashi; overrides config)
   --theme-light <NAME> light syntax theme (default github-light; overrides config)
   --theme-dark <NAME>  dark syntax theme (default github-dark; overrides config)
   --min-contrast <N>   minimum WCAG contrast ratio of token colours, 0 to 21 (default off; overrides config)
@@ -141,17 +147,25 @@ turns them off.
 the block, for appending to a document that already has the template. `--font` and
 `--font-size` set the block's font family and text size (a Typst length such as `10pt`).
 
-All of these accept `--config`, `--theme-light`, `--theme-dark` and `--min-contrast` like
-`process`. Contrast correction applies to HTML output, so `typst` accepts the flag and ignores it.
+All of these accept `--config`, `--engine`, `--theme-light`, `--theme-dark` and
+`--min-contrast` like `process`. Contrast correction applies to HTML output, so `typst` accepts
+the flag and ignores it. `themes` and `languages` accept `--engine` too, so
+`kazari themes --engine syntect` lists what that backend knows.
+
+With `--engine syntect`, theme names are not validated: syntect maps the common VS Code names
+to the closest of its seven bundled themes (`github-light` to `InspiredGitHub`, `github-dark`
+to `base16-ocean.dark`, and so on), loads a name ending in `.tmTheme` from that path, and
+falls back to a light or dark bundled theme for anything else.
 
 ## Configuration
 
 Every command reads `kazari.config.yaml` (or `.yml`, `.json`) from the target directory, then
 the working directory; `--config` names one explicitly. The keys are Kazari's, documented in
 the [kazari-rs README](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/README.md#config-file),
-plus a `process` section for this command:
+plus an `engine` key and a `process` section for this command:
 
 ```yaml
+engine: irosashi   # or syntect
 themes:
   light: github-light
   dark: github-dark

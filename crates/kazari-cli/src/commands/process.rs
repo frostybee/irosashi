@@ -49,7 +49,8 @@ pub fn run(args: ProcessArgs) -> Result<u8, Fail> {
         )));
     }
 
-    let engine = args.engine.build(&args.dir, crate::highlighter()?)?;
+    let backend = args.engine.backend(&args.dir)?;
+    let engine = args.engine.build(&args.dir, backend)?;
     if args.verbose
         && let Some(p) = &engine.config_path
     {

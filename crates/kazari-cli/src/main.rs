@@ -1,3 +1,4 @@
+mod backend;
 mod commands;
 mod engine;
 mod html;
@@ -63,10 +64,10 @@ enum Command {
     Css(engine::EngineArgs),
     /// Print the page-wide script
     Js(engine::EngineArgs),
-    /// List bundled syntax theme names
-    Themes,
-    /// List bundled language names
-    Languages,
+    /// List the syntax theme names of a backend
+    Themes(commands::list::ListArgs),
+    /// List the language names of a backend
+    Languages(commands::list::ListArgs),
     /// Print the kazari version
     Version,
 }
@@ -80,8 +81,8 @@ fn main() -> ExitCode {
         Command::Typst(args) => commands::typst::run(args),
         Command::Css(args) => commands::assets::run_css(args),
         Command::Js(args) => commands::assets::run_js(args),
-        Command::Themes => commands::list::run_themes(),
-        Command::Languages => commands::list::run_languages(),
+        Command::Themes(args) => commands::list::run_themes(args),
+        Command::Languages(args) => commands::list::run_languages(args),
         Command::Version => {
             println!("kazari {}", env!("CARGO_PKG_VERSION"));
             Ok(0)
@@ -94,8 +95,4 @@ fn main() -> ExitCode {
             ExitCode::from(2)
         }
     }
-}
-
-pub fn highlighter() -> Result<irosashi::Highlighter, Fail> {
-    irosashi::Highlighter::new().map_err(|e| Fail::new(format!("initializing highlighter: {e}")))
 }

@@ -36,9 +36,13 @@ pub struct TypstArgs {
 
 pub fn run(args: TypstArgs) -> Result<u8, Fail> {
     let code = super::read_input(&args.input)?;
-    let hl = crate::highlighter()?;
-    let meta =
-        super::render::resolve_meta(&hl, &args.input, args.lang.as_deref(), args.meta.as_deref());
+    let backend = args.engine.backend(Path::new("."))?;
+    let meta = super::render::resolve_meta(
+        &backend,
+        &args.input,
+        args.lang.as_deref(),
+        args.meta.as_deref(),
+    );
     let mut overrides = kazari_rs::TypstConfig::default();
     if let Some(font) = &args.font {
         overrides.set_font(font)?;
@@ -46,7 +50,7 @@ pub fn run(args: TypstArgs) -> Result<u8, Fail> {
     if let Some(size) = &args.font_size {
         overrides.set_size(size)?;
     }
-    let engine = args.engine.build_with(Path::new("."), hl, |config| {
+    let engine = args.engine.build_with(Path::new("."), backend, |config| {
         // Both values were validated above, so the setters cannot fail here.
         if let Some(font) = overrides.font() {
             let _ = config.typst.set_font(font);

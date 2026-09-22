@@ -17,7 +17,7 @@ path = "src/main.rs"
 clap = { version = "4", features = ["derive"] }
 html-escape = "0.2"
 irosashi = { version = "0.2.0", path = "../irosashi" }
-kazari-rs = { version = "0.2.0", path = "../kazari-rs", features = ["markdown"] }
+kazari-rs = { version = "0.2.0", path = "../kazari-rs", features = ["markdown", "syntect"] }
 pulldown-cmark = { version = "0.13", default-features = false }
 serde.workspace = true
 serde_json.workspace = true

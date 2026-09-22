@@ -25,6 +25,7 @@ kazari typst <input> [flags]
 | `--font-size <LENGTH>` | `typst.size` from the config, else `9pt` | Text size as a Typst length, for example `10pt` or `0.9em`. |
 | `--no-preamble` | off | Omit the `#code-block` template from the output. Use this when appending blocks to a document that already includes the template. |
 | `--config <PATH>` | auto-discover | Path to a config file. Without it, the tool probes `kazari.config.yaml`, `.yml`, and `.json` in the working directory. |
+| `--engine <NAME>` | `engine` from the config, else `irosashi` | Highlighting backend, `irosashi` or `syntect`. See [backends](/docs/getting-started/cli#backends). |
 | `--theme-light <NAME>` | `github-light` | Syntax theme for the output. |
 | `--theme-dark <NAME>` | `github-dark` | Ignored. Typst output uses only the light theme (see [single-theme output](#single-theme-output)). |
 | `--min-contrast <RATIO>` | off | Ignored. Contrast correction applies to HTML output only. The flag is accepted for consistency with the other commands. |

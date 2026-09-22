@@ -62,6 +62,73 @@ fn version_and_lists() {
 }
 
 #[test]
+fn engine_flag_selects_syntect() {
+    let t = run(&["themes", "--engine", "syntect"], None);
+    assert_eq!(t.code, 0, "{}", t.stderr);
+    let themes: Vec<&str> = t.stdout.lines().collect();
+    assert!(themes.contains(&"InspiredGitHub"), "{}", t.stdout);
+    assert!(!themes.contains(&"github-dark"));
+
+    let l = run(&["languages", "--engine", "syntect"], None);
+    assert_eq!(l.code, 0);
+    assert!(l.stdout.lines().any(|x| x == "Rust"), "{}", l.stdout);
+
+    let o = run(
+        &["render", "-", "--lang", "rust", "--engine", "syntect"],
+        Some("fn main() {}\n"),
+    );
+    assert_eq!(o.code, 0, "{}", o.stderr);
+    assert!(o.stdout.starts_with("<div class=\"kazari-block"));
+    assert!(o.stdout.contains("data-lang=\"rust\""));
+
+    let tmp = site(&[("main.rs", "fn main() {}\n")]);
+    let file = tmp.path().join("main.rs");
+    let o = run(
+        &["render", file.to_str().unwrap(), "--engine", "syntect"],
+        None,
+    );
+    assert!(
+        o.stdout.contains("data-lang=\"rs\""),
+        "language detected from the file name: {}",
+        o.stdout
+    );
+
+    let o = run(&["render", "-", "--engine", "chroma"], Some("x"));
+    assert_eq!(o.code, 2);
+    assert!(
+        o.stderr.contains("irosashi") && o.stderr.contains("syntect"),
+        "{}",
+        o.stderr
+    );
+}
+
+#[test]
+fn engine_from_config_file_and_flag_precedence() {
+    let tmp = site(&[
+        ("index.html", PLAIN_PAGE),
+        (
+            "kazari.config.yaml",
+            "engine: syntect\nthemes:\n  light: not-a-theme\n",
+        ),
+    ]);
+    let o = run(&["process", tmp.path().to_str().unwrap(), "--check"], None);
+    assert_eq!(o.code, 1, "syntect accepts any theme name: {}", o.stderr);
+
+    let o = run(
+        &[
+            "process",
+            tmp.path().to_str().unwrap(),
+            "--check",
+            "--engine",
+            "irosashi",
+        ],
+        None,
+    );
+    assert_eq!(o.code, 2, "the flag wins and Irosashi rejects the name");
+    assert!(o.stderr.contains("not-a-theme"), "{}", o.stderr);
+}
+
+#[test]
 fn usage_errors_exit_2() {
     let o = run(&[], None);
     assert_eq!(o.code, 2);

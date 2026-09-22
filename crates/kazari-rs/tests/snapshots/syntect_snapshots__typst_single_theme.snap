@@ -1,0 +1,10 @@
+---
+source: crates/kazari-rs/tests/syntect_snapshots.rs
+expression: "engine().render_with_meta_typst(RUST, \"rust showLineNumbers {2}\").unwrap()"
+---
+#code-block(lang: "rust", fg: rgb("#323232"), bg: rgb("#ffffff"), numbers: true, gutter-width: 1 * 0.65em, lines: 4)[
+#code-line(num: 1)[#text(fill: rgb("#a71d5d"), weight: "bold", "fn")#text(" ")#text(fill: rgb("#795da3"), weight: "bold", "main")#text("(")#text(")")#text(" ")#text("{")]
+#code-line(num: 2, mark: "mark", indent: 4 * 0.6em)[#text("    ")#text(fill: rgb("#a71d5d"), weight: "bold", "let")#text(" x ")#text(fill: rgb("#a71d5d"), weight: "bold", "=")#text(" ")#text(fill: rgb("#0086b3"), "1")#text(";")]
+#code-line(num: 3, indent: 4 * 0.6em)[#text("    ")#text("println!")#text("(")#text(fill: rgb("#183691"), "\"")#text(fill: rgb("#0086b3"), "{x}")#text(fill: rgb("#183691"), "\"")#text(")")#text(";")]
+#code-line(num: 4)[#text("}")]
+]

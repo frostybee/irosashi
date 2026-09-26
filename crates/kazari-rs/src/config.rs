@@ -6,7 +6,7 @@ use crate::error::Error;
 use crate::meta::BlockOptions;
 use crate::types::{
     DarkMode, Frame, InlineMarker, LineMarker, LineRange, LinkAnnotation, MarkerType,
-    TerminalDotStyle, ThemeInfo,
+    TerminalDotStyle, ThemeInfo, TypstTokens,
 };
 
 #[derive(Debug, Clone)]
@@ -219,6 +219,7 @@ pub struct TypstConfig {
     font: Option<String>,
     size: Option<String>,
     marker_colors: BTreeMap<MarkerType, String>,
+    tokens: TypstTokens,
 }
 
 impl TypstConfig {
@@ -232,6 +233,24 @@ impl TypstConfig {
 
     pub fn marker_color(&self, marker: MarkerType) -> Option<&str> {
         self.marker_colors.get(&marker).map(String::as_str)
+    }
+
+    pub fn tokens(&self) -> TypstTokens {
+        self.tokens
+    }
+
+    /// `raw` or `string`.
+    pub fn set_tokens(&mut self, tokens: &str) -> Result<(), Error> {
+        self.tokens = match tokens.trim() {
+            "raw" => TypstTokens::Raw,
+            "string" => TypstTokens::String,
+            other => {
+                return Err(Error::Config(format!(
+                    "typst.tokens must be raw or string, got {other:?}"
+                )));
+            }
+        };
+        Ok(())
     }
 
     pub fn set_font(&mut self, font: &str) -> Result<(), Error> {
@@ -623,6 +642,7 @@ pub struct TypstFile {
     pub font: Option<String>,
     pub size: Option<String>,
     pub marker_colors: Option<BTreeMap<String, String>>,
+    pub tokens: Option<String>,
 }
 
 /// The `process` section of a config file. It configures the `kazari process` command
@@ -858,6 +878,9 @@ impl FileConfig {
             }
             for (marker, color) in typst.marker_colors.unwrap_or_default() {
                 cfg.typst.set_marker_color(&marker, &color)?;
+            }
+            if let Some(v) = typst.tokens {
+                cfg.typst.set_tokens(&v)?;
             }
         }
         if let Some(v) = self.locale.filter(|s| !s.is_empty()) {
@@ -1460,7 +1483,7 @@ styleOverrides:
 
     #[test]
     fn file_config_typst_section() {
-        let yaml = "typst:\n  font: JetBrains Mono\n  size: 10pt\n  markerColors:\n    mark: \"#abcdef\"\n    del: \"#fee\"\n";
+        let yaml = "typst:\n  font: JetBrains Mono\n  size: 10pt\n  tokens: string\n  markerColors:\n    mark: \"#abcdef\"\n    del: \"#fee\"\n";
         let mut cfg = Config::default();
         FileConfig::from_yaml(yaml)
             .unwrap()
@@ -1471,6 +1494,8 @@ styleOverrides:
         assert_eq!(cfg.typst.marker_color(MarkerType::Mark), Some("#abcdef"));
         assert_eq!(cfg.typst.marker_color(MarkerType::Del), Some("#fee"));
         assert_eq!(cfg.typst.marker_color(MarkerType::Ins), None);
+        assert_eq!(cfg.typst.tokens(), TypstTokens::String);
+        assert_eq!(Config::default().typst.tokens(), TypstTokens::Raw);
 
         for bad in [
             "typst:\n  size: 10\n",
@@ -1480,6 +1505,7 @@ styleOverrides:
             "typst:\n  markerColors:\n    mark: red\n",
             "typst:\n  markerColors:\n    mark: abcdef\n",
             "typst:\n  markerColors:\n    focus: \"#abcdef\"\n",
+            "typst:\n  tokens: markup\n",
         ] {
             let applied =
                 FileConfig::from_yaml(bad).and_then(|fc| fc.apply(&mut Config::default()));

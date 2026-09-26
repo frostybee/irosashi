@@ -417,6 +417,22 @@ fn markdown_typst_css_js() {
     assert_ne!(o.code, 0);
     assert!(o.stderr.contains("typst.size"), "{}", o.stderr);
 
+    let o = run(&["typst", "-", "--no-preamble"], Some("x\n"));
+    assert!(o.stdout.contains("#code-line[`x`]"), "{}", o.stdout);
+    let o = run(
+        &["typst", "-", "--no-preamble", "--tokens", "string"],
+        Some("x\n"),
+    );
+    assert_eq!(o.code, 0, "{}", o.stderr);
+    assert!(
+        o.stdout.contains("#code-line[#text(\"x\")]"),
+        "{}",
+        o.stdout
+    );
+    let o = run(&["typst", "-", "--tokens", "markup"], Some("x\n"));
+    assert_ne!(o.code, 0);
+    assert!(o.stderr.contains("typst.tokens"), "{}", o.stderr);
+
     let css = run(&["css"], None);
     assert_eq!(css.code, 0);
     assert!(css.stdout.contains("--kz-"));

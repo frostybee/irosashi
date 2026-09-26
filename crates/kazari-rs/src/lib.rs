@@ -35,8 +35,9 @@ pub use engine::{Kazari, KazariBuilder, Options, PostRender, ThemeCustomizer};
 pub use error::Error;
 pub use highlighter::{FontStyle, Highlighted, Highlighter, Line, Style, ThemeDefaults, Token};
 pub use locale::UIStrings;
-pub use render_typst::preamble as typst_preamble;
+pub use render_typst::{TypstBlock, TypstToken, preamble as typst_preamble};
 pub use types::{
     AdjustTargets, AssetFile, Assets, BlockInfo, DarkMode, Frame, InlineMarker, LineMarker,
     LineRange, LinkAnnotation, MarkerType, TerminalDotStyle, ThemeAdjustments, ThemeInfo, Themes,
+    TypstTokens,
 };

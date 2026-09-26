@@ -166,6 +166,7 @@ Each row maps a YAML key to its builder method and the default value from `Confi
 | `typst.font` | `.typst_font("...")?` | template default, `DejaVu Sans Mono` |
 | `typst.size` | `.typst_size("...")?` | template default, `9pt` |
 | `typst.markerColors` | `.typst_marker_color("...", "...")?` | template palette |
+| `typst.tokens` | `.typst_tokens("...")?` | `raw` |
 | `languageDefaults` | YAML only | empty |
 | `languageAliases` | YAML only | empty |
 | `defaults` | YAML only | `wrap: false`, `frame: auto` |
@@ -179,6 +180,7 @@ The `typst` section applies to Typst output only. HTML output ignores it.
 | `font` | A font family name installed where the document is compiled. |
 | `size` | A Typst length: a number followed by `pt`, `em`, `mm`, `cm`, or `in`. |
 | `markerColors` | A map from `mark`, `ins`, `del`, `error`, or `warning` to a hex colour (`#rgb`, `#rrggbb`, or `#rrggbbaa`). Kinds left out keep the template colour. |
+| `tokens` | `raw` (default) writes each token as a raw literal, so every glyph maps back to its character; `string` writes string arguments. See [token forms](/docs/reference/cli-typst#token-forms). |
 
 The builder methods return `Result`, and an invalid value is a config error in both the builder and the config file. The overrides are written into each `#code-block(...)` call, so the preamble stays the same for every configuration.
 

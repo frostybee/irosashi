@@ -154,6 +154,20 @@ To change the font, text size, or marker colours of Typst blocks, use the builde
 `.typst_font("...")?`, `.typst_size("10pt")?`, and `.typst_marker_color("ins", "#c8f7d0")?`, or
 the [`typst` section of the config file](/docs/reference/configuration#typst-options).
 
+To map positions in the compiled document back to the code, for example for click-to-source
+in a preview, use `render_with_meta_typst_block`. It returns the Typst text, the code that was
+highlighted (after tab expansion and the removal of notation comments, diff prefixes and a
+file-name comment), and one `TypstToken` per token:
+
+```rust
+let block = kz.render_with_meta_typst_block(code, "rust showLineNumbers")?;
+for token in &block.tokens {
+    // token.output: byte range of the token text in block.typst
+    // token.line, token.column: line index and byte range in block.code
+    // token.exact: true for a raw literal, whose bytes match the code one to one
+}
+```
+
 ## Markdown integration
 
 Enable the `markdown` feature to render entire Markdown documents through Kazari. Every fenced

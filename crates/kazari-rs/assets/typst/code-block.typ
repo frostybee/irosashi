@@ -9,7 +9,17 @@
   warning: rgb("#fff1d5"),
 )
 
+// Dark themes get the translucent fills the HTML output uses.
+#let kz-marker-colors-dark = (
+  mark: rgb("#ffc8001f"),
+  ins: rgb("#2ea0431f"),
+  del: rgb("#f851491f"),
+  error: rgb("#dc26261f"),
+  warning: rgb("#f59e0b1f"),
+)
+
 #let kz-gutter-width = state("kz-gutter-width", 0pt)
+#let kz-mode = state("kz-mode", "light")
 
 #let code-line(
   num: none,
@@ -18,17 +28,18 @@
   fill: none,
   indent: 0em,
   body,
-) = {
+) = context {
+  let palette = if kz-mode.get() == "dark" { kz-marker-colors-dark } else { kz-marker-colors }
   let fill = if fill != none {
     fill
   } else if mark != none {
-    kz-marker-colors.at(mark, default: none)
+    palette.at(mark, default: none)
   } else {
     none
   }
   let code = par(hanging-indent: indent, body)
   let content = if num != none {
-    context grid(
+    grid(
       columns: (kz-gutter-width.get(), 1fr),
       column-gutter: 1em,
       align(right, text(fill: text.fill.transparentize(50%), str(num))),
@@ -61,6 +72,7 @@
   title: none,
   fg: rgb("#24292e"),
   bg: rgb("#ffffff"),
+  mode: "light",
   numbers: false,
   gutter-width: 0pt,
   lines: 0,
@@ -72,6 +84,9 @@
   let breakable = if breakable == auto { lines > 30 } else { breakable }
   let border = 0.5pt + fg.transparentize(80%)
   set text(fill: fg, font: font, size: size)
+  // Tokens are raw literals; undo raw's own monospace font and 0.8em size.
+  show raw: set text(font: font, size: 1.25em)
+  kz-mode.update(mode)
   set par(justify: false, leading: 0.45em)
   block(
     width: 100%,

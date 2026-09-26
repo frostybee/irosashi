@@ -1,0 +1,8 @@
+---
+source: crates/kazari-rs/tests/typst_snapshots.rs
+expression: "kz.render_with_meta_typst(\"let s = `a ${b}`;\\nlet x = 1;\",\n\"javascript {2}\").unwrap()"
+---
+#code-block(lang: "javascript", fg: rgb("#24292e"), bg: rgb("#fff"), mode: "light", lines: 2)[
+#code-line[#text(fill: rgb("#d73a49"), "let")#text(" ")#text("s")#text(" ")#text(fill: rgb("#d73a49"), "=")#text(" ")#text(fill: rgb("#032f62"), "`")#text(fill: rgb("#032f62"), "a ")#text(fill: rgb("#032f62"), "${")#text("b")#text(fill: rgb("#032f62"), "}")#text(fill: rgb("#032f62"), "`")#text(";")]
+#code-line(mark: "mark")[#text(fill: rgb("#d73a49"), "let")#text(" ")#text("x")#text(" ")#text(fill: rgb("#d73a49"), "=")#text(" ")#text(fill: rgb("#005cc5"), "1")#text(";")]
+]

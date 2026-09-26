@@ -149,6 +149,7 @@ turns them off.
 `typst` prints the `#code-block` template followed by the block; `--no-preamble` prints only
 the block, for appending to a document that already has the template. `--font` and
 `--font-size` set the block's font family and text size (a Typst length such as `10pt`).
+`--tokens string` writes tokens as string arguments instead of raw literals.
 
 All of these accept `--config`, `--engine`, `--theme-light`, `--theme-dark` and
 `--min-contrast` like `process`. Contrast correction applies to HTML output, so `typst` accepts

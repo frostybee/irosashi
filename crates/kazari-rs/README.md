@@ -197,7 +197,10 @@ let document = format!("{}\n{typst}", kazari_rs::typst_preamble());
 ```
 
 The preamble ships the `#code-block(...)` template; every block renders with the same colours
-as the HTML from the light theme.
+as the HTML from the light theme. Tokens are raw literals, so a click in a Typst preview
+resolves to the exact character. `render_with_meta_typst_block` also returns the highlighted
+code and a table of where each token's text sits in the output, for mapping those positions
+back to the code.
 
 ## Configuration
 

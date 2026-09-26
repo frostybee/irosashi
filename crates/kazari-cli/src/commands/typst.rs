@@ -26,6 +26,10 @@ pub struct TypstArgs {
     #[arg(long, value_name = "LENGTH")]
     pub font_size: Option<String>,
 
+    /// How tokens are written: raw (raw literals, the default) or string (overrides config)
+    #[arg(long, value_name = "FORM")]
+    pub tokens: Option<String>,
+
     /// Omit the code-block template preamble (for appending to a document that has it)
     #[arg(long)]
     pub no_preamble: bool,
@@ -50,13 +54,20 @@ pub fn run(args: TypstArgs) -> Result<u8, Fail> {
     if let Some(size) = &args.font_size {
         overrides.set_size(size)?;
     }
+    if let Some(tokens) = &args.tokens {
+        overrides.set_tokens(tokens)?;
+    }
+    let tokens = args.tokens.clone();
     let engine = args.engine.build_with(Path::new("."), backend, |config| {
-        // Both values were validated above, so the setters cannot fail here.
+        // Every value was validated above, so the setters cannot fail here.
         if let Some(font) = overrides.font() {
             let _ = config.typst.set_font(font);
         }
         if let Some(size) = overrides.size() {
             let _ = config.typst.set_size(size);
+        }
+        if let Some(tokens) = &tokens {
+            let _ = config.typst.set_tokens(tokens);
         }
     })?;
     let block = engine.kazari.render_with_meta_typst(&code, &meta)?;

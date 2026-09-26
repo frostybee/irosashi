@@ -41,6 +41,18 @@ pub enum TerminalDotStyle {
     Minimal,
 }
 
+/// How the Typst renderer writes each token's text.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+pub enum TypstTokens {
+    /// A raw literal, `` `tok` ``: every glyph keeps a span on the source text, so
+    /// click-to-source in a Typst preview resolves to the exact character. Tokens
+    /// containing a backtick fall back to a string.
+    #[default]
+    Raw,
+    /// A string argument, `"tok"`: glyphs map at best to the start of the token.
+    String,
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct LineRange {
     pub start: usize,

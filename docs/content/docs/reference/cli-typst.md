@@ -23,6 +23,7 @@ kazari typst <input> [flags]
 | `--meta <META>` | none | Full fence meta string. Overrides `--lang` and adds per-block options (title, line numbers, markers, focus). Uses the same syntax as the [meta string reference](/docs/reference/meta-string-syntax). |
 | `--font <NAME>` | `typst.font` from the config, else `DejaVu Sans Mono` | Font family of the code block. The font must be installed where the document is compiled. |
 | `--font-size <LENGTH>` | `typst.size` from the config, else `9pt` | Text size as a Typst length, for example `10pt` or `0.9em`. |
+| `--tokens <FORM>` | `typst.tokens` from the config, else `raw` | How token text is written: `raw` (raw literals) or `string` (string arguments). See [token forms](#token-forms). |
 | `--no-preamble` | off | Omit the `#code-block` template from the output. Use this when appending blocks to a document that already includes the template. |
 | `--config <PATH>` | auto-discover | Path to a config file. Without it, the tool probes `kazari.config.yaml`, `.yml`, and `.json` in the working directory. |
 | `--engine <NAME>` | `engine` from the config, else `irosashi` | Highlighting backend, `irosashi` or `syntect`. See [backends](/docs/getting-started/cli#backends). |
@@ -34,7 +35,7 @@ Language detection follows the same rules as [`kazari render`](/docs/reference/c
 
 ## The preamble
 
-By default, the output starts with the `#code-block` Typst template (about 80 lines). This template defines the `code-block` and `code-line` functions that the generated calls depend on. The template defaults to `DejaVu Sans Mono` at `9pt`. `--font` and `--font-size` change both per block without changing the preamble. To change the marker colours, set [`typst.markerColors`](/docs/reference/configuration#typst-options) in the config file.
+By default, the output starts with the `#code-block` Typst template (about 110 lines). This template defines the `code-block` and `code-line` functions that the generated calls depend on. The template defaults to `DejaVu Sans Mono` at `9pt`. `--font` and `--font-size` change both per block without changing the preamble. To change the marker colours, set [`typst.markerColors`](/docs/reference/configuration#typst-options) in the config file.
 
 A self-contained `.typ` file:
 
@@ -71,9 +72,27 @@ To produce a dark-themed PDF, pass the dark theme as `--theme-light`:
 kazari typst main.rs --theme-light github-dark > dark.typ
 ```
 
+Each `#code-block(...)` call carries `mode: "light"` or `mode: "dark"`, decided by the luminance of the theme's background. The template uses it to choose the line-marker fills: solid pastel fills on light backgrounds, and on dark backgrounds the same translucent fills as the HTML output. Inline markers keep the light palette.
+
 ## Output structure
 
-Each block is a `#code-block(...)` call containing `#code-line(...)` calls, one per source line. Tokens are `#text(fill: rgb("..."), weight: "bold", style: "italic", "content")` calls. All content is emitted as Typst string literals in code mode, so markup characters (`//`, `--`, `~`, quotes, URLs) are safe.
+Each block is a `#code-block(...)` call containing `#code-line(...)` calls, one per source line. Tokens carry their colour and font style as `#text(...)` arguments, for example `#text(fill: rgb("#d73a49"), weight: "bold")`.
+
+### Token forms
+
+By default each token's text is a raw literal: ``#text(fill: rgb("#d73a49"))[`let`]``, or a bare `` `x` `` when the token has no arguments. Raw literals keep the text verbatim, so markup characters (`//`, `--`, `~`, quotes, URLs) are safe. Every glyph also keeps a source position on the literal. In a Typst preview, clicking a glyph jumps to the exact character in the generated file, and a caller can map it back to the code with [`render_with_meta_typst_block`](/docs/getting-started/kazari#typst-output). A token containing a backtick or a control character cannot be a single-backtick raw literal, so it is written as a string instead.
+
+With `--tokens string` (or `typst.tokens: string`), every token is a string argument: `#text(fill: rgb("#d73a49"), "let")`. Strings render the same, but glyphs map at best to the start of their token, and tokens without arguments get no source position at all.
+
+### Custom templates
+
+A template that replaces the preamble must define `code-block` and `code-line` with the parameters the output passes, including `mode` on `code-block`. For raw-literal tokens it must also undo the font and size that Typst gives raw text, inside `code-block`:
+
+```typst
+show raw: set text(font: font, size: 1.25em)
+```
+
+Without that rule, tokens render in Typst's raw font at 80 % of the block's size.
 
 The generated output supports:
 

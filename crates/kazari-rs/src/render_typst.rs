@@ -1,5 +1,6 @@
 use std::collections::{HashMap, HashSet};
 use std::fmt::Write;
+use std::ops::Range;
 
 use crate::config::{ResolvedBlock, TypstConfig};
 use crate::escape::escape_typst_string;
@@ -7,7 +8,7 @@ use crate::highlighter::{FontStyle, Style, Token};
 use crate::marker::{self, ResolvedLine, Segment};
 use crate::render::digit_count;
 use crate::tokenize::Tokens;
-use crate::types::{LinkAnnotation, MarkerType};
+use crate::types::{LinkAnnotation, MarkerType, TypstTokens};
 
 const CODE_BLOCK_TYP: &str = include_str!("../assets/typst/code-block.typ");
 
@@ -20,6 +21,34 @@ pub fn preamble() -> &'static str {
     CODE_BLOCK_TYP
 }
 
+/// A rendered Typst code block and where each token's text sits in it.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct TypstBlock {
+    /// The `#code-block(...)` call.
+    pub typst: String,
+    /// The code that was highlighted, after tab expansion, file-name extraction,
+    /// diff prefix and notation comment removal. Token lines and columns index
+    /// into it.
+    pub code: String,
+    /// One entry per token or inline-marker segment, in output order.
+    pub tokens: Vec<TypstToken>,
+}
+
+/// One token's text in [`TypstBlock::typst`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct TypstToken {
+    /// Byte range of the token text in the Typst output: the body of the raw
+    /// literal or of the string.
+    pub output: Range<usize>,
+    /// 0-based line in [`TypstBlock::code`].
+    pub line: usize,
+    /// Byte range within that line.
+    pub column: Range<usize>,
+    /// `true` for a raw literal, whose bytes equal the code bytes one to one.
+    /// `false` for a string, whose body is escaped.
+    pub exact: bool,
+}
+
 struct LineCtx<'a> {
     resolved: &'a ResolvedBlock,
     typst: &'a TypstConfig,
@@ -29,8 +58,24 @@ struct LineCtx<'a> {
     has_focus: bool,
 }
 
-pub fn render_block(tokens: &Tokens, resolved: &ResolvedBlock, typst: &TypstConfig) -> String {
-    let mut sb = String::with_capacity(4096);
+struct Out {
+    sb: String,
+    table: Vec<TypstToken>,
+}
+
+/// Where a piece of token text comes from: line index and byte column.
+#[derive(Clone, Copy)]
+struct Origin {
+    line: usize,
+    column: usize,
+}
+
+pub fn render_block(tokens: &Tokens, resolved: &ResolvedBlock, typst: &TypstConfig) -> TypstBlock {
+    let mut out = Out {
+        sb: String::with_capacity(4096),
+        table: Vec::new(),
+    };
+    let sb = &mut out.sb;
     let line_count = tokens.line_count();
 
     sb.push_str("#code-block(");
@@ -40,9 +85,14 @@ pub fn render_block(tokens: &Tokens, resolved: &ResolvedBlock, typst: &TypstConf
     if !resolved.title.is_empty() {
         write!(sb, "title: \"{}\", ", escape_typst_string(&resolved.title)).unwrap();
     }
+    let mode = if crate::color::is_light(tokens.light_bg()) {
+        "light"
+    } else {
+        "dark"
+    };
     write!(
         sb,
-        "fg: rgb(\"{}\"), bg: rgb(\"{}\")",
+        "fg: rgb(\"{}\"), bg: rgb(\"{}\"), mode: \"{mode}\"",
         tokens.light_fg(),
         tokens.light_bg()
     )
@@ -76,15 +126,23 @@ pub fn render_block(tokens: &Tokens, resolved: &ResolvedBlock, typst: &TypstConf
     };
 
     for i in 0..line_count {
-        render_line(&mut sb, tokens, i, resolved.start_line_number + i, &lctx);
+        render_line(&mut out, tokens, i, resolved.start_line_number + i, &lctx);
     }
 
-    sb.push(']');
-    sb
+    out.sb.push(']');
+    let code = (0..line_count)
+        .map(|i| tokens.line_text(i))
+        .collect::<Vec<_>>()
+        .join("\n");
+    TypstBlock {
+        typst: out.sb,
+        code,
+        tokens: out.table,
+    }
 }
 
 fn render_line(
-    sb: &mut String,
+    out: &mut Out,
     tokens: &Tokens,
     line_idx: usize,
     line_num: usize,
@@ -118,11 +176,11 @@ fn render_line(
         args.push(format!("indent: {indent} * {CHAR_WIDTH}"));
     }
 
-    sb.push_str("#code-line");
+    out.sb.push_str("#code-line");
     if !args.is_empty() {
-        write!(sb, "({})", args.join(", ")).unwrap();
+        write!(out.sb, "({})", args.join(", ")).unwrap();
     }
-    sb.push('[');
+    out.sb.push('[');
 
     let dimmed = lctx.has_focus
         && !lctx
@@ -138,23 +196,36 @@ fn render_line(
         .unwrap_or(&[]);
 
     if blank {
-        sb.push_str("#text(\" \")");
+        out.sb.push_str("#text(\" \")");
     } else if lctx.resolved.inline_markers.is_empty() && line_links.is_empty() {
         for token in line_tokens {
             let text = token.text(line_text);
             if !text.is_empty() {
-                write_token(sb, text, &token.light, lctx.fg, dimmed);
+                let origin = Origin {
+                    line: line_idx,
+                    column: token.start,
+                };
+                write_token(out, text, &token.light, lctx, dimmed, origin);
             }
         }
     } else {
-        render_with_inline_markers(sb, line_text, line_tokens, line_links, lctx, dimmed);
+        render_with_inline_markers(
+            out,
+            line_idx,
+            line_text,
+            line_tokens,
+            line_links,
+            lctx,
+            dimmed,
+        );
     }
 
-    sb.push_str("]\n");
+    out.sb.push_str("]\n");
 }
 
 fn render_with_inline_markers(
-    sb: &mut String,
+    out: &mut Out,
+    line_idx: usize,
     line_text: &str,
     line_tokens: &[Token],
     line_links: &[LinkAnnotation],
@@ -182,28 +253,47 @@ fn render_with_inline_markers(
         line_links,
     ) else {
         for token in renderable {
-            write_token(sb, token.text(line_text), &token.light, lctx.fg, dimmed);
+            let origin = Origin {
+                line: line_idx,
+                column: token.start,
+            };
+            write_token(
+                out,
+                token.text(line_text),
+                &token.light,
+                lctx,
+                dimmed,
+                origin,
+            );
         }
         return;
     };
 
     for at in &annotated {
-        let style = &renderable[at.token_idx].light;
+        let token = renderable[at.token_idx];
+        let token_plain_start = token_ranges[at.token_idx].0;
         for seg in &at.segments {
-            write_segment(sb, &plain_text, seg, style, lctx, dimmed);
+            // Segment offsets index the concatenated line; map them back to the
+            // token's own position in the line.
+            let origin = Origin {
+                line: line_idx,
+                column: token.start + (seg.start - token_plain_start),
+            };
+            debug_assert!(line_text.is_char_boundary(origin.column));
+            write_segment(out, &plain_text, seg, &token.light, lctx, dimmed, origin);
         }
     }
 }
 
 fn write_segment(
-    sb: &mut String,
+    out: &mut Out,
     plain_text: &str,
     seg: &Segment,
     style: &Style,
     lctx: &LineCtx<'_>,
     dimmed: bool,
+    origin: Origin,
 ) {
-    let fg = lctx.fg;
     let text = &plain_text[seg.start..seg.end];
     if text.is_empty() {
         return;
@@ -211,33 +301,49 @@ fn write_segment(
     match &seg.marker {
         Some(ann) => {
             if let Some(url) = &ann.link {
-                write!(sb, "#link(\"{}\")[", escape_typst_string(url)).unwrap();
+                write!(out.sb, "#link(\"{}\")[", escape_typst_string(url)).unwrap();
             }
             match ann.kind {
                 Some(kind) => {
                     match lctx.typst.marker_color(kind) {
-                        Some(color) => write!(sb, "#highlight(fill: rgb(\"{color}\"))[").unwrap(),
+                        Some(color) => {
+                            write!(out.sb, "#highlight(fill: rgb(\"{color}\"))[").unwrap()
+                        }
                         None => write!(
-                            sb,
+                            out.sb,
                             "#highlight(fill: kz-marker-colors.{})[",
                             marker_name(kind)
                         )
                         .unwrap(),
                     }
-                    write_token(sb, text, style, fg, dimmed);
-                    sb.push(']');
+                    write_token(out, text, style, lctx, dimmed, origin);
+                    out.sb.push(']');
                 }
-                None => write_token(sb, text, style, fg, dimmed),
+                None => write_token(out, text, style, lctx, dimmed, origin),
             }
             if ann.link.is_some() {
-                sb.push(']');
+                out.sb.push(']');
             }
         }
-        None => write_token(sb, text, style, fg, dimmed),
+        None => write_token(out, text, style, lctx, dimmed, origin),
     }
 }
 
-fn write_token(sb: &mut String, text: &str, style: &Style, fg: &str, dimmed: bool) {
+/// A raw literal holds its text verbatim: it cannot contain the backtick that
+/// closes it, and control characters have no escape inside it.
+fn fits_raw(text: &str) -> bool {
+    !text.contains('`') && !text.chars().any(char::is_control)
+}
+
+fn write_token(
+    out: &mut Out,
+    text: &str,
+    style: &Style,
+    lctx: &LineCtx<'_>,
+    dimmed: bool,
+    origin: Origin,
+) {
+    let fg = lctx.fg;
     let mut args: Vec<String> = Vec::new();
     let color = style
         .color
@@ -257,6 +363,7 @@ fn write_token(sb: &mut String, text: &str, style: &Style, fg: &str, dimmed: boo
         args.push("style: \"italic\"".to_owned());
     }
 
+    let sb = &mut out.sb;
     let mut wrappers = 0;
     if let Some(bg) = style.bg.as_deref().filter(|bg| !bg.is_empty()) {
         write!(sb, "#highlight(fill: rgb(\"{bg}\"))[").unwrap();
@@ -271,16 +378,44 @@ fn write_token(sb: &mut String, text: &str, style: &Style, fg: &str, dimmed: boo
         wrappers += 1;
     }
 
-    sb.push_str("#text(");
-    for arg in &args {
-        sb.push_str(arg);
-        sb.push_str(", ");
-    }
-    write!(sb, "\"{}\")", escape_typst_string(text)).unwrap();
+    let exact = lctx.typst.tokens() == TypstTokens::Raw && fits_raw(text);
+    let body = if exact {
+        if !args.is_empty() {
+            write!(sb, "#text({})[", args.join(", ")).unwrap();
+        }
+        sb.push('`');
+        let start = sb.len();
+        sb.push_str(text);
+        let body = start..sb.len();
+        sb.push('`');
+        if !args.is_empty() {
+            sb.push(']');
+        }
+        body
+    } else {
+        sb.push_str("#text(");
+        for arg in &args {
+            sb.push_str(arg);
+            sb.push_str(", ");
+        }
+        sb.push('"');
+        let start = sb.len();
+        sb.push_str(&escape_typst_string(text));
+        let body = start..sb.len();
+        sb.push_str("\")");
+        body
+    };
 
     for _ in 0..wrappers {
         sb.push(']');
     }
+
+    out.table.push(TypstToken {
+        output: body,
+        line: origin.line,
+        column: origin.column..origin.column + text.len(),
+        exact,
+    });
 }
 
 fn indent_chars(line_text: &str, resolved: &ResolvedBlock) -> usize {
@@ -315,14 +450,14 @@ mod tests {
     fn render(code: &str, lang: &str, resolved: ResolvedBlock) -> String {
         let hl = highlighter();
         let tokens = tokenize::tokenize(&hl, code, lang, &Themes::single("github-light")).unwrap();
-        render_block(&tokens, &resolved, &TypstConfig::default())
+        render_block(&tokens, &resolved, &TypstConfig::default()).typst
     }
 
     fn render_with(code: &str, resolved: ResolvedBlock, typst: &TypstConfig) -> String {
         let hl = highlighter();
         let tokens =
             tokenize::tokenize(&hl, code, "text", &Themes::single("github-light")).unwrap();
-        render_block(&tokens, &resolved, typst)
+        render_block(&tokens, &resolved, typst).typst
     }
 
     #[test]
@@ -372,7 +507,7 @@ mod tests {
         }];
         let out = render_with("a b", r, &typst);
         assert!(
-            out.contains("#highlight(fill: rgb(\"#abcdef\"))[#text(\"b\")]"),
+            out.contains("#highlight(fill: rgb(\"#abcdef\"))[`b`]"),
             "{out}"
         );
     }
@@ -409,11 +544,11 @@ mod tests {
     }
 
     #[test]
-    fn indentation_preserved_in_string() {
+    fn indentation_preserved_in_raw_literal() {
         let mut r = resolved("text");
         r.preserve_indent = false;
         let out = render("    four  spaces", "text", r);
-        assert!(out.contains("#text(\"    four  spaces\")"), "{out}");
+        assert!(out.contains("[`    four  spaces`]"), "{out}");
     }
 
     #[test]
@@ -422,13 +557,10 @@ mod tests {
         r.hanging_indent = 2;
         let out = render("    x\ny", "text", r);
         assert!(
-            out.contains("#code-line(indent: 6 * 0.6em)[#text(\"    x\")]"),
+            out.contains("#code-line(indent: 6 * 0.6em)[`    x`]"),
             "{out}"
         );
-        assert!(
-            out.contains("#code-line(indent: 2 * 0.6em)[#text(\"y\")]"),
-            "{out}"
-        );
+        assert!(out.contains("#code-line(indent: 2 * 0.6em)[`y`]"), "{out}");
     }
 
     #[test]
@@ -449,8 +581,8 @@ mod tests {
     #[test]
     fn font_styles_are_text_args() {
         let out = render("**bold** *it*", "markdown", resolved("markdown"));
-        assert!(out.contains("weight: \"bold\", \"bold\""), "{out}");
-        assert!(out.contains("style: \"italic\", \"it\""), "{out}");
+        assert!(out.contains("weight: \"bold\")[`bold`]"), "{out}");
+        assert!(out.contains("style: \"italic\")[`it`]"), "{out}");
     }
 
     #[test]
@@ -463,7 +595,7 @@ mod tests {
             out.contains("numbers: true, gutter-width: 3 * 0.65em, lines: 3)[\n"),
             "{out}"
         );
-        assert!(out.contains("#code-line(num: 100)[#text(\"c\")]"), "{out}");
+        assert!(out.contains("#code-line(num: 100)[`c`]"), "{out}");
     }
 
     #[test]
@@ -483,17 +615,11 @@ mod tests {
         ];
         let out = render("a\nb\nc", "text", r);
         assert!(
-            out.contains("#code-line(mark: \"ins\", label: \"new\")[#text(\"a\")]"),
+            out.contains("#code-line(mark: \"ins\", label: \"new\")[`a`]"),
             "{out}"
         );
-        assert!(
-            out.contains("#code-line(mark: \"ins\")[#text(\"b\")]"),
-            "{out}"
-        );
-        assert!(
-            out.contains("#code-line(mark: \"error\")[#text(\"c\")]"),
-            "{out}"
-        );
+        assert!(out.contains("#code-line(mark: \"ins\")[`b`]"), "{out}");
+        assert!(out.contains("#code-line(mark: \"error\")[`c`]"), "{out}");
     }
 
     #[test]
@@ -506,9 +632,7 @@ mod tests {
         }];
         let out = render("a b c d", "text", r);
         assert!(
-            out.contains(
-                "#text(\"a \")#highlight(fill: kz-marker-colors.mark)[#text(\"b c\")]#text(\" d\")"
-            ),
+            out.contains("`a `#highlight(fill: kz-marker-colors.mark)[`b c`]` d`"),
             "{out}"
         );
     }
@@ -528,7 +652,41 @@ mod tests {
 
     #[test]
     fn string_content_is_escaped() {
-        let out = render("s = \"a\\b\"", "text", resolved("text"));
+        let mut typst = TypstConfig::default();
+        typst.set_tokens("string").unwrap();
+        let out = render_with("s = \"a\\b\"", resolved("text"), &typst);
         assert!(out.contains("#text(\"s = \\\"a\\\\b\\\"\")"), "{out}");
+    }
+
+    #[test]
+    fn raw_content_is_verbatim() {
+        let out = render("s = \"a\\b\" // #x $y [z]", "text", resolved("text"));
+        assert!(out.contains("[`s = \"a\\b\" // #x $y [z]`]"), "{out}");
+    }
+
+    #[test]
+    fn backtick_and_control_tokens_fall_back_to_strings() {
+        let hl = highlighter();
+        let tokens =
+            tokenize::tokenize(&hl, "a `b` c", "text", &Themes::single("github-light")).unwrap();
+        let block = render_block(&tokens, &resolved("text"), &TypstConfig::default());
+        assert!(
+            block.typst.contains("#text(\"a `b` c\")"),
+            "{}",
+            block.typst
+        );
+        assert!(!block.tokens[0].exact);
+        assert!(fits_raw("  x  "));
+        assert!(!fits_raw("a\u{7}b"));
+    }
+
+    #[test]
+    fn mode_follows_the_theme_background() {
+        let hl = highlighter();
+        for (theme, mode) in [("github-light", "light"), ("github-dark", "dark")] {
+            let tokens = tokenize::tokenize(&hl, "x", "text", &Themes::single(theme)).unwrap();
+            let out = render_block(&tokens, &resolved("text"), &TypstConfig::default()).typst;
+            assert!(out.contains(&format!("mode: \"{mode}\"")), "{out}");
+        }
     }
 }

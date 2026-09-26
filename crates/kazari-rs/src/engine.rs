@@ -15,7 +15,7 @@ use crate::locale::{self, UIStrings};
 use crate::meta;
 use crate::notation;
 use crate::render;
-use crate::render_typst;
+use crate::render_typst::{self, TypstBlock};
 use crate::theme_css;
 use crate::tokenize::{self, Tokens, expand_tabs};
 use crate::types::{
@@ -130,6 +130,22 @@ impl Kazari {
     /// Renders the block as a `#code-block(...)` call for the functions defined by
     /// [`typst_preamble`](crate::typst_preamble). Only the light theme is used.
     pub fn render_with_meta_typst(&self, code: &str, meta_str: &str) -> Result<String, Error> {
+        Ok(self.render_with_meta_typst_block(code, meta_str)?.typst)
+    }
+
+    /// Same as [`Kazari::render_with_meta_typst`] with programmatic options.
+    pub fn render_typst(&self, code: &str, options: &Options) -> Result<String, Error> {
+        Ok(self.render_typst_block(code, options)?.typst)
+    }
+
+    /// Same as [`Kazari::render_with_meta_typst`], plus the highlighted code and a
+    /// table of where each token's text sits in the output, for mapping positions
+    /// in a compiled document back to the code.
+    pub fn render_with_meta_typst_block(
+        &self,
+        code: &str,
+        meta_str: &str,
+    ) -> Result<TypstBlock, Error> {
         let mut resolved = self.resolve_meta(meta_str);
         let tokens = self.prepare_and_tokenize(code, &mut resolved, true)?;
         Ok(render_typst::render_block(
@@ -139,8 +155,8 @@ impl Kazari {
         ))
     }
 
-    /// Same as [`Kazari::render_with_meta_typst`] with programmatic options.
-    pub fn render_typst(&self, code: &str, options: &Options) -> Result<String, Error> {
+    /// Same as [`Kazari::render_with_meta_typst_block`] with programmatic options.
+    pub fn render_typst_block(&self, code: &str, options: &Options) -> Result<TypstBlock, Error> {
         let mut resolved = self.resolve_options(options);
         let tokens = self.prepare_and_tokenize(code, &mut resolved, true)?;
         Ok(render_typst::render_block(
@@ -793,6 +809,12 @@ impl KazariBuilder {
     /// hex colour.
     pub fn typst_marker_color(mut self, marker: &str, color: &str) -> Result<Self, Error> {
         self.config.typst.set_marker_color(marker, color)?;
+        Ok(self)
+    }
+
+    /// How Typst tokens are written: `raw` (the default) or `string`.
+    pub fn typst_tokens(mut self, tokens: &str) -> Result<Self, Error> {
+        self.config.typst.set_tokens(tokens)?;
         Ok(self)
     }
 
@@ -1721,7 +1743,7 @@ mod tests {
             "{out}"
         );
         assert!(
-            out.contains("#code-line[#text(fill: rgb(\"#d73a49\"), \"let\")"),
+            out.contains("#code-line[#text(fill: rgb(\"#d73a49\"))[`let`]"),
             "{out}"
         );
         assert!(out.ends_with("]\n]"), "{out}");
@@ -1737,7 +1759,7 @@ mod tests {
             out.contains("numbers: true, gutter-width: 2 * 0.65em"),
             "{out}"
         );
-        assert!(out.contains("#code-line(num: 10)[#text(\"b\")]"), "{out}");
+        assert!(out.contains("#code-line(num: 10)[`b`]"), "{out}");
     }
 
     #[test]
@@ -1746,27 +1768,18 @@ mod tests {
         let out = kz
             .render_with_meta_typst("a\nb\nc", "text {1} ins={2} del={3}")
             .unwrap();
-        assert!(
-            out.contains("#code-line(mark: \"mark\")[#text(\"a\")]"),
-            "{out}"
-        );
-        assert!(
-            out.contains("#code-line(mark: \"ins\")[#text(\"b\")]"),
-            "{out}"
-        );
-        assert!(
-            out.contains("#code-line(mark: \"del\")[#text(\"c\")]"),
-            "{out}"
-        );
+        assert!(out.contains("#code-line(mark: \"mark\")[`a`]"), "{out}");
+        assert!(out.contains("#code-line(mark: \"ins\")[`b`]"), "{out}");
+        assert!(out.contains("#code-line(mark: \"del\")[`c`]"), "{out}");
     }
 
     #[test]
     fn render_with_meta_typst_focus() {
         let kz = test_engine();
         let out = kz.render_with_meta_typst("a\nb", "text focus={1}").unwrap();
-        assert!(out.contains("#code-line[#text(\"a\")]"), "{out}");
+        assert!(out.contains("#code-line[`a`]"), "{out}");
         assert!(
-            out.contains("#code-line[#text(fill: rgb(\"#24292e\").transparentize(60%), \"b\")]"),
+            out.contains("#code-line[#text(fill: rgb(\"#24292e\").transparentize(60%))[`b`]]"),
             "{out}"
         );
     }
@@ -1810,7 +1823,7 @@ mod tests {
             )
             .unwrap();
         assert!(out.contains("title: \"t\", "), "{out}");
-        assert!(out.contains("#code-line(num: 1)[#text(\"a\")]"), "{out}");
+        assert!(out.contains("#code-line(num: 1)[`a`]"), "{out}");
     }
 
     #[test]
@@ -2112,7 +2125,7 @@ mod tests {
             .render_with_meta_typst("see @[docs](https://x.y/d) now", "text")
             .unwrap();
         assert!(
-            typ.contains("#text(\"see \")#link(\"https://x.y/d\")[#text(\"docs\")]#text(\" now\")"),
+            typ.contains("`see `#link(\"https://x.y/d\")[`docs`]` now`"),
             "{typ}"
         );
     }

@@ -7,7 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking
+
+- **Typst tokens are raw literals** (`kazari-rs`, `kazari-cli`): each token's text is now
+  written as a raw literal, ``#text(fill: ...)[`tok`]``, instead of a string argument. Every
+  glyph keeps a source position, so click-to-source in a Typst preview lands on the exact
+  character; with strings, tokens without a colour had no position at all. The output looks
+  the same. A custom template that replaces the preamble needs
+  `show raw: set text(font: font, size: 1.25em)` inside `code-block`. Set `typst.tokens: string`
+  for the previous form.
+- **`mode` argument on `#code-block`** (`kazari-rs`): every block call passes
+  `mode: "light"` or `mode: "dark"`, from the luminance of the theme's background. A custom
+  `code-block` must accept it.
+
 ### Added
+
+- **Typst token table** (`kazari-rs`): `Kazari::render_with_meta_typst_block` and
+  `render_typst_block` return a `TypstBlock` with the Typst text, the code that was
+  highlighted, and one `TypstToken` per token (its byte range in the output, and its line and
+  byte columns in the code), for mapping positions in a compiled document back to the code.
+- **`typst.tokens`** (`kazari-rs`, `kazari-cli`): `raw` (default) or `string`, as a config key,
+  the builder method `typst_tokens` and `--tokens` on `kazari typst`.
+- **Dark marker fills in the Typst template** (`kazari-rs`): with `mode: "dark"`, line markers
+  use the translucent fills of the HTML output instead of the light pastel palette.
 
 - **Pluggable highlighter backend in `kazari-rs`:** the new `kazari_rs::Highlighter` trait
   (`tokenize` and `theme_info`) is what `Kazari::builder` accepts. `irosashi::Highlighter`

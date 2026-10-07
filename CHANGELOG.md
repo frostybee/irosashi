@@ -14,11 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `onig_sys` is gone. No C compiler is needed on any platform, and the workspace has no
   `unsafe` code of its own. MSRV is Rust 1.94. Output is unchanged: byte-identical to
   `vscode-textmate` on all 234 grammars and 468 grammar/theme pairs. Measured across every
-  fixture of the 234 grammars, warm tokenization is 27 percent faster than on C Oniguruma;
+  fixture of the 234 grammars, warm tokenization is 27 percent faster than on C Oniguruma,
+  and faster than Shiki 4.4.3 on 9 of the 10 benchmarked languages;
   cold start (first use of a grammar, pattern compilation) is 1.3 times slower and peak
   memory with all 234 grammars loaded is 2.4 times higher (373 against 155 MiB), because
-  Ferroni's compiled patterns are larger. The published performance tables still show the
-  C Oniguruma numbers and are marked as such; a refresh is pending. Two Ferroni parity
+  Ferroni's compiled patterns are larger. The performance tables in the README and
+  the docs were re-measured on Ferroni (`docs/perf/2026-10-07-ferroni.md`). Two Ferroni parity
   fixes found during the switch were contributed upstream (ferroni#226, ferroni#229).
   Ferroni follows the final C Oniguruma, which rejects raw byte escapes `\x80`-`\xff` in
   UTF-8 patterns; the one bundled grammar that has one (AutoHotkey v2, an alternative that

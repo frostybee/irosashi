@@ -241,7 +241,7 @@ pub fn irosashi_vs_syntect() -> Result<String, Error> {
         header: r#"  <h1 class="cmp-page-title">Irosashi vs syntect</h1>
   <p>Kazari renders framed code blocks on top of a pluggable highlighter. <strong>Left:</strong> the <code>irosashi</code> backend (default), VS Code grammars and the <code>github-light</code> and <code>github-dark</code> themes, byte-identical to Shiki. <strong>Right:</strong> the <code>syntect</code> backend, Sublime Text grammars and the closest bundled <code>.tmTheme</code> (<code>InspiredGitHub</code> and <code>base16-ocean.dark</code>).</p>
   <p>Both columns are the same Kazari engine configuration: language badge, line numbers, a highlighted line and an inserted line, copy button, dual theme. Only the tokens come from a different engine. Toggle dark mode to compare both variants.</p>
-  <p>Irosashi is the default backend because it is both more faithful and faster: with the <code>kazari</code> binary, a 45 KB Rust file renders in 48 ms on Irosashi against 221 ms on syntect, and a 60-page site in 128 ms against 332 ms (measured before the switch to Ferroni). Choose syntect to match code blocks that syntect renders elsewhere on the site.</p>"#,
+  <p>Irosashi is the default backend because it is both more faithful and faster: with the <code>kazari</code> binary, a 45 KB Rust file renders in 40 ms on Irosashi against 209 ms on syntect, and a 60-page site in 165 ms against 393 ms (medians of 7 runs). Choose syntect to match code blocks that syntect renders elsewhere on the site.</p>"#,
         rows: &rows,
         engine_js: &iro.js(),
         script: DARK_TOGGLE_JS,

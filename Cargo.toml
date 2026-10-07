@@ -6,6 +6,7 @@ members = [
     "crates/irosashi-fidelity",
     "tools/sync-assets",
     "tools/bench-report",
+    "tools/kazari-bench",
 ]
 exclude = ["fuzz"]
 resolver = "3"

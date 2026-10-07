@@ -1,0 +1,11 @@
+[package]
+name = "kazari-bench"
+version = "0.1.0"
+description = "Times the kazari binary on generated inputs, one engine against the other"
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+serde_json.workspace = true

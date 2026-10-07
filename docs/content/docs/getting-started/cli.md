@@ -120,7 +120,7 @@ kazari process ./public --engine syntect
 kazari themes --engine syntect
 ```
 
-Every Kazari feature (frames, line numbers, markers, diff, dual themes) works on both; only the tokens differ. syntect is not a speed option here: the binary builds it on `fancy-regex`, and Irosashi is several times faster on the same input (about 10 ms against 65 ms for a small file, 128 ms against 332 ms for a 60-page site, measured on 2026-09-16 on the C Oniguruma engine Irosashi used before Ferroni). With `syntect`, theme names are mapped to the closest bundled theme (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`), a name ending in `.tmTheme` is loaded from that path, and an unknown name falls back to a light or dark bundled theme instead of failing. See [theme names per backend](/docs/styling/themes-and-dark-mode#theme-names-per-backend).
+Every Kazari feature (frames, line numbers, markers, diff, dual themes) works on both; only the tokens differ. syntect is not a speed option here: the binary builds it on `fancy-regex`, and Irosashi is several times faster on the same input (about 10 ms against 57 ms for a small file, 165 ms against 393 ms for a 60-page site; medians of 7 runs, see [`docs/perf/2026-10-07-ferroni.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-10-07-ferroni.md)). With `syntect`, theme names are mapped to the closest bundled theme (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`), a name ending in `.tmTheme` is loaded from that path, and an unknown name falls back to a light or dark bundled theme instead of failing. See [theme names per backend](/docs/styling/themes-and-dark-mode#theme-names-per-backend).
 
 ## Configuration
 

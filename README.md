@@ -83,16 +83,16 @@ Shiki is the right choice. Where Irosashi earns its place:
   app, a CLI, a Typst pipeline or a Rust server cannot call Shiki without a sidecar process or
   embedding V8. That was the original reason for the project: Sarde Maker is a Tauri app, and
   Nuri, the Go engine it ships today, is 10 to 30 times slower than Irosashi on the same inputs.
-- **Cold start is a different comparison:** Shiki's 20 to 90 ms cold numbers exclude Node startup
+- **Cold start is a different comparison:** Shiki's 6 to 110 ms cold numbers exclude Node startup
   and WASM instantiation, which add roughly 50 to 150 ms per process. Irosashi builds a
-  highlighter in 1.5 ms and first-tokenizes Go in 9 ms, inside the host process.
+  highlighter in 1.6 ms and first-tokenizes Go in 3 ms, inside the host process.
 - **Fidelity is strictly better than the alternatives in Rust:** syntect uses Sublime syntaxes and
   cannot reproduce VS Code themes and grammars byte for byte. Irosashi is at 234 of 234 grammars
   against `vscode-textmate` and byte-identical to Shiki's HTML, which no other Rust crate offers.
 - **And it is faster than syntect on the same input.** Measured with the `kazari` binary, which
   ships both backends behind one flag: a 2.5 KB Rust file renders in 10 ms on Irosashi against
-  65 ms on syntect (`fancy-regex`), a 45 KB file in 48 against 221 ms, and a 60-page site in
-  128 against 332 ms (measured before the switch to Ferroni). syntect's place is a site
+  57 ms on syntect (`fancy-regex`), a 45 KB file in 40 against 209 ms, and a 60-page site in
+  165 against 393 ms (`tools/kazari-bench`, medians of 7 runs). syntect's place is a site
   whose other code blocks already come from syntect, not speed.
 - **The per-line API** with an explicit state handle is designed for editors and previews that
   re-tokenize from a dirty line. Shiki's `codeToHtml` is whole-document.
@@ -472,44 +472,60 @@ println!("{:?}", highlighter.themes());
 
 ## Performance
 
-Measured on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, `onig-regset` 6.7.0, theme
-`github-dark`, Criterion medians. Nuri and Shiki numbers are from Nuri's `tools/compare` on the
-same five snippets. Full data, the allocation audit and the cold-start breakdown are in
-[`docs/perf/`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
+Measured on 2026-10-07 on an Intel Core i9-10850K, Windows 10, rustc 1.94.0, Ferroni 1.9.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs in the same session, since Shiki's own timings vary by tens of percent between sessions. The raw dumps are in [`docs/perf/2026-10-07-ferroni.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-10-07-ferroni.md); the per-pattern scanner record and the C Oniguruma numbers it replaced are in [`docs/perf/2026-09-16-per-pattern.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-per-pattern.md).
 
-Warm, small snippets (100 to 300 bytes):
+Warm, small snippets (100 to 600 bytes):
 
-| Input | Irosashi (ms) | Nuri (ms) | Shiki (ms) | Irosashi allocs | Nuri allocs |
-|---|---:|---:|---:|---:|---:|
-| Go (117 B) | 0.25 | 1.26 | 0.98 | 113 | 1,604 |
-| HTML (304 B) | 0.30 | 4.00 | 1.23 | 230 | 2,227 |
-| JavaScript (309 B) | 2.09 | 7.03 | 1.86 | 164 | 3,082 |
-| Markdown (135 B) | 0.26 | 1.57 | 0.51 | | 1,856 |
-| TypeScript (203 B) | 0.82 | 4.00 | 0.96 | | 2,742 |
+| Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
+|---|---:|---:|---:|---:|
+| Go | 117 | 11 | 0.16 | 0.41 |
+| JavaScript | 309 | 13 | 0.79 | 1.96 |
+| HTML | 304 | 16 | 0.18 | 0.53 |
+| TypeScript | 203 | 11 | 0.34 | 0.56 |
+| Markdown | 135 | 12 | 0.27 | 0.21 |
+| Python | 415 | 16 | 0.35 | 0.87 |
+| Bash | 339 | 16 | 0.30 | 0.57 |
+| PHP | 385 | 20 | 0.62 | 1.12 |
+| CSS | 424 | 25 | 0.20 | 0.72 |
+| Rust | 607 | 25 | 0.42 | 1.19 |
 
-Cold start, first call on a fresh highlighter:
+Warm, 50 KiB inputs (the fixture sources repeated):
 
-| Bench | Irosashi (ms) | Nuri (ms) | Shiki (ms) |
-|---|---:|---:|---:|
-| `Highlighter::new()` (embedded registry) | 1.4 | | |
-| first tokens, Go | 8.8 | 77 | 40 |
-| first tokens, HTML | 29.5 | 354 | 48 |
-| first tokens, JavaScript | 57.9 | 557 | 74 |
-| first tokens, Markdown | 24.4 | 145 | 21 |
-| first tokens, TypeScript | 67.3 | 677 | 88 |
+| Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
+|---|---:|---:|---:|---:|
+| Go | 51324 | 2653 | 39.5 | 121.2 |
+| JavaScript | 51298 | 1963 | 91.1 | 208.0 |
+| HTML | 52668 | 1716 | 17.2 | 37.5 |
+| TypeScript | 52920 | 1848 | 79.3 | 100.0 |
+| Markdown | 52150 | 2380 | 28.0 | 19.5 |
+| Python | 51345 | 1794 | 27.0 | 55.2 |
+| Bash | 51558 | 2184 | 25.7 | 52.1 |
+| PHP | 51350 | 2291 | 60.3 | 68.8 |
+| CSS | 51442 | 4094 | 22.1 | 70.6 |
+| Rust | 51561 | 1989 | 25.6 | 47.0 |
 
-Warm speed matches or beats Shiki because both run Oniguruma over the same grammars with the
-same per-pattern last-match cache. Cold time is Oniguruma compiling each distinct pattern once
-on first use; parsing a grammar costs 1.2 to 2.5 ms. Shiki's cold numbers exclude Node startup
-and WASM instantiation. On 50 KiB inputs Irosashi tokenizes Go at 39 ms and JavaScript at
-98 ms, against Nuri's 2.4 s and 3.4 s and Shiki's 89 ms and 106 ms. Against Shiki at snippet,
-fixture and 50 KiB sizes Irosashi is faster on seven of ten languages, at parity on PHP and
-CSS, and 1.6x slower on Markdown (`docs/perf/2026-09-16-per-pattern.md`). Those three, and
-34 smaller grammars by a few tenths of a millisecond, share one shape: many patterns per
-context and one or two scan steps per line, where a full-line search per pattern does more
-work than the regset's stop-at-leftmost scan; the perf file has the per-grammar table and
-the cause. The five-snippet table above predates the per-pattern scanner; see the perf
-file for current numbers.
+Cold start, first call on a fresh highlighter (`Highlighter::new()` itself takes 1.6 ms):
+
+| Language | Irosashi cold (ms) | Shiki cold (ms) |
+|---|---:|---:|
+| Go | 3.28 | 84.3 |
+| JavaScript | 34.0 | 84.6 |
+| HTML | 28.1 | 51.5 |
+| TypeScript | 33.2 | 87.4 |
+| Markdown | 76.8 | 13.8 |
+| Python | 2.22 | 19.0 |
+| Bash | 1.77 | 9.20 |
+| PHP | 86.5 | 110.4 |
+| CSS | 12.7 | 62.8 |
+| Rust | 1.55 | 5.50 |
+
+Irosashi is faster than Shiki on 9 of the 10 languages at both sizes and 1.3 to 1.4x slower
+on Markdown, the one grammar shape where a full-line search per pattern does more work than
+Shiki's regset scan; the cause is in the perf record. Cold time is the engine compiling each
+distinct pattern once on first use plus parsing embedded grammars (Markdown pulls in HTML, CSS
+and JavaScript); Shiki's cold numbers exclude the Node process that runs it. The 2026-09-14
+comparison against Nuri, the Go port, is in
+[`docs/perf/2026-09-14-bench.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
 
 ### Comparison
 
@@ -522,8 +538,8 @@ file for current numbers.
 | Typst output         | Yes         | No             | No           | No            |
 | Licence              | MIT         | MIT            | MIT          | EUPL          |
 | Runtime              | Pure Rust   | Pure Rust      | Node + WASM  | Native + C    |
-| `kazari render`, 45 KB Rust file | 48 ms | 221 ms | n/a | n/a |
-| `kazari process`, 60 pages | 128 ms | 332 ms | n/a | n/a |
+| `kazari render`, 45 KB Rust file | 40 ms | 209 ms | n/a | n/a |
+| `kazari process`, 60 pages | 165 ms | 393 ms | n/a | n/a |
 
 The last two rows are medians from the `kazari` binary with `--engine irosashi` and
 `--engine syntect` on the same input (syntect built on `fancy-regex`); process start and
@@ -686,6 +702,7 @@ None of these are linked into the library.
 |---|---|
 | `tools/sync-assets` | Copies grammars, themes and fidelity fixtures from the Nuri checkout, pinned to its upstream commit. |
 | `tools/bench-report` | Reads `target/criterion` and prints the markdown table used in `docs/perf/`. |
+| `tools/kazari-bench` | Times the release `kazari` binary on generated inputs, both engines, and prints the CLI table used in `docs/perf/`. |
 | `tools/gen-html-goldens` | Node script that runs Shiki 4.4.3 to produce the HTML goldens for the Shiki preset. |
 | `fuzz/` | `cargo-fuzz` targets `parse_grammar` and `tokenize`. |
 

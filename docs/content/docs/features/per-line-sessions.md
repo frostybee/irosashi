@@ -20,13 +20,15 @@ let hl = irosashi::Highlighter::new()?;
 let mut session = hl.session("rust")?;
 ```
 
-The session owns the scope interner and the compiled pattern cache. It is not `Send` or `Sync`:
-each thread that tokenizes needs its own session.
+The session owns the scope interner and the compiled pattern cache. It is `Send` but not
+`Sync`: a session can move to another thread, and each thread that tokenizes needs its own.
 
 ## Tokenize a file line by line
 
 `tokenize_line` takes one bare line (no trailing `\n`), a reference to the previous state, a
-flag for whether this is the first line in the file, and a `TokenizeOptions` struct:
+flag for whether this is the first line in the file, and a `TokenizeOptions` struct. It returns
+raw `Token`s, each a byte range plus a `ScopeListId`, not the `ThemedToken`s with resolved
+colours that `code_to_tokens` returns:
 
 ```rust
 use irosashi::TokenizeOptions;

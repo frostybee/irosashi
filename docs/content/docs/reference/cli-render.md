@@ -30,7 +30,7 @@ kazari render <input> [flags]
 
 ## Language detection
 
-When neither `--lang` nor `--meta` is given, the language is detected from the input file name using Irosashi's built-in tables: exact file name first (`Makefile`, `Dockerfile`, `.gitignore`), then the lowercased extension (`.rs` to `rust`, `.py` to `python`, `.tsx` to `tsx`). Stdin (`-`) has no file name, so it falls back to plain text.
+When neither `--lang` nor `--meta` is given, the language is detected from the input file name using Irosashi's built-in tables: exact file name first (`Makefile`, `Dockerfile`), then the lowercased extension (`.rs` to `rust`, `.py` to `python`, `.tsx` to `tsx`). Stdin (`-`) has no file name, so it falls back to plain text.
 
 `--lang` overrides detection. `--meta` overrides both, since the first token of a meta string is the language:
 

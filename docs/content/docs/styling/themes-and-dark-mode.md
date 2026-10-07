@@ -19,7 +19,7 @@ let kz = Kazari::builder(hl)
 
 ## Dual theme
 
-Pass a light and a dark theme. The light theme's colours appear as inline styles. The dark theme's colours appear as `--kz-dark-*` CSS variables, scoped to the block, and activated by the dark mode selector.
+Pass a light and a dark theme. The light theme's colours appear as inline styles. The dark theme's colours are present in the same HTML, as `--sd` custom properties on each token and `:root.dark` variables for the frame, and are activated by the dark mode selector.
 
 ```rust
 let kz = Kazari::builder(hl)
@@ -65,7 +65,7 @@ let kz = Kazari::builder(hl)
     .build()?;
 ```
 
-The generated CSS uses `.dark .kazari-block` to scope the dark variables. Change the selector to match the convention on the page, for example `[data-theme="dark"]` for frameworks that use a data attribute.
+The generated CSS puts the dark theme variables on `:root.dark` (the `themeCssRoot` selector followed by the dark selector) and switches token colours with `.dark .kazari-block .kz-line span`. Change the selector to match the convention on the page, for example `[data-theme="dark"]` for frameworks that use a data attribute.
 
 ### Media query
 
@@ -79,7 +79,7 @@ let kz = Kazari::builder(hl)
 
 ### Both
 
-A selector and the media query, whichever matches first.
+Both the selector and the `prefers-color-scheme` media query are emitted; either one activates the dark theme.
 
 ```rust
 let kz = Kazari::builder(hl)
@@ -173,8 +173,8 @@ With dual themes, the generated CSS follows this structure:
   /* ... */
 }
 
-/* Dark theme, activated by the dark mode selector */
-.dark .kazari-block {
+/* Dark theme variables, activated by the dark mode selector */
+:root.dark {
   --kz-editor-bg: #24292e;
   --kz-editor-fg: #e1e4e8;
   --kz-ln-fg: #6e7681;
@@ -182,6 +182,15 @@ With dual themes, the generated CSS follows this structure:
 }
 ```
 
-Token colours for the dark theme are emitted as `--kz-dark-*` variables on each `<span>`, resolved by the dark selector. The switch is instantaneous because both sets of colours are present in the HTML from the first render.
+Token colours switch through a separate rule:
+
+```css
+/* Token colours: each span carries --sl (light) and --sd (dark) inline */
+.dark .kazari-block .kz-line span[style^="--"] {
+  color: var(--sd, inherit);
+}
+```
+
+Each token `<span>` carries its light and dark colours as the inline custom properties `--sl` and `--sd`; the dark selector switches `color` from one to the other. The switch is instantaneous because both colours are present in the HTML from the first render.
 
 See [CSS variables](/docs/reference/css-variables/) for the full list of `--kz-*` properties.

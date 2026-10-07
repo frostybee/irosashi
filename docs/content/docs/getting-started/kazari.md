@@ -7,9 +7,7 @@ sidebar:
 
 Irosashi tokenizes code. Kazari turns those tokens into the finished code blocks a documentation
 site or PDF needs: editor and terminal frames, line numbers, highlight and diff markers, copy
-buttons, collapsible sections, and dual-theme support. This page walks through rendering a
-single block, injecting the page-wide assets, and the two alternative output paths (Typst and
-Markdown).
+buttons, collapsible sections, and dual-theme support.
 
 ## Prerequisites
 

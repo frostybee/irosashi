@@ -25,11 +25,11 @@ Irosashi runs Ferroni, a pure Rust port of the Oniguruma regex engine, in-proces
 - Cold start measured in single-digit milliseconds, not hundreds
 - Per-line incremental API with explicit `StateStack` handles, for editors and live previews that re-tokenize from a dirty line
 - Typst output in the same process through kazari-rs, not a post-processing step on an HTML blob
-- Single static binary. No `node_modules`, no sidecar
+- A single static binary, with no `node_modules` and no sidecar
 
 ## Performance
 
-Measured on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs. Full data, including the medium fixtures, the cache counters and the before and after of the per-pattern scanner, are in [`docs/perf/2026-09-16-per-pattern.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-per-pattern.md); the allocation audit and the older cold-start breakdown are in [`docs/perf/2026-09-14-bench.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
+Measured on 2026-09-16 on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, with the C Oniguruma engine (`onig_sys` 69.9.3) that Irosashi used before the switch to Ferroni, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs. Full data, including the medium fixtures, the cache counters and the before and after of the per-pattern scanner, are in [`docs/perf/2026-09-16-per-pattern.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-per-pattern.md); the allocation audit and the older cold-start breakdown are in [`docs/perf/2026-09-14-bench.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
 
 ### Warm speed matches or beats Shiki
 
@@ -63,13 +63,9 @@ On 50 KiB inputs (the fixture sources repeated) Irosashi is faster on seven lang
 | CSS | 51442 | 4094 | 72.8 | 71.0 |
 | Rust | 51561 | 1989 | 22.2 | 46.8 |
 
-_Measured on C Oniguruma through `onig_sys`, before the switch to Ferroni; a refresh on Ferroni is pending._
-
 Markdown, PHP and CSS share the one shape the per-pattern design handles worse than a regset: contexts with many patterns and only one or two scan steps per line, so there is little for the cache to reuse, and a stale pattern's search runs to the end of the line, rejecting candidate positions the regset never looked at past the leftmost match. Oniguruma's public search call cannot bound where a match may start without also bounding where it may end, which would change tokens, so Irosashi does not bound it. The same shape costs a few tenths of a millisecond on some smaller grammars (LLVM, CMake, Kusto, Fish); the full per-grammar table over all 234 fixtures is in the perf record linked above. Ferroni has the bounded search internally (`search_in_range`); exposing it is an upstream change on the roadmap.
 
-Choosing Irosashi does not cost tokenization speed. The win is removing the runtime, and on most languages it is also faster.
-
-### Cold start is the real difference
+### Cold start
 
 Shiki's published cold numbers (20 to 90 ms per language) exclude Node.js startup and WASM instantiation, which add 50 to 150 ms per process. A Rust program calling Shiki via subprocess pays that cost on every invocation. Irosashi's `Highlighter::new()` runs in 1.5 ms inside the host process.
 
@@ -86,8 +82,6 @@ Shiki's published cold numbers (20 to 90 ms per language) exclude Node.js startu
 | CSS | 24.2 | 59.8 |
 | Rust | 1.5 | 6.1 |
 
-_Measured on C Oniguruma through `onig_sys`, before the switch to Ferroni; a refresh on Ferroni is pending._
-
 Irosashi cold time is the engine compiling each distinct pattern of the grammar once on first use, plus parsing any grammar the language embeds (Markdown pulls in HTML, and through it CSS and JavaScript, which is most of its 45 ms). Shiki cold time includes WASM compilation of the grammar but not the Node process that runs it.
 
 ### No runtime overhead
@@ -100,10 +94,6 @@ The performance tables show that tokenization speed is comparable. The differenc
 
 A grammar ships in the fidelity gate only at 100% on the shipping theme set. Anything below that is listed in `held.toml` and excluded from the core gate.
 
-**syntect** uses Sublime Text syntaxes and `.tmTheme` colour files. These are a different format from VS Code's TextMate JSON grammars and JSON themes, so syntect cannot reproduce VS Code scoping or theme colours byte for byte. It is also slower on the same input: the `kazari` binary ships both backends behind one flag, and a 2.5 KB Rust file renders in 10 ms on Irosashi against 65 ms on syntect, a 45 KB file in 48 against 221 ms, and a 60-page site in 128 against 332 ms (medians; syntect built on `fancy-regex`). See [Backends](/docs/getting-started/cli#backends).
-
-**giallo** also runs native Oniguruma and parses VS Code grammars, but does not publish fidelity scores against `vscode-textmate`.
-
 ## The presentation layer
 
 [kazari-rs](https://crates.io/crates/kazari-rs) adds the decoration a documentation site or PDF pipeline needs on top of Irosashi's token output: editor and terminal frames, line numbers, highlight/insert/delete/focus markers, titles, collapsible sections, toolbar buttons, dual-theme switching, output panels, Typst rendering, and a `pulldown-cmark` adapter with code groups and Mermaid pass-through.
@@ -111,6 +101,8 @@ A grammar ships in the fidelity gate only at 100% on the shipping theme set. Any
 It reads the same fence meta syntax and `kazari.config.yaml` as [Go Kazari](https://github.com/frostybee/kazari), so content written for the Go library works unchanged. A Rust program that renders documentation can tokenize, decorate, and export to HTML and Typst in one process.
 
 ## Comparison
+
+The `kazari` timings in the table come from the run described under [Performance](#performance).
 
 |                      | Irosashi     | syntect        | Shiki (JS)   | giallo        |
 |----------------------|--------------|----------------|--------------|---------------|
@@ -124,9 +116,11 @@ It reads the same fence meta syntax and `kazari.config.yaml` as [Go Kazari](http
 | `kazari render`, 45 KB Rust file | 48 ms | 221 ms | n/a | n/a |
 | `kazari process`, 60 pages | 128 ms | 332 ms | n/a | n/a |
 
-_Measured on C Oniguruma through `onig_sys`, before the switch to Ferroni; a refresh on Ferroni is pending._
+**syntect** uses Sublime Text syntaxes and `.tmTheme` colour files. These are a different format from VS Code's TextMate JSON grammars and JSON themes, so syntect cannot reproduce VS Code scoping or theme colours byte for byte. It is also slower on the same input: the `kazari` binary ships both backends behind one flag, and a 2.5 KB Rust file renders in 10 ms on Irosashi against 65 ms on syntect, a 45 KB file in 48 against 221 ms, and a 60-page site in 128 against 332 ms (medians; syntect built on `fancy-regex`). See [Backends](/docs/getting-started/cli#backends).
 
-syntect is the right choice when a site already renders other code blocks with syntect and wants them to match. Both backends are pure Rust. syntect is not faster: on `fancy-regex` it is 3 to 6 times slower than Irosashi (measured before the switch to Ferroni).
+**giallo** also runs native Oniguruma and parses VS Code grammars, but does not publish fidelity scores against `vscode-textmate`.
+
+syntect is the right choice when a site already renders other code blocks with syntect and wants them to match. Both backends are pure Rust.
 
 ## When to use Shiki instead
 

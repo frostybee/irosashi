@@ -5,8 +5,6 @@ sidebar:
   order: 2
 ---
 
-This page walks through the core highlighting workflow: creating a highlighter, reading tokens, rendering single-theme and dual-theme HTML, and generating a class-based stylesheet.
-
 ## Create a highlighter
 
 `Highlighter::new()` loads the 257 embedded grammars and 65 themes:

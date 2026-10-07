@@ -9,8 +9,6 @@ Irosashi tokenizes once and renders to six formats. Each format has its own `cod
 on `Highlighter` and its own options struct. Every options struct has a `::new(lang, theme)`
 constructor that fills in defaults.
 
-All examples on this page assume a highlighter created with `Highlighter::new()`.
-
 ## HTML
 
 `code_to_html` produces a `<pre><code>` block with inline `style` attributes. Two dialects are

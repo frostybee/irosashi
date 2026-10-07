@@ -38,7 +38,7 @@ let kz = Kazari::builder(hl)
 ```
 
 The highlighter is any type implementing `kazari_rs::Highlighter`. Irosashi is the default
-backend. To build without Oniguruma, or to keep an existing syntect setup, use the `syntect`
+backend. To keep an existing syntect setup, use the `syntect`
 feature and pass a `SyntectHighlighter` instead; every Kazari feature works the same on either
 backend:
 

@@ -41,16 +41,15 @@ With a Rust toolchain:
 cargo install kazari-cli
 ```
 
-Building from source needs a C compiler for Irosashi's vendored Oniguruma. On Windows, Visual
-Studio with the VC tools component works; on Linux and macOS a system `cc` is enough.
+Building from source needs only a Rust toolchain (1.94 or later); there is no C dependency.
 
 The binary ships two highlighting backends. `irosashi` (default) uses VS Code grammars and
 themes and matches Shiki byte for byte; `syntect` uses Sublime Text grammars and syntect's
 bundled `.tmTheme` set, for sites that want their code blocks to look the way syntect
 renders them elsewhere. Pick one with `--engine` on any command or `engine:` in the config
-file. Irosashi is also the faster of the two in this binary (syntect runs on `fancy-regex`
-here, not Oniguruma): about 10 ms against 65 ms for a small file, and 128 ms against 332 ms
-for a 60-page site.
+file. Irosashi is also the faster of the two in this binary (syntect runs on `fancy-regex`):
+about 10 ms against 65 ms for a small file, and 128 ms against 332 ms for a 60-page site,
+measured before the switch to Ferroni.
 
 ## Commands
 

@@ -1,7 +1,6 @@
-//! [`syntect`] as a Kazari backend: Sublime Text grammars and `.tmTheme` themes,
-//! pure Rust (no C compiler). Less faithful to VS Code than Irosashi, and slower on
-//! `fancy-regex`; its place is a build that cannot link Oniguruma or a site that
-//! already renders with syntect.
+//! [`syntect`] as a Kazari backend: Sublime Text grammars and `.tmTheme` themes.
+//! Less faithful to VS Code than Irosashi, and slower on `fancy-regex`; its place is a
+//! site that already renders with syntect and wants its code blocks to match.
 
 use std::collections::HashMap;
 use std::path::Path;

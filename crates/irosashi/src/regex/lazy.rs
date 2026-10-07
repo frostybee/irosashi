@@ -4,13 +4,15 @@ use std::sync::OnceLock;
 use serde::{Deserialize, Serialize};
 
 use crate::regex::raw::Regex;
-use crate::regex::rewrite_z_anchor;
+use crate::regex::{rewrite_crude_byte_class, rewrite_z_anchor};
 
 /// A pattern string compiled on first use.
 ///
-/// Construction applies the vscode-textmate `\z` rewrite; this is the only place it
-/// happens, so every grammar pattern (match, begin, end, while, and backref-resolved
-/// end patterns derived from `source()`) goes through it exactly once.
+/// Construction applies the vscode-textmate `\z` rewrite and the crude-byte class
+/// rewrite; this is the only place they happen, so every grammar pattern (match, begin,
+/// end, while, and backref-resolved end patterns derived from `source()`) goes through
+/// them exactly once. Both are idempotent: `copy()` and deserialization rebuild a
+/// `LazyRegex` from an already rewritten source.
 #[derive(Serialize, Deserialize)]
 #[serde(from = "String", into = "String")]
 pub struct LazyRegex {
@@ -21,7 +23,7 @@ pub struct LazyRegex {
 impl LazyRegex {
     pub fn new(pattern: &str) -> Self {
         Self {
-            source: rewrite_z_anchor(pattern),
+            source: rewrite_crude_byte_class(&rewrite_z_anchor(pattern)),
             compiled: OnceLock::new(),
         }
     }
@@ -30,7 +32,7 @@ impl LazyRegex {
         &self.source
     }
 
-    /// `false` if Oniguruma rejects the pattern.
+    /// `false` if the engine rejects the pattern.
     pub fn compiles(&self) -> bool {
         self.compiled().is_some()
     }
@@ -91,6 +93,14 @@ mod tests {
     fn rewrites_z_anchor_in_source() {
         assert_eq!(LazyRegex::new(r"foo\z").source(), r"foo$(?!\n)(?<!\n)");
         assert_eq!(LazyRegex::new(r"foo\\z").source(), r"foo\\z");
+    }
+
+    #[test]
+    fn rewrites_crude_byte_class_in_source() {
+        let regex = LazyRegex::new(r"a|[^\x00-\xff]|b");
+        assert_eq!(regex.source(), "a|b");
+        assert_eq!(LazyRegex::new(regex.source()).source(), "a|b");
+        assert!(regex.compiles());
     }
 
     #[test]

@@ -8,7 +8,7 @@
   <a href="https://crates.io/crates/irosashi"><img src="https://img.shields.io/crates/v/irosashi.svg" alt="crates.io"></a>
   <a href="https://docs.rs/irosashi"><img src="https://docs.rs/irosashi/badge.svg" alt="docs.rs"></a>
   <a href="https://github.com/frostybee/irosashi/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Rust-%E2%89%A51.93-f74c00" alt="Rust Version">
+  <img src="https://img.shields.io/badge/Rust-%E2%89%A51.94-f74c00" alt="Rust Version">
 </p>
 
 <p align="center">
@@ -42,9 +42,10 @@ Shiki's output without Shiki's runtime. Irosashi (色差し, "applying colour") 
 257 languages, 65 VS Code themes, byte-identical tokens and HTML, incremental per-line
 tokenization, and Typst output. No Node, no browser and no WASM in the process.
 
-It runs the real [Oniguruma regex engine](https://github.com/kkos/oniguruma) natively through
-the [`onig_sys`](https://crates.io/crates/onig_sys) bindings, one compiled pattern per source
-with a per-pattern match cache, for bug-for-bug compatibility with Shiki's tokenizer.
+It runs [Ferroni](https://crates.io/crates/ferroni), a pure Rust port of the
+[Oniguruma regex engine](https://github.com/kkos/oniguruma), one compiled pattern per source
+with a per-pattern match cache, and is byte-identical to `vscode-textmate` on all 234
+tested grammars. The whole workspace is Rust: no C compiler, no vendored C library.
 
 234 of 234 tested grammars (100%) produce output byte-identical to Shiki, verified against
 [vscode-textmate](https://github.com/microsoft/vscode-textmate) across both `github-dark` and
@@ -63,7 +64,7 @@ The workspace has four crates:
   SVG, JSON, plain text).
 - `kazari-rs`: presentation layer (fence meta, transformers, line numbers, markers, decorated
   HTML, Typst output, `kazari.config.yaml`) on a pluggable `Highlighter`: `irosashi` by
-  default, or `syntect` for a pure Rust build. It has its own
+  default, or `syntect` for sites that already render with syntect. It has its own
   [README](https://github.com/frostybee/irosashi/blob/main/crates/kazari-rs/README.md).
 - `kazari-cli`: the `kazari` binary. `kazari process ./public` upgrades the code blocks of a
   built site from any generator; `render`, `markdown` and `typst` render single files.
@@ -91,7 +92,8 @@ Shiki is the right choice. Where Irosashi earns its place:
 - **And it is faster than syntect on the same input.** Measured with the `kazari` binary, which
   ships both backends behind one flag: a 2.5 KB Rust file renders in 10 ms on Irosashi against
   65 ms on syntect (`fancy-regex`), a 45 KB file in 48 against 221 ms, and a 60-page site in
-  128 against 332 ms. syntect's advantage is the build (no C compiler), not the run.
+  128 against 332 ms (measured before the switch to Ferroni). syntect's place is a site
+  whose other code blocks already come from syntect, not speed.
 - **The per-line API** with an explicit state handle is designed for editors and previews that
   re-tokenize from a dirty line. Shiki's `codeToHtml` is whole-document.
 - **Typst output** through Kazari, for PDF export in the same process that renders the preview:
@@ -124,9 +126,7 @@ Shiki is the right choice. Where Irosashi earns its place:
 
 ## Installation
 
-Requires **Rust 1.93** or later and a C compiler for the vendored Oniguruma build (`onig-sys`).
-On Windows, Visual Studio with the VC tools component works. On Linux and macOS, a system `cc`
-is enough.
+Requires **Rust 1.94** or later. Everything is Rust: no C compiler is needed on any platform.
 
 ```toml
 [dependencies]
@@ -521,7 +521,7 @@ file for current numbers.
 | Per-line API         | Yes         | Yes            | No           | No            |
 | Typst output         | Yes         | No             | No           | No            |
 | Licence              | MIT         | MIT            | MIT          | EUPL          |
-| Runtime              | Native + C  | Pure Rust      | Node + WASM  | Native + C    |
+| Runtime              | Pure Rust   | Pure Rust      | Node + WASM  | Native + C    |
 | `kazari render`, 45 KB Rust file | 48 ms | 221 ms | n/a | n/a |
 | `kazari process`, 60 pages | 128 ms | 332 ms | n/a | n/a |
 
@@ -537,8 +537,8 @@ backend construction are under 6 ms for both. Shiki and giallo are not selectabl
   backreferences, `\G` anchoring, injection selectors, cross-grammar includes, while-condition
   checking) and its pattern quirks (`\z` rewrite, empty `match` no-op, `captures` fallback for
   `beginCaptures`/`endCaptures`, empty rules removed to a fixpoint)
-- The Oniguruma regex engine, natively, with the real `ONIG_OPTION_NOT_BEGIN_STRING` and
-  `ONIG_OPTION_NOT_BEGIN_POSITION` search options
+- Oniguruma's regex semantics through Ferroni, its pure Rust port, with the real
+  `ONIG_OPTION_NOT_BEGIN_STRING` and `ONIG_OPTION_NOT_BEGIN_POSITION` search options
 - VS Code theme parsing, scope matching with specificity scoring, and `FontStyle` bitmask
   semantics (`NotSet` distinct from `None`)
 - HTML rendering with the `<pre><code><span>` structure, multi-theme CSS variable emission, and
@@ -691,7 +691,7 @@ None of these are linked into the library.
 
 ## Status
 
-Engine complete. Native Oniguruma via `onig_sys`, grammar compiler, tokenizer, theme
+Engine complete. Ferroni (pure Rust Oniguruma), grammar compiler, tokenizer, theme
 resolution, embedded assets (257 grammars, 65 themes), the fidelity gate, and HTML output in
 two dialects plus ANSI, SVG, JSON and plain text. All 234 grammars are byte-identical to
 `vscode-textmate` (468 of 468 grammar/theme pairs); the Shiki HTML preset is byte-identical to
@@ -709,8 +709,8 @@ Copyright (c) 2026 FrostyBee.
 Irosashi is licensed under the [MIT License](https://github.com/frostybee/irosashi/blob/main/LICENSE). You are free to use, modify and
 distribute it in both open-source and commercial projects.
 
-Irosashi embeds third-party components (Oniguruma through `onig_sys`, TextMate grammars, VS
-Code themes) under their respective licences (BSD-2-Clause, MIT and others).
+Irosashi depends on and embeds third-party components (Ferroni, TextMate grammars, VS Code
+themes) under their respective licences (BSD-2-Clause, MIT and others).
 
 ---
 

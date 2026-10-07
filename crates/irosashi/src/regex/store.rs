@@ -16,7 +16,7 @@ pub(crate) struct RegexStore {
 
 impl RegexStore {
     /// The compiled pattern for `source` and whether this call compiled it. A pattern
-    /// Oniguruma rejects is remembered with its message.
+    /// the engine rejects is remembered with its message.
     pub fn get_or_compile(&self, source: &str) -> (Compiled, bool) {
         if let Some(known) = self.lock().get(source) {
             return (known.clone(), false);

@@ -1,13 +1,18 @@
-//! Direct Oniguruma calls. A safe wrapper's search entry points allocate a match
-//! parameter per call and validate the encoding per call; the tokenizer issues tens of
-//! searches per scan step, so those costs dominate.
+//! The regex engine: `ferroni`, a pure Rust port of Oniguruma. The C-shaped entry
+//! points are used because they take a start position and a reusable region, which
+//! the safe `ferroni::api::Regex` does not expose.
 
-use std::ffi::CStr;
-use std::sync::Mutex;
+use ferroni::encodings::utf8::ONIG_ENCODING_UTF8;
+use ferroni::error::RegexError;
+use ferroni::oniguruma::{
+    ONIG_MISMATCH, ONIG_OPTION_CAPTURE_GROUP, ONIG_REGION_NOTPOS, OnigOptionType, OnigRegion,
+};
+use ferroni::regint::RegexType;
+use ferroni::regsyntax::OnigSyntaxOniguruma;
 
-use onig_sys::{OnigErrorInfo, OnigRegex, OnigRegion};
-
-static COMPILE: Mutex<()> = Mutex::new(());
+pub(crate) const OPTION_NONE: u32 = OnigOptionType::NONE.bits();
+pub(crate) const OPTION_NOT_BEGIN_STRING: u32 = OnigOptionType::NOT_BEGIN_STRING.bits();
+pub(crate) const OPTION_NOT_BEGIN_POSITION: u32 = OnigOptionType::NOT_BEGIN_POSITION.bits();
 
 pub(crate) enum Search {
     Found,
@@ -18,41 +23,23 @@ pub(crate) enum Search {
 /// A compiled pattern. Searching is thread safe; the results live in the caller's
 /// `Region`.
 pub(crate) struct Regex {
-    raw: OnigRegex,
+    raw: RegexType,
 }
-
-unsafe impl Send for Regex {}
-unsafe impl Sync for Regex {}
 
 impl Regex {
     /// Compiles with capture groups on, UTF-8, and Oniguruma's default syntax.
     pub fn new(source: &str) -> Result<Self, String> {
-        let bytes = source.as_bytes();
-        let mut raw: OnigRegex = std::ptr::null_mut();
-        let mut info = OnigErrorInfo {
-            enc: std::ptr::null_mut(),
-            par: std::ptr::null_mut(),
-            par_end: std::ptr::null_mut(),
-        };
-        let _guard = COMPILE
-            .lock()
-            .unwrap_or_else(|poisoned| poisoned.into_inner());
-        let code = unsafe {
-            onig_sys::onig_new(
-                &mut raw,
-                bytes.as_ptr(),
-                bytes.as_ptr().add(bytes.len()),
-                onig_sys::ONIG_OPTION_CAPTURE_GROUP,
-                &raw mut onig_sys::OnigEncodingUTF8,
-                onig_sys::OnigDefaultSyntax,
-                &mut info,
-            )
-        };
-        if code == onig_sys::ONIG_NORMAL as i32 {
-            Ok(Self { raw })
-        } else {
-            Err(error_message(code, &info))
-        }
+        ferroni::regcomp::onig_new(
+            source.as_bytes(),
+            ONIG_OPTION_CAPTURE_GROUP,
+            &ONIG_ENCODING_UTF8,
+            &OnigSyntaxOniguruma,
+        )
+        .map(|raw| Self { raw })
+        .map_err(|err| match err {
+            RegexError::Syntax { message, .. } => message,
+            other => other.to_string(),
+        })
     }
 
     /// Searches `text` for a match starting in `start..=text.len()`, with the whole
@@ -60,59 +47,50 @@ impl Regex {
     pub fn search(&self, text: &str, start: usize, options: u32, region: &mut Region) -> Search {
         debug_assert!(start <= text.len());
         let bytes = text.as_bytes();
-        let code = unsafe {
-            onig_sys::onig_search(
-                self.raw,
-                bytes.as_ptr(),
-                bytes.as_ptr().add(bytes.len()),
-                bytes.as_ptr().add(start),
-                bytes.as_ptr().add(bytes.len()),
-                region.raw,
-                options,
-            )
-        };
+        let (code, raw) = ferroni::regexec::onig_search(
+            &self.raw,
+            bytes,
+            bytes.len(),
+            start,
+            bytes.len(),
+            region.raw.take(),
+            OnigOptionType::from_bits_retain(options),
+        );
+        region.raw = raw;
         if code >= 0 {
             Search::Found
-        } else if code == onig_sys::ONIG_MISMATCH {
+        } else if code == ONIG_MISMATCH {
             Search::NotFound
         } else {
             Search::Failed
         }
     }
-}
 
-impl Regex {
     /// Whether the pattern matches anywhere in `text`.
     pub fn is_match_anywhere(&self, text: &str) -> bool {
         matches!(
-            self.search(text, 0, onig_sys::ONIG_OPTION_NONE, &mut Region::new()),
+            self.search(text, 0, OPTION_NONE, &mut Region::new()),
             Search::Found
         )
     }
 }
 
-impl Drop for Regex {
-    fn drop(&mut self) {
-        unsafe { onig_sys::onig_free(self.raw) };
-    }
-}
-
 /// Capture positions of the last successful search.
 pub(crate) struct Region {
-    raw: *mut OnigRegion,
+    raw: Option<OnigRegion>,
 }
-
-unsafe impl Send for Region {}
 
 impl Region {
     pub fn new() -> Self {
-        let raw = unsafe { onig_sys::onig_region_new() };
-        assert!(!raw.is_null(), "onig_region_new returned null");
-        Self { raw }
+        Self {
+            raw: Some(OnigRegion::new()),
+        }
     }
 
     pub fn len(&self) -> usize {
-        unsafe { (*self.raw).num_regs.max(0) as usize }
+        self.raw
+            .as_ref()
+            .map_or(0, |raw| raw.num_regs.max(0) as usize)
     }
 
     /// Byte range of group `index`, `None` when it did not participate.
@@ -120,32 +98,14 @@ impl Region {
         if index >= self.len() {
             return None;
         }
-        let (beg, end) = unsafe { (*(*self.raw).beg.add(index), *(*self.raw).end.add(index)) };
-        if beg == onig_sys::ONIG_REGION_NOTPOS || beg < 0 || end < beg {
+        let raw = self.raw.as_ref()?;
+        let (beg, end) = (*raw.beg.get(index)?, *raw.end.get(index)?);
+        if beg == ONIG_REGION_NOTPOS || beg < 0 || end < beg {
             None
         } else {
             Some((beg as usize, end as usize))
         }
     }
-}
-
-impl Drop for Region {
-    fn drop(&mut self) {
-        unsafe { onig_sys::onig_region_free(self.raw, 1) };
-    }
-}
-
-fn error_message(code: i32, info: &OnigErrorInfo) -> String {
-    let mut buf = [0u8; onig_sys::ONIG_MAX_ERROR_MESSAGE_LEN as usize + 1];
-    let len = unsafe {
-        onig_sys::onig_error_code_to_str(buf.as_mut_ptr(), code, info as *const OnigErrorInfo)
-    };
-    if len <= 0 {
-        return format!("oniguruma error {code}");
-    }
-    CStr::from_bytes_until_nul(&buf)
-        .map(|s| s.to_string_lossy().into_owned())
-        .unwrap_or_else(|_| format!("oniguruma error {code}"))
 }
 
 #[cfg(test)]
@@ -182,12 +142,7 @@ mod tests {
         let mut region = Region::new();
         assert!(matches!(re.search("abc", 1, 0, &mut region), Search::Found));
         assert!(matches!(
-            re.search(
-                "abc",
-                1,
-                onig_sys::ONIG_OPTION_NOT_BEGIN_POSITION,
-                &mut region
-            ),
+            re.search("abc", 1, OPTION_NOT_BEGIN_POSITION, &mut region),
             Search::NotFound
         ));
     }

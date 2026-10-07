@@ -17,7 +17,7 @@ Both paths add a runtime dependency that the Rust program would not otherwise ne
 
 ## What Irosashi provides instead
 
-Irosashi runs the real Oniguruma regex engine natively through `onig_sys`, in-process, with no subprocess and no WASM. The concrete differences:
+Irosashi runs Ferroni, a pure Rust port of the Oniguruma regex engine, in-process, with no subprocess, no WASM and no C compiler. The concrete differences:
 
 - No Node.js or WASM runtime to install, start, or keep alive
 - No subprocess IPC or serialization between processes
@@ -33,7 +33,7 @@ Measured on an Intel Core i9-10850K, Windows 10, rustc 1.93.0, theme `github-dar
 
 ### Warm speed matches or beats Shiki
 
-Both Irosashi and Shiki run Oniguruma over identical TextMate grammars, and both use the same scan strategy: one compiled pattern per rule, and a per-pattern cache of where it last matched on the current line, so a scan step re-searches only the patterns whose remembered match is behind the cursor. On short snippets Irosashi is faster on 8 of 10 tested languages, even on Markdown, and within 7 percent on CSS.
+Both Irosashi and Shiki run Oniguruma's regex semantics (Ferroni in Rust, vscode-oniguruma in WASM) over identical TextMate grammars, and both use the same scan strategy: one compiled pattern per rule, and a per-pattern cache of where it last matched on the current line, so a scan step re-searches only the patterns whose remembered match is behind the cursor. On short snippets Irosashi is faster on 8 of 10 tested languages, even on Markdown, and within 7 percent on CSS.
 
 | Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
 |---|---:|---:|---:|---:|
@@ -63,7 +63,9 @@ On 50 KiB inputs (the fixture sources repeated) Irosashi is faster on seven lang
 | CSS | 51442 | 4094 | 72.8 | 71.0 |
 | Rust | 51561 | 1989 | 22.2 | 46.8 |
 
-Markdown, PHP and CSS share the one shape the per-pattern design handles worse than a regset: contexts with many patterns and only one or two scan steps per line, so there is little for the cache to reuse, and a stale pattern's search runs to the end of the line, rejecting candidate positions the regset never looked at past the leftmost match. Oniguruma's public search call cannot bound where a match may start without also bounding where it may end, which would change tokens, so Irosashi does not bound it. The same shape costs a few tenths of a millisecond on some smaller grammars (LLVM, CMake, Kusto, Fish); the full per-grammar table over all 234 fixtures is in the perf record linked above. The fix is a one-function export from a vendored Oniguruma build and is on the roadmap.
+_Measured on C Oniguruma through `onig_sys`, before the switch to Ferroni; a refresh on Ferroni is pending._
+
+Markdown, PHP and CSS share the one shape the per-pattern design handles worse than a regset: contexts with many patterns and only one or two scan steps per line, so there is little for the cache to reuse, and a stale pattern's search runs to the end of the line, rejecting candidate positions the regset never looked at past the leftmost match. Oniguruma's public search call cannot bound where a match may start without also bounding where it may end, which would change tokens, so Irosashi does not bound it. The same shape costs a few tenths of a millisecond on some smaller grammars (LLVM, CMake, Kusto, Fish); the full per-grammar table over all 234 fixtures is in the perf record linked above. Ferroni has the bounded search internally (`search_in_range`); exposing it is an upstream change on the roadmap.
 
 Choosing Irosashi does not cost tokenization speed. The win is removing the runtime, and on most languages it is also faster.
 
@@ -84,7 +86,9 @@ Shiki's published cold numbers (20 to 90 ms per language) exclude Node.js startu
 | CSS | 24.2 | 59.8 |
 | Rust | 1.5 | 6.1 |
 
-Irosashi cold time is Oniguruma compiling each distinct pattern of the grammar once on first use, plus parsing any grammar the language embeds (Markdown pulls in HTML, and through it CSS and JavaScript, which is most of its 45 ms). Shiki cold time includes WASM compilation of the grammar but not the Node process that runs it.
+_Measured on C Oniguruma through `onig_sys`, before the switch to Ferroni; a refresh on Ferroni is pending._
+
+Irosashi cold time is the engine compiling each distinct pattern of the grammar once on first use, plus parsing any grammar the language embeds (Markdown pulls in HTML, and through it CSS and JavaScript, which is most of its 45 ms). Shiki cold time includes WASM compilation of the grammar but not the Node process that runs it.
 
 ### No runtime overhead
 
@@ -116,14 +120,16 @@ It reads the same fence meta syntax and `kazari.config.yaml` as [Go Kazari](http
 | Per-line API         | Yes          | Yes            | No           | No            |
 | Typst output         | Yes (kazari) | No             | No           | No            |
 | Licence              | MIT          | MIT            | MIT          | EUPL          |
-| Runtime              | Native + C   | Pure Rust      | Node + WASM  | Native + C    |
+| Runtime              | Pure Rust    | Pure Rust      | Node + WASM  | Native + C    |
 | `kazari render`, 45 KB Rust file | 48 ms | 221 ms | n/a | n/a |
 | `kazari process`, 60 pages | 128 ms | 332 ms | n/a | n/a |
 
-syntect's advantage is a pure-Rust build with no C dependency. It is the right choice when the build cannot link Oniguruma, or when a site already renders other code blocks with syntect and wants them to match. It is not faster: on `fancy-regex` it is 3 to 6 times slower than Irosashi's native Oniguruma.
+_Measured on C Oniguruma through `onig_sys`, before the switch to Ferroni; a refresh on Ferroni is pending._
+
+syntect is the right choice when a site already renders other code blocks with syntect and wants them to match. Both backends are pure Rust. syntect is not faster: on `fancy-regex` it is 3 to 6 times slower than Irosashi (measured before the switch to Ferroni).
 
 ## When to use Shiki instead
 
 If the project already runs on Node.js, use Shiki. A Next.js site, an Astro build, a Vite plugin: Shiki is the reference implementation with the largest ecosystem, and calling it from JavaScript costs nothing when the runtime is already there.
 
-Adding Irosashi to a Node project would introduce a native C dependency (`onig-sys` requires a C compiler at build time) for no performance or fidelity gain. Irosashi removes a runtime, not a feature.
+Adding Irosashi to a Node project would add a second toolchain for no performance or fidelity gain. Irosashi removes a runtime, not a feature.

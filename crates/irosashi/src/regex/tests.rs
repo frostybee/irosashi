@@ -1,5 +1,6 @@
 use super::{
-    AnchorActive, Match, PatternTable, ScanStats, Scanner, SearchOptions, rewrite_z_anchor,
+    AnchorActive, Match, PatternTable, ScanStats, Scanner, SearchOptions, rewrite_crude_byte_class,
+    rewrite_z_anchor,
 };
 use crate::Error;
 
@@ -310,6 +311,35 @@ fn test_z_anchor_rewrite() {
         rewrite_z_anchor(r#"^(?:(?=(msg(?:id(_plural)?|ctxt))\s*"[^"])|\s*$).*\z"#),
         r#"^(?:(?=(msg(?:id(_plural)?|ctxt))\s*"[^"])|\s*$).*$(?!\n)(?<!\n)"#
     );
+}
+
+#[test]
+fn test_crude_byte_class_rewrite() {
+    let ahk2_tail = r"`[;{]|[\x21-\x3A\x3C-\x7E]|[^\x00-\xff]|(?<=[^ \t]);)(?=([ \t]|$))";
+    let rewritten = r"`[;{]|[\x21-\x3A\x3C-\x7E]|(?<=[^ \t]);)(?=([ \t]|$))";
+    assert_eq!(rewrite_crude_byte_class(ahk2_tail), rewritten);
+    assert_eq!(rewrite_crude_byte_class(rewritten), rewritten);
+    assert_eq!(rewrite_crude_byte_class("^normal$"), "^normal$");
+    assert_eq!(rewrite_crude_byte_class(""), "");
+    assert_eq!(
+        rewrite_crude_byte_class(r"[\x21-\x7E]|[^\x00-\x7f]"),
+        r"[\x21-\x7E]|[^\x00-\x7f]"
+    );
+    assert_eq!(
+        rewrite_crude_byte_class(r"a|\[^\x00-\xff]"),
+        r"a|\[^\x00-\xff]"
+    );
+}
+
+#[test]
+fn test_crude_byte_class_rewrite_compiles_and_matches() {
+    let rewritten = rewrite_crude_byte_class(
+        r"(?<=(&[ \t]+|^[ \t]*))(`[;{]|[\x21-\x3A\x3C-\x7E]|[^\x00-\xff]|(?<=[^ \t]);)(?=([ \t]|$))",
+    );
+    assert_eq!(find_some(&[&rewritten], "^ ", 0).range(), (0, 1));
+    assert_eq!(find_some(&[&rewritten], "`; ", 0).range(), (0, 2));
+    assert_eq!(find(&[&rewritten], "é ", 0), None);
+    assert_eq!(find(&[&rewritten], "中 ", 0), None);
 }
 
 #[test]

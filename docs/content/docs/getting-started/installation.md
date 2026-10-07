@@ -7,8 +7,7 @@ sidebar:
 
 ## Prerequisites
 
-- **Rust 1.93** or later (stable toolchain).
-- **A C compiler** for the vendored Oniguruma build (`onig-sys`). On Windows, install Visual Studio with the "Desktop development with C++" workload. On Linux and macOS, the system `cc` is enough.
+- **Rust 1.94** or later (stable toolchain).
 
 ## Add the crate
 
@@ -33,7 +32,7 @@ The `markdown` feature on `kazari-rs` pulls in `pulldown-cmark` for rendering fe
 kazari-rs = { version = "0.2", features = ["markdown"] }
 ```
 
-`kazari-rs` depends on `irosashi` through its default `irosashi` feature. To use Kazari on top of [syntect](https://crates.io/crates/syntect) instead, with no C compiler needed, turn the default off and enable `syntect`:
+`kazari-rs` depends on `irosashi` through its default `irosashi` feature. To use Kazari on top of [syntect](https://crates.io/crates/syntect) instead, for a site that already renders with syntect, turn the default off and enable `syntect`:
 
 ```toml title="Cargo.toml"
 kazari-rs = { version = "0.2", default-features = false, features = ["syntect"] }
@@ -64,7 +63,7 @@ The directory must contain `grammars/{name}.json`, `grammars/index.json`, and `t
 cargo build
 ```
 
-The first build compiles the vendored Oniguruma C library. Subsequent builds reuse the cached object files.
+Everything is Rust; no C compiler or system library is needed on any platform.
 
 ## Without Rust
 

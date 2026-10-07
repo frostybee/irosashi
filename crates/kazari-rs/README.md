@@ -8,7 +8,7 @@
   <a href="https://crates.io/crates/kazari-rs"><img src="https://img.shields.io/crates/v/kazari-rs.svg" alt="crates.io"></a>
   <a href="https://docs.rs/kazari-rs"><img src="https://docs.rs/kazari-rs/badge.svg" alt="docs.rs"></a>
   <a href="https://github.com/frostybee/irosashi/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/Rust-%E2%89%A51.93-f74c00" alt="Rust Version">
+  <img src="https://img.shields.io/badge/Rust-%E2%89%A51.94-f74c00" alt="Rust Version">
 </p>
 
 <p align="center">
@@ -70,7 +70,7 @@ no framework dependency, no Node, no WASM.
 - `all: revert` style reset isolates blocks from page CSS
 
 **Integration**
-- Pluggable highlighter: Irosashi (default) or syntect (feature `syntect`, pure Rust), or your own
+- Pluggable highlighter: Irosashi (default) or syntect (feature `syntect`), or your own
   `Highlighter` implementation
 - `pulldown-cmark` adapter (feature `markdown`) with `:::code-group` tabbed containers and tab sync
 - Mermaid pass-through
@@ -88,24 +88,24 @@ irosashi = "0.2"
 kazari-rs = { version = "0.2", features = ["markdown"] }  # `markdown` is optional
 ```
 
-Requires a C compiler for Irosashi's vendored Oniguruma build. On Windows, Visual Studio with the
-VC tools component works; on Linux and macOS a system `cc` is enough.
+Everything is Rust; no C compiler is needed on any platform.
 
 ### Highlighter backends
 
 Kazari asks a backend for styled tokens and does everything else itself. Pick one with Cargo
 features:
 
-| Feature | Backend | Grammars and themes | Build | 45 KB Rust file |
-|---------|---------|---------------------|-------|-----------------|
-| `irosashi` (default) | [Irosashi](https://crates.io/crates/irosashi) | VS Code TextMate grammars and themes, byte-identical to `vscode-textmate` | Needs a C compiler (Oniguruma) | 48 ms |
-| `syntect` | [syntect](https://crates.io/crates/syntect) | Sublime Text grammars, `.tmTheme` themes | Pure Rust (`fancy-regex`) | 221 ms |
+| Feature | Backend | Grammars and themes | Engine | 45 KB Rust file |
+|---------|---------|---------------------|--------|-----------------|
+| `irosashi` (default) | [Irosashi](https://crates.io/crates/irosashi) | VS Code TextMate grammars and themes, byte-identical to `vscode-textmate` | Ferroni (Oniguruma in Rust) | 48 ms |
+| `syntect` | [syntect](https://crates.io/crates/syntect) | Sublime Text grammars, `.tmTheme` themes | `fancy-regex` | 221 ms |
 
-The last column is `kazari render` on the same file with each `--engine` (median of 7 runs);
-a 60-page `kazari process` run is 128 ms against 332 ms. Irosashi is the default because it is
-both the more faithful and the faster backend.
+The last column is `kazari render` on the same file with each `--engine` (median of 7 runs,
+measured before the switch to Ferroni); a 60-page `kazari process` run is 128 ms against
+332 ms. Irosashi is the default because it is both the more faithful and the faster backend.
+Both backends are pure Rust.
 
-For a pure Rust build, turn the default off and enable `syntect`:
+To use syntect instead, turn the default off and enable `syntect`:
 
 ```toml
 [dependencies]
@@ -125,9 +125,9 @@ let kz = Kazari::builder(SyntectHighlighter::new())
 themes (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`, and so on);
 `with_theme_map` replaces that table, `add_theme_file` registers a `.tmTheme`, and a theme name
 ending in `.tmTheme` is loaded from that path. Every feature of the presentation layer works on
-either backend; what changes is the tokenization. syntect is the choice for a build that cannot
-link Oniguruma or a site whose other code blocks already come from syntect; it is not a speed
-option (on `fancy-regex` it is several times slower than Irosashi's native Oniguruma). See
+either backend; what changes is the tokenization. syntect is the choice for a site whose other
+code blocks already come from syntect; it is not a speed option (on `fancy-regex` it is several
+times slower than Irosashi). See
 `examples/backends.rs`.
 
 Any type implementing `kazari_rs::Highlighter` (two methods: `tokenize` and `theme_info`) can be
@@ -363,7 +363,7 @@ grammar, the `kazari.config.yaml` keys, the HTML structure, the `kz-*` class nam
 unchanged. What differs:
 
 - **Engine:** Irosashi (the Nuri counterpart, byte-identical to `vscode-textmate`) or syntect
-  (the Chroma counterpart, pure Rust), both in process, behind the same `Highlighter` trait.
+  (the Chroma counterpart), both in process and pure Rust, behind the same `Highlighter` trait.
 - **Markdown:** a `pulldown-cmark` adapter instead of a Goldmark extension.
 - **Typst output** for PDF pipelines, which the Go library does not have.
 - **CLI:** the `kazari process ./public` post-build command lives in the
@@ -382,7 +382,7 @@ cargo run -p kazari-rs --example demo_typst > demo.typ && typst compile demo.typ
 cargo run -p kazari-rs --features markdown --example demo_markdown > demo_markdown.html
 cargo run -p kazari-rs --features markdown,syntect --example showcase      # multi-page showcase site
 cargo run -p kazari-rs --features markdown,syntect --example backends -- all  # one page per backend
-cargo test -p kazari-rs --no-default-features --features syntect,markdown  # pure Rust build
+cargo test -p kazari-rs --no-default-features --features syntect,markdown  # syntect-only build
 ```
 
 ## Acknowledgments

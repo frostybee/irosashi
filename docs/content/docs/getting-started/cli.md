@@ -17,7 +17,7 @@ With a Rust toolchain:
 cargo install kazari-cli
 ```
 
-Building from source needs a C compiler for Irosashi's vendored Oniguruma. On Windows, install Visual Studio with the "Desktop development with C++" workload. On Linux and macOS, the system `cc` is enough.
+Building from source needs only a Rust toolchain (1.94 or later); there is no C dependency.
 
 ## Upgrade a built static site
 
@@ -120,7 +120,7 @@ kazari process ./public --engine syntect
 kazari themes --engine syntect
 ```
 
-Every Kazari feature (frames, line numbers, markers, diff, dual themes) works on both; only the tokens differ. syntect is not a speed option here: the binary builds it on `fancy-regex`, and Irosashi's native Oniguruma is several times faster on the same input (about 10 ms against 65 ms for a small file, 128 ms against 332 ms for a 60-page site). With `syntect`, theme names are mapped to the closest bundled theme (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`), a name ending in `.tmTheme` is loaded from that path, and an unknown name falls back to a light or dark bundled theme instead of failing. See [theme names per backend](/docs/styling/themes-and-dark-mode#theme-names-per-backend).
+Every Kazari feature (frames, line numbers, markers, diff, dual themes) works on both; only the tokens differ. syntect is not a speed option here: the binary builds it on `fancy-regex`, and Irosashi is several times faster on the same input (about 10 ms against 65 ms for a small file, 128 ms against 332 ms for a 60-page site, measured before the switch to Ferroni). With `syntect`, theme names are mapped to the closest bundled theme (`github-light` to `InspiredGitHub`, `github-dark` to `base16-ocean.dark`), a name ending in `.tmTheme` is loaded from that path, and an unknown name falls back to a light or dark bundled theme instead of failing. See [theme names per backend](/docs/styling/themes-and-dark-mode#theme-names-per-backend).
 
 ## Configuration
 

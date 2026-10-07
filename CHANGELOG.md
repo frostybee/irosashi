@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Breaking
 
+- **Regex engine is Ferroni** (`irosashi`): the engine is now
+  [Ferroni](https://crates.io/crates/ferroni) 1.9.0, a pure Rust port of Oniguruma, and
+  `onig_sys` is gone. No C compiler is needed on any platform, and the workspace has no
+  `unsafe` code of its own. MSRV is Rust 1.94. Output is unchanged: byte-identical to
+  `vscode-textmate` on all 234 grammars and 468 grammar/theme pairs. Measured across every
+  fixture of the 234 grammars, warm tokenization is 27 percent faster than on C Oniguruma;
+  cold start (first use of a grammar, pattern compilation) is 1.3 times slower and peak
+  memory with all 234 grammars loaded is 2.4 times higher (373 against 155 MiB), because
+  Ferroni's compiled patterns are larger. The published performance tables still show the
+  C Oniguruma numbers and are marked as such; a refresh is pending. Two Ferroni parity
+  fixes found during the switch were contributed upstream (ferroni#226, ferroni#229).
+  Ferroni follows the final C Oniguruma, which rejects raw byte escapes `\x80`-`\xff` in
+  UTF-8 patterns; the one bundled grammar that has one (AutoHotkey v2, an alternative that
+  never matches valid UTF-8) is handled by a pattern rewrite with no output change.
+
 - **Typst tokens are raw literals** (`kazari-rs`, `kazari-cli`): each token's text is now
   written as a raw literal, ``#text(fill: ...)[`tok`]``, instead of a string argument. Every
   glyph keeps a source position, so click-to-source in a Typst preview lands on the exact
@@ -35,8 +50,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (`tokenize` and `theme_info`) is what `Kazari::builder` accepts. `irosashi::Highlighter`
   implements it behind the default `irosashi` feature; the new `syntect` feature adds
   `kazari_rs::backends::syntect::SyntectHighlighter` on syntect's bundled grammars and
-  `.tmTheme` themes, so `kazari-rs` builds as pure Rust with
-  `default-features = false, features = ["syntect"]`. Every presentation feature works on
+  `.tmTheme` themes, selected with `default-features = false, features = ["syntect"]`
+  for sites that already render with syntect. Every presentation feature works on
   either backend. New example `backends` renders the same document through both, and the
   demo site gained an "Irosashi vs syntect" page (the `showcase` example now needs
   `--features markdown,syntect`).

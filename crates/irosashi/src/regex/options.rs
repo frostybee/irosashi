@@ -1,4 +1,6 @@
-/// Search-time options passed to Oniguruma for one `find_next_match` call.
+use crate::regex::raw;
+
+/// Search-time options passed to the engine for one `find_next_match` call.
 ///
 /// These are the real Oniguruma option bits (`ONIG_OPTION_NOT_BEGIN_STRING`,
 /// `ONIG_OPTION_NOT_BEGIN_POSITION`), not `NOTBOL`.
@@ -6,13 +8,13 @@
 pub struct SearchOptions(u32);
 
 impl SearchOptions {
-    pub const NONE: Self = Self(onig_sys::ONIG_OPTION_NONE);
+    pub const NONE: Self = Self(raw::OPTION_NONE);
 
     /// Disables `\A`: the search start is not the beginning of the string.
-    pub const NOT_BEGIN_STRING: Self = Self(onig_sys::ONIG_OPTION_NOT_BEGIN_STRING);
+    pub const NOT_BEGIN_STRING: Self = Self(raw::OPTION_NOT_BEGIN_STRING);
 
     /// Disables `\G`: the search start is not the anchor position.
-    pub const NOT_BEGIN_POSITION: Self = Self(onig_sys::ONIG_OPTION_NOT_BEGIN_POSITION);
+    pub const NOT_BEGIN_POSITION: Self = Self(raw::OPTION_NOT_BEGIN_POSITION);
 
     pub fn union(self, other: Self) -> Self {
         Self(self.0 | other.0)

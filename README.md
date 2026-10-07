@@ -130,8 +130,8 @@ Requires **Rust 1.94** or later. Everything is Rust: no C compiler is needed on 
 
 ```toml
 [dependencies]
-irosashi = "0.2"
-kazari-rs = "0.2"   # optional: decorated HTML, Typst, fence meta
+irosashi = "0.3"
+kazari-rs = "0.3"   # optional: decorated HTML, Typst, fence meta
 ```
 
 ## Quick Start

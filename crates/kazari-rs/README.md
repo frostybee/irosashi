@@ -84,8 +84,8 @@ no framework dependency, no Node, no WASM.
 
 ```toml
 [dependencies]
-irosashi = "0.2"
-kazari-rs = { version = "0.2", features = ["markdown"] }  # `markdown` is optional
+irosashi = "0.3"
+kazari-rs = { version = "0.3", features = ["markdown"] }  # `markdown` is optional
 ```
 
 Everything is Rust; no C compiler is needed on any platform.
@@ -109,7 +109,7 @@ To use syntect instead, turn the default off and enable `syntect`:
 
 ```toml
 [dependencies]
-kazari-rs = { version = "0.2", default-features = false, features = ["syntect", "markdown"] }
+kazari-rs = { version = "0.3", default-features = false, features = ["syntect", "markdown"] }
 ```
 
 ```rust

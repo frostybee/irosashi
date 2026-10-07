@@ -503,7 +503,7 @@ dependencies = [
 
 [[package]]
 name = "irosashi"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "bitflags",
  "ferroni",
@@ -554,7 +554,7 @@ dependencies = [
 
 [[package]]
 name = "kazari-cli"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "clap",
  "html-escape",
@@ -568,7 +568,7 @@ dependencies = [
 
 [[package]]
 name = "kazari-rs"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "bitflags",
  "insta",

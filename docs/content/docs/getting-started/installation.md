@@ -15,27 +15,27 @@ Add `irosashi` to your `Cargo.toml`:
 
 ```toml title="Cargo.toml"
 [dependencies]
-irosashi = "0.2"
+irosashi = "0.3"
 ```
 
 To render decorated code blocks with frames, line numbers, markers, and Typst output, add `kazari-rs` as well:
 
 ```toml title="Cargo.toml"
 [dependencies]
-irosashi = "0.2"
-kazari-rs = "0.2"
+irosashi = "0.3"
+kazari-rs = "0.3"
 ```
 
 The `markdown` feature on `kazari-rs` pulls in `pulldown-cmark` for rendering fenced code blocks inside Markdown documents:
 
 ```toml title="Cargo.toml"
-kazari-rs = { version = "0.2", features = ["markdown"] }
+kazari-rs = { version = "0.3", features = ["markdown"] }
 ```
 
 `kazari-rs` depends on `irosashi` through its default `irosashi` feature. To use Kazari on top of [syntect](https://crates.io/crates/syntect) instead, for a site that already renders with syntect, turn the default off and enable `syntect`:
 
 ```toml title="Cargo.toml"
-kazari-rs = { version = "0.2", default-features = false, features = ["syntect"] }
+kazari-rs = { version = "0.3", default-features = false, features = ["syntect"] }
 ```
 
 Both features can be on at once; the backend is chosen when the engine is built. See [Decorated code blocks with Kazari](/docs/getting-started/kazari#build-a-kazari-engine).
@@ -48,7 +48,7 @@ To load grammars and themes from a directory instead, disable the default featur
 
 ```toml title="Cargo.toml"
 [dependencies]
-irosashi = { version = "0.2", default-features = false }
+irosashi = { version = "0.3", default-features = false }
 ```
 
 ```rust

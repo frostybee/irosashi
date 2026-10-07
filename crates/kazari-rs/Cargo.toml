@@ -1,6 +1,6 @@
 [package]
 name = "kazari-rs"
-version = "0.2.0"
+version = "0.3.0"
 description = "Presentation layer for irosashi: fence meta, transformers, decorated HTML and Typst output"
 edition.workspace = true
 license.workspace = true
@@ -17,7 +17,7 @@ markdown = ["dep:pulldown-cmark"]
 
 [dependencies]
 bitflags.workspace = true
-irosashi = { version = "0.2", path = "../irosashi", optional = true }
+irosashi = { version = "0.3", path = "../irosashi", optional = true }
 syntect = { version = "5.3", optional = true, default-features = false, features = [
     "parsing",
     "default-syntaxes",

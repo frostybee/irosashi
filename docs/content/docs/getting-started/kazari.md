@@ -16,8 +16,8 @@ buttons, collapsible sections, and dual-theme support.
 
 ```toml title="Cargo.toml"
 [dependencies]
-irosashi = "0.2"
-kazari-rs = "0.2"
+irosashi = "0.3"
+kazari-rs = "0.3"
 ```
 
 ## Build a Kazari engine
@@ -42,7 +42,7 @@ backend:
 
 ```toml title="Cargo.toml"
 [dependencies]
-kazari-rs = { version = "0.2", default-features = false, features = ["syntect"] }
+kazari-rs = { version = "0.3", default-features = false, features = ["syntect"] }
 ```
 
 ```rust
@@ -173,7 +173,7 @@ code block is highlighted and decorated; the prose is rendered by pulldown-cmark
 
 ```toml title="Cargo.toml"
 [dependencies]
-kazari-rs = { version = "0.2", features = ["markdown"] }
+kazari-rs = { version = "0.3", features = ["markdown"] }
 pulldown-cmark = "0.13"
 ```
 

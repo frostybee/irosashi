@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Ferroni 1.9.1** (`irosashi`): the minimum engine version moves from 1.9.0 to 1.9.1, a
+  performance-only patch. Output is unchanged (468/468 fixtures identical) and warm
+  tokenization over all 234 grammar fixtures is 6 percent faster than on 1.9.0, with no
+  grammar slower. The performance tables still show the 1.9.0 measurements.
+
 ## [0.3.0] - 2026-10-07
 
 ### Breaking

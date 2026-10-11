@@ -9,10 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Ferroni 1.9.1** (`irosashi`): the minimum engine version moves from 1.9.0 to 1.9.1, a
-  performance-only patch. Output is unchanged (468/468 fixtures identical) and warm
-  tokenization over all 234 grammar fixtures is 6 percent faster than on 1.9.0, with no
-  grammar slower. The performance tables still show the 1.9.0 measurements.
+- **Ferroni 2.1.0** (`irosashi`): the minimum engine version moves from 1.9.0 to 2.1.0.
+  The 1.9.x patches are performance work plus three look-behind and multibyte fixes in the
+  matcher; 1.10.0 adds public API (a cloneable `Regex`, search from a start position,
+  replace and split) that Irosashi does not use yet; 2.0.0 makes the parser and compiler
+  internals crate-private, lowers the default pattern nesting limit to 128 groups, and
+  moves the Unicode tables to 18.0; 2.1.0 only changes Ferroni's own multi-pattern
+  scanner, which Irosashi does not use. The only change in Irosashi is the import path of
+  the compiled-pattern type. Output is unchanged on every step (468/468 fixtures
+  identical, 234/234 grammars, every grammar pattern still compiles under the new nesting
+  limit). Warm tokenization over all 234 grammar fixtures is 6 percent faster than on
+  1.9.0, all of it from 1.9.1; 1.10.0, 2.0.0 and 2.1.0 are each within noise of the
+  release before. The performance tables still show the 1.9.0 measurements.
 
 ## [0.3.0] - 2026-10-07
 

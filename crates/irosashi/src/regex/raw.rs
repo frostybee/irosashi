@@ -1,13 +1,13 @@
 //! The regex engine: `ferroni`, a pure Rust port of Oniguruma. The C-shaped entry
-//! points are used because they take a start position and a reusable region, which
-//! the safe `ferroni::api::Regex` does not expose.
+//! points are used because they take the raw search option bits and a reusable
+//! region, which the safe `ferroni::api::Regex` does not expose.
 
 use ferroni::encodings::utf8::ONIG_ENCODING_UTF8;
 use ferroni::error::RegexError;
+use ferroni::oniguruma::RegexType;
 use ferroni::oniguruma::{
     ONIG_MISMATCH, ONIG_OPTION_CAPTURE_GROUP, ONIG_REGION_NOTPOS, OnigOptionType, OnigRegion,
 };
-use ferroni::regint::RegexType;
 use ferroni::regsyntax::OnigSyntaxOniguruma;
 
 pub(crate) const OPTION_NONE: u32 = OnigOptionType::NONE.bits();

@@ -15,7 +15,7 @@ default = ["embedded-assets"]
 embedded-assets = ["dep:include_dir"]
 
 [dependencies]
-ferroni = "1.9.1"
+ferroni = "2.1.0"
 thiserror.workspace = true
 serde.workspace = true
 serde_json.workspace = true

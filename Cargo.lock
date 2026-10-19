@@ -377,9 +377,9 @@ checksum = "da7c62ceae207dd37ea5b845da6a0696c799f85e97da1ab5b7910be3c1c80223"
 
 [[package]]
 name = "ferroni"
-version = "2.1.2"
+version = "2.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7d6297b16f203aa86da933355c286cd5a86e6d45260358419cfdadd3e382ab66"
+checksum = "83a5625f91788dfbfd109e4d1700bb0d56828c28923db18ff1db80b1b332f235"
 dependencies = [
  "aho-corasick",
  "bitflags",

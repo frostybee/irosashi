@@ -1,7 +1,7 @@
 mod languages;
 
 use std::borrow::Cow;
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, OnceLock};
@@ -36,6 +36,9 @@ pub struct GrammarMeta {
     pub file_types: Vec<String>,
     #[serde(default)]
     pub inject_to: Vec<String>,
+    /// Languages this one embeds, by name, as Shiki's `embeddedLangs` lists them.
+    #[serde(default)]
+    pub embedded_langs: Vec<String>,
     #[serde(default)]
     pub first_line_match: Option<String>,
 }
@@ -180,6 +183,7 @@ pub struct RegistryBuilder {
     extensions: Vec<(String, String)>,
     filenames: Vec<(String, String)>,
     default_tables: bool,
+    embedded_injections_only: bool,
 }
 
 impl RegistryBuilder {
@@ -192,6 +196,7 @@ impl RegistryBuilder {
             extensions: Vec::new(),
             filenames: Vec::new(),
             default_tables: true,
+            embedded_injections_only: false,
         }
     }
 
@@ -251,6 +256,15 @@ impl RegistryBuilder {
     /// Skips the built-in alias, extension and file name tables.
     pub fn without_default_tables(mut self) -> Self {
         self.default_tables = false;
+        self
+    }
+
+    /// Applies a grammar's `injectTo` only to the languages that embed it, directly or
+    /// through other embedded languages, as Shiki does when it loads a language with
+    /// its `embeddedLangs`. Off by default: every registered injector then reaches
+    /// every scope it names.
+    pub fn embedded_injections_only(mut self, on: bool) -> Self {
+        self.embedded_injections_only = on;
         self
     }
 
@@ -323,6 +337,7 @@ impl RegistryBuilder {
             scope_index: HashMap::new(),
             injection_index: HashMap::new(),
             first_line: Vec::new(),
+            embedded_injections_only: self.embedded_injections_only,
         };
         for (name, entry) in grammars {
             registry.index_grammar(&name, &entry.meta, entry.bytes.is_some(), false);
@@ -373,6 +388,7 @@ pub struct Registry {
     scope_index: HashMap<String, String>,
     injection_index: HashMap<String, Vec<String>>,
     first_line: Vec<(String, LazyRegex)>,
+    embedded_injections_only: bool,
 }
 
 impl std::fmt::Debug for Registry {
@@ -491,6 +507,7 @@ impl Registry {
             filename_index: self.filename_index.clone(),
             scope_index: self.scope_index.clone(),
             injection_index: self.injection_index.clone(),
+            embedded_injections_only: self.embedded_injections_only,
             first_line: self
                 .first_line
                 .iter()
@@ -567,6 +584,32 @@ impl Registry {
 
     pub fn grammar_meta(&self, name: &str) -> Option<&GrammarMeta> {
         self.grammars.get(name).map(|e| &e.meta)
+    }
+
+    /// The grammar named by scope `scope` and every language it embeds, transitively.
+    fn embedded_closure(&self, scope: &str) -> HashSet<&str> {
+        let mut seen = HashSet::new();
+        let mut next: Vec<&str> = self
+            .scope_index
+            .get(scope)
+            .map(String::as_str)
+            .into_iter()
+            .collect();
+        while let Some(name) = next.pop() {
+            let Some(name) = self.resolve_language(name) else {
+                continue;
+            };
+            if seen.insert(name) {
+                next.extend(
+                    self.grammars[name]
+                        .meta
+                        .embedded_langs
+                        .iter()
+                        .map(String::as_str),
+                );
+            }
+        }
+        seen
     }
 
     /// The grammar name `name` refers to: itself when it is a grammar, otherwise its
@@ -667,10 +710,16 @@ impl GrammarResolver for Registry {
 
 impl InjectionProvider for Registry {
     fn injectors_for(&self, scope: &str) -> Vec<Arc<Grammar>> {
+        let embedded = self
+            .embedded_injections_only
+            .then(|| self.embedded_closure(scope));
         self.injection_index
             .get(scope)
-            .map(|names| names.iter().filter_map(|n| self.grammar(n).ok()).collect())
-            .unwrap_or_default()
+            .into_iter()
+            .flatten()
+            .filter(|n| embedded.as_ref().is_none_or(|e| e.contains(n.as_str())))
+            .filter_map(|n| self.grammar(n).ok())
+            .collect()
     }
 }
 
@@ -777,6 +826,33 @@ mod tests {
             &r.theme("github-dark").unwrap(),
             &r.theme("github-dark").unwrap()
         ));
+    }
+
+    #[test]
+    fn embedded_injections_reach_only_the_languages_that_embed_them() {
+        let build = |on: bool| {
+            RegistryBuilder::new(AssetSource::None)
+                .grammar("a", &br#"{"scopeName": "source.a", "embeddedLangs": ["mid"], "patterns": []}"#[..])
+                .unwrap()
+                .grammar("mid", &br#"{"scopeName": "source.mid", "embeddedLangs": ["inj"], "patterns": []}"#[..])
+                .unwrap()
+                .grammar("b", &br#"{"scopeName": "source.b", "patterns": []}"#[..])
+                .unwrap()
+                .grammar(
+                    "inj",
+                    &br#"{"scopeName": "inj", "injectTo": ["source.a", "source.b"], "injectionSelector": "L:source", "patterns": [{"match": "x"}]}"#[..],
+                )
+                .unwrap()
+                .embedded_injections_only(on)
+                .build()
+                .unwrap()
+        };
+        let all = build(false);
+        assert_eq!(all.injectors_for("source.a").len(), 1);
+        assert_eq!(all.injectors_for("source.b").len(), 1);
+        let embedded = build(true);
+        assert_eq!(embedded.injectors_for("source.a").len(), 1);
+        assert!(embedded.injectors_for("source.b").is_empty());
     }
 
     #[test]

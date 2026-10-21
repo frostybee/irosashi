@@ -134,6 +134,15 @@ irosashi = "0.3"
 kazari-rs = "0.3"   # optional: decorated HTML, Typst, fence meta
 ```
 
+Patterns run on [Ferroni](https://crates.io/crates/ferroni) by default. The `onig` feature
+runs them on C Oniguruma through the [`onig`](https://crates.io/crates/onig) crate instead,
+which compiles patterns faster, so a grammar's first lines highlight sooner; it needs a C
+compiler. Tokens are the same on both.
+
+```toml
+irosashi = { version = "0.3", default-features = false, features = ["embedded-assets", "onig"] }
+```
+
 ## Quick Start
 
 ```rust

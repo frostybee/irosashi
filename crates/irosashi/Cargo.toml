@@ -10,12 +10,17 @@ keywords = ["syntax-highlighting", "textmate", "shiki", "vscode", "oniguruma"]
 categories = ["text-processing", "parsing", "development-tools"]
 
 [features]
-default = ["embedded-assets"]
+default = ["embedded-assets", "ferroni"]
 # Embed every bundled grammar and theme so `Highlighter::new()` needs no files on disk.
 embedded-assets = ["dep:include_dir"]
+# Pure Rust Oniguruma: no C compiler, WebAssembly included.
+ferroni = ["dep:ferroni"]
+# C Oniguruma, which compiles patterns faster; wins over `ferroni` when both are on.
+onig = ["dep:onig"]
 
 [dependencies]
-ferroni = "2.2.1"
+ferroni = { version = "2.2.1", optional = true }
+onig = { version = "6.5", default-features = false, optional = true }
 thiserror.workspace = true
 serde.workspace = true
 serde_json.workspace = true

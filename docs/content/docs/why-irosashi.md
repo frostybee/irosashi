@@ -29,39 +29,39 @@ Irosashi runs Ferroni, a pure Rust port of the Oniguruma regex engine, in-proces
 
 ## Performance
 
-Measured on 2026-10-07 on an Intel Core i9-10850K, Windows 10, rustc 1.94.0, Ferroni 1.9.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs in the same session, since Shiki's own timings vary by tens of percent between sessions. The raw dumps are in [`docs/perf/2026-10-07-ferroni.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-10-07-ferroni.md); the per-pattern scanner record and the C Oniguruma numbers it replaced are in [`docs/perf/2026-09-16-per-pattern.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-per-pattern.md).
+Measured on 2026-11-08 on an Intel Core i9-10850K, Windows 10, rustc 1.94.0, Ferroni 2.7.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs in the same session, since Shiki's own timings vary by tens of percent between sessions. The raw dumps are in [`docs/perf/2026-11-08-ferroni-2.7.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-11-08-ferroni-2.7.md); the per-pattern scanner record and the C Oniguruma numbers it replaced are in [`docs/perf/2026-09-16-per-pattern.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-per-pattern.md).
 
 ### Warm speed
 
-Both Irosashi and Shiki run Oniguruma's regex semantics (Ferroni in Rust, vscode-oniguruma in WASM) over identical TextMate grammars, and both use the same scan strategy: one compiled pattern per rule, and a per-pattern cache of where it last matched on the current line, so a scan step re-searches only the patterns whose remembered match is behind the cursor. On short snippets Irosashi is faster on 9 of 10 tested languages, by 1.6x (TypeScript) to 3.7x (CSS), and 1.3x slower on Markdown.
+Both Irosashi and Shiki run Oniguruma's regex semantics (Ferroni in Rust, vscode-oniguruma in WASM) over identical TextMate grammars, and both use the same scan strategy: one compiled pattern per rule, and a per-pattern cache of where it last matched on the current line, so a scan step re-searches only the patterns whose remembered match is behind the cursor. On short snippets Irosashi is faster on 9 of 10 tested languages, by 1.4x (JavaScript) to 4.3x (CSS), and level on Markdown.
 
 | Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
 |---|---:|---:|---:|---:|
-| Go | 117 | 11 | 0.16 | 0.41 |
-| JavaScript | 309 | 13 | 0.79 | 1.96 |
-| HTML | 304 | 16 | 0.18 | 0.53 |
-| TypeScript | 203 | 11 | 0.34 | 0.56 |
-| Markdown | 135 | 12 | 0.27 | 0.21 |
-| Python | 415 | 16 | 0.35 | 0.87 |
-| Bash | 339 | 16 | 0.30 | 0.57 |
-| PHP | 385 | 20 | 0.62 | 1.12 |
-| CSS | 424 | 25 | 0.20 | 0.72 |
-| Rust | 607 | 25 | 0.42 | 1.19 |
+| Go | 117 | 11 | 0.17 | 0.39 |
+| JavaScript | 309 | 13 | 0.76 | 1.03 |
+| HTML | 304 | 16 | 0.17 | 0.49 |
+| TypeScript | 203 | 11 | 0.36 | 0.56 |
+| Markdown | 135 | 12 | 0.22 | 0.21 |
+| Python | 415 | 16 | 0.34 | 0.84 |
+| Bash | 339 | 16 | 0.28 | 0.57 |
+| PHP | 385 | 20 | 0.49 | 1.11 |
+| CSS | 424 | 25 | 0.17 | 0.73 |
+| Rust | 607 | 25 | 0.45 | 1.21 |
 
-On 50 KiB inputs (the fixture sources repeated) Irosashi is faster on the same nine languages, from 1.1x (PHP) to 3.2x (CSS), and 1.4x slower on Markdown:
+On 50 KiB inputs (the fixture sources repeated) Irosashi is faster on the same nine languages, from 1.3x (TypeScript) to 3.8x (CSS), and 1.4x slower on Markdown:
 
 | Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
 |---|---:|---:|---:|---:|
-| Go | 51324 | 2653 | 39.5 | 121.2 |
-| JavaScript | 51298 | 1963 | 91.1 | 208.0 |
-| HTML | 52668 | 1716 | 17.2 | 37.5 |
-| TypeScript | 52920 | 1848 | 79.3 | 100.0 |
-| Markdown | 52150 | 2380 | 28.0 | 19.5 |
-| Python | 51345 | 1794 | 27.0 | 55.2 |
-| Bash | 51558 | 2184 | 25.7 | 52.1 |
-| PHP | 51350 | 2291 | 60.3 | 68.8 |
-| CSS | 51442 | 4094 | 22.1 | 70.6 |
-| Rust | 51561 | 1989 | 25.6 | 47.0 |
+| Go | 51324 | 2653 | 37.8 | 89.6 |
+| JavaScript | 51298 | 1963 | 82.2 | 104.6 |
+| HTML | 52668 | 1716 | 16.8 | 35.1 |
+| TypeScript | 52920 | 1848 | 74.9 | 94.2 |
+| Markdown | 52150 | 2380 | 27.3 | 19.6 |
+| Python | 51345 | 1794 | 25.9 | 55.5 |
+| Bash | 51558 | 2184 | 26.0 | 52.8 |
+| PHP | 51350 | 2291 | 44.6 | 70.8 |
+| CSS | 51442 | 4094 | 19.0 | 71.7 |
+| Rust | 51561 | 1989 | 26.0 | 49.1 |
 
 Markdown is the one shape the per-pattern design handles worse than a regset: contexts with many patterns and only one or two scan steps per line, so there is little for the cache to reuse, and a stale pattern's search runs to the end of the line, rejecting candidate positions the regset never looked at past the leftmost match. Oniguruma's public search call cannot bound where a match may start without also bounding where it may end, which would change tokens, so Irosashi does not bound it. Ferroni has the bounded search internally (`search_in_range`); exposing it is an upstream change on the roadmap.
 
@@ -71,18 +71,18 @@ Shiki's cold numbers (6 to 110 ms per language in the table) exclude Node.js sta
 
 | Language | Irosashi cold (ms) | Shiki cold (ms) |
 |---|---:|---:|
-| Go | 3.28 | 84.3 |
-| JavaScript | 34.0 | 84.6 |
-| HTML | 28.1 | 51.5 |
-| TypeScript | 33.2 | 87.4 |
-| Markdown | 76.8 | 13.8 |
-| Python | 2.22 | 19.0 |
-| Bash | 1.77 | 9.20 |
-| PHP | 86.5 | 110.4 |
-| CSS | 12.7 | 62.8 |
-| Rust | 1.55 | 5.50 |
+| Go | 3.40 | 103.4 |
+| JavaScript | 29.4 | 83.4 |
+| HTML | 24.8 | 51.2 |
+| TypeScript | 28.0 | 82.8 |
+| Markdown | 71.5 | 10.2 |
+| Python | 2.21 | 17.9 |
+| Bash | 1.82 | 9.60 |
+| PHP | 57.7 | 113.3 |
+| CSS | 13.2 | 60.0 |
+| Rust | 1.60 | 6.20 |
 
-Irosashi cold time is the engine compiling each distinct pattern of the grammar once on first use, plus parsing any grammar the language embeds (Markdown pulls in HTML, and through it CSS and JavaScript, which is most of its 77 ms). Shiki cold time includes WASM compilation of the grammar but not the Node process that runs it.
+Irosashi cold time is the engine compiling each distinct pattern of the grammar once on first use, plus parsing any grammar the language embeds (Markdown pulls in HTML, and through it CSS and JavaScript, which is most of its 72 ms). Shiki cold time includes WASM compilation of the grammar but not the Node process that runs it.
 
 ### No runtime overhead
 
@@ -113,10 +113,10 @@ The `kazari` timings in the table come from the run described under [Performance
 | Typst output         | Yes (kazari) | No             | No           | No            |
 | Licence              | MIT          | MIT            | MIT          | EUPL          |
 | Runtime              | Pure Rust    | Pure Rust      | Node + WASM  | Native + C    |
-| `kazari render`, 45 KB Rust file | 40 ms | 209 ms | n/a | n/a |
-| `kazari process`, 60 pages | 165 ms | 393 ms | n/a | n/a |
+| `kazari render`, 45 KB Rust file | 42 ms | 215 ms | n/a | n/a |
+| `kazari process`, 60 pages | 167 ms | 391 ms | n/a | n/a |
 
-**syntect** uses Sublime Text syntaxes and `.tmTheme` colour files. These are a different format from VS Code's TextMate JSON grammars and JSON themes, so syntect cannot reproduce VS Code scoping or theme colours byte for byte. It is also slower on the same input: the `kazari` binary ships both backends behind one flag, and a 2.5 KB Rust file renders in 10 ms on Irosashi against 57 ms on syntect, a 45 KB file in 40 against 209 ms, and a 60-page site in 165 against 393 ms (medians of 7 runs with `tools/kazari-bench`; syntect built on `fancy-regex`). See [Backends](/docs/getting-started/cli#backends).
+**syntect** uses Sublime Text syntaxes and `.tmTheme` colour files. These are a different format from VS Code's TextMate JSON grammars and JSON themes, so syntect cannot reproduce VS Code scoping or theme colours byte for byte. It is also slower on the same input: the `kazari` binary ships both backends behind one flag, and a 2.5 KB Rust file renders in 11 ms on Irosashi against 61 ms on syntect, a 45 KB file in 42 against 215 ms, and a 60-page site in 167 against 391 ms (medians of 7 runs with `tools/kazari-bench`; syntect built on `fancy-regex`). See [Backends](/docs/getting-started/cli#backends).
 
 **giallo** runs C Oniguruma natively and parses VS Code grammars, but does not publish fidelity scores against `vscode-textmate`.
 

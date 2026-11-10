@@ -9,7 +9,7 @@ use flate2::read::GzDecoder;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
-const DEFAULT_NURI_ROOT: &str = r"D:\Dev\my-repos\irosashi";
+const DEFAULT_NURI_ROOT: &str = r"D:\dev\my-repos\nuri";
 const NURI_MODULE: &str = "github.com/frostybee/nuri";
 
 type Hashes = BTreeMap<String, String>;

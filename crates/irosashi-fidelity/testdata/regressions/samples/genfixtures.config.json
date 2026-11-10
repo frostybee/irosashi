@@ -1,0 +1,12 @@
+{
+  "injections": true,
+  "themes": [
+    "github-light",
+    "github-dark"
+  ],
+  "grammars": [
+    "ahk2"
+  ],
+  "samplesDir": "../../../iro/crates/irosashi-fidelity/testdata/regressions/samples",
+  "outputDir": "../../../iro/crates/irosashi-fidelity/testdata/regressions"
+}

@@ -472,58 +472,59 @@ println!("{:?}", highlighter.themes());
 
 ## Performance
 
-Measured on 2026-10-07 on an Intel Core i9-10850K, Windows 10, rustc 1.94.0, Ferroni 1.9.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs in the same session, since Shiki's own timings vary by tens of percent between sessions. The raw dumps are in [`docs/perf/2026-10-07-ferroni.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-10-07-ferroni.md); the per-pattern scanner record and the C Oniguruma numbers it replaced are in [`docs/perf/2026-09-16-per-pattern.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-per-pattern.md).
+Measured on 2026-11-08 on an Intel Core i9-10850K, Windows 10, rustc 1.94.0, Ferroni 2.7.0, theme `github-dark`. Irosashi numbers are [Criterion](https://github.com/bheisler/criterion.rs) medians. Shiki numbers are from `tools/shiki-bench` running Shiki 4.4.3 on the same inputs in the same session, since Shiki's own timings vary by tens of percent between sessions. The raw dumps are in [`docs/perf/2026-11-08-ferroni-2.7.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-11-08-ferroni-2.7.md); the per-pattern scanner record and the C Oniguruma numbers it replaced are in [`docs/perf/2026-09-16-per-pattern.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-16-per-pattern.md).
 
 Warm, small snippets (100 to 600 bytes):
 
 | Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
 |---|---:|---:|---:|---:|
-| Go | 117 | 11 | 0.16 | 0.41 |
-| JavaScript | 309 | 13 | 0.79 | 1.96 |
-| HTML | 304 | 16 | 0.18 | 0.53 |
-| TypeScript | 203 | 11 | 0.34 | 0.56 |
-| Markdown | 135 | 12 | 0.27 | 0.21 |
-| Python | 415 | 16 | 0.35 | 0.87 |
-| Bash | 339 | 16 | 0.30 | 0.57 |
-| PHP | 385 | 20 | 0.62 | 1.12 |
-| CSS | 424 | 25 | 0.20 | 0.72 |
-| Rust | 607 | 25 | 0.42 | 1.19 |
+| Go | 117 | 11 | 0.17 | 0.39 |
+| JavaScript | 309 | 13 | 0.76 | 1.03 |
+| HTML | 304 | 16 | 0.17 | 0.49 |
+| TypeScript | 203 | 11 | 0.36 | 0.56 |
+| Markdown | 135 | 12 | 0.22 | 0.21 |
+| Python | 415 | 16 | 0.34 | 0.84 |
+| Bash | 339 | 16 | 0.28 | 0.57 |
+| PHP | 385 | 20 | 0.49 | 1.11 |
+| CSS | 424 | 25 | 0.17 | 0.73 |
+| Rust | 607 | 25 | 0.45 | 1.21 |
 
 Warm, 50 KiB inputs (the fixture sources repeated):
 
 | Language | Bytes | Lines | Irosashi (ms) | Shiki (ms) |
 |---|---:|---:|---:|---:|
-| Go | 51324 | 2653 | 39.5 | 121.2 |
-| JavaScript | 51298 | 1963 | 91.1 | 208.0 |
-| HTML | 52668 | 1716 | 17.2 | 37.5 |
-| TypeScript | 52920 | 1848 | 79.3 | 100.0 |
-| Markdown | 52150 | 2380 | 28.0 | 19.5 |
-| Python | 51345 | 1794 | 27.0 | 55.2 |
-| Bash | 51558 | 2184 | 25.7 | 52.1 |
-| PHP | 51350 | 2291 | 60.3 | 68.8 |
-| CSS | 51442 | 4094 | 22.1 | 70.6 |
-| Rust | 51561 | 1989 | 25.6 | 47.0 |
+| Go | 51324 | 2653 | 37.8 | 89.6 |
+| JavaScript | 51298 | 1963 | 82.2 | 104.6 |
+| HTML | 52668 | 1716 | 16.8 | 35.1 |
+| TypeScript | 52920 | 1848 | 74.9 | 94.2 |
+| Markdown | 52150 | 2380 | 27.3 | 19.6 |
+| Python | 51345 | 1794 | 25.9 | 55.5 |
+| Bash | 51558 | 2184 | 26.0 | 52.8 |
+| PHP | 51350 | 2291 | 44.6 | 70.8 |
+| CSS | 51442 | 4094 | 19.0 | 71.7 |
+| Rust | 51561 | 1989 | 26.0 | 49.1 |
 
-Cold start, first call on a fresh highlighter (`Highlighter::new()` itself takes 1.6 ms):
+Cold start, first call on a fresh highlighter (`Highlighter::new()` itself takes 1.5 ms):
 
 | Language | Irosashi cold (ms) | Shiki cold (ms) |
 |---|---:|---:|
-| Go | 3.28 | 84.3 |
-| JavaScript | 34.0 | 84.6 |
-| HTML | 28.1 | 51.5 |
-| TypeScript | 33.2 | 87.4 |
-| Markdown | 76.8 | 13.8 |
-| Python | 2.22 | 19.0 |
-| Bash | 1.77 | 9.20 |
-| PHP | 86.5 | 110.4 |
-| CSS | 12.7 | 62.8 |
-| Rust | 1.55 | 5.50 |
+| Go | 3.40 | 103.4 |
+| JavaScript | 29.4 | 83.4 |
+| HTML | 24.8 | 51.2 |
+| TypeScript | 28.0 | 82.8 |
+| Markdown | 71.5 | 10.2 |
+| Python | 2.21 | 17.9 |
+| Bash | 1.82 | 9.60 |
+| PHP | 57.7 | 113.3 |
+| CSS | 13.2 | 60.0 |
+| Rust | 1.60 | 6.20 |
 
-Irosashi is faster than Shiki on 9 of the 10 languages at both sizes and 1.3 to 1.4x slower
-on Markdown, the one grammar shape where a full-line search per pattern does more work than
-Shiki's regset scan; the cause is in the perf record. Cold time is the engine compiling each
-distinct pattern once on first use plus parsing embedded grammars (Markdown pulls in HTML, CSS
-and JavaScript); Shiki's cold numbers exclude the Node process that runs it. The 2026-09-14
+Irosashi is faster than Shiki on 9 of the 10 languages at both sizes; on Markdown it is level
+for the small snippet and 1.4x slower on the large input, the one grammar shape where a
+full-line search per pattern does more work than Shiki's regset scan; the cause is in the
+perf record. Cold time is the engine compiling each distinct pattern once on first use plus
+parsing embedded grammars (Markdown pulls in HTML, CSS and JavaScript); Shiki's cold numbers
+exclude the Node process that runs it. The 2026-09-14
 comparison against Nuri, the Go port, is in
 [`docs/perf/2026-09-14-bench.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
 
@@ -538,8 +539,8 @@ comparison against Nuri, the Go port, is in
 | Typst output         | Yes         | No             | No           | No            |
 | Licence              | MIT         | MIT            | MIT          | EUPL          |
 | Runtime              | Pure Rust   | Pure Rust      | Node + WASM  | Native + C    |
-| `kazari render`, 45 KB Rust file | 40 ms | 209 ms | n/a | n/a |
-| `kazari process`, 60 pages | 165 ms | 393 ms | n/a | n/a |
+| `kazari render`, 45 KB Rust file | 42 ms | 215 ms | n/a | n/a |
+| `kazari process`, 60 pages | 167 ms | 391 ms | n/a | n/a |
 
 The last two rows are medians from the `kazari` binary with `--engine irosashi` and
 `--engine syntect` on the same input (syntect built on `fancy-regex`); process start and
@@ -632,6 +633,11 @@ cargo test -p irosashi-fidelity                             # core gate: 64/64
 cargo test -p irosashi-fidelity -- --ignored golden_all     # full matrix: 468/468
 IRO_WRITE_REPORT=1 cargo test -p irosashi-fidelity          # regenerate FIDELITY.md
 ```
+
+`crates/irosashi-fidelity/testdata/regressions/` holds committed fixtures for inputs the
+synced sets do not cover (for example AutoHotkey v2 hotkeys with non-ASCII key names),
+generated with the same `vscode-textmate` tooling; the `regressions` test requires every one
+to be identical.
 
 ### HTML goldens and snapshots
 

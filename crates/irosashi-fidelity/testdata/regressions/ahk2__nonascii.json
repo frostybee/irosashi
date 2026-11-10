@@ -1,0 +1,2241 @@
+{
+  "vsctmVersion": "9.3.2",
+  "grammar": "ahk2",
+  "grammarSourceHash": "sha256:791493a9f49fab988cae452a015b11d14f6443bc852acf41b349747e8fee076f",
+  "injections": true,
+  "source": "; Hotkeys whose key names are outside ASCII, one per line.\na::Send \"ascii\"\né::Send \"latin-1\"\nÿ::Send \"latin-1 high\"\nĀ::Send \"latin extended\"\n中::Send \"cjk\"\n😀::Send \"astral\"\nſ::Send \"long s, folds to s\"\nK::Send \"kelvin sign, folds to k\"\n^中::Send \"modifier\"\n中 & ж::Send \"combination\"\nĀ up::Send \"key up\"\n中:: {\n    MsgBox \"block body\"\n}\n",
+  "themes": {
+    "github-dark": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ";",
+            "scopes": [
+              "source.ahk2",
+              "comment.line.ahk2"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 58,
+            "text": " Hotkeys whose key names are outside ASCII, one per line.",
+            "scopes": [
+              "source.ahk2",
+              "comment.line.ahk2"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "a",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 3,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 7,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 14,
+            "text": "ascii",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "é",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 17,
+            "text": "latin-1",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "ÿ",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 22,
+            "text": "latin-1 high",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "Ā",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 24,
+            "text": "latin extended",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "中",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 9,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 14,
+            "text": "cjk",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "😀",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 18,
+            "text": "astral",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "ſ",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 28,
+            "text": "long s, folds to s",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "K",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 9,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 34,
+            "text": "kelvin sign, folds to k",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "^中",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 20,
+            "text": "modifier",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "中",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "&",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.operator.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 8,
+            "text": "ж",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 14,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 27,
+            "text": "combination",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "Ā",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": " up",
+            "scopes": [
+              "source.ahk2",
+              "keyword.keys.up.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 11,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 19,
+            "text": "key up",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "中",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#F97583",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "{",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.section.block.begin.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 10,
+            "text": "MsgBox",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#79B8FF",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 22,
+            "text": "block body",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#9ECBFF",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.section.block.end.ahk2"
+            ],
+            "color": "#E1E4E8",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    },
+    "github-light": {
+      "tokens": [
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": ";",
+            "scopes": [
+              "source.ahk2",
+              "comment.line.ahk2"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 58,
+            "text": " Hotkeys whose key names are outside ASCII, one per line.",
+            "scopes": [
+              "source.ahk2",
+              "comment.line.ahk2"
+            ],
+            "color": "#6A737D",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "a",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 1,
+            "end": 3,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 7,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 8,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 14,
+            "text": "ascii",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "é",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 17,
+            "text": "latin-1",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 17,
+            "end": 18,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "ÿ",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 22,
+            "text": "latin-1 high",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "Ā",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 24,
+            "text": "latin extended",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 24,
+            "end": 25,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "中",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 9,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 14,
+            "text": "cjk",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "😀",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 18,
+            "text": "astral",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 18,
+            "end": 19,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "ſ",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 4,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 8,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 9,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 28,
+            "text": "long s, folds to s",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 28,
+            "end": 29,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "K",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 9,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 9,
+            "end": 10,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 34,
+            "text": "kelvin sign, folds to k",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 34,
+            "end": 35,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "^中",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 6,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 10,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 20,
+            "text": "modifier",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 20,
+            "end": 21,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "中",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 4,
+            "text": " ",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 5,
+            "text": "&",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.operator.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 8,
+            "text": "ж",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 8,
+            "end": 10,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 14,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 14,
+            "end": 15,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 15,
+            "end": 16,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 16,
+            "end": 27,
+            "text": "combination",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 27,
+            "end": 28,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 2,
+            "text": "Ā",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 2,
+            "end": 5,
+            "text": " up",
+            "scopes": [
+              "source.ahk2",
+              "keyword.keys.up.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 7,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 7,
+            "end": 11,
+            "text": "Send",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 13,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 13,
+            "end": 19,
+            "text": "key up",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 19,
+            "end": 20,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 3,
+            "text": "中",
+            "scopes": [
+              "source.ahk2",
+              "hotkey.ahk2",
+              "keyword.keys.ahk2"
+            ],
+            "color": "#D73A49",
+            "fontStyle": 0
+          },
+          {
+            "start": 3,
+            "end": 5,
+            "text": "::",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.definition.colon"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 5,
+            "end": 6,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 6,
+            "end": 7,
+            "text": "{",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.section.block.begin.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 4,
+            "text": "    ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 4,
+            "end": 10,
+            "text": "MsgBox",
+            "scopes": [
+              "source.ahk2",
+              "variable.other.ahk2",
+              "support.function.ahk2"
+            ],
+            "color": "#005CC5",
+            "fontStyle": 0
+          },
+          {
+            "start": 10,
+            "end": 11,
+            "text": " ",
+            "scopes": [
+              "source.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          },
+          {
+            "start": 11,
+            "end": 12,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.begin.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 12,
+            "end": 22,
+            "text": "block body",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          },
+          {
+            "start": 22,
+            "end": 23,
+            "text": "\"",
+            "scopes": [
+              "source.ahk2",
+              "string.quoted.ahk2",
+              "punctuation.definition.string.end.ahk2"
+            ],
+            "color": "#032F62",
+            "fontStyle": 0
+          }
+        ],
+        [
+          {
+            "start": 0,
+            "end": 1,
+            "text": "}",
+            "scopes": [
+              "source.ahk2",
+              "punctuation.section.block.end.ahk2"
+            ],
+            "color": "#24292E",
+            "fontStyle": 0
+          }
+        ]
+      ],
+      "html": ""
+    }
+  }
+}

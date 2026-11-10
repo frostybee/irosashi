@@ -316,14 +316,14 @@ fn test_z_anchor_rewrite() {
 #[test]
 fn test_crude_byte_class_rewrite() {
     let ahk2_tail = r"`[;{]|[\x21-\x3A\x3C-\x7E]|[^\x00-\xff]|(?<=[^ \t]);)(?=([ \t]|$))";
-    let rewritten = r"`[;{]|[\x21-\x3A\x3C-\x7E]|(?<=[^ \t]);)(?=([ \t]|$))";
+    let rewritten = r"`[;{]|[\x21-\x3A\x3C-\x7E]|[^\x00-\x7f]|(?<=[^ \t]);)(?=([ \t]|$))";
     assert_eq!(rewrite_crude_byte_class(ahk2_tail), rewritten);
     assert_eq!(rewrite_crude_byte_class(rewritten), rewritten);
     assert_eq!(rewrite_crude_byte_class("^normal$"), "^normal$");
     assert_eq!(rewrite_crude_byte_class(""), "");
     assert_eq!(
-        rewrite_crude_byte_class(r"[\x21-\x7E]|[^\x00-\x7f]"),
-        r"[\x21-\x7E]|[^\x00-\x7f]"
+        rewrite_crude_byte_class(r"[^\x00-\xff]|a"),
+        r"[^\x00-\xff]|a"
     );
     assert_eq!(
         rewrite_crude_byte_class(r"a|\[^\x00-\xff]"),
@@ -331,15 +331,37 @@ fn test_crude_byte_class_rewrite() {
     );
 }
 
+/// The rewritten key-name rule matches what vscode-oniguruma matches on the original:
+/// every non-ASCII key, including U+017F and U+212A, which the ASCII class takes under
+/// case folding.
 #[test]
 fn test_crude_byte_class_rewrite_compiles_and_matches() {
     let rewritten = rewrite_crude_byte_class(
-        r"(?<=(&[ \t]+|^[ \t]*))(`[;{]|[\x21-\x3A\x3C-\x7E]|[^\x00-\xff]|(?<=[^ \t]);)(?=([ \t]|$))",
+        r"(?<=(&[ \t]+|^[ \t]*))([<>$~*!+#^]*?)(?i:`[;{]|[\x21-\x3A\x3C-\x7E]|[^\x00-\xff]|(?<=[^ \t]);)(?=([ \t]|$))",
     );
-    assert_eq!(find_some(&[&rewritten], "^ ", 0).range(), (0, 1));
-    assert_eq!(find_some(&[&rewritten], "`; ", 0).range(), (0, 2));
-    assert_eq!(find(&[&rewritten], "é ", 0), None);
-    assert_eq!(find(&[&rewritten], "中 ", 0), None);
+    assert!(rewritten.contains(r"[^\x00-\x7f]"));
+    let keys = [
+        "^",
+        "`;",
+        "\u{e9}",
+        "\u{ff}",
+        "\u{100}",
+        "\u{4e2d}",
+        "\u{1f600}",
+        "\u{17f}",
+        "\u{212a}",
+        "^\u{4e2d}",
+    ];
+    for key in keys {
+        let line = format!("{key} ");
+        assert_eq!(
+            find_some(&[&rewritten], &line, 0).range(),
+            (0, key.len()),
+            "{key:?}"
+        );
+    }
+    assert_eq!(find(&[&rewritten], "; ", 0), None);
+    assert_eq!(find(&[&rewritten], "  ", 0), None);
 }
 
 #[test]

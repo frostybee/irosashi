@@ -2,7 +2,8 @@ use std::fs;
 
 use irosashi_fidelity::{
     FULL_MATRIX_HEADING, FidelityReport, golden_all_dir, golden_dir, held_all_path, held_path,
-    highlighter, load_held, render_full_matrix, render_markdown, report_path, run_suite,
+    highlighter, load_held, regressions_dir, render_full_matrix, render_markdown, report_path,
+    run_suite,
 };
 
 fn core_report() -> (FidelityReport, Vec<String>) {
@@ -95,6 +96,24 @@ fn core_ships_green() {
     assert!(
         held_core.is_empty(),
         "core grammars are held (fidelity < 100%): {held_core:?}"
+    );
+}
+
+/// Every regression fixture must be byte-identical on every theme; there is no held list.
+#[test]
+fn regressions() {
+    let highlighter = highlighter();
+    let (report, _) =
+        run_suite(&highlighter, &regressions_dir()).expect("regression fixtures load");
+    let failing = report.failing_grammars();
+    assert!(
+        failing.is_empty(),
+        "regression fixtures are not identical: {failing:?}{}",
+        describe_failures(&report, &failing, diffs_to_show())
+    );
+    println!(
+        "regressions: {}/{} triples identical",
+        report.global.pass, report.global.total
     );
 }
 

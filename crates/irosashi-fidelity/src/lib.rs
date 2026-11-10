@@ -29,6 +29,12 @@ pub fn golden_dir() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/golden")
 }
 
+/// Path of the regression fixtures: inputs the synced golden sets do not cover,
+/// generated with the same `vscode-textmate` tooling and committed here.
+pub fn regressions_dir() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/regressions")
+}
+
 /// Path of the full 234-grammar fixture matrix (synced locally, not committed).
 pub fn golden_all_dir() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("testdata/golden-all")

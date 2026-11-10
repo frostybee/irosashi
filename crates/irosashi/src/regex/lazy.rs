@@ -98,8 +98,8 @@ mod tests {
     #[test]
     fn rewrites_crude_byte_class_in_source() {
         let regex = LazyRegex::new(r"a|[^\x00-\xff]|b");
-        assert_eq!(regex.source(), "a|b");
-        assert_eq!(LazyRegex::new(regex.source()).source(), "a|b");
+        assert_eq!(regex.source(), r"a|[^\x00-\x7f]|b");
+        assert_eq!(LazyRegex::new(regex.source()).source(), r"a|[^\x00-\x7f]|b");
         assert!(regex.compiles());
     }
 

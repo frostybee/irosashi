@@ -48,7 +48,7 @@ themes and matches Shiki byte for byte; `syntect` uses Sublime Text grammars and
 bundled `.tmTheme` set, for sites that want their code blocks to look the way syntect
 renders them elsewhere. Pick one with `--engine` on any command or `engine:` in the config
 file. Irosashi is also the faster of the two in this binary (syntect runs on `fancy-regex`):
-about 10 ms against 57 ms for a small file, and 165 ms against 393 ms for a 60-page site
+about 11 ms against 61 ms for a small file, and 167 ms against 391 ms for a 60-page site
 (medians of 7 runs, `tools/kazari-bench`).
 
 ## Commands

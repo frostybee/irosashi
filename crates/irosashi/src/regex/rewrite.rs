@@ -29,18 +29,21 @@ pub fn rewrite_z_anchor(pattern: &str) -> String {
 }
 
 const CRUDE_BYTE_ALTERNATIVE: &str = "|[^\\x00-\\xff]";
+const ASCII_COMPLEMENT_ALTERNATIVE: &str = "|[^\\x00-\\x7f]";
 
-/// Drops the alternative `|[^\x00-\xff]` from a pattern.
+/// Rewrites the alternative `|[^\x00-\xff]` to `|[^\x00-\x7f]`.
 ///
-/// The AutoHotkey v2 grammar uses it in its hotkey key-name rule. vscode-oniguruma
-/// (Oniguruma 6.9.8) reads `\x00`-`\xff` as raw bytes, so the class matches no character
-/// of valid UTF-8 and the alternative never fires in VS Code. Oniguruma's final release
-/// and Ferroni reject the raw bytes, so the whole rule would fail to compile. Removing
-/// the alternative keeps vscode-textmate's output on every input. No other bundled
-/// grammar contains a `\x80`-`\xff` escape; a widened rewrite needs a new fixture.
+/// The AutoHotkey v2 grammar has it in its hotkey key-name rule, inside `(?i:`. In
+/// vscode-oniguruma (Oniguruma 6.9.8) `\x00`-`\xff` are raw bytes; on their own they
+/// match no character of valid UTF-8, but under case folding the negated class matches
+/// every non-ASCII code point except U+017F and U+212A, which fold to ASCII, and so does
+/// `[^\x00-\x7f]`. Oniguruma's final release and Ferroni reject the raw bytes, so without
+/// the rewrite the whole rule fails to compile. The two forms agree only under `(?i)`,
+/// which is why the rewrite is pinned to this exact alternative and not widened to other
+/// byte escapes; no other bundled grammar contains one.
 pub fn rewrite_crude_byte_class(pattern: &str) -> String {
     if !pattern.contains(CRUDE_BYTE_ALTERNATIVE) {
         return pattern.to_owned();
     }
-    pattern.replace(CRUDE_BYTE_ALTERNATIVE, "")
+    pattern.replace(CRUDE_BYTE_ALTERNATIVE, ASCII_COMPLEMENT_ALTERNATIVE)
 }

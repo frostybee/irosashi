@@ -97,11 +97,11 @@ features:
 
 | Feature | Backend | Grammars and themes | Engine | 45 KB Rust file |
 |---------|---------|---------------------|--------|-----------------|
-| `irosashi` (default) | [Irosashi](https://crates.io/crates/irosashi) | VS Code TextMate grammars and themes, byte-identical to `vscode-textmate` | Ferroni (Oniguruma in Rust) | 40 ms |
-| `syntect` | [syntect](https://crates.io/crates/syntect) | Sublime Text grammars, `.tmTheme` themes | `fancy-regex` | 209 ms |
+| `irosashi` (default) | [Irosashi](https://crates.io/crates/irosashi) | VS Code TextMate grammars and themes, byte-identical to `vscode-textmate` | Ferroni (Oniguruma in Rust) | 42 ms |
+| `syntect` | [syntect](https://crates.io/crates/syntect) | Sublime Text grammars, `.tmTheme` themes | `fancy-regex` | 215 ms |
 
 The last column is `kazari render` on the same file with each `--engine` (median of 7 runs,
-`tools/kazari-bench`); a 60-page `kazari process` run is 165 ms against 393 ms. Irosashi is
+`tools/kazari-bench`); a 60-page `kazari process` run is 167 ms against 391 ms. Irosashi is
 the default because it is both the more faithful and the faster backend.
 Both backends are pure Rust.
 

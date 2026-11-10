@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-08
+
+### Fixed
+
+- **AutoHotkey v2 hotkeys with non-ASCII key names** (`irosashi`): `中::`, `Ā::`, `é::` and
+  `😀::` now get `keyword.keys.ahk2`, as in VS Code. The 0.3.0 pattern rewrite dropped the
+  grammar's `|[^\x00-\xff]` alternative on the claim that it never matches valid UTF-8; that
+  was tested outside the rule's `(?i:`, under which vscode-oniguruma matches every non-ASCII
+  character with it. The alternative is now rewritten to `|[^\x00-\x7f]`, which has the same
+  match set there and compiles on Ferroni. A `vscode-textmate` fixture with non-ASCII hotkeys
+  is added under `crates/irosashi-fidelity/testdata/regressions/` and runs with `cargo test`.
+  Reported against the grammar as thqby/vscode-autohotkey2-lsp#868, where the maintainer
+  showed the VS Code behaviour.
+
 ### Changed
 
 - **Ferroni 2.7.0** (`irosashi`): the minimum engine version moves from 1.9.0 to 2.7.0.
@@ -27,8 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   1.9.0: 6 percent from 1.9.1 and 3 percent from 2.2.x, where 45 grammars gain more than
   5 percent (`shellsession` is 2.4 times faster, `jinja`, `sas`, `mermaid`, `php`,
   `powershell` and `cobol` 20 to 35 percent) and none loses more than noise; 2.3.0
-  through 2.7.0 are within noise of 2.2.x. The performance tables still show the 1.9.0
-  measurements.
+  through 2.7.0 are within noise of 2.2.x. The performance tables in the README and the docs
+  were re-measured on 2.7.0 (`docs/perf/2026-11-08-ferroni-2.7.md`).
 
 ## [0.3.0] - 2026-10-07
 
@@ -313,7 +327,8 @@ The changelog is maintained by hand. Add entries under `[Unreleased]` as work la
 `main`. The release steps, including how this file is updated for a new version, are in
 [RELEASING.md](https://github.com/frostybee/irosashi/blob/main/RELEASING.md).
 
-[Unreleased]: https://github.com/frostybee/irosashi/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/frostybee/irosashi/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/frostybee/irosashi/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/frostybee/irosashi/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/frostybee/irosashi/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/frostybee/irosashi/compare/v0.1.1...v0.1.2

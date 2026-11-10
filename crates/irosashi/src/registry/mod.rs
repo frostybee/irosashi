@@ -666,11 +666,17 @@ impl GrammarResolver for Registry {
 }
 
 impl InjectionProvider for Registry {
+    /// Grammars injecting into `scope` or into any of its dot-prefixes, as Shiki's
+    /// resolver collects them: `injectTo: ["source.ts"]` also reaches `source.ts.tags`.
     fn injectors_for(&self, scope: &str) -> Vec<Arc<Grammar>> {
-        self.injection_index
-            .get(scope)
-            .map(|names| names.iter().filter_map(|n| self.grammar(n).ok()).collect())
-            .unwrap_or_default()
+        scope
+            .match_indices('.')
+            .map(|(end, _)| &scope[..end])
+            .chain([scope])
+            .filter_map(|prefix| self.injection_index.get(prefix))
+            .flatten()
+            .filter_map(|n| self.grammar(n).ok())
+            .collect()
     }
 }
 
@@ -801,6 +807,9 @@ mod tests {
         assert_eq!(next.detect_by_filename("a.CST"), Some("custom"));
         assert_eq!(next.detect_by_first_line("#!custom"), Some("custom"));
         assert_eq!(next.injectors_for("source.go").len(), 1);
+        assert_eq!(next.injectors_for("source.go.mod").len(), 1);
+        assert!(next.injectors_for("source.gomod").is_empty());
+        assert!(next.injectors_for("source").is_empty());
         assert!(r.injectors_for("source.go").is_empty());
         assert_eq!(r.detect_by_filename("a.cst"), None);
 

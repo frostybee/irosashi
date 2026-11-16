@@ -158,6 +158,13 @@ impl HighlighterBuilder {
         self
     }
 
+    /// Applies a grammar's `injectTo` only to the languages that embed it, as Shiki
+    /// does: see [`RegistryBuilder::embedded_injections_only`].
+    pub fn embedded_injections_only(mut self, on: bool) -> Self {
+        self.registry = self.registry.embedded_injections_only(on);
+        self
+    }
+
     /// Loads grammars and themes from `root/grammars` and `root/themes`.
     pub fn from_dir(root: impl Into<PathBuf>) -> Self {
         Self::new(AssetSource::Dir(root.into()))

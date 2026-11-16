@@ -140,7 +140,10 @@ impl Parser {
             let patterns = self.parse_list(&raw.patterns);
             let scope_backrefs =
                 has_scope_backref(&raw.name) || has_scope_backref(&raw.content_name);
-            self.rules[id.index()] = if let Some(while_) = raw.while_.as_deref() {
+            // vscode-textmate tests `while` and `end` for truthiness, so an empty string
+            // means the key is absent.
+            let while_ = raw.while_.as_deref().filter(|w| !w.is_empty());
+            self.rules[id.index()] = if let Some(while_) = while_ {
                 let while_captures = self.parse_captures(pick(&raw.while_captures, &raw.captures));
                 Rule::BeginWhile {
                     name: raw.name.clone(),
@@ -154,7 +157,11 @@ impl Parser {
                     needs_begin_capture_texts: has_backref_marker(while_) || scope_backrefs,
                 }
             } else {
-                let end = raw.end.as_deref().unwrap_or(DEFAULT_END);
+                let end = raw
+                    .end
+                    .as_deref()
+                    .filter(|e| !e.is_empty())
+                    .unwrap_or(DEFAULT_END);
                 let end_captures = self.parse_captures(pick(&raw.end_captures, &raw.captures));
                 Rule::BeginEnd {
                     name: raw.name.clone(),
@@ -444,6 +451,18 @@ mod tests {
         };
         assert_eq!(end.source(), "\u{FFFF}");
         assert_eq!(names(begin_captures), [Some("shared")]);
+
+        let (g, id) = first_rule(r#"[{"begin": "b", "end": ""}]"#);
+        let Rule::BeginEnd { end, .. } = g.rule(id) else {
+            panic!()
+        };
+        assert_eq!(end.source(), "\u{FFFF}");
+
+        let (g, id) = first_rule(r#"[{"begin": "b", "while": "", "end": "e"}]"#);
+        let Rule::BeginEnd { end, .. } = g.rule(id) else {
+            panic!()
+        };
+        assert_eq!(end.source(), "e");
         assert_eq!(names(end_captures), [None, Some("end-only")]);
 
         let (g, id) = first_rule(r#"[{"begin": "b", "while": "w", "captures": {"0": "shared"}}]"#);

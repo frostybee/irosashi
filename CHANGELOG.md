@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-11-13
+
+### Changed
+
+- **Smaller binaries with embedded assets** (`irosashi`): the grammars and themes compiled in by
+  the default `embedded-assets` feature are now stored deflated and inflated when a language or
+  theme is first used. A stripped release binary that embeds them shrinks from 10.9 MB to
+  3.9 MB, and the `kazari` binary from 15.9 MB to 8.8 MB (Windows, measured). Output, API and
+  cold-start time are unchanged. The `include_dir` dependency is replaced by `miniz_oxide`,
+  which is pure Rust; the crate now has a build script.
+
+### Documentation
+
+- **Engine comparison record**: `docs/perf/2026-11-13-engine-comparison.md` measures Irosashi,
+  giallo 0.6.0 and ferriki 1.3.0 against Shiki 3.19 on one corpus in one session (fidelity,
+  speed, binary size). The README states the added binary size and links to the record.
+
 ## [0.3.1] - 2026-11-08
 
 ### Fixed
@@ -327,7 +344,8 @@ The changelog is maintained by hand. Add entries under `[Unreleased]` as work la
 `main`. The release steps, including how this file is updated for a new version, are in
 [RELEASING.md](https://github.com/frostybee/irosashi/blob/main/RELEASING.md).
 
-[Unreleased]: https://github.com/frostybee/irosashi/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/frostybee/irosashi/compare/v0.3.2...HEAD
+[0.3.2]: https://github.com/frostybee/irosashi/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/frostybee/irosashi/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/frostybee/irosashi/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/frostybee/irosashi/compare/v0.1.2...v0.2.0

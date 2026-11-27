@@ -1,5 +1,5 @@
-//! Inputs shared by the benches and the audit tests. The five small snippets are the
-//! ones Nuri's `tools/compare` and `cmd/bench` use, copied verbatim so warm timings
+//! Inputs shared by the benches and the audit tests. Five of the ten small snippets are
+//! the ones Nuri's `tools/compare` and `cmd/bench` use, copied verbatim so warm timings
 //! compare like for like; the medium inputs are the fidelity fixture sources.
 
 use crate::{golden_dir, load_fixture};

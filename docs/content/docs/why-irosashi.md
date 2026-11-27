@@ -86,7 +86,7 @@ Irosashi cold time is the engine compiling each distinct pattern of the grammar 
 
 ### No runtime overhead
 
-The difference beyond the tables is everything around tokenization: no Node.js process, no WASM instantiation, no IPC serialization, no `node_modules`, no second runtime to deploy. A Rust program ships a single static binary.
+The difference beyond the tables is everything around tokenization: no Node.js process, no WASM instantiation, no IPC serialization, no `node_modules`, no second runtime to deploy. A Rust program ships a single static binary. With the bundled 257 grammars and 65 themes, Irosashi adds 3.8 MB to a stripped release binary (`lto = true`, `codegen-units = 1`); the assets are stored deflated and inflated when a language or theme is first used.
 
 ## Fidelity
 
@@ -112,13 +112,13 @@ The `kazari` timings in the table come from the run described under [Performance
 | Per-line API         | Yes          | Yes            | No           | No            |
 | Typst output         | Yes (kazari) | No             | No           | No            |
 | Licence              | MIT          | MIT            | MIT          | EUPL          |
-| Runtime              | Pure Rust    | Pure Rust      | Node + WASM  | Native + C    |
+| Runtime              | Pure Rust    | Pure Rust      | Node + WASM  | Rust, C zstd  |
 | `kazari render`, 45 KB Rust file | 42 ms | 215 ms | n/a | n/a |
 | `kazari process`, 60 pages | 167 ms | 391 ms | n/a | n/a |
 
 **syntect** uses Sublime Text syntaxes and `.tmTheme` colour files. These are a different format from VS Code's TextMate JSON grammars and JSON themes, so syntect cannot reproduce VS Code scoping or theme colours byte for byte. It is also slower on the same input: the `kazari` binary ships both backends behind one flag, and a 2.5 KB Rust file renders in 11 ms on Irosashi against 61 ms on syntect, a 45 KB file in 42 against 215 ms, and a 60-page site in 167 against 391 ms (medians of 7 runs with `tools/kazari-bench`; syntect built on `fancy-regex`). See [Backends](/docs/getting-started/cli#backends).
 
-**giallo** runs C Oniguruma natively and parses VS Code grammars, but does not publish fidelity scores against `vscode-textmate`.
+**giallo** is a Rust port of `vscode-textmate` on `fancy-regex` (its built-in asset dump links the C `zstd` library) and is licensed under EUPL-1.2. It does not publish fidelity scores against `vscode-textmate`. **ferriki** is another Rust port, on Ferroni, under MIT or Apache-2.0. In a one-off measurement on a 12-language corpus, Irosashi, giallo 0.6.0 and ferriki 1.3.0 all matched Shiki 3.19 on every character, and their warm one-theme speed was within a factor of 1.5; the [dated record](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-11-13-engine-comparison.md) has the method and the numbers.
 
 syntect is the right choice when a site already renders other code blocks with syntect and wants them to match. Both backends are pure Rust.
 

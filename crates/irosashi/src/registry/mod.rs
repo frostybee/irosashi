@@ -17,11 +17,17 @@ use crate::tokenizer::InjectionProvider;
 pub use languages::{DEFAULT_ALIASES, DEFAULT_EXTENSIONS, DEFAULT_FILENAMES, PLAINTEXT_NAMES};
 
 #[cfg(feature = "embedded-assets")]
-static EMBEDDED_GRAMMARS: include_dir::Dir<'static> =
-    include_dir::include_dir!("$CARGO_MANIFEST_DIR/assets/grammars");
+include!(concat!(env!("OUT_DIR"), "/embedded_assets.rs"));
+
+/// The embedded table for an asset kind: `(file name, deflated bytes)`, sorted by name.
 #[cfg(feature = "embedded-assets")]
-static EMBEDDED_THEMES: include_dir::Dir<'static> =
-    include_dir::include_dir!("$CARGO_MANIFEST_DIR/assets/themes");
+fn embedded(kind: &str) -> &'static [(&'static str, &'static [u8])] {
+    if kind == "grammars" {
+        EMBEDDED_GRAMMARS
+    } else {
+        EMBEDDED_THEMES
+    }
+}
 
 const INDEX_FILE: &str = "index.json";
 const INDEX_VERSION: u32 = 1;
@@ -90,12 +96,11 @@ impl AssetSource {
             Self::Dir(root) => fs::read(root.join(kind).join(file)).ok().map(Cow::Owned),
             #[cfg(feature = "embedded-assets")]
             Self::Embedded => {
-                let dir = if kind == "grammars" {
-                    &EMBEDDED_GRAMMARS
-                } else {
-                    &EMBEDDED_THEMES
-                };
-                dir.get_file(file).map(|f| Cow::Borrowed(f.contents()))
+                let table = embedded(kind);
+                let index = table.binary_search_by(|(name, _)| (*name).cmp(file)).ok()?;
+                miniz_oxide::inflate::decompress_to_vec(table[index].1)
+                    .ok()
+                    .map(Cow::Owned)
             }
             Self::None => None,
         }
@@ -114,16 +119,10 @@ impl AssetSource {
                 })
                 .unwrap_or_default(),
             #[cfg(feature = "embedded-assets")]
-            Self::Embedded => {
-                let dir = if kind == "grammars" {
-                    &EMBEDDED_GRAMMARS
-                } else {
-                    &EMBEDDED_THEMES
-                };
-                dir.files()
-                    .filter_map(|f| f.path().file_stem()?.to_str().map(str::to_owned))
-                    .collect()
-            }
+            Self::Embedded => embedded(kind)
+                .iter()
+                .filter_map(|(name, _)| name.strip_suffix(".json").map(str::to_owned))
+                .collect(),
             Self::None => Vec::new(),
         };
         names.sort();
@@ -693,6 +692,26 @@ mod tests {
         assert_eq!(r.themes().count(), 65);
         assert!(r.languages().any(|l| l == "javascript"));
         assert!(r.themes().any(|t| t == "github-dark"));
+    }
+
+    #[cfg(feature = "embedded-assets")]
+    #[test]
+    fn embedded_assets_inflate_to_the_files_on_disk() {
+        for kind in ["grammars", "themes"] {
+            let table = embedded(kind);
+            let on_disk = AssetSource::Dir(assets()).list(kind);
+            assert_eq!(table.len(), on_disk.len(), "{kind}");
+            assert!(
+                table.windows(2).all(|w| w[0].0 < w[1].0),
+                "{kind} is sorted"
+            );
+            for (file, _) in table {
+                let inflated = AssetSource::Embedded.read(kind, file).unwrap();
+                let raw = fs::read(assets().join(kind).join(file)).unwrap();
+                assert!(*inflated == *raw, "{kind}/{file}");
+            }
+        }
+        assert_eq!(AssetSource::Embedded.read("grammars", "nope.json"), None);
     }
 
     #[test]

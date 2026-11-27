@@ -1,6 +1,6 @@
 [package]
 name = "irosashi"
-version = "0.3.1"
+version = "0.3.2"
 description = "TextMate grammar syntax highlighting with VS Code themes, byte-identical to vscode-textmate"
 edition.workspace = true
 license.workspace = true
@@ -11,8 +11,9 @@ categories = ["text-processing", "parsing", "development-tools"]
 
 [features]
 default = ["embedded-assets"]
-# Embed every bundled grammar and theme so `Highlighter::new()` needs no files on disk.
-embedded-assets = ["dep:include_dir"]
+# Embed every bundled grammar and theme (deflated, inflated on first use) so
+# `Highlighter::new()` needs no files on disk.
+embedded-assets = ["dep:miniz_oxide"]
 
 [dependencies]
 ferroni = "2.7.0"
@@ -20,7 +21,10 @@ thiserror.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 bitflags.workspace = true
-include_dir = { version = "0.7", optional = true }
+miniz_oxide = { version = "0.9", optional = true }
+
+[build-dependencies]
+miniz_oxide = { version = "0.9", optional = true }
 
 [dev-dependencies]
 insta = "1"

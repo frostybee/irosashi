@@ -118,7 +118,7 @@ Shiki is the right choice. Where Irosashi earns its place:
   (`HighlighterBuilder::min_contrast`, off by default)
 - **Language detection:** by file extension, exact filename, or first-line shebang
 - **Embedded assets:** 257 grammars and 65 themes compiled into the binary (feature
-  `embedded-assets`, on by default), or loaded from a directory
+  `embedded-assets`, on by default, about 3.8 MB), or loaded from a directory
 - **No panics on any input:** grammar parsing and tokenization are fuzz targets; a per-line panic
   is caught and reported as a `Diagnostic`
 - **Deterministic output:** attributes and styles in sorted key order, class hashes stable across
@@ -528,6 +528,12 @@ exclude the Node process that runs it. The 2026-09-14
 comparison against Nuri, the Go port, is in
 [`docs/perf/2026-09-14-bench.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-09-14-bench.md).
 
+Binary size: with the default `embedded-assets` feature, Irosashi adds 3.8 MB to a stripped
+release binary built with `lto = true` and `codegen-units = 1` (3.88 MB against 0.12 MB for an
+empty program, on Windows). 1.5 MB of that is the 257 grammars and 65 themes, which are stored
+deflated and inflated when a language or theme is first used; the rest is code. Build with
+`default-features = false` and load assets from a directory to leave them out.
+
 ### Comparison
 
 |                      | Irosashi    | syntect        | Shiki (JS)   | giallo        |
@@ -538,13 +544,19 @@ comparison against Nuri, the Go port, is in
 | Per-line API         | Yes         | Yes            | No           | No            |
 | Typst output         | Yes         | No             | No           | No            |
 | Licence              | MIT         | MIT            | MIT          | EUPL          |
-| Runtime              | Pure Rust   | Pure Rust      | Node + WASM  | Native + C    |
+| Runtime              | Pure Rust   | Pure Rust      | Node + WASM  | Rust, C zstd  |
 | `kazari render`, 45 KB Rust file | 42 ms | 215 ms | n/a | n/a |
 | `kazari process`, 60 pages | 167 ms | 391 ms | n/a | n/a |
 
 The last two rows are medians from the `kazari` binary with `--engine irosashi` and
 `--engine syntect` on the same input (syntect built on `fancy-regex`); process start and
 backend construction are under 6 ms for both. Shiki and giallo are not selectable there.
+
+A one-off measurement of Irosashi, giallo 0.6.0 and ferriki 1.3.0 on one corpus of 12 languages
+is recorded in [`docs/perf/2026-11-13-engine-comparison.md`](https://github.com/frostybee/irosashi/blob/main/docs/perf/2026-11-13-engine-comparison.md). All three matched Shiki 3.19
+on every character. With one theme their warm speed is within a factor of 1.5, with Irosashi
+the slowest of the three; binaries with bundled assets are 3.9 MB for Irosashi and 4.0 MB for
+giallo.
 
 ## Relationship to Upstream Shiki
 
@@ -649,9 +661,9 @@ cargo insta test -p kazari-rs                               # Kazari snapshots
 
 ### Benchmarks
 
-Criterion benches live in `crates/irosashi-fidelity/benches/highlight`. The inputs are the same
-five snippets Nuri's `tools/compare` uses, plus the fidelity fixture sources as medium inputs
-and 50 KiB repetitions as large inputs. Groups: `cold/highlighter_new`, `cold/first_tokens`,
+Criterion benches live in `crates/irosashi-fidelity/benches/highlight`. The small inputs are ten
+snippets, five of them the ones Nuri's `tools/compare` uses; the medium inputs are the fidelity
+fixture sources, and the large inputs repeat those to 50 KiB. Groups: `cold/highlighter_new`, `cold/first_tokens`,
 `warm/tokens`, `warm/tokens_multi`, `warm/tokenize_line`, `warm/html/{iro,shiki,shiki_dual}`.
 
 ```bash
@@ -709,6 +721,7 @@ None of these are linked into the library.
 | `tools/sync-assets` | Copies grammars, themes and fidelity fixtures from the Nuri checkout, pinned to its upstream commit. |
 | `tools/bench-report` | Reads `target/criterion` and prints the markdown table used in `docs/perf/`. |
 | `tools/kazari-bench` | Times the release `kazari` binary on generated inputs, both engines, and prints the CLI table used in `docs/perf/`. |
+| `tools/shiki-bench` | Node script that times Shiki 4.4.3 on the same inputs as the Criterion benches. |
 | `tools/gen-html-goldens` | Node script that runs Shiki 4.4.3 to produce the HTML goldens for the Shiki preset. |
 | `fuzz/` | `cargo-fuzz` targets `parse_grammar` and `tokenize`. |
 

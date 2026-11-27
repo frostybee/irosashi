@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.3.2] - 2026-11-13
+## [0.3.2] - 2026-11-27
 
 ### Changed
 
@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   3.9 MB, and the `kazari` binary from 15.9 MB to 8.8 MB (Windows, measured). Output, API and
   cold-start time are unchanged. The `include_dir` dependency is replaced by `miniz_oxide`,
   which is pure Rust; the crate now has a build script.
+- **Ferroni 2.9.1** (`irosashi`): the minimum engine version moves from 2.7.0 to 2.9.1. The
+  release fixes three matcher bugs (the backtrack stack cap is now enforced inside star loops,
+  among others) and reworks internal data layouts. Output is unchanged (468/468 fixtures
+  identical, 234/234 grammars) and warm tokenization over all 234 grammar fixtures is within
+  noise of 2.7.0. The performance tables still show the 2.7.0 measurements.
 
 ### Documentation
 

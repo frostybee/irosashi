@@ -16,7 +16,7 @@ default = ["embedded-assets"]
 embedded-assets = ["dep:miniz_oxide"]
 
 [dependencies]
-ferroni = "2.7.0"
+ferroni = "2.9.1"
 thiserror.workspace = true
 serde.workspace = true
 serde_json.workspace = true
